@@ -1,0 +1,247 @@
+/* ===== CSS Variables (Design Tokens) ===== */
+:root {
+    /* Colors from Figma */
+    --color-primary: #003049;
+    --color-secondary: #780000;
+    --color-background: #272727;
+    --color-text-light: #FDF0D5;
+    --color-overlay: rgba(39, 39, 39, 0.6);
+
+    /* Spacing */
+    --spacing-xs: 8px;
+    --spacing-sm: 10px;
+    --spacing-md: 13px;
+    --spacing-lg: 16px;
+    --spacing-xl: 19px;
+    --spacing-2xl: 32px;
+    --spacing-3xl: 51px;
+
+    /* Typography */
+    --font-family: 'Poppins', sans-serif;
+    --font-size-base: 18px;
+    --font-size-lg: 24px;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+
+    /* Layout */
+    --navbar-height: 96px;
+    --border-radius: 6px;
+    --hamburger-width: 240px;
+    --hamburger-top: 71px;
+
+    /* Transitions */
+    --transition-speed: 0.3s;
+}
+
+/* ===== Reset & Base Styles ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--color-background);
+    color: var(--color-text-light);
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ===== Background Video ===== */
+.bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1;
+}
+
+/* ===== Main Content ===== */
+.main-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - var(--navbar-height));
+    padding: 20px;
+}
+
+.logo-container {
+    text-align: center;
+    animation: fadeIn 1s ease-in;
+}
+
+.main-logo {
+    max-width: 800px;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
+}
+
+/* ===== Hamburger Menu (เปิดจากปุ่ม 3 ขีดใน Navbar) ===== */
+.hamburger-menu {
+    position: fixed;
+    top: var(--navbar-height);
+    right: 15px;
+    z-index: 998;
+    background-color: var(--color-secondary);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-xl) var(--spacing-sm);
+    min-width: var(--hamburger-width);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: all var(--transition-speed) ease;
+    transform-origin: top;
+    margin-top: 10px;
+}
+
+.hamburger-menu.show {
+    max-height: 500px;
+    opacity: 1;
+}
+
+.menu-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    align-items: center;
+}
+
+.menu-item {
+    font-size: var(--font-size-base);
+    color: var(--color-text-light);
+    text-align: center;
+    width: 100%;
+    padding: 8px 0;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.menu-item:hover {
+    transform: translateX(5px);
+    color: #fff;
+}
+
+.menu-item:hover::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 5px;
+    height: 5px;
+    background-color: var(--color-text-light);
+    border-radius: 50%;
+}
+
+.menu-divider {
+    width: 202px;
+    height: 1px;
+    background-color: var(--color-text-light);
+    opacity: 0.5;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== Responsive Design ===== */
+@media screen and (max-width: 1024px) {
+    .hamburger-menu {
+        right: 20px;
+    }
+
+    .main-logo {
+        max-width: 600px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    :root {
+        --hamburger-width: 220px;
+        --font-size-base: 16px;
+    }
+
+    .hamburger-menu {
+        right: 15px;
+    }
+
+    .main-logo {
+        max-width: 450px;
+    }
+
+    .menu-divider {
+        width: 180px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    :root {
+        --hamburger-width: 200px;
+        --font-size-base: 14px;
+    }
+
+    .hamburger-menu {
+        right: 10px;
+        padding: var(--spacing-md) var(--spacing-xs);
+    }
+
+    .main-logo {
+        max-width: 300px;
+    }
+
+    .menu-divider {
+        width: 160px;
+    }
+}
+
+/* ===== Scrollbar Styling ===== 
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-secondary);
+}*/

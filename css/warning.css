@@ -1,0 +1,384 @@
+/* ===== Warning Page CSS ===== */
+/* Reuse existing CSS Variables from main style.css */
+:root {
+    /* Colors from Figma */
+    --color-primary: #003049;
+    --color-secondary: #780000;
+    --color-background: #272727;
+    --color-text-light: #FDF0D5;
+    --color-text-white: #FFFFFF;
+
+    /* Spacing */
+    --spacing-xs: 8px;
+    --spacing-sm: 10px;
+    --spacing-md: 13px;
+    --spacing-lg: 16px;
+    --spacing-xl: 19px;
+    --spacing-2xl: 32px;
+    --spacing-3xl: 51px;
+
+    /* Typography */
+    --font-family: 'Poppins', sans-serif;
+    --font-size-title: 40px;
+    --font-size-intro: 20px;
+    --font-size-highlight: 24px;
+    --font-size-base: 20px;
+
+    /* Layout */
+    --navbar-height: 96px;
+    --border-radius: 6px;
+    --content-max-width: 1251px;
+
+    /* Transitions */
+    --transition-speed: 0.3s;
+}
+
+/* ===== Reset & Base Styles ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--color-background);
+    color: var(--color-text-light);
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* ===== Warning Container ===== */
+.warning-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: calc(var(--navbar-height) + 40px) 20px 40px;
+    position: relative;
+}
+
+/* ===== Logo ===== */
+.logo-container {
+    margin-bottom: 40px;
+    animation: fade-in-down 1s ease-out 0.2s both;
+}
+
+.warning-logo {
+    width: 245px;
+    height: 163px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+/* ===== Warning Content ===== */
+.warning-content {
+    max-width: var(--content-max-width);
+    text-align: center;
+    margin-bottom: 60px;
+    animation: fade-in-up 1s ease-out 0.5s both;
+}
+
+/* ===== Warning Title ===== */
+.warning-title {
+    font-family: var(--font-family);
+    font-size: var(--font-size-title);
+    font-weight: 700;
+    color: var(--color-text-light);
+    text-align: center;
+    margin-bottom: 40px;
+    line-height: 1.2;
+}
+
+/* ===== Warning Text ===== */
+.warning-text {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.intro-text {
+    font-family: var(--font-family);
+    font-size: var(--font-size-intro);
+    color: var(--color-text-light);
+    line-height: 1.6;
+    text-align: center;
+}
+
+.note-text {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    color: var(--color-text-light);
+    line-height: 1.6;
+    text-align: center;
+}
+
+.highlight-text {
+    font-family: var(--font-family);
+    font-size: var(--font-size-highlight);
+    font-weight: 700;
+    color: var(--color-text-white);
+    line-height: 1.5;
+    text-align: center;
+}
+
+.closing-text {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    color: var(--color-text-light);
+    line-height: 1.6;
+    text-align: center;
+}
+
+/* ===== Interaction Instructions ===== */
+.interaction-instructions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 40px;
+    animation: bounce-in 1s ease-out 1s both;
+}
+
+.click-icon {
+    margin-bottom: 10px;
+}
+
+.click-image {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    opacity: 1;
+    animation: pulse-click 2s ease-in-out infinite;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.click-image:hover {
+    opacity: 1;
+    transform: scale(1.2);
+    background-color: rgba(253, 240, 213, 0.1);
+    box-shadow: 0 0 20px rgba(253, 240, 213, 0.3);
+    animation: none;
+    /* หยุด animation เมื่อ hover */
+}
+
+.click-image:active {
+    transform: scale(0.95);
+    box-shadow: 0 0 10px rgba(120, 0, 0, 0.5);
+}
+
+.scroll-arrows {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+}
+
+.scroll-arrow {
+    font-size: 24px;
+    color: var(--color-text-light);
+    opacity: 0.7;
+    animation: float-up 2s ease-in-out infinite;
+}
+
+.scroll-arrow:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.scroll-arrow:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+.instruction-text {
+    font-family: var(--font-family);
+    font-size: 16px;
+    color: var(--color-text-light);
+    text-align: center;
+    opacity: 0.9;
+    margin-top: 10px;
+}
+
+/* ===== Animations ===== */
+@keyframes fade-in-down {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce-in {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse-click {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+}
+
+@keyframes float-up {
+
+    0%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: translateY(-10px);
+        opacity: 1;
+    }
+}
+
+/* ===== Responsive Design ===== */
+@media screen and (max-width: 1024px) {
+    :root {
+        --content-max-width: 90%;
+    }
+
+    .warning-container {
+        padding: calc(var(--navbar-height) + 30px) 15px 30px;
+    }
+
+    .warning-logo {
+        width: 200px;
+        height: 133px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    :root {
+        --font-size-title: 28px;
+        --font-size-intro: 18px;
+        --font-size-highlight: 20px;
+        --font-size-base: 16px;
+    }
+
+    .warning-container {
+        padding: calc(70px + 20px) 15px 20px;
+    }
+
+    .warning-logo {
+        width: 180px;
+        height: 120px;
+    }
+
+    .warning-content {
+        margin-bottom: 40px;
+    }
+
+    .warning-text {
+        gap: 20px;
+    }
+
+    .accept-button {
+        bottom: 20px;
+        right: 20px;
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    :root {
+        --font-size-title: 24px;
+        --font-size-intro: 16px;
+        --font-size-highlight: 18px;
+        --font-size-base: 14px;
+    }
+
+    .warning-container {
+        padding: calc(60px + 15px) 10px 15px;
+    }
+
+    .warning-logo {
+        width: 150px;
+        height: 100px;
+    }
+
+    .logo-container {
+        margin-bottom: 30px;
+    }
+
+    .warning-content {
+        margin-bottom: 30px;
+    }
+
+    .warning-text {
+        gap: 15px;
+    }
+
+    .instruction-text {
+        font-size: 14px;
+    }
+
+    .accept-button {
+        bottom: 15px;
+        right: 15px;
+        left: 15px;
+        padding: 12px 15px;
+    }
+}
+
+/* ===== Scroll Behavior ===== */
+.warning-container.scrolled {
+    background: linear-gradient(to bottom,
+            rgba(39, 39, 39, 0.9),
+            rgba(39, 39, 39, 0.95),
+            var(--color-background));
+}
+
+/* ===== Loading Complete Effect ===== */
+.warning-complete .warning-container {
+    animation: fade-out-scale 0.8s ease-out forwards;
+}
+
+@keyframes fade-out-scale {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(1.05);
+    }
+}

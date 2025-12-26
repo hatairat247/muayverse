@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuayVerse - ศิลปะมวยไทย</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Google Fonts - Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- Background Video -->
+    <video autoplay muted loop playsinline webkit-playsinline class="bg-video">
+        <source src="https://res.cloudinary.com/muayverse/video/upload/q_auto,f_auto/v1764260482/OpenScene_dkqzya.mp4"
+            type="video/mp4"> Your browser does not support HTML5 video.
+    </video>
+
+    <!-- Navbar Component -->
+    <nav id="navbar" class="navbar">
+        <div class="navbar-logo">
+            <img src="img/logo_nav.png" alt="MuayVerse Logo" class="logo-nav">
+        </div>
+
+        <div class="navbar-controls">
+            <!-- ปุ่ม Music (มี div หุ้ม img เพื่อให้ใส่เส้นขีดฆ่าได้) -->
+            <div class="nav-btn music-btn" id="musicBtn" title="Background Music">
+                <img src="icon/Music.svg" alt="Music" class="btn-icon">
+            </div>
+
+            <!-- ปุ่ม Menu -->
+            <div class="nav-btn menu-btn" id="menuBtn" title="Menu">
+                <img src="icon/Menu.svg" alt="Menu" class="btn-icon">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- <div class="logo-container">
+            <img src="img/logo.png" alt="MuayVerse Logo" class="main-logo">
+        </div> -->
+    </main>
+
+    <!-- Hamburger Menu (เปิดจากปุ่ม 3 ขีดใน Navbar) -->
+    <div class="hamburger-menu" id="hamburgerMenu">
+        <div class="menu-content">
+            <a href="#" class="menu-item">
+                <span>History Of Muay Thai</span>
+            </a>
+            <div class="menu-divider"></div>
+
+            <a href="#" class="menu-item">
+                <span>Wai Khru</span>
+            </a>
+            <div class="menu-divider"></div>
+
+            <a href="#" class="menu-item">
+                <span>Art Of Eight Lims</span>
+            </a>
+            <div class="menu-divider"></div>
+
+            <a href="#" class="menu-item">
+                <span>Contact</span>
+            </a>
+            <div class="menu-divider"></div>
+
+            <a href="#" class="menu-item">
+                <span>Satisfaction Questionnaire</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Audio Element for Background Music -->
+    <audio id="bgMusic" loop>
+        <source src="audio/Double Helix - Ethan Meixsell.m4a" type="audio/mp4">
+        <source src="audio/Double Helix - Ethan Meixsell.m4a" type="audio/x-m4a">
+    </audio>
+
+    <!-- Scripts -->
+    <script src="js/navbar.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
