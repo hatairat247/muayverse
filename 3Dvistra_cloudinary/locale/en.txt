@@ -1,0 +1,34 @@
+#: locale=en
+
+## Media
+
+### 360 Video
+
+### Title
+media_2DCA9836_2101_25C2_41BC_F3DD9796BF32.label = sastrawut_colorgrading
+
+### Video
+videores_64F98522_6A93_269C_41D4_3CF07E4D2B94.url = https://res.cloudinary.com/muayverse/video/upload/v1767940599/media_2DCA9836_2101_25C2_41BC_F3DD9796BF32_en_cjhee3.mp4
+videores_64F98522_6A93_269C_41D4_3CF07E4D2B94.posterURL = media/media_2DCA9836_2101_25C2_41BC_F3DD9796BF32_poster_en.jpg
+
+### Video Subtitles
+
+## Skin
+
+### Tooltip
+IconButton_303C7758_3F28_9E98_41BE_DF89033D2558.toolTip = Enter VR Mode (Mobile Only)
+IconButton_580F081A_55DC_96C2_41D4_E0BC6F8FD89E.toolTip = Fullscreen
+
+
+## Tour
+
+### Description
+
+### Title
+tour.name = MuayVerse - Art Of Eight Lims
+
+## VR Menu
+
+### Text
+Menu_2FEE8641_3F28_BEEB_419C_72067918AF77.label = Media
+MenuItem_2FF9F662_3F28_BEA8_41CA_777B5E1D296B.label = sastrawut_colorgrading
