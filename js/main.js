@@ -164,7 +164,7 @@ if (document.readyState === 'loading') {
         window.showNotification = MuayVerse.showNotification;
 
         // Welcome message (optional)
-        console.log('MuayVerse - ยินดีต้อนรับสู่โลกแห่งมวยไทย',
+        console.log('MuayVerse - ยินดีต้อนรับ',
             'font-size: 16px; color: #780000; font-weight: bold;');
     });
 } else {

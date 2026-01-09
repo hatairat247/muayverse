@@ -272,6 +272,10 @@ body {
 @media screen and (max-width: 1024px) {
     :root {
         --content-max-width: 90%;
+        --font-size-title: 28px;
+        --font-size-intro: 18px;
+        --font-size-highlight: 20px;
+        --font-size-base: 18px;
     }
 
     .warning-container {
@@ -286,9 +290,9 @@ body {
 
 @media screen and (max-width: 768px) {
     :root {
-        --font-size-title: 28px;
-        --font-size-intro: 18px;
-        --font-size-highlight: 20px;
+        --font-size-title: 24px;
+        --font-size-intro: 14px;
+        --font-size-highlight: 16px;
         --font-size-base: 16px;
     }
 
@@ -317,11 +321,11 @@ body {
     }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 320px) {
     :root {
-        --font-size-title: 24px;
-        --font-size-intro: 16px;
-        --font-size-highlight: 18px;
+        --font-size-title: 20px;
+        --font-size-intro: 14px;
+        --font-size-highlight: 16px;
         --font-size-base: 14px;
     }
 

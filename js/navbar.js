@@ -25,7 +25,7 @@ class Navbar {
                 </div>
                 <div class="navbar-controls">
                     <div class="nav-btn music-btn" id="musicBtn" title="Background Music">
-                        <img src="icon/Music.svg" alt="Music" class="btn-icon">
+                        <img src="icon/Bell.svg" alt="Music" class="btn-icon">
                     </div>
 
                     <div class="nav-btn menu-btn" id="menuBtn" title="Menu">
@@ -91,6 +91,12 @@ class Navbar {
                 border-radius: 8px;
                 transition: all 0.3s ease;
                 position: relative;
+            }
+
+            /* เพิ่มขนาด music button */
+            .music-btn {
+                width: 56px;
+                height: 56px;
             }
 
             /* เพิ่ม CSS ให้รูปภาพข้างในเต็มกล่อง */
@@ -189,6 +195,12 @@ class Navbar {
                     font-size: 16px;
                 }
 
+                /* music button on tablet */
+                .music-btn {
+                    width: 44px;
+                    height: 44px;
+                }
+
                 .navbar-controls {
                     gap: 16px;
                 }
@@ -212,6 +224,25 @@ class Navbar {
                     width: 24px;
                     height: 24px;
                     font-size: 14px;
+                }
+
+                /* music button on small screens */
+                .music-btn {
+                    width: 32px;
+                    height: 32px;
+                }
+
+                .menu-btn.active{
+                    width: 36px;
+                    height: 36px;
+                }
+                
+                .menu-content{
+                    gap: 4px;
+                }
+                
+                .menu-item{
+                    font-size: 12px;
                 }
 
                 .navbar-controls {
