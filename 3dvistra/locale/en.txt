@@ -1,0 +1,36 @@
+#: locale=en
+
+## Media
+
+### 360 Video
+
+### Title
+video_E1C6E601_EE8E_A9B6_41E8_0094ABA91E22.label = sastrawut edit_1 mp4
+media_2DCA9836_2101_25C2_41BC_F3DD9796BF32.label = sastrawut_colorgrading
+
+### Video
+videores_019050D0_0E82_E27E_4198_1F0DA4F5AC9C.url = https://res.cloudinary.com/muayverse/video/upload/v1769784196/media_2DCA9836_2101_25C2_41BC_F3DD9796BF32_en_obxmu4.mp4
+videores_019050D0_0E82_E27E_4198_1F0DA4F5AC9C.posterURL = media/media_2DCA9836_2101_25C2_41BC_F3DD9796BF32_poster_en.jpg
+videolevel_019110BD_0E82_E226_4199_641D3561DEC5.url = https://res.cloudinary.com/muayverse/video/upload/v1769782916/video_E1C6E601_EE8E_A9B6_41E8_0094ABA91E22_en_l30a3d.mp4
+videolevel_019110BD_0E82_E226_4199_641D3561DEC5.posterURL = media/video_E1C6E601_EE8E_A9B6_41E8_0094ABA91E22_poster_en.jpg
+
+### Video Subtitles
+
+## Skin
+
+### Tooltip
+IconButton_303C7758_3F28_9E98_41BE_DF89033D2558.toolTip = Enter VR Mode (Mobile Only)
+IconButton_580F081A_55DC_96C2_41D4_E0BC6F8FD89E.toolTip = Fullscreen
+
+## Tour
+
+### Description
+
+### Title
+tour.name = MuayVerse - Art Of Eight Lims
+
+## VR Menu
+
+### Text
+Menu_2FEE8641_3F28_BEEB_419C_72067918AF77.label = Media
+MenuItem_2FF9F662_3F28_BEA8_41CA_777B5E1D296B.label = sastrawut_colorgrading
