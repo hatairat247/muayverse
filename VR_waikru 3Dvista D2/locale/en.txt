@@ -1,0 +1,37 @@
+#: locale=en
+
+## Media
+
+### 360 Video
+
+### Title
+video_34A6AED4_38B7_6B6B_41B4_F827AB5EC367.label = VR360waikru_intro_7_2
+media_33422258_38B7_3B1B_41A5_F2CA24D6D6B0.label = waikru_5_2
+
+### Video
+videores_3309AED8_3CB0_48E6_41B1_78BA5DF83A12.url = https://dl.dropboxusercontent.com/scl/fi/kl3637u3ge4gt7b4biy7y/VR360waikru-9_2-600mb_1.mp4?rlkey=p3bytzeqokmcxs5usj3epfu4z&st=zq98qddg
+videores_3309AED8_3CB0_48E6_41B1_78BA5DF83A12.posterURL = media/media_33422258_38B7_3B1B_41A5_F2CA24D6D6B0_poster_en.jpg
+videolevel_330ABEC5_3CB0_48EF_41C1_A51DA01E5E89.url = https://res.cloudinary.com/muayverse/video/upload/v1770537082/VR360waikru_intro_7_2_tr2uhl.mp4
+videolevel_330ABEC5_3CB0_48EF_41C1_A51DA01E5E89.posterURL = media/video_34A6AED4_38B7_6B6B_41B4_F827AB5EC367_poster_en.jpg
+
+### Video Subtitles
+
+## Skin
+
+### Tooltip
+IconButton_303C7758_3F28_9E98_41BE_DF89033D2558.toolTip = Enter VR Mode (Mobile Only)
+IconButton_580F081A_55DC_96C2_41D4_E0BC6F8FD89E.toolTip = Fullscreen
+
+## Tour
+
+### Description
+
+### Title
+tour.name = MuayVerse - Wai Kru Muay Thai
+
+## VR Menu
+
+### Text
+Menu_2FEE8641_3F28_BEEB_419C_72067918AF77.label = Media
+MenuItem_2FF9F662_3F28_BEA8_41CA_777B5E1D296B.label = sastrawut_colorgrading
+MenuItem_37640B1E_38BC_E917_4194_3179F188B768.label = waikru_5_2
