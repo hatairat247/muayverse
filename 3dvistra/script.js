@@ -233,7 +233,7 @@ function onLoad() {
     }
 
     showPreloader();
-    loadTour();
+    //loadTour();
 }
 
 function onMessage(event) {
@@ -256,7 +256,6 @@ function onMessage(event) {
             break;
     }
 }
-
 
 
 function playVideo(video, autoplayMuted, clickComponent) {

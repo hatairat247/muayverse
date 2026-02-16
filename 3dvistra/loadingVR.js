@@ -37,6 +37,11 @@ class LoadingPage {
         // Add completion effect
         document.body.classList.add('loading-complete');
 
+        // เริ่มโหลด VR tour หลังจาก loading เสร็จ
+        if (typeof loadTour === 'function') {
+            loadTour();
+        }
+
         // สั่งโชว์หน้า VR (Viewer) ขึ้นมา
         if (this.viewer) {
             this.viewer.style.opacity = '1';

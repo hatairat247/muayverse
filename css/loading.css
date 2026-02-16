@@ -1,49 +1,28 @@
 /* ===== Loading Page CSS ===== */
-/* Reuse existing CSS Variables from main style.css */
+/* Variables inherited from style.css */
+
 :root {
-    /* Colors from Figma */
+    --font-size-title: 28px;
+    --font-size-intro: 18px;
+    --font-size-highlight: 20px;
+    --font-size-base: 18px;
+    --font-family-title: 'Bebas Neue', sans-serif;
+
+    --color-text-white: #ffffff;
     --color-primary: #003049;
     --color-secondary: #780000;
     --color-background: #272727;
     --color-text-light: #FDF0D5;
 
-    /* Spacing */
-    --spacing-xs: 8px;
-    --spacing-sm: 10px;
-    --spacing-md: 13px;
-    --spacing-lg: 16px;
-    --spacing-xl: 19px;
-    --spacing-2xl: 32px;
-    --spacing-3xl: 51px;
-
-    /* Typography */
     --font-family: 'Poppins', sans-serif;
-    --font-family-title: 'Bebas Neue', sans-serif;
-    --font-size-base: 20px;
-    --font-size-title: 36px;
-
-    /* Layout */
-    --navbar-height: 96px;
-    --border-radius: 6px;
-
-    /* Transitions */
-    --transition-speed: 0.3s;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
 }
 
-/* ===== Reset & Base Styles ===== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: var(--font-family);
-    background-color: var(--color-background);
-    color: var(--color-text-light);
+body.loading-active {
     overflow: hidden;
     height: 100vh;
-    position: relative;
 }
 
 /* ===== Loading Container ===== */
@@ -52,18 +31,14 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: calc(100vh - var(--navbar-height));
+    min-height: 100vh;
     padding: 60px 20px 20px;
-    /* เพิ่ม padding-top เพื่อเว้นห่างจาก navbar */
     position: relative;
-    margin-top: var(--navbar-height);
-    /* เพิ่ม margin-top */
 }
 
 /* ===== Boxing Gloves ===== */
 .gloves-container {
     margin-bottom: 40px;
-    animation: rotate-gloves 10s linear infinite;
 }
 
 .gloves-image {
@@ -71,8 +46,6 @@ body {
     height: 403px;
     object-fit: contain;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-    transform: rotate(-6.556deg);
-    /* 353.444deg - 360deg */
 }
 
 /* ===== Loading Title ===== */
@@ -295,20 +268,5 @@ body {
     left: 50%;
     width: 450px;
     height: 450px;
-    border: 2px solid rgba(120, 0, 0, 0.3);
-    border-radius: 50%;
     transform: translate(-50%, -50%);
-    animation: pulse-ring 2s ease-out infinite;
-}
-
-@keyframes pulse-ring {
-    0% {
-        transform: translate(-50%, -50%) scale(0.8);
-        opacity: 1;
-    }
-
-    100% {
-        transform: translate(-50%, -50%) scale(1.2);
-        opacity: 0;
-    }
 }
