@@ -1,0 +1,238 @@
+/* ===== Hero Section from Figma Design ===== */
+
+/* Hero Section Container */
+.hero-section-figma {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #272727;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Hero Container */
+.hero-container {
+    width: 100%;
+    max-width: 1920px;
+    padding: 20px 60px;
+    display: flex;
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+/* Left Content */
+.hero-content-left {
+    width: 100%;
+    max-width: 1076px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.hero-title-wrapper {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.hero-title-figma {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 96px;
+    font-weight: 400;
+    line-height: normal;
+    color: #FDF0D5;
+    margin: 0;
+    text-transform: lowercase;
+}
+
+.hero-description-wrapper {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.hero-description-figma {
+    font-family: 'Poppins', sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: normal;
+    color: #FDF0D5;
+    margin: 0;
+    max-width: 1056px;
+}
+
+
+.muted-text {
+    color: rgba(253, 240, 213, 0.5);
+}
+
+/* Right Content - Punching Bag */
+.hero-content-right {
+    width: 100%;
+    max-width: 684px;
+    height: 912px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.punching-bag-wrapper {
+    position: relative;
+    width: 687px;
+    height: 918px;
+    align-items: center;
+    justify-content: center;
+}
+
+.punching-bag-img {
+    width: 100%;
+    max-width: 1277.981px;
+    height: auto;
+    transform: rotate(-7.9deg);
+    object-fit: contain;
+}
+
+/* Continue Journey Text */
+.continue-journey {
+    position: absolute;
+    right: 60px;
+    bottom: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.continue-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: normal;
+    color: #FDF0D5;
+    text-align: right;
+    margin: 0;
+}
+
+/* ===== Responsive Design ===== */
+
+/* Tablets and below (1200px) */
+@media screen and (max-width: 1200px) {
+    .hero-container {
+        padding: 40px;
+        gap: 30px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-content-left {
+        max-width: 100%;
+    }
+
+    .hero-title-figma {
+        font-size: 80px;
+    }
+
+    .hero-description-figma {
+        font-size: 28px;
+    }
+
+    .hero-content-right {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .punching-bag-wrapper {
+        width: 100%;
+        height: auto;
+        max-width: 600px;
+    }
+
+    .punching-bag-img {
+        max-width: 100%;
+    }
+
+    .continue-journey {
+        right: 40px;
+        bottom: 40px;
+    }
+
+    .continue-text {
+        font-size: 20px;
+    }
+}
+
+/* Mobile devices (768px and below) */
+@media screen and (max-width: 768px) {
+    .hero-section-figma {
+        padding: 106px 0 20px 0;
+    }
+
+    .hero-container {
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .hero-title-wrapper {
+        padding: 5px;
+    }
+
+    .hero-title-figma {
+        font-size: 48px;
+    }
+
+    .hero-description-wrapper {
+        padding: 10px 5px;
+    }
+
+    .hero-description-figma {
+        font-size: 18px;
+    }
+
+    .hero-content-right {
+        height: auto;
+    }
+
+    .punching-bag-wrapper {
+        max-width: 400px;
+    }
+
+    .continue-journey {
+        position: relative;
+        right: auto;
+        bottom: auto;
+        margin-top: 20px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .continue-text {
+        font-size: 16px;
+        text-align: center;
+    }
+}
+
+/* Extra small devices (480px and below) */
+@media screen and (max-width: 480px) {
+    .hero-title-figma {
+        font-size: 36px;
+    }
+
+    .hero-description-figma {
+        font-size: 16px;
+    }
+
+    .punching-bag-wrapper {
+        max-width: 300px;
+    }
+
+    .continue-text {
+        font-size: 14px;
+    }
+}

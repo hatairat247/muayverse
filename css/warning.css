@@ -1,62 +1,26 @@
 /* ===== Warning Page CSS ===== */
-/* Reuse existing CSS Variables from main style.css */
 :root {
-    /* Colors from Figma */
-    --color-primary: #003049;
-    --color-secondary: #780000;
-    --color-background: #272727;
+    --font-size-title: 28px;
+    --font-size-intro: 18px;
+    --font-size-highlight: 20px;
+    --font-size-base: 18px;
+
+    --color-text-white: #ffffff;
     --color-text-light: #FDF0D5;
-    --color-text-white: #FFFFFF;
 
-    /* Spacing */
-    --spacing-xs: 8px;
-    --spacing-sm: 10px;
-    --spacing-md: 13px;
-    --spacing-lg: 16px;
-    --spacing-xl: 19px;
-    --spacing-2xl: 32px;
-    --spacing-3xl: 51px;
-
-    /* Typography */
-    --font-family: 'Poppins', sans-serif;
-    --font-size-title: 40px;
-    --font-size-intro: 20px;
-    --font-size-highlight: 24px;
-    --font-size-base: 20px;
-
-    /* Layout */
-    --navbar-height: 96px;
-    --border-radius: 6px;
-    --content-max-width: 1251px;
-
-    /* Transitions */
-    --transition-speed: 0.3s;
+    --font-family: 'Poppins', sans-serif, 'Bebas Neue', sans-serif;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
 }
 
-/* ===== Reset & Base Styles ===== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: var(--font-family);
-    background-color: var(--color-background);
-    color: var(--color-text-light);
-    overflow-x: hidden;
-    min-height: 100vh;
-    position: relative;
-}
-
-/* ===== Warning Container ===== */
 .warning-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     min-height: 100vh;
-    padding: calc(var(--navbar-height) + 40px) 20px 40px;
+    padding: 40px 20px 40px;
     position: relative;
 }
 
@@ -84,7 +48,7 @@ body {
 /* ===== Warning Title ===== */
 .warning-title {
     font-family: var(--font-family);
-    font-size: var(--font-size-title);
+    font-size: 32px;
     font-weight: 700;
     color: var(--color-text-light);
     text-align: center;
@@ -140,10 +104,16 @@ body {
     gap: 20px;
     margin-bottom: 40px;
     animation: bounce-in 1s ease-out 1s both;
+    position: relative;
+    z-index: 10000;
+    pointer-events: auto;
 }
 
 .click-icon {
     margin-bottom: 10px;
+    position: relative;
+    z-index: 10000;
+    pointer-events: auto;
 }
 
 .click-image {
@@ -156,6 +126,9 @@ body {
     transition: all 0.3s ease;
     border-radius: 8px;
     padding: 5px;
+    pointer-events: auto;
+    position: relative;
+    z-index: 10001;
 }
 
 .click-image:hover {

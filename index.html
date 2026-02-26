@@ -10,32 +10,113 @@
     <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="MuayVerse" />
     <link rel="manifest" href="favicon/site.webmanifest" />
-    <title>MuayVerse - Homepage</title>
+    <title>MuayVerse</title>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-    <!-- Google Fonts - Poppins -->
+    <!-- Google Fonts - Poppins & Bebas Neue -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Bebas+Neue&display=swap"
         rel="stylesheet">
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/warning.css">
+    <link rel="stylesheet" href="css/loading.css">
+    <link rel="stylesheet" href="css/hero-figma.css">
+    <link rel="stylesheet" href="css/cards-section.css">
 </head>
 
 <body>
-    <!-- Background Video -->
-    <video autoplay muted loop playsinline webkit-playsinline class="bg-video">
-        <source src="https://res.cloudinary.com/muayverse/video/upload/q_auto,f_auto/v1764260482/OpenScene_dkqzya.mp4"
-            type="video/mp4"> Your browser does not support HTML5 video.
-    </video>
+    <!-- Warning Overlay -->
+    <div id="warningOverlay" class="warning-overlay active">
+        <div class="warning-container">
+            <!-- Logo -->
+            <div class="logo-container">
+                <img src="img/logo_nav.png" alt="MuayVerse Logo" class="warning-logo">
+            </div>
+
+            <!-- Warning Content -->
+            <div class="warning-content">
+                <!-- Main Title -->
+                <h1 class="warning-title">Interactive Website to Promote Muay Thai Soft Power</h1>
+
+                <!-- Content Paragraphs -->
+                <div class="warning-text">
+                    <p class="intro-text">
+                        This website was created for educational purposes as part of a bachelor's degree project. Its
+                        objective is to share knowledge, foster understanding, and highlight the unique charm of Muay
+                        Thai,
+                        the traditional martial art of Thailand.
+                    </p>
+
+                    <p class="note-text">
+                        Please note that user feedback may be collected solely for academic analysis and evaluation.
+                    </p>
+
+                    <p class="highlight-text">
+                        For the best viewing experience, we recommend accessing this website on a computer (PC).
+                    </p>
+
+                    <p class="closing-text">
+                        We warmly invite you to explore and experience Muay Thai — a cultural treasure and a valuable
+                        form
+                        of Thailand's soft power
+                    </p>
+                </div>
+            </div>
+
+            <!-- Interaction Instructions -->
+            <div class="interaction-instructions">
+                <div class="scroll-arrows">
+                    <img src="icon/Chevron up.svg" alt="scroll-arrow">
+                    <img src="icon/Chevron up.svg" alt="scroll-arrow">
+                    <img src="icon/Chevron up.svg" alt="scroll-arrow">
+                </div>
+                <div class="click-icon">
+                    <img src="icon/Mouse_Cream.png" alt="Left Click" class="click-image" id="acceptBtn">
+                </div>
+                <p class="instruction-text">Click to Accept and Continue</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-container">
+            <!-- Boxing Gloves Image -->
+            <div class="gloves-container">
+                <img src="img/PunchLoading.png" alt="Boxing Gloves" class="gloves-image">
+            </div>
+
+            <!-- Title -->
+            <h1 class="loading-title">MUAYVERSE</h1>
+
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill">
+                        <div class="progress-wave-start"></div>
+                        <div class="progress-wave"></div>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-stop"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subtitle -->
+            <p class="loading-subtitle">Interactive Website to Promote Muay Thai Soft Power</p>
+        </div>
+    </div>
 
     <!-- Navbar Component -->
     <nav id="navbar" class="navbar">
         <div class="navbar-logo">
-            <img src="img/logo_nav.png" alt="MuayVerse Logo" class="logo-nav">
+            <img src="img/logo_nav.png" alt="MuayVerse Logo" class="logo-nav" href="index.html" class="menu-item">
         </div>
 
         <div class="navbar-controls">
@@ -51,12 +132,71 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- <div class="logo-container">
-            <img src="img/logo.png" alt="MuayVerse Logo" class="main-logo">
-        </div> -->
-    </main>
+    <!-- Hero Section 1: Video -->
+    <section class="hero-video-section" id="heroVideo">
+        <div id="video-wrapper">
+            <video autoplay loop playsinline webkit-playsinline muted class="bg-video" id="bgVideo">
+                <source src="https://res.cloudinary.com/muayverse/video/upload/v1767956196/8sec_9_1_iczxae.mp4"
+                    type="video/mp4"> Your browser does not support HTML5 video.
+            </video>
+        </div>
+    </section>
+
+    <!-- Hero Section 2: We're MUAYVERSE -->
+    <section class="hero-section-figma" id="heroFigma">
+        <div class="hero-container">
+            <div class="hero-content-left">
+                <div class="hero-title-wrapper">
+                    <h1 class="hero-title-figma">we're MUAYVERSE.</h1>
+                </div>
+                <div class="hero-description-wrapper">
+                    <p class="hero-description-figma">
+                        Welcome to MuayVerse, an
+                        interactive VR360 website dedicated to promoting Muay Thai Soft Power. Developed by students
+                        from King Mongkut's University of Technology Thonburi (KMUTT)</span>
+                    </p>
+                </div>
+            </div>
+            <div class="hero-content-right">
+                <div class="punching-bag-wrapper">
+                    <img src="img/punchingbag-paper.png" alt="Muay Thai Punching Bag" class="punching-bag-img">
+                </div>
+            </div>
+            <div class="continue-journey">
+                <p class="continue-text">Continue the Journey</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hero Section 3: Muay Thai Cards -->
+    <section class="cards-section" id="cardsSection">
+        <div class="cards-background"></div>
+        <div class="cards-container">
+            <a href="#historySection" class="card" target="_blank" rel="noopener noreferrer">
+                <div class="card-image-wrapper">
+                    <img src="img/card-history.png" alt="History of Muay Thai" class="card-image">
+                    <img src="img/card-history-hover.png" alt="History of Muay Thai Hover" class="card-image-hover">
+                </div>
+                <h3 class="card-title">HISTORY OF MUAY THAI</h3>
+            </a>
+
+            <a href="/VR_waikru 3Dvista D2/index.htm" class="card" target="_blank" rel="noopener noreferrer">
+                <div class="card-image-wrapper">
+                    <img src="img/card-waikru.png" alt="Wai Kru Muay Thai" class="card-image">
+                    <img src="img/card-waikru-hover.png" alt="Wai Kru Muay Thai Hover" class="card-image-hover">
+                </div>
+                <h3 class="card-title">WAI KRU MUAY THAI</h3>
+            </a>
+
+            <a href="/3dvistra/index.htm" class="card" target="_blank" rel="noopener noreferrer">
+                <div class="card-image-wrapper">
+                    <img src="img/card-art8limbs.png" alt="The Art of Eight Limbs" class="card-image">
+                    <img src="img/card-art8limbs-hover.png" alt="The Art of Eight Limbs Hover" class="card-image-hover">
+                </div>
+                <h3 class="card-title">THE ART OF EIGHT LIMBS</h3>
+            </a>
+        </div>
+    </section>
 
     <!-- Hamburger Menu (เปิดจากปุ่ม 3 ขีดใน Navbar) -->
     <div class="hamburger-menu" id="hamburgerMenu">
@@ -66,18 +206,18 @@
             </a>
             <div class="menu-divider"></div>
 
-            <a href="#" class="menu-item">
-                <span>Wai Khru</span>
+            <a href="/VR_waikru 3Dvista D2/index.htm" class="menu-item" target="_blank" rel="noopener noreferrer">
+                <span>Wai Kru Muay Thai</span>
             </a>
             <div class="menu-divider"></div>
 
-            <a href="/3Dvistra_cloudinary/index.htm" class="menu-item" target="_blank" rel="noopener noreferrer">
+            <a href="/3dvistra/index.htm" class="menu-item" target="_blank" rel="noopener noreferrer">
                 <span>Art Of Eight Lims</span>
             </a>
             <div class="menu-divider"></div>
 
-            <a href="#" class="menu-item">
-                <span>Contact</span>
+            <a href="creator.html" class="menu-item">
+                <span>Creator</span>
             </a>
             <div class="menu-divider"></div>
 
@@ -86,16 +226,18 @@
             </a>
         </div>
     </div>
-
-    <!-- Audio Element for Background Music -->
-    <audio id="bgMusic" loop>
-        <source src="audio/Double Helix - Ethan Meixsell.m4a" type="audio/mp4">
-        <source src="audio/Double Helix - Ethan Meixsell.m4a" type="audio/x-m4a">
-    </audio>
-
+    <footer id="footer" class="footer">
+        <div class="footer-container">
+            <p class="footer-text">© 2024 MuayVerse. All rights reserved.</p>
+        </div>
+    </footer>
     <!-- Scripts -->
+    <script src="js/page-flow.js"></script>
+    <script src="js/parallax-scroll.js"></script>
     <script src="js/navbar.js"></script>
+    <script src="js/cards-section.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/footer.js"></script>
 </body>
 
 </html>

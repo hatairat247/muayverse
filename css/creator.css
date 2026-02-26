@@ -1,0 +1,351 @@
+/* Creator Page Styles */
+
+:root {
+    --creator-bg: #272727;
+    --creator-title-color: #fdf0d5;
+    --card-bg: #ffffff;
+    --card-text: #000000;
+    --card-icon-bg: #d82121;
+    --card-icon-color: #fdf0d5;
+    --navbar-bg: #003049;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--creator-bg);
+    overflow-x: hidden;
+}
+
+.creator-page {
+    min-height: 100vh;
+    background-color: var(--creator-bg);
+    padding-top: 96px;
+    /* Height of navbar */
+    padding-bottom: 40px;
+}
+
+.creator-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Title Styling */
+.creator-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 96px;
+    font-weight: 400;
+    color: var(--creator-title-color);
+    text-align: center;
+    margin: 0;
+    padding: 20px 0;
+    line-height: 1;
+    letter-spacing: 2px;
+}
+
+/* Cards Grid */
+.creator-cards {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px 0;
+}
+
+/* Individual Card */
+.creator-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    --card-email: attr(data-email);
+    --card-badge: attr(data-badge);
+}
+
+.card-image {
+    width: 280px;
+    height: 486px;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Special hover for card */
+.creator-card:hover .card-image {
+    width: 368px;
+    height: 486px;
+}
+
+/* Card Info Section */
+.card-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: visible;
+}
+
+/* Hide default info on hover for card */
+.creator-card:hover .card-info {
+    gap: 6px;
+}
+
+.creator-card:hover .card-name {
+    min-width: 290px;
+}
+
+.card-icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transform: translateX(0px);
+    opacity: 1;
+    transition: transform 0.4s ease, opacity 0.3s ease 0.2s;
+}
+
+.card-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Icon animation on hover - เคลื่อนที่ไปขวาแล้วค่อยหายไป */
+.creator-card:hover .card-icon {
+    transform: translateX(300px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.card-icon i {
+    font-size: 36px;
+    color: var(--card-icon-color);
+}
+
+.card-name {
+    background-color: var(--card-bg);
+    padding: 8px 12px;
+    border-radius: 100px;
+    min-width: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    transform: translateX(0);
+    opacity: 0;
+    transition: transform 0.4s ease 0.3s, opacity 0.3s ease 0.3s;
+}
+
+/* Text animation - ปรากฏขึ้นหลัง icon หายไป */
+.creator-card:hover .card-name {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* Default state - แสดง card-name ตอนไม่ hover */
+.creator-card .card-name {
+    opacity: 1;
+    transform: translateX(0);
+    transition: transform 0.3s ease, opacity 0.2s ease;
+}
+
+.card-name span {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--card-text);
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* Email Badge ใช้ data attributes ทุกการ์ด */
+.creator-card .card-info::after {
+    content: '';
+    display: none;
+    transition: all 0.3s ease;
+}
+
+.creator-card:hover .card-info::after {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--card-icon-bg);
+    color: var(--card-icon-color);
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px 13px;
+    border-radius: 100px;
+    height: 28px;
+    min-width: 64px;
+}
+
+/* แสดง badge แต่ละคนตาม data-badge */
+.creator-card[data-badge="MO"]:hover .card-info::after {
+    content: 'MO';
+}
+
+.creator-card[data-badge="TAR"]:hover .card-info::after {
+    content: 'TAR';
+}
+
+.creator-card[data-badge="ZEE"]:hover .card-info::after {
+    content: 'ZEE';
+}
+
+.creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+    content: 'ADVISOR';
+}
+
+/* Change name to email on hover - แสดงอีเมลแต่ละคน */
+.creator-card:hover .card-name span {
+    font-size: 0;
+}
+
+.creator-card[data-email="namo.sangd@gmail.com"]:hover .card-name span::before {
+    content: 'namo.sangd@gmail.com';
+    font-size: 16px;
+}
+
+.creator-card[data-email="hatairat.chuen@gmail.com"]:hover .card-name span::before {
+    content: 'hatairat.chuen@gmail.com';
+    font-size: 16px;
+}
+
+.creator-card[data-email="pirapatchoochaiya@gmail.com"]:hover .card-name span::before {
+    content: 'pirapatchoochaiya@gmail.com';
+    font-size: 16px;
+}
+
+.creator-card[data-email="Lecturer, Department of Computer and Information Technology, KMUTT"]:hover .card-name span::before {
+    content: 'Lecturer, Department of Computer \A and Information Technology, KMUTT';
+    font-size: 14px;
+    line-height: 1.4;
+    white-space: pre-line;
+}
+
+.creator-card[data-email="Lecturer, Department of Computer and Information Technology, KMUTT"]:hover .card-name {
+    min-width: 300px;
+    height: auto;
+    padding: 10px 13px;
+}
+
+/* Expanded card (เฉพาะการ์ดที่มี data-expanded) */
+.creator-card[data-expanded="true"]:hover .card-image {
+    width: 368px;
+    height: 486px;
+}
+
+/* Responsive Design */
+@media (max-width: 1600px) {
+    .creator-cards {
+        max-width: 1200px;
+    }
+}
+
+@media (max-width: 1400px) {
+    .creator-title {
+        font-size: 96px;
+    }
+
+    .creator-cards {
+        gap: 20px;
+    }
+
+    .card-image {
+        width: 300px;
+        height: 520px;
+    }
+
+    .card-name {
+        min-width: 240px;
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .creator-cards {
+        flex-wrap: wrap;
+        max-width: 800px;
+    }
+
+    .creator-title {
+        font-size: 72px;
+    }
+}
+
+@media (max-width: 768px) {
+    .creator-title {
+        font-size: 48px;
+        padding: 20px 0;
+    }
+
+    .creator-cards {
+        gap: 20px;
+        padding: 20px 0;
+    }
+
+    .card-image {
+        width: 250px;
+        height: 434px;
+    }
+
+    .card-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .card-icon i {
+        font-size: 36px;
+    }
+
+    .card-name {
+        min-width: 200px;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .card-name span {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .creator-container {
+        padding: 20px 10px;
+    }
+
+    .creator-title {
+        font-size: 36px;
+    }
+
+    .creator-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card-image {
+        width: 280px;
+        height: 486px;
+    }
+}

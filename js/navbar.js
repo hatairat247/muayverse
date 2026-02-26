@@ -3,13 +3,23 @@ class Navbar {
     constructor() {
         this.navbar = document.getElementById('navbar');
         this.isMusicPlaying = false;
-        this.bgMusic = document.getElementById('bgMusic');
-        if (this.bgMusic) {
-            this.bgMusic.loop = true;  // วนซ้ำ
-            this.bgMusic.volume = 0.4; // ตั้งค่าเสียงเริ่มต้น
+        this.bgVideo = document.querySelector('.bg-video');
+        this.audioElement = null;
+
+        // ถ้าไม่มี bg-video ให้สร้าง audio element สำรอง
+        if (!this.bgVideo) {
+            this.audioElement = new Audio('https://res.cloudinary.com/muayverse/video/upload/v1767956196/8sec_9_1_iczxae.mp4');
+            this.audioElement.loop = true;
+            this.audioElement.volume = 0.4;
+            this.audioElement.muted = true;
+        } else {
+            this.bgVideo.volume = 0.4;
+            this.bgVideo.muted = true;
         }
+
         this.init();
-        this.checkAutoPlayConsent(); // ตรวจสอบการยินยอมเล่นเพลงอัตโนมัติ
+        this.checkAutoPlayConsent();
+        this.restoreMusicState(); // เรียกคืนสถานะเสียงจาก localStorage
     }
 
     init() {
@@ -21,10 +31,12 @@ class Navbar {
         this.navbar.innerHTML = `
             <div class="navbar">
                 <div class="navbar-logo">
-                    <img src="img/logo_nav.png" alt="MuayVerse Logo" class="logo-nav">
+                    <a href="index.html?return=true">
+                        <img src="img/logo_nav.png" alt="MuayVerse Logo" class="logo-nav">
+                    </a>
                 </div>
                 <div class="navbar-controls">
-                    <div class="nav-btn music-btn" id="musicBtn" title="Background Music">
+                    <div class="nav-btn music-btn muted" id="musicBtn" title="Background Music">
                         <img src="icon/Bell.svg" alt="Music" class="btn-icon">
                     </div>
 
@@ -47,7 +59,7 @@ class Navbar {
                 top: 0;
                 left: 0;
                 width: 100%;
-                height: var(--navbar-height);
+                height: 80px;
                 background-color: var(--color-primary);
                 display: flex;
                 align-items: center;
@@ -63,8 +75,19 @@ class Navbar {
                 align-items: center;
             }
 
-            .logo-nav {
+            .navbar-logo a {
                 height: 100%;
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                transition: transform 0.3s ease;
+            }
+
+            .navbar-logo a:hover {
+                transform: scale(1.05);
+            }
+
+            .logo-nav {
                 max-height: var(--navbar-height);
                 width: auto;
                 object-fit: contain;
@@ -78,8 +101,8 @@ class Navbar {
             }
 
             .nav-btn {
-                width: 40px;
-                height: 40px;
+                width: 38px;
+                height: 38px;
                 border: none;
                 background: transparent;
                 color: var(--color-text-light);
@@ -95,8 +118,8 @@ class Navbar {
 
             /* เพิ่มขนาด music button */
             .music-btn {
-                width: 56px;
-                height: 56px;
+                width: 52px;
+                height: 52px;
             }
 
             /* เพิ่ม CSS ให้รูปภาพข้างในเต็มกล่อง */
@@ -254,46 +277,63 @@ class Navbar {
     }
 
     attachEventListeners() {
-        // Music button
+        // Music button - เช็คว่ามีปุ่มหรือไม่ (อาจไม่มีในบางหน้า)
         const musicBtn = document.getElementById('musicBtn');
-        musicBtn.addEventListener('click', () => this.toggleMusic());
+        if (musicBtn) {
+            musicBtn.addEventListener('click', () => this.toggleMusic());
+        }
 
         // Menu button
         const menuBtn = document.getElementById('menuBtn');
-        menuBtn.addEventListener('click', () => this.toggleMenu());
+        if (menuBtn) {
+            menuBtn.addEventListener('click', () => this.toggleMenu());
+        }
 
         // --- ดักจับ Event เมื่อผู้ใช้คลิก icon เข้าเว็บ ---
         window.addEventListener('musicConsentGiven', () => {
             console.log("อนุญาตให้เล่นเพลง");
+            // ไม่เล่นทันที รอจนกว่า loading จะเสร็จ
+        });
 
-            // เรียกฟังก์ชันเล่นเพลงทันที (ไม่ต้องรอ timeout)
-            // Browser จะยอมให้เล่นเพราะโค้ดนี้รันต่อเนื่องมาจากการคลิกของผู้ใช้
+        // --- ดักจับ Event เมื่อ loading เสร็จแล้ว ---
+        window.addEventListener('pageLoadComplete', () => {
+            console.log('Page load complete - เริ่มเล่นเพลง');
+            // เรียกฟังก์ชันเล่นเพลงทันที
             this.startAutoPlayMusic();
         });
     }
 
     toggleMusic() {
+        const mediaElement = this.bgVideo || this.audioElement;
+        if (!mediaElement) return;
+
         const musicBtn = document.getElementById('musicBtn');
 
         if (this.isMusicPlaying) {
-            this.bgMusic.pause();
+            // Mute media
+            mediaElement.muted = true;
+            if (this.audioElement) {
+                this.audioElement.pause();
+            }
             musicBtn.classList.remove('playing');
             musicBtn.classList.add('muted');
             this.isMusicPlaying = false;
+            localStorage.setItem('muayverse_music_playing', 'false');
+            console.log('Media muted');
         } else {
-            // Try to play music
-            const playPromise = this.bgMusic.play();
+            // Unmute media
+            mediaElement.muted = false;
+            musicBtn.classList.remove('muted');
+            musicBtn.classList.add('playing');
+            this.isMusicPlaying = true;
+            localStorage.setItem('muayverse_music_playing', 'true');
+            console.log('Media unmuted');
 
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    // Music started playing successfully
-                    musicBtn.classList.remove('muted');
-                    musicBtn.classList.add('playing');
-                    this.isMusicPlaying = true;
-                }).catch(error => {
-                    // Auto-play was prevented or file not found
-                    console.error('Error playing music:', error);
-                    this.showNotification('ไม่สามารถเล่นเพลงได้ กรุณาตรวจสอบไฟล์เสียง');
+            // ถ้า media หยุดเล่นไปแล้ว ให้เล่นใหม่
+            if (mediaElement.paused) {
+                mediaElement.play().catch(error => {
+                    console.error('Error playing media:', error);
+                    this.showNotification('ไม่สามารถเล่นเสียงได้');
                 });
             }
         }
@@ -349,39 +389,35 @@ class Navbar {
         const autoPlaySetting = localStorage.getItem('muayverse_autoplay');
 
         if (autoPlay === 'true' || (musicConsent === 'true' && autoPlaySetting === 'true')) {
-            console.log('Auto-play consent detected, attempting to start music...');
+            console.log('Auto-play consent detected - will start after loading completes');
+            // ไม่เรียก startAutoPlayMusic() ทันที - จะเรียกหลัง pageLoadComplete event
+        }
 
-            // ลดเวลาเหลือ 100ms หรือเรียกเลยถ้า element พร้อมแล้ว
-            if (this.bgMusic) {
-                this.startAutoPlayMusic();
-            } else {
-                setTimeout(() => this.startAutoPlayMusic(), 500);
-            }
-
-            // ล้าง URL parameter (ใช้แค่ครั้งเดียว)
-            if (autoPlay === 'true') {
-                const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-                window.history.replaceState({}, document.title, newUrl);
-            }
+        // ล้าง URL parameter (ใช้แค่ครั้งเดียว)
+        if (autoPlay === 'true') {
+            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.history.replaceState({}, document.title, newUrl);
         }
     }
 
     // เริ่มเล่นเพลงอัตโนมัติ
     startAutoPlayMusic() {
-        if (!this.bgMusic) {
-            console.log('Background music element not found');
+        const mediaElement = this.bgVideo || this.audioElement;
+        if (!mediaElement) {
+            console.log('Media element not found');
             return;
         }
 
         const musicBtn = document.getElementById('musicBtn');
 
-        // พยายามเล่นเพลง
-        const playPromise = this.bgMusic.play();
+        // unmute media และพยายามเล่น
+        mediaElement.muted = false;
+        const playPromise = mediaElement.play();
 
         if (playPromise !== undefined) {
             playPromise.then(() => {
-                // เพลงเริ่มเล่นสำเร็จ
-                console.log('Auto-play music started successfully');
+                // media เริ่มเล่นสำเร็จ
+                console.log('Auto-play media started successfully');
                 this.isMusicPlaying = true;
 
                 if (musicBtn) {
@@ -400,6 +436,40 @@ class Navbar {
                     musicBtn.style.animation = 'pulse 1.5s ease-in-out 3';
                 }
             });
+        }
+    }
+
+    // เรียกคืนสถานะเสียงจาก localStorage
+    restoreMusicState() {
+        const musicPlaying = localStorage.getItem('muayverse_music_playing');
+        const mediaElement = this.bgVideo || this.audioElement;
+        const musicBtn = document.getElementById('musicBtn');
+
+        if (!mediaElement || !musicBtn) return;
+
+        if (musicPlaying === 'true') {
+            // ลองเล่นเสียงต่อ
+            setTimeout(() => {
+                mediaElement.muted = false;
+                mediaElement.play().then(() => {
+                    this.isMusicPlaying = true;
+                    musicBtn.classList.remove('muted');
+                    musicBtn.classList.add('playing');
+                    console.log('Music state restored: playing');
+                }).catch(error => {
+                    console.log('Could not restore music state:', error);
+                });
+            }, 500);
+        } else if (musicPlaying === 'false') {
+            // ตั้งเป็นปิดเสียง
+            mediaElement.muted = true;
+            if (this.audioElement) {
+                this.audioElement.pause();
+            }
+            this.isMusicPlaying = false;
+            musicBtn.classList.remove('playing');
+            musicBtn.classList.add('muted');
+            console.log('Music state restored: muted');
         }
     }
 }

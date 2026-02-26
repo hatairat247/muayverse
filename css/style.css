@@ -42,7 +42,7 @@
 
 body {
     font-family: var(--font-family);
-    background-color: var(--color-background);
+    background-color: #272727;
     color: var(--color-text-light);
     overflow-x: hidden;
     min-height: 100vh;
@@ -54,37 +54,45 @@ a {
     color: inherit;
 }
 
-/* ===== Background Video ===== */
-.bg-video {
-    position: fixed;
-    top: 0;
-    left: 0;
+/* ===== Video in Hero Section ===== */
+#video-wrapper {
+    position: relative;
     width: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: -1;
+    overflow: hidden;
 }
+
+.bg-video {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+/* ===== Hero Video Section ===== */
+.hero-video-section {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: #272727;
+}
+
+.hero-video-section #video-wrapper {
+    margin-bottom: 40px;
+}
+
 
 /* ===== Main Content ===== */
 .main-content {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: calc(100vh - var(--navbar-height));
+    justify-content: flex-start;
+    min-height: auto;
     padding: 20px;
-}
-
-.logo-container {
-    text-align: center;
-    animation: fadeIn 1s ease-in;
-}
-
-.main-logo {
-    max-width: 800px;
-    width: 100%;
-    height: auto;
-    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
 }
 
 /* ===== Hamburger Menu (เปิดจากปุ่ม 3 ขีดใน Navbar) ===== */
@@ -226,6 +234,20 @@ a {
 
     .menu-divider {
         width: 160px;
+    }
+
+    /* Hero Video Section Responsive */
+    .hero-video-section {
+        padding: 100px 15px 40px 15px;
+    }
+
+    #video-wrapper {
+        max-width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .hero-video-section .main-logo {
+        max-width: 400px;
     }
 }
 

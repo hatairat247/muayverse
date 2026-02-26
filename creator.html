@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+    <link rel="shortcut icon" href="favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="MuayVerse" />
+    <link rel="manifest" href="favicon/site.webmanifest" />
+    <title>MuayVerse - Creator</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Google Fonts - Poppins & Bebas Neue -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Bebas+Neue&display=swap"
+        rel="stylesheet">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/creator.css">
+</head>
+
+<body>
+    <!-- Navbar Component -->
+    <nav id="navbar" class="navbar">
+        <div class="navbar-logo">
+            <a href="index.html" class="menu-item">
+                <img src="img/logo_nav.png" alt="MuayVerse Logo" class="logo-nav">
+            </a>
+        </div>
+
+        <div class="navbar-controls">
+            <!-- ปุ่ม Music (มี div หุ้ม img เพื่อให้ใส่เส้นขีดฆ่าได้) -->
+            <div class="nav-btn music-btn" id="musicBtn" title="Background Music">
+                <img src="icon/Bell.svg" alt="Music" class="btn-icon">
+            </div>
+
+            <!-- ปุ่ม Menu -->
+            <div class="nav-btn menu-btn" id="menuBtn" title="Menu">
+                <img src="icon/Menu.svg" alt="Menu" class="btn-icon">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Creator Section -->
+    <main class="creator-page">
+        <div class="creator-container">
+            <h1 class="creator-title">CREATOR</h1>
+
+            <!-- Cards Grid -->
+            <div class="creator-cards">
+                <!-- Card 1 - Namo Sangduanchay -->
+                <div class="creator-card" data-email="namo.sangd@gmail.com" data-badge="MO" data-expanded="true">
+                    <div class="card-image">
+                        <img src="img/member-mo.jpg" alt="Namo Sangduanchay">
+                    </div>
+                    <div class="card-info">
+                        <div class="card-icon">
+                            <img src="icon/punch.svg" alt="punch">
+                        </div>
+                        <div class="card-name">
+                            <span>Namo Sangduanchay</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 - Hatairat Chuenoutai -->
+                <div class="creator-card" data-email="hatairat.chuen@gmail.com" data-badge="TAR" data-expanded="true">
+                    <div class="card-image">
+                        <img src="img/member-hatairat.jpg" alt="Hatairat Chuenoutai">
+                    </div>
+                    <div class="card-info">
+                        <div class="card-icon">
+                            <img src="icon/punch.svg" alt="punch">
+                        </div>
+                        <div class="card-name">
+                            <span>Hatairat Chuenoutai</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 - Pirapat Choochaiya -->
+                <div class="creator-card" data-email="pirapatchoochaiya@gmail.com" data-badge="ZEE"
+                    data-expanded="true">
+                    <div class="card-image">
+                        <img src="img/member-pirapat.jpg" alt="Pirapat Choochaiya">
+                    </div>
+                    <div class="card-info">
+                        <div class="card-icon">
+                            <img src="icon/punch.svg" alt="punch">
+                        </div>
+                        <div class="card-name">
+                            <span>Pirapat Choochaiya</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 - Nuttapong Prasertsung -->
+                <div class="creator-card"
+                    data-email="Lecturer, Department of Computer and Information Technology, KMUTT" data-badge="ADVISOR"
+                    data-expanded="true">
+                    <div class="card-image">
+                        <img src="img/member-nuttapong.jpg" alt="Nuttapong Prasertsung">
+                    </div>
+                    <div class="card-info">
+                        <div class="card-icon">
+                            <img src="icon/punch.svg" alt="punch">
+                        </div>
+                        <div class="card-name">
+                            <span>Nuttapong Prasertsung</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Hamburger Menu (เปิดจากปุ่ม 3 ขีดใน Navbar) -->
+    <div class="hamburger-menu" id="hamburgerMenu">
+        <div class="menu-content">
+            <a href="#" class="menu-item">
+                <span>History Of Muay Thai</span>
+            </a>
+            <div class="menu-divider"></div>
+
+            <a href="#" class="menu-item">
+                <span>Wai Khru</span>
+            </a>
+            <div class="menu-divider"></div>
+
+            <a href="/3dvistra/index.htm" class="menu-item" target="_blank" rel="noopener noreferrer">
+                <span>Art Of Eight Lims</span>
+            </a>
+            <div class="menu-divider"></div>
+
+            <a href="creator.html" class="menu-item">
+                <span>Creator</span>
+            </a>
+            <div class="menu-divider"></div>
+
+            <a href="https://forms.gle/U1odRp1tjZMavh9R6" class="menu-item" target="_blank" rel="noopener noreferrer">
+                <span>Satisfaction Questionnaire</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer Component -->
+    <div id="footer"></div>
+
+    <!-- Scripts -->
+    <script src="js/navbar.js"></script>
+    <script src="js/footer.js"></script>
+    <script src="js/creator.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

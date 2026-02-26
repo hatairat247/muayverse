@@ -1,8 +1,6 @@
-// Main JavaScript - Handles hamburger menu and page interactions
+// Main JavaScript - Handles page interactions
 class MuayVerse {
     constructor() {
-        this.hamburgerMenu = document.getElementById('hamburgerMenu');
-        this.isMenuOpen = false;
         this.init();
     }
 
@@ -12,59 +10,7 @@ class MuayVerse {
     }
 
     attachEventListeners() {
-        // Monitor menu state changes
-        const observer = new MutationObserver(() => {
-            this.isMenuOpen = this.hamburgerMenu.classList.contains('show');
-        });
-
-        observer.observe(this.hamburgerMenu, {
-            attributes: true,
-            attributeFilter: ['class']
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => this.handleOutsideClick(e));
-
-        // Close menu when clicking menu items
-        const menuItems = document.querySelectorAll('.menu-item');
-        menuItems.forEach(item => {
-            item.addEventListener('click', () => {
-                this.closeHamburgerMenu();
-            });
-        });
-    }
-
-    toggleHamburgerMenu() {
-        this.isMenuOpen = !this.isMenuOpen;
-
-        if (this.isMenuOpen) {
-            this.openHamburgerMenu();
-        } else {
-            this.closeHamburgerMenu();
-        }
-    }
-
-    openHamburgerMenu() {
-        this.hamburgerMenu.classList.add('show');
-        this.isMenuOpen = true;
-    }
-
-    closeHamburgerMenu() {
-        this.hamburgerMenu.classList.remove('show');
-        const menuBtn = document.getElementById('menuBtn');
-        if (menuBtn) {
-            menuBtn.classList.remove('active');
-        }
-        this.isMenuOpen = false;
-    }
-
-    handleOutsideClick(e) {
-        // Close menu if clicking outside hamburger menu
-        if (this.isMenuOpen &&
-            !this.hamburgerMenu.contains(e.target) &&
-            !e.target.closest('.menu-btn')) {
-            this.closeHamburgerMenu();
-        }
+        // Future event listeners can be added here
     }
 
     addAnimations() {
@@ -159,24 +105,9 @@ class MuayVerse {
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         window.muayverseApp = new MuayVerse();
-
-        // Make notification function globally accessible
         window.showNotification = MuayVerse.showNotification;
-
-        // Welcome message (optional)
-        console.log('MuayVerse - ยินดีต้อนรับ',
-            'font-size: 16px; color: #780000; font-weight: bold;');
     });
 } else {
     window.muayverseApp = new MuayVerse();
     window.showNotification = MuayVerse.showNotification;
 }
-
-// Handle page visibility for music control
-document.addEventListener('visibilitychange', () => {
-    const bgMusic = document.getElementById('bgMusic');
-    if (document.hidden && bgMusic && !bgMusic.paused) {
-        // Optionally pause music when tab is hidden
-        // bgMusic.pause();
-    }
-});
