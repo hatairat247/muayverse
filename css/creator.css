@@ -51,6 +51,7 @@ body {
 /* Cards Grid */
 .creator-cards {
     display: flex;
+    flex-direction: row;
     gap: 30px;
     justify-content: center;
     align-items: flex-start;
@@ -96,8 +97,11 @@ body {
 .card-info {
     display: flex;
     align-items: center;
+    flex-direction: row;
     justify-content: center;
-    gap: 0;
+    gap: 5px;
+    width: 100%;
+    min-height: 60px;
     transition: all 0.3s ease;
     position: relative;
     overflow: visible;
@@ -118,10 +122,12 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-right: -5px;
     flex-shrink: 0;
     transform: translateX(0px);
     opacity: 1;
-    transition: transform 0.4s ease, opacity 0.3s ease 0.2s;
+    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s ease;
+    z-index: 5;
 }
 
 .card-icon img {
@@ -132,8 +138,9 @@ body {
 
 /* Icon animation on hover - เคลื่อนที่ไปขวาแล้วค่อยหายไป */
 .creator-card:hover .card-icon {
-    transform: translateX(300px);
+    transform: translateX(180px) scale(1.15);
     opacity: 0;
+    position: absolute;
     pointer-events: none;
 }
 
@@ -144,22 +151,26 @@ body {
 
 .card-name {
     background-color: var(--card-bg);
-    padding: 8px 12px;
+    padding: 0 15px;
     border-radius: 100px;
+    width: 220px;
     min-width: 220px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 40px;
     transform: translateX(0);
     opacity: 0;
-    transition: transform 0.4s ease 0.3s, opacity 0.3s ease 0.3s;
+    clip-path: inset(0 0 0 0);
+    transition: clip-path 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
 }
 
 /* Text animation - ปรากฏขึ้นหลัง icon หายไป */
 .creator-card:hover .card-name {
-    transform: translateX(0);
-    opacity: 1;
+    clip-path: inset(0 0 0 100%);
+    position: absolute;
+    opacity: 0;
 }
 
 /* Default state - แสดง card-name ตอนไม่ hover */
@@ -182,7 +193,59 @@ body {
 .creator-card .card-info::after {
     content: '';
     display: none;
-    transition: all 0.3s ease;
+    transition: all 0.5s ease;
+}
+
+.card-info::before,
+.card-info::after {
+    display: flex;
+    /* แก้: ซ่อนไว้ก่อนในตอนแรก */
+    height: 30px;
+    opacity: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100px;
+    white-space: nowrap;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    animation: slideUpCenter 0.5s ease 0.3s forwards;
+    /* แก้: เพิ่ม Animation ให้สไลด์ขึ้นมาหลังจากหมัดต่อยจบ (Delay 0.3s) */
+}
+
+@keyframes slideUpCenter {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.creator-card:hover .card-info::before,
+.creator-card:hover .card-info::after {
+    display: flex;
+    /* แก้: เมื่อ Hover ให้โผล่มาเป็นสมาชิกของ Flexbox (มันจะจัดกลางรูปให้เอง) */
+}
+
+/* กล่องขาว (Email) */
+.card-info::before {
+    background-color: var(--card-bg);
+    color: var(--card-text);
+    padding: 5px 22px;
+    max-width: 230px;
+    white-space: normal;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* กล่องแดง (Badge) */
+.card-info::after {
+    background-color: var(--card-icon-bg);
+    color: var(--card-icon-color);
+    padding: 8px 15px;
+    font-weight: 600;
 }
 
 .creator-card:hover .card-info::after {
@@ -200,54 +263,46 @@ body {
     min-width: 64px;
 }
 
-/* แสดง badge แต่ละคนตาม data-badge */
+/* แก้จากเดิมที่ใส่รวมกัน: แยกเนื้อหา Email ไว้ที่ ::before และ Badge ไว้ที่ ::after */
+.creator-card[data-badge="MO"]:hover .card-info::before {
+    content: "namo.sangd@gmail.com";
+}
+
 .creator-card[data-badge="MO"]:hover .card-info::after {
-    content: 'MO';
+    content: "MO";
+}
+
+.creator-card[data-badge="TAR"]:hover .card-info::before {
+    content: "hatairat.chuen@gmail.com";
 }
 
 .creator-card[data-badge="TAR"]:hover .card-info::after {
-    content: 'TAR';
+    content: "TAR";
+}
+
+.creator-card[data-badge="ZEE"]:hover .card-info::before {
+    content: "pirapatchoochaiya@gmail.com";
 }
 
 .creator-card[data-badge="ZEE"]:hover .card-info::after {
-    content: 'ZEE';
+    content: "ZEE";
+}
+
+.creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+    content: "Lecturer, Department of Computer \A and Information Technology, KMUTT";
+    max-width: 250px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.1;
+    padding: 5px 15px;
+    border-radius: 100px;
 }
 
 .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
-    content: 'ADVISOR';
-}
-
-/* Change name to email on hover - แสดงอีเมลแต่ละคน */
-.creator-card:hover .card-name span {
-    font-size: 0;
-}
-
-.creator-card[data-email="namo.sangd@gmail.com"]:hover .card-name span::before {
-    content: 'namo.sangd@gmail.com';
+    content: "ADVISOR";
     font-size: 16px;
-}
-
-.creator-card[data-email="hatairat.chuen@gmail.com"]:hover .card-name span::before {
-    content: 'hatairat.chuen@gmail.com';
-    font-size: 16px;
-}
-
-.creator-card[data-email="pirapatchoochaiya@gmail.com"]:hover .card-name span::before {
-    content: 'pirapatchoochaiya@gmail.com';
-    font-size: 16px;
-}
-
-.creator-card[data-email="Lecturer, Department of Computer and Information Technology, KMUTT"]:hover .card-name span::before {
-    content: 'Lecturer, Department of Computer \A and Information Technology, KMUTT';
-    font-size: 14px;
-    line-height: 1.4;
-    white-space: pre-line;
-}
-
-.creator-card[data-email="Lecturer, Department of Computer and Information Technology, KMUTT"]:hover .card-name {
-    min-width: 300px;
-    height: auto;
-    padding: 10px 13px;
+    /* ปรับขนาด Badge ให้เล็กลงล้อไปกับกล่องขาว */
+    padding: 5px 12px;
 }
 
 /* Expanded card (เฉพาะการ์ดที่มี data-expanded) */
