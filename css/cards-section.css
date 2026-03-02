@@ -19,7 +19,7 @@
     width: 100%;
     height: 100%;
     z-index: -1;
-    background-image: url('../img/boxingstadium.webp');
+    background-image: url('../img/homepage/boxingstadium.webp');
     background-size: cover;
     background-position: center center;
     transform: translateY(80px);
@@ -55,7 +55,8 @@
     max-width: 1600px;
     width: 100%;
     overflow: visible;
-    padding-top: 80px;  /* space for lamp to slide into */
+    padding-top: 80px;
+    /* space for lamp to slide into */
     opacity: 0;
     transform: translateY(50px);
     animation: fadeInUp 1s ease-out forwards;
