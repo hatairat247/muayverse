@@ -311,96 +311,69 @@ body {
     height: 486px;
 }
 
-/* Responsive Design */
-@media (max-width: 1600px) {
+/* Desktop (หน้าจอที่กว้างกว่า 1024px ขึ้นไป) */
+@media (min-width: 1025px) {
     .creator-cards {
-        max-width: 1200px;
+        flex-direction: row;
+        flex-wrap: nowrap;
     }
 }
 
-@media (max-width: 1400px) {
+/* Tablet (หน้าจอขนาด 768px ถึง 1024px) */
+@media (max-width: 1024px) and (min-width: 768px) {
     .creator-title {
-        font-size: 96px;
+        font-size: 80px;
     }
 
     .creator-cards {
-        gap: 20px;
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        gap: 40px 60px;
+        max-width: 900px;
     }
 
+    /* 1.รูปภาพปกติ */
     .card-image {
-        width: 300px;
-        height: 520px;
+        width: 260px;
+        height: 450px;
     }
 
-    .card-name {
-        min-width: 240px;
-        font-size: 18px;
+    /* 2.Hover:*/
+    .creator-card:hover .card-image {
+        width: 320px;
+        height: 486px;
     }
 }
 
-@media (max-width: 1200px) {
-    .creator-cards {
-        flex-wrap: wrap;
-        max-width: 800px;
-    }
-
+/* Mobile (หน้าจอขนาดเล็กกว่า 768px) */
+@media (max-width: 767px) {
     .creator-title {
-        font-size: 72px;
-    }
-}
-
-@media (max-width: 768px) {
-    .creator-title {
-        font-size: 48px;
-        padding: 20px 0;
+        font-size: 56px;
+        padding: 10px 0;
     }
 
-    .creator-cards {
-        gap: 20px;
-        padding: 20px 0;
-    }
-
-    .card-image {
-        width: 250px;
-        height: 434px;
-    }
-
-    .card-icon {
-        width: 60px;
-        height: 60px;
-    }
-
-    .card-icon i {
-        font-size: 36px;
-    }
-
-    .card-name {
-        min-width: 200px;
-        height: 40px;
-        font-size: 16px;
-    }
-
-    .card-name span {
-        font-size: 16px;
-    }
-}
-
-@media (max-width: 480px) {
     .creator-container {
-        padding: 20px 10px;
-    }
-
-    .creator-title {
-        font-size: 36px;
+        padding: 20px 15px;
+        gap: 20px;
     }
 
     .creator-cards {
         flex-direction: column;
         align-items: center;
+        gap: 40px;
     }
 
     .card-image {
         width: 280px;
         height: 486px;
+    }
+
+    .creator-card:hover .card-image {
+        width: 320px;
+    }
+
+    .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+        font-size: 11px;
+        max-width: 220px;
     }
 }
