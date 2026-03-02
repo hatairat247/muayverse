@@ -1,0 +1,288 @@
+/* ===== Sakyan Page Styles ===== */
+
+:root {
+    --sakyan-height: 100vh;
+}
+
+/* ===== Main Section ===== */
+.sakyan-section {
+    position: relative;
+    width: 100%;
+    min-height: var(--sakyan-height);
+    padding-top: var(--navbar-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* ===== Background ===== */
+.sakyan-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.bg-dark {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-background);
+}
+
+.bg-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.4;
+}
+
+/* ===== Content Container ===== */
+.sakyan-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    max-width: 1920px;
+    margin: 0 auto;
+}
+
+/* ===== Yantra Images (Left & Right) ===== */
+.yantra-left,
+.yantra-right {
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.yantra-left {
+    left: -50px;
+    animation: rotateSlow 30s linear infinite;
+}
+
+.yantra-right {
+    right: -50px;
+    animation: floatVertical 4s ease-in-out infinite;
+}
+
+.yantra-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: opacity(0.7) drop-shadow(0 0 20px rgba(255, 193, 7, 0.2));
+}
+
+@keyframes rotateSlow {
+    from {
+        transform: translateY(-50%) rotate(0deg);
+    }
+    to {
+        transform: translateY(-50%) rotate(360deg);
+    }
+}
+
+@keyframes floatVertical {
+    0%, 100% {
+        transform: translateY(-50%);
+    }
+    50% {
+        transform: translateY(calc(-50% + 20px));
+    }
+}
+
+/* ===== Center Content ===== */
+.center-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 40px 80px;
+}
+
+/* ===== Title Section ===== */
+.title-section {
+    margin: 0;
+}
+
+.main-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--color-text-light);
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+    letter-spacing: 1px;
+    word-spacing: 0.05em;
+}
+
+/* ===== Description Section ===== */
+.description-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.description-section p {
+    font-family: var(--font-family);
+    font-size: 1.1rem;
+    color: var(--color-text-light);
+    line-height: 1.8;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    font-weight: 400;
+    margin: 0;
+    word-break: normal;
+    overflow-wrap: break-word;
+    hyphens: none;
+}
+
+.description-section strong {
+    color: #ffc107;
+    font-weight: 600;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 1400px) {
+    .yantra-left,
+    .yantra-right {
+        width: 300px;
+        height: 300px;
+    }
+
+    .main-title {
+        font-size: 3rem;
+    }
+
+    .description-section p {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .sakyan-section {
+        min-height: auto;
+        padding: 40px 20px;
+    }
+
+    .sakyan-content {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .yantra-left,
+    .yantra-right {
+        position: static;
+        width: 300px;
+        height: 300px;
+        transform: none !important;
+        margin: 20px auto;
+    }
+
+    .yantra-left {
+        animation: rotateSlow 30s linear infinite;
+    }
+
+    .yantra-right {
+        animation: floatVertical 4s ease-in-out infinite;
+    }
+
+    .center-content {
+        max-width: 100%;
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .main-title {
+        font-size: 2.2rem;
+    }
+
+    .description-section p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+}
+
+@media (max-width: 768px) {
+    .sakyan-section {
+        padding-top: 70px;
+    }
+
+    .sakyan-content {
+        padding: 20px 15px;
+    }
+
+    .yantra-left,
+    .yantra-right {
+        width: 200px;
+        height: 200px;
+        margin: 15px auto;
+    }
+
+    .center-content {
+        gap: 20px;
+        padding: 15px;
+    }
+
+    .title-section {
+        margin-bottom: 10px;
+    }
+
+    .main-title {
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+    }
+
+    .description-section p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+}
+
+@media (max-width: 480px) {
+    .sakyan-section {
+        padding-top: 60px;
+        min-height: auto;
+    }
+
+    .bg-image {
+        opacity: 0.3;
+    }
+
+    .yantra-left,
+    .yantra-right {
+        width: 150px;
+        height: 150px;
+        margin: 10px auto;
+    }
+
+    .center-content {
+        gap: 15px;
+        padding: 15px 10px;
+    }
+
+    .main-title {
+        font-size: 1.3rem;
+        letter-spacing: 0.5px;
+    }
+
+    .description-section p {
+        font-size: 0.85rem;
+        line-height: 1.5;
+    }
+}
+

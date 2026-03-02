@@ -1,0 +1,584 @@
+/* ===== Sakyan Page Styles - Exact Figma Layout ===== */
+
+:root {
+    --sakyan-height: calc(100vh - var(--navbar-height));
+    --karaoke-scroll-length: 80vh; /* extra scroll distance for karaoke */
+}
+
+/* ===== Page Wrapper (shared background) ===== */
+.sakyan-page-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: var(--navbar-height);
+}
+
+/* ===== Scroll-lock container ===== */
+.sakyan-scroll-lock {
+    position: relative;
+    height: calc(var(--sakyan-height) + var(--karaoke-scroll-length));
+}
+
+/* ===== Main Section (sticky inside scroll-lock) ===== */
+.sakyan-section {
+    position: sticky;
+    top: var(--navbar-height);
+    width: 100%;
+    height: var(--sakyan-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* ===== Shared Background ===== */
+.sakyan-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.bg-dark {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-background);
+}
+
+.bg-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.4;
+}
+
+/* ===== Content Container ===== */
+.sakyan-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    will-change: opacity;
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== Yantra Images (Left & Right) ===== */
+.yantra-left,
+.yantra-right {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Left Yantra - Figma: 730×692px, center at ~50px from left, vertically centered, rotate 16.9deg */
+.yantra-left {
+    width: clamp(380px, 38vw, 730px);
+    aspect-ratio: 730 / 692;
+    left: clamp(-300px, -16.4vw, -160px);
+    top: 50%;
+    transform: translateY(-50%);
+    animation: rotateSlow 30s linear infinite;
+}
+
+/* Right Yantra - Figma: 791px wide, rotated -15.24deg, positioned bottom-right */
+.yantra-right {
+    width: clamp(400px, 41.2vw, 791px);
+    aspect-ratio: 569 / 427;
+    right: clamp(-380px, -18.85vw, -180px);
+    top: 26%;
+    transform: rotate(-15.24deg);
+    animation: floatRight 4s ease-in-out infinite;
+}
+
+.yantra-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 20px rgba(255, 193, 7, 0.2));
+}
+
+@keyframes rotateSlow {
+    from {
+        transform: translateY(-50%) rotate(0deg);
+    }
+    to {
+        transform: translateY(-50%) rotate(360deg);
+    }
+}
+
+@keyframes floatRight {
+    0%, 100% {
+        transform: rotate(-15.24deg) translateY(0);
+    }
+    50% {
+        transform: rotate(-15.24deg) translateY(25px);
+    }
+}
+
+/* ===== Center Content ===== */
+.center-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1452px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 46px;
+    padding: 68px 10px;
+    margin: 0 auto;
+}
+
+/* ===== Title Section ===== */
+.title-section {
+    margin: 0;
+}
+
+.main-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 6.67vw, 128px);
+    font-weight: 400;
+    line-height: normal;
+    color: var(--color-text-light);
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.9);
+    letter-spacing: 0.5px;
+    margin: 0;
+    max-width: 1120px;
+}
+
+/* ===== Description Section ===== */
+.description-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 1452px;
+    width: 100%;
+}
+
+.description-section p {
+    font-family: var(--font-family);
+    font-size: clamp(0.85rem, 1.25vw, 24px);
+    color: var(--color-text-light);
+    line-height: normal;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    font-weight: 400;
+    margin: 0;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: none;
+}
+
+.description-section strong {
+    color: #ffc107;
+    font-weight: 600;
+}
+
+/* ===== Responsive Design ===== */
+
+/* ===== Parallax & Text Animations ===== */
+
+/* Title: split-letter fly-in */
+.main-title .char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(60px) rotateX(40deg);
+    transition: opacity 0.5s cubic-bezier(0.2, 0, 0.2, 1),
+                transform 0.5s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.main-title .char.visible {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+}
+
+/* Space character — no animation needed */
+.main-title .char-space {
+    display: inline;
+    width: 0.3em;
+}
+
+/* Description: karaoke blur reveal */
+.description-section .word {
+    display: inline;
+    white-space: nowrap;
+}
+
+.description-section .desc-char {
+    display: inline;
+    opacity: 0.15;
+    filter: blur(4px);
+    transition: opacity 0.45s cubic-bezier(0.2, 0, 0.2, 1),
+                filter 0.45s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.description-section .desc-char.active {
+    opacity: 1;
+    filter: blur(0);
+}
+
+/* Keep <strong> gold color through animation */
+.description-section strong .desc-char.active {
+    color: #ffc107;
+}
+
+/* Yantra glow pulse on scroll */
+.yantra-img.glow {
+    filter: drop-shadow(0 0 30px rgba(255, 193, 7, 0.5))
+            drop-shadow(0 0 60px rgba(255, 193, 7, 0.2));
+    transition: filter 1s ease;
+}
+
+@media (max-width: 1400px) {
+    .description-section p {
+        font-size: clamp(0.85rem, 1.25vw, 20px);
+    }
+}
+
+@media (max-width: 1024px) {
+    .sakyan-section {
+        height: auto;
+        min-height: 100vh;
+        padding-top: var(--navbar-height);
+    }
+
+    .sakyan-content {
+        flex-direction: column;
+        padding: 40px 20px;
+        height: auto;
+    }
+
+    .yantra-left {
+        width: 320px;
+        left: -140px;
+    }
+
+    .yantra-right {
+        width: 340px;
+        right: -160px;
+        top: 30%;
+    }
+
+    .center-content {
+        max-width: 100%;
+        padding: 20px;
+        gap: 25px;
+    }
+
+    .main-title {
+        font-size: clamp(1.8rem, 5vw, 80px);
+    }
+
+    .description-section p {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .yantra-left {
+        width: 240px;
+        left: -110px;
+    }
+
+    .yantra-right {
+        width: 260px;
+        right: -130px;
+        top: 35%;
+    }
+
+    .center-content {
+        gap: 20px;
+        padding: 15px;
+    }
+
+    .main-title {
+        font-size: 1.6rem;
+    }
+
+    .description-section p {
+        font-size: 0.85rem;
+        line-height: 1.6;
+    }
+}
+
+@media (max-width: 480px) {
+    .sakyan-section {
+        min-height: auto;
+        padding-top: 70px;
+    }
+
+    .yantra-left {
+        width: 180px;
+        left: -80px;
+    }
+
+    .yantra-right {
+        width: 200px;
+        right: -100px;
+        top: 40%;
+    }
+
+    .center-content {
+        gap: 15px;
+        padding: 10px;
+    }
+
+    .main-title {
+        font-size: 1.2rem;
+    }
+
+    .description-section p {
+        font-size: 0.8rem;
+        line-height: 1.5;
+    }
+}
+
+/* ============================================================
+   GAO YORD SECTION — Figma node 575:342
+   ============================================================ */
+
+.gaoyord-section {
+    position: relative;
+    width: 100%;
+    min-height: var(--sakyan-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 2;
+}
+
+/* ── Decorative yantra (behind content) ── */
+.gaoyord-deco {
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.gaoyord-deco-left {
+    width: clamp(420px, 42vw, 804px);
+    left: clamp(-400px, -17.2vw, -170px);
+    top: 35%;
+    transform: rotate(18.66deg);
+}
+
+.gaoyord-deco-right {
+    width: clamp(380px, 37.4vw, 717px);
+    right: clamp(-360px, -14.6vw, -140px);
+    top: 46%;
+    transform: rotate(31.94deg);
+}
+
+.deco-img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 20px rgba(255, 193, 7, 0.15));
+}
+
+/* ── Main content row ── */
+.gaoyord-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1640px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(40px, 8.2vw, 158px);
+    padding: 80px 40px;
+    margin: 0 auto;
+}
+
+/* ── Stacked paper images (left) ── */
+.gaoyord-papers {
+    position: relative;
+    flex-shrink: 0;
+}
+
+/* Front paper — kaoyod, in flow, creates container size */
+.paper-front {
+    position: relative;
+    width: clamp(260px, 28vw, 530px);
+    aspect-ratio: 693 / 727;
+    transform: rotate(-6.92deg);
+    z-index: 2;
+}
+
+/* Back paper — hateaw, absolute behind front */
+.paper-back {
+    position: absolute;
+    width: clamp(280px, 30vw, 565px);
+    aspect-ratio: 737 / 754;
+    left: clamp(-6px, -0.3vw, -3px);
+    top: clamp(30px, 3.5vw, 66px);
+    transform: rotate(6.91deg);
+    z-index: 1;
+}
+
+.paper-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 1);
+    border-radius: 4px;
+}
+
+/* ── Text content (right) ── */
+.gaoyord-text {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    max-width: 687px;
+    flex-shrink: 1;
+}
+
+.gaoyord-title {
+    font-family: var(--font-family);
+    font-size: clamp(1.5rem, 1.67vw, 32px);
+    font-weight: 700;
+    color: var(--color-text-light);
+    text-shadow: 0 4px 5.2px rgba(0, 0, 0, 0.82);
+    margin: 0;
+    line-height: normal;
+}
+
+.gaoyord-desc {
+    font-family: var(--font-family);
+    font-size: clamp(0.85rem, 1.04vw, 20px);
+    font-weight: 400;
+    color: var(--color-text-light);
+    text-shadow: 0 4px 5.2px rgba(0, 0, 0, 0.82);
+    line-height: 1.6;
+    margin: 0;
+    max-width: 598px;
+}
+
+/* ── Scroll-triggered entrance ── */
+.gaoyord-papers {
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.2, 0, 0.2, 1),
+                transform 0.8s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.gaoyord-text {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.2, 0, 0.2, 1),
+                transform 0.8s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.gaoyord-papers.visible {
+    opacity: 1;
+}
+
+.gaoyord-text.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+    .gaoyord-content {
+        flex-direction: column;
+        gap: 40px;
+        padding: 60px 20px;
+    }
+
+    .gaoyord-papers {
+        width: clamp(300px, 70vw, 500px);
+    }
+
+    .gaoyord-text {
+        max-width: 90%;
+        text-align: center;
+        align-items: center;
+    }
+
+    .gaoyord-desc {
+        max-width: 100%;
+    }
+
+    .gaoyord-deco-left {
+        width: 350px;
+        left: -180px;
+        top: 5%;
+    }
+
+    .gaoyord-deco-right {
+        width: 320px;
+        right: -160px;
+        top: auto;
+        bottom: 5%;
+    }
+}
+
+@media (max-width: 768px) {
+    .gaoyord-content {
+        gap: 30px;
+        padding: 40px 15px;
+    }
+
+    .gaoyord-papers {
+        width: clamp(260px, 80vw, 400px);
+    }
+
+    .gaoyord-title {
+        font-size: 1.3rem;
+    }
+
+    .gaoyord-desc {
+        font-size: 0.85rem;
+    }
+
+    .gaoyord-deco-left {
+        width: 260px;
+        left: -140px;
+    }
+
+    .gaoyord-deco-right {
+        width: 240px;
+        right: -130px;
+    }
+}
+
+@media (max-width: 480px) {
+    .gaoyord-content {
+        gap: 20px;
+        padding: 30px 10px;
+    }
+
+    .gaoyord-papers {
+        width: clamp(220px, 85vw, 320px);
+    }
+
+    .gaoyord-title {
+        font-size: 1.1rem;
+    }
+
+    .gaoyord-desc {
+        font-size: 0.8rem;
+        line-height: 1.5;
+    }
+
+    .gaoyord-deco-left {
+        width: 200px;
+        left: -110px;
+    }
+
+    .gaoyord-deco-right {
+        width: 180px;
+        right: -100px;
+    }
+}
