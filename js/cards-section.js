@@ -71,34 +71,47 @@ class CardsSection {
         this.initParallaxScroll();
     }
 
-    initParallaxScroll() {
-        const cardsSection = document.querySelector('.cards-section');
-        const cardsBackground = document.querySelector('.cards-background');
+   initParallaxScroll() {
+    const cardsSection = document.querySelector('.cards-section');
+    const cardsBackground = document.querySelector('.cards-background');
 
-        if (!cardsSection || !cardsBackground) return;
+    if (!cardsSection || !cardsBackground) return;
 
-        let ticking = false;
+    // 1. แยก Logic ออกมาเป็นฟังก์ชันเพื่อให้เรียกใช้ซ้ำได้
+    const updateParallax = () => {
+        const rect = cardsSection.getBoundingClientRect();
+        
+        // เช็คว่า Section โผล่เข้ามาในหน้าจอหรือยัง
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+            const parallaxSpeed = 0.15; // ความเร็วนุ่มๆ
+            const distanceVisible = window.innerHeight - rect.top;
+            
+            // คำนวณตำแหน่ง: เริ่มจากเยื้องล่าง 200px แล้วค่อยๆ เลื่อนขึ้น
+            let yPos = 200 - (distanceVisible * parallaxSpeed);
 
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const rect = cardsSection.getBoundingClientRect();
-                    const scrolled = window.pageYOffset;
+            // ล็อคขอบไม่ให้เห็นแถบเทาด้านล่าง
+            const maxLimit = 0; 
+            if (yPos < maxLimit) yPos = maxLimit;
 
-                    // Only apply parallax when section is in view
-                    if (rect.top < window.innerHeight && rect.bottom > 0) {
-                        const parallaxSpeed = 0.5;
-                        const yPos = -(scrolled - cardsSection.offsetTop) * parallaxSpeed;
-                        cardsBackground.style.transform = `translateY(${yPos}px)`;
-                    }
+            cardsBackground.style.transform = `translateY(${yPos}px)`;
+        }
+    };
 
-                    ticking = false;
-                });
+    // 2. เรียกใช้ทันที 1 ครั้งตอนโหลดหน้า เพื่อให้รูปสแตนด์บายรอ (แก้ปัญหาเลื่อนครั้งแรกช้า)
+    updateParallax();
 
-                ticking = true;
-            }
-        });
-    }
+    // 3. ทำงานตอน Scroll ตามปกติ
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                updateParallax();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+}
 }
 
 // Initialize when DOM is ready

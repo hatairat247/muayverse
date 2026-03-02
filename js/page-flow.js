@@ -24,11 +24,16 @@ class PageFlow {
         const urlParams = new URLSearchParams(window.location.search);
         const isReturn = urlParams.get('return') === 'true';
 
-        if (hasSeenWarning === 'true' || isReturn) {
-            // ถ้าเคยเห็นแล้ว หรือกลับมาจากหน้าอื่น ข้ามไปหน้าหลักเลย
+        if (isReturn) {
+            // กลับมาจากหน้าอื่น → ข้ามทุก overlay, เล่นวิดีโอทันที
             sessionStorage.setItem('muayverse_warning_seen', 'true');
             this.hideWarning();
             this.hideLoading();
+            this.startVideoAndMusic(true); // force music on when returning
+        } else if (hasSeenWarning === 'true') {
+            // refresh → ข้าม warning แต่ยังแสดง loading
+            this.hideWarning();
+            this.showLoading();
         } else {
             // แสดง warning ก่อน
             this.showWarning();
@@ -155,22 +160,7 @@ class PageFlow {
     // เสร็จสิ้นการ Loading
     completeLoading() {
         console.log('Loading complete!');
-
-        // เริ่มเล่น video และ unmute เสียง
-        const video = document.getElementById('bgVideo');
-        if (video) {
-            video.play().then(() => {
-                console.log('Video started playing');
-                // Unmute video หลังจาก user ให้ consent แล้ว
-                if (localStorage.getItem('muayverse_music_consent') === 'true') {
-                    video.muted = false;
-                    console.log('Video unmuted - music playing');
-                }
-            }).catch(err => {
-                console.error('Video play error:', err);
-            });
-        }
-        console.log('Loading complete, showing main page');
+        this.startVideoAndMusic(false);
 
         // Fade out loading
         this.loadingOverlay.style.transition = 'opacity 0.5s ease';
@@ -184,6 +174,28 @@ class PageFlow {
             // แจ้ง navbar ว่าสามารถเล่นเพลงอัตโนมัติได้
             window.dispatchEvent(new Event('pageLoadComplete'));
         }, 500);
+    }
+
+    // เล่นวิดีโอ + เริ่มเสียง
+    startVideoAndMusic(forceMusicOn) {
+        const video = document.getElementById('bgVideo');
+        if (video) {
+            const playFromStart = () => {
+                video.currentTime = 0;
+                video.play().catch(err => console.error('Video play error:', err));
+            };
+            // readyState >= 1 = HAVE_METADATA, safe to set currentTime
+            if (video.readyState >= 1) {
+                playFromStart();
+            } else {
+                video.addEventListener('loadedmetadata', playFromStart, { once: true });
+            }
+        }
+        if (forceMusicOn) {
+            // บังคับเปิดเสียงเมื่อกลับมาหน้า home
+            localStorage.setItem('muayverse_music_playing', 'true');
+            window.dispatchEvent(new Event('pageLoadComplete'));
+        }
     }
 }
 

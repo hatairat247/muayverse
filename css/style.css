@@ -56,14 +56,24 @@ a {
 
 /* ===== Video in Hero Section ===== */
 #video-wrapper {
-    position: relative;
+    position: sticky;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100vh;
     overflow: hidden;
+    box-sizing: border-box;
+    z-index: 1000;
+    /* clip-path drives the card animation — GPU only, no layout reflow */
+    clip-path: inset(0px 0px 0px 0px round 0px);
+    will-change: clip-path, filter;
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
 }
 
 .bg-video {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
     object-fit: cover;
 }
@@ -71,18 +81,13 @@ a {
 /* ===== Hero Video Section ===== */
 .hero-video-section {
     width: 100%;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    height: 185vh;   /* 55vh shrink + 30vh pause + 100vh sticky */
+    display: block;
     position: relative;
     background-color: #272727;
 }
 
-.hero-video-section #video-wrapper {
-    margin-bottom: 40px;
-}
+/* video-wrapper margin removed — sticky layout handles positioning */
 
 
 /* ===== Main Content ===== */
@@ -238,12 +243,12 @@ a {
 
     /* Hero Video Section Responsive */
     .hero-video-section {
-        padding: 100px 15px 40px 15px;
+        /* padding removed — sticky layout handles this */
     }
 
     #video-wrapper {
         max-width: 100%;
-        margin-bottom: 30px;
+        /* margin-bottom removed — sticky layout */
     }
 
     .hero-video-section .main-logo {

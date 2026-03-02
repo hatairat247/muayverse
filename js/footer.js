@@ -31,6 +31,13 @@ class Footer {
     addStyles() {
         const style = document.createElement('style');
         style.textContent = `
+        #footer {
+            position: relative;
+            z-index: 99; 
+            background-color: #272727; /* หรือสีที่มึงใช้ */
+            width: 100%;
+            display: block;
+        }
             .footer-container {
                 background-color: var(--color-primary);
                 color: var(--color-text-light);

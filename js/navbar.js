@@ -19,7 +19,7 @@ class Navbar {
 
         this.init();
         this.checkAutoPlayConsent();
-        this.restoreMusicState(); // เรียกคืนสถานะเสียงจาก localStorage
+        // restoreMusicState is called after pageLoadComplete to prevent early audio during overlays
     }
 
     init() {
@@ -298,7 +298,8 @@ class Navbar {
         // --- ดักจับ Event เมื่อ loading เสร็จแล้ว ---
         window.addEventListener('pageLoadComplete', () => {
             console.log('Page load complete - เริ่มเล่นเพลง');
-            // เรียกฟังก์ชันเล่นเพลงทันที
+            // Restore previous music state first, then autoplay if consent given
+            this.restoreMusicState();
             this.startAutoPlayMusic();
         });
     }
@@ -410,29 +411,33 @@ class Navbar {
 
         const musicBtn = document.getElementById('musicBtn');
 
-        // unmute media และพยายามเล่น
+        mediaElement.volume = 0.4;
         mediaElement.muted = false;
-        const playPromise = mediaElement.play();
 
+        // If already playing (started by page-flow), just unmute — don't restart
+        if (!mediaElement.paused) {
+            this.isMusicPlaying = true;
+            if (musicBtn) {
+                musicBtn.classList.remove('muted');
+                musicBtn.classList.add('playing');
+            }
+            localStorage.setItem('muayverse_music_playing', 'true');
+            return;
+        }
+
+        const playPromise = mediaElement.play();
         if (playPromise !== undefined) {
             playPromise.then(() => {
-                // media เริ่มเล่นสำเร็จ
                 console.log('Auto-play media started successfully');
                 this.isMusicPlaying = true;
-
                 if (musicBtn) {
                     musicBtn.classList.remove('muted');
                     musicBtn.classList.add('playing');
                 }
-
-                // บันทึกสถานะ
                 localStorage.setItem('muayverse_music_playing', 'true');
-
             }).catch(error => {
                 console.log('Auto-play prevented by browser:', error);
-
                 if (musicBtn) {
-                    // เพิ่มเอฟเฟกต์ pulse เพื่อให้เห็นว่าสามารถคลิกได้
                     musicBtn.style.animation = 'pulse 1.5s ease-in-out 3';
                 }
             });
@@ -448,20 +453,20 @@ class Navbar {
         if (!mediaElement || !musicBtn) return;
 
         if (musicPlaying === 'true') {
-            // ลองเล่นเสียงต่อ
             setTimeout(() => {
+                mediaElement.volume = 0.4;
                 mediaElement.muted = false;
-                mediaElement.play().then(() => {
-                    this.isMusicPlaying = true;
-                    musicBtn.classList.remove('muted');
-                    musicBtn.classList.add('playing');
-                    console.log('Music state restored: playing');
-                }).catch(error => {
-                    console.log('Could not restore music state:', error);
-                });
+                if (mediaElement.paused) {
+                    mediaElement.play().catch(error => {
+                        console.log('Could not restore music state:', error);
+                    });
+                }
+                this.isMusicPlaying = true;
+                musicBtn.classList.remove('muted');
+                musicBtn.classList.add('playing');
+                console.log('Music state restored: playing');
             }, 500);
         } else if (musicPlaying === 'false') {
-            // ตั้งเป็นปิดเสียง
             mediaElement.muted = true;
             if (this.audioElement) {
                 this.audioElement.pause();
@@ -471,6 +476,19 @@ class Navbar {
             musicBtn.classList.add('muted');
             console.log('Music state restored: muted');
         }
+    }
+
+    // Fade volume from 0 to targetVolume over duration (ms) using rAF
+    fadeInVolume(mediaElement, targetVolume, duration) {
+        const startTime = performance.now();
+        mediaElement.volume = 0;
+        const tick = (now) => {
+            const elapsed = now - startTime;
+            const t = Math.min(elapsed / duration, 1);
+            mediaElement.volume = t * targetVolume;
+            if (t < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
     }
 }
 
