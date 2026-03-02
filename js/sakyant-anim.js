@@ -5,13 +5,13 @@
  */
 class SakYantAnim {
     constructor() {
-        this.bg = document.querySelector('.sakyan-bg');
+        this.bg = document.querySelector('.sakyant-bg');
         this.title = document.querySelector('.main-title');
         this.descSection = document.querySelector('.description-section');
         this.yantras = document.querySelectorAll('.yantra-img');
-        this.section = document.querySelector('.sakyan-section');
-        this.contentWrap = document.querySelector('.sakyan-content');
-        this.scrollLock = document.querySelector('.sakyan-scroll-lock');
+        this.section = document.querySelector('.sakyant-section');
+        this.contentWrap = document.querySelector('.sakyant-content');
+        this.scrollLock = document.querySelector('.sakyant-scroll-lock');
 
         // Gao Yord section elements
         this.gaoyordPapers = document.querySelector('.gaoyord-papers');

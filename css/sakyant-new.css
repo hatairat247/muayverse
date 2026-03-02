@@ -1,29 +1,29 @@
-/* ===== Sakyan Page Styles - Exact Figma Layout ===== */
+/* ===== sakyant Page Styles - Exact Figma Layout ===== */
 
 :root {
-    --sakyan-height: calc(100vh - var(--navbar-height));
+    --sakyant-height: calc(100vh - var(--navbar-height));
     --karaoke-scroll-length: 80vh; /* extra scroll distance for karaoke */
 }
 
 /* ===== Page Wrapper (shared background) ===== */
-.sakyan-page-wrapper {
+.sakyant-page-wrapper {
     position: relative;
     width: 100%;
     padding-top: var(--navbar-height);
 }
 
 /* ===== Scroll-lock container ===== */
-.sakyan-scroll-lock {
+.sakyant-scroll-lock {
     position: relative;
-    height: calc(var(--sakyan-height) + var(--karaoke-scroll-length));
+    height: calc(var(--sakyant-height) + var(--karaoke-scroll-length));
 }
 
 /* ===== Main Section (sticky inside scroll-lock) ===== */
-.sakyan-section {
+.sakyant-section {
     position: sticky;
     top: var(--navbar-height);
     width: 100%;
-    height: var(--sakyan-height);
+    height: var(--sakyant-height);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -32,7 +32,7 @@
 }
 
 /* ===== Shared Background ===== */
-.sakyan-bg {
+.sakyant-bg {
     position: fixed;
     top: 0;
     left: 0;
@@ -58,7 +58,7 @@
 }
 
 /* ===== Content Container ===== */
-.sakyan-content {
+.sakyant-content {
     position: relative;
     z-index: 1;
     width: 100%;
@@ -247,13 +247,13 @@
 }
 
 @media (max-width: 1024px) {
-    .sakyan-section {
+    .sakyant-section {
         height: auto;
         min-height: 100vh;
         padding-top: var(--navbar-height);
     }
 
-    .sakyan-content {
+    .sakyant-content {
         flex-direction: column;
         padding: 40px 20px;
         height: auto;
@@ -313,7 +313,7 @@
 }
 
 @media (max-width: 480px) {
-    .sakyan-section {
+    .sakyant-section {
         min-height: auto;
         padding-top: 70px;
     }
@@ -351,7 +351,7 @@
 .gaoyord-section {
     position: relative;
     width: 100%;
-    min-height: var(--sakyan-height);
+    min-height: var(--sakyant-height);
     display: flex;
     align-items: center;
     justify-content: center;

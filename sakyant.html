@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+    <link rel="shortcut icon" href="favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="MuayVerse" />
+    <link rel="manifest" href="favicon/site.webmanifest" />
+    <title>Sak Yant - MuayVerse</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Google Fonts - Poppins & Bebas Neue -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Bebas+Neue&display=swap"
+        rel="stylesheet">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/sakyant-new.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div id="navbar"></div>
+
+    <!-- Shared Background Wrapper -->
+    <div class="sakyant-page-wrapper">
+        <!-- Single Background for all sections -->
+        <div class="sakyant-bg">
+            <div class="bg-dark"></div>
+            <img src="img/sakyant/sakyant-bg.png" alt="" class="bg-image">
+        </div>
+
+        <!-- Section 1: Sak Yant Intro (scroll-locked for karaoke) -->
+        <div class="sakyant-scroll-lock">
+            <main class="sakyant-section" data-name="Sak Yant Sec1">
+
+                <!-- Content Wrapper -->
+                <div class="sakyant-content">
+                    <!-- Left Yantra - Rotating -->
+                    <div class="yantra-left">
+                        <img src="img/sakyant/sakyant-yantra-left.png" alt="Sak Yant Yantra" class="yantra-img">
+                    </div>
+
+                    <!-- Center Content -->
+                    <div class="center-content">
+                        <!-- Main Title -->
+                        <div class="title-section">
+                            <h1 class="main-title">Sak Yant: The Spiritual<br>Tattoos of Muay Thai</h1>
+                        </div>
+
+                        <!-- Description Text -->
+                        <div class="description-section">
+                            <p>
+                                Thailand, deeply rooted in Buddhist traditions, views <strong>"Sak Yant"</strong>
+                                (Yantra Tattooing) not merely as body<br>
+                                art, but as a sacred ritual intertwining religion, magic, and culture. Muay Thai
+                                fighters and martial artists<br>
+                                worldwide seek these tattoos to invoke blessings of power, protection, and fortune,<br>
+                                as well as to symbolize respect for their teachers and the art itself.
+                            </p>
+                            <p>
+                                The term <strong>"Sak Yant"</strong> translates to "Magic Tattoo" or "Sacred Yantra."
+                                Authentically, these designs must<br>
+                                be bestowed by Buddhist monks or spiritual masters (Arjarn) who have undergone rigorous
+                                training in the magical arts.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Right Yantra - Rotating -->
+                    <div class="yantra-right">
+                        <img src="img/sakyant/sakyant-yantra-right.png" alt="Sak Yant Yantra" class="yantra-img">
+                    </div>
+                </div>
+            </main>
+        </div><!-- end sakyant-scroll-lock -->
+
+        <!-- Section 2: Gao Yord -->
+        <section class="gaoyord-section" data-name="Sak Yant Gao Yord">
+
+            <!-- Decorative Yantra - Left (Tiger) -->
+            <div class="gaoyord-deco gaoyord-deco-left">
+                <img src="img/sakyant/sueku-light.png" alt="" class="deco-img">
+            </div>
+
+            <!-- Decorative Yantra - Right (Elephant) -->
+            <div class="gaoyord-deco gaoyord-deco-right">
+                <img src="img/sakyant/hanuman-light.png" alt="" class="deco-img">
+            </div>
+
+            <!-- Content -->
+            <div class="gaoyord-content">
+                <!-- Left: Stacked Paper Images -->
+                <div class="gaoyord-papers">
+                    <!-- Front paper (hateaw) - main paper in flow, rotated -6.92deg -->
+                    <div class="paper paper-front">
+                        <img src="img/sakyant/kaoyod.png" alt="Gao Yord Yant" class="paper-img">
+                    </div>
+                    <!-- Back paper (kaoyod) - absolute behind, rotated +6.91deg -->
+                    <div class="paper paper-back">
+                        <img src="img/sakyant/hateaw.png" alt="Ha Teaw Yant" class="paper-img">
+                    </div>
+                </div>
+
+                <!-- Right: Text Content -->
+                <div class="gaoyord-text">
+                    <h2 class="gaoyord-title">Gao Yord (Nine Peaks)</h2>
+                    <p class="gaoyord-desc">
+                        Typically inked at the base of the neck, the Gao Yord is regarded as the "Yant Kru" (Master
+                        Yant). It offers
+                        supreme protection against weapons and danger while bestowing "Metta Mahaniyom" (Great
+                        Popularity
+                        and Loving Kindness) upon the wearer.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div><!-- end sakyant-page-wrapper -->
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <!-- Scripts -->
+    <script src="js/navbar.js"></script>
+    <script src="js/footer.js"></script>
+    <script src="js/sakyant-anim.js"></script>
+
+    <script>
+        // Initialize Navbar and Footer
+        document.addEventListener('DOMContentLoaded', function () {
+            new Navbar();
+            new Footer();
+            new SakYantAnim();
+        });
+    </script>
+</body>
+
+</html>
