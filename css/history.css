@@ -1,0 +1,1906 @@
+/* History Page - Horizontal Scrolling Parallax */
+
+/* Variables */
+:root {
+    --history-bg: #272727;
+    --history-text: #fdf0d5;
+    --history-highlight: #e9c824;
+    --history-accent: #d82121;
+    --history-text-highlight: #ffffff;
+}
+
+/* Base Styles */
+body {
+    overflow-x: hidden;
+    background-color: var(--history-bg);
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: var(--history-bg) url('../img/paper_texture.png') repeat;
+    background-size: 420px 420px;
+    opacity: 0.2;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* History Wrapper - Full Viewport */
+.history-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* ============================================
+   SINGLE CONTINUOUS TIMELINE TRACK
+   ============================================ */
+#timeline-track {
+    position: relative;
+    width: 780vw;
+    /* Total width: ~780vw for 7 eras */
+    height: 100vh;
+    will-change: transform;
+}
+
+/* ============================================
+   GLOBAL SEAMLESS BACKGROUND LAYERS
+   ============================================ */
+
+/* Global Sky/Base Layer */
+.layer-sky {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg,
+            rgba(39, 39, 39, 0.95) 0%,
+            rgba(60, 50, 45, 0.85) 50%,
+            rgba(39, 39, 39, 0.9) 100%);
+    z-index: 1;
+}
+
+/* Global Mountains Layer (parallax) */
+.layer-mountains {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.mountain-panorama {
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+    height: 40%;
+    object-fit: contain;
+    transform: scaleY(-1) rotate(180deg);
+    opacity: 0.3;
+}
+
+/* Global Ground Layer (seamless floor) */
+.layer-ground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 25vh;
+    background-size: cover;
+    background-position: center bottom;
+    z-index: 6;
+    /* อยู่หลังนักมวย (z-index: 8) แต่อยู่หน้าภูเขา (z-index: 2) */
+    background: var(--history-bg) url('../img/history-floor.jpg') repeat-x bottom left;
+    pointer-events: none;
+}
+
+/* Global Dark Overlay */
+.layer-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../img/history-dark-overlay.png') repeat-x;
+    background-size: 100vw 100vh;
+    opacity: 0.5;
+    z-index: 4;
+    pointer-events: none;
+}
+
+/* ============================================
+   ERA CONTENT CONTAINERS (Absolute Positioning)
+   ============================================ */
+.era-content {
+    position: absolute;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    /*  บังคับให้กว้างเท่าจอเสมอ */
+    pointer-events: none;
+}
+
+.era-content * {
+    pointer-events: auto;
+}
+
+/* Era Backgrounds (per-era styling) */
+.era-background {
+    position: absolute;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.sukhothai-bg .bg-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ruins-back {
+    z-index: 1;
+    opacity: 0.6;
+}
+
+.ruins-middle {
+    z-index: 2;
+    opacity: 0.5;
+}
+
+.ruins-front {
+    z-index: 3;
+    opacity: 0.4;
+}
+
+/* ============================================
+   SUKHOTHAI ERA - PRECISE POSITIONING
+   ============================================ */
+
+/* Era Section Container */
+.era-section {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+}
+
+/* Sukhothai Section - First section at origin */
+[data-era="sukhothai"] {
+    left: 0;
+}
+
+/* Background Mountain (Farthest Layer) */
+.bg-mountain {
+    position: absolute;
+    bottom: 80px;
+    width: 120%;
+    /* เพิ่มความกว้างให้เกินพื้นที่ */
+    height: 50vh;
+    object-fit: cover;
+    /* ใช้ cover เพื่อให้ใหญ่เต็มพื้นที่ */
+    object-position: center bottom;
+    z-index: 0;
+    transform: scaleY(-1) rotate(180deg);
+    opacity: 0.9;
+    overflow: visible;
+}
+
+/* Sukhothai-specific mountain positioning */
+[data-era="sukhothai"] .bg-mountain {
+    left: -20vw;
+}
+
+/* Ayutthaya-specific mountain positioning */
+[data-era="ayutthaya"] .bg-mountain {
+    left: 24vw;
+    bottom: 40px;
+}
+
+/* Background Floor (2 Artboards positioned to connect seamlessly) */
+.bg-floor {
+    position: absolute;
+    object-fit: center bottom;
+    z-index: 4;
+    pointer-events: none;
+}
+
+/* Floor Artboard 1 - Base floor pattern */
+.bg-floor-1 {
+    left: -250px;
+    bottom: -20px;
+    width: 2369px;
+    /* 2369px / 1920px */
+    height: 100vh;
+}
+
+/* Floor Artboard 2 - Connecting floor pattern */
+.bg-floor-2 {
+    left: 100px;
+    bottom: -20px;
+    width: 2369px;
+    height: 100vh;
+}
+
+/* Floor Artboard 3 - Connecting floor pattern */
+.bg-floor-3 {
+    left: 2000px;
+    bottom: -20px;
+    width: 2369px;
+    height: 100vh;
+}
+
+/* Floor Artboard 4 - Connecting floor pattern */
+.bg-floor-4 {
+    left: 3000px;
+    bottom: -20px;
+    width: 2369px;
+    height: 100vh;
+}
+
+/* Floor Artboard 5 - Connecting floor pattern */
+.bg-floor-5 {
+    left: 4000px;
+    bottom: -20px;
+    width: 2369px;
+    height: 100vh;
+}
+
+/* Floor Artboard 6 - Regional Styles section */
+.bg-floor-6 {
+    left: 2000px;
+    bottom: -20px;
+    width: 2369px;
+    height: 100vh;
+}
+
+/* Floor Artboard 7 - Regional Styles section */
+.bg-floor-7 {
+    left: 5500px;
+    bottom: -33px;
+    width: 2369px;
+    height: 100vh;
+}
+
+
+
+/* Dark Overlay */
+.bg-dark-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../img/history-dark-overlay.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+    z-index: 6;
+}
+
+/* Background Ruins (3 Layers - Overlay) */
+.bg-ruins {
+    position: absolute;
+    left: 0;
+    top: 8vh;
+    /* 96px / 1080px */
+    width: 66.67vw;
+    /* 1280px / 1920px */
+    height: 78.98vh;
+    /* 853px / 1080px */
+    z-index: 5;
+    /* Above mountain, floor, and dark overlay */
+}
+
+.ruins-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ruins-back {
+    z-index: 1;
+    /* Relative to .bg-ruins container */
+    opacity: 1.0;
+}
+
+.ruins-middle {
+    z-index: 2;
+    /* Relative to .bg-ruins container */
+    opacity: 1.0;
+}
+
+.ruins-front {
+    z-index: 3;
+    /* Relative to .bg-ruins container */
+    opacity: 1.0;
+}
+
+/* Kick Poses (Between Text Boxes) */
+.kick-poses {
+    position: absolute;
+    left: 85vw;
+    /* Position between text-box-1 and text-box-2 */
+    top: 30vh;
+    /* Vertically centered with text boxes */
+    z-index: 100;
+    /* Very high z-index to ensure visibility */
+    width: 30vw;
+    height: 50vh;
+}
+
+.kick-pose {
+    position: relative;
+    /* Changed from absolute */
+    height: 45vh;
+    width: auto;
+    object-fit: contain;
+    opacity: 1;
+    display: block;
+    /* Ensure display */
+    transition: transform 0.3s ease, filter 0.3s ease;
+    cursor: pointer;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
+}
+
+/* Individual Kick Positioning (Grid Layout from Figma) */
+.kick-pose:nth-child(1) {
+    left: 50px;
+    top: -90px;
+    height: 35vw;
+}
+
+/* Hover Effect for Kick Poses
+.kick-pose:hover {
+    filter: brightness(1.2) drop-shadow(0 0 20px rgba(233, 200, 36, 0.6));
+    z-index: 11;
+} */
+
+/* Fighters (7 fighters) - Bottom Row */
+.fighters {
+    position: absolute;
+    left: 11.35vw;
+    /* 218px / 1920px */
+    top: 59.07vh;
+    /* 638px / 1080px */
+    z-index: 8;
+}
+
+.fighter {
+    position: absolute;
+    width: 12.99vw;
+    /* 249.435px / 1920px */
+    height: 34.63vh;
+    /* 373.971px / 1080px */
+    object-fit: contain;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Individual Fighter Positioning (Exact Figma Coordinates) */
+.fighter:nth-child(1) {
+    left: 0;
+}
+
+.fighter:nth-child(2) {
+    left: 1.17vw;
+    /* 22.54px / 1920px */
+}
+
+.fighter:nth-child(3) {
+    left: 6.5vw;
+    /* 124.88px / 1920px */
+}
+
+.fighter:nth-child(4) {
+    left: 15.53vw;
+    /* 298.29px / 1920px */
+}
+
+.fighter:nth-child(5) {
+    left: 20.86vw;
+    /* 400.62px / 1920px */
+}
+
+.fighter:nth-child(6) {
+    left: 29.88vw;
+    /* 573.62px / 1920px */
+}
+
+.fighter:nth-child(7) {
+    left: 34.04vw;
+    /* 653.40px / 1920px */
+}
+
+/* Revealed State for Fighters (Stagger Animation) */
+.fighter.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Text Boxes (General Styles) */
+.text-box {
+    position: absolute;
+    padding: 20px 30px;
+    z-index: 15;
+    opacity: 1;
+    transition: opacity 0.8s ease, filter 0.8s ease;
+}
+
+.text-box.revealed {
+    opacity: 1;
+    filter: blur(0);
+}
+
+.text-box p {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--history-text);
+    text-align: center;
+}
+
+.text-box .highlight {
+    font-weight: 700;
+    color: var(--history-highlight);
+}
+
+/* Text Box 1 (Muay Boran Context) */
+.text-box-1 {
+    left: 55vw;
+    /* 1049px / 1920px */
+    top: 30vh;
+    /* 319px / 1080px */
+    width: 22vw;
+    /* 416px / 1920px */
+}
+
+/* Text Box 2 (Royal Curriculum) */
+.text-box-2 {
+    left: 120vw;
+    /* 2319px / 1920px - extends beyond first viewport */
+    top: 29vh;
+    /* 311px / 1080px */
+    width: 19vw;
+    /* 351px / 1920px */
+}
+
+/* Text Box 3 (Ayutthaya - Muay Boran 4 Regions) */
+.text-box-3 {
+    left: 120vw;
+    top: 40vh;
+    width: 30vw;
+}
+
+/* Text Box 4 (Ayutthaya - Royal Boxing Department) */
+.text-box-4 {
+    left: 222vw;
+    top: 27vh;
+    width: 32vw;
+}
+
+/* Text Box 4 (Ayutthaya - Royal Boxing Department) */
+.text-box-5 {
+    left: 288vw;
+    top: 31vh;
+    width: 28vw;
+}
+
+/* Khanom Tom Fighter */
+.khanom-tom-fighter {
+    position: absolute;
+    left: 255vw;
+    bottom: 200px;
+    height: 50vh;
+    /* ขนาดนักมวย */
+    width: auto;
+    object-fit: contain;
+    opacity: 1;
+    z-index: 12;
+}
+
+/* Regional 4 Styles Fighters (Ayutthaya) */
+.regional-fighters {
+    position: absolute;
+    left: 153vw;
+    top: 130px;
+    display: flex;
+    z-index: 12;
+    /* เหนือพื้นแต่ต่ำกว่า text-box */
+}
+
+.fighter-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin-left: -9vw;
+    /* ให้กรอบเหลื่อมกัน */
+}
+
+.fighter-container:first-child {
+    margin-left: 0;
+    /* คนแรกไม่เหลื่อม */
+}
+
+.fighter-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--history-text-highlight);
+    text-align: center;
+    white-space: nowrap;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Individual label positioning */
+.label-north {
+    position: relative;
+    top: 60px;
+}
+
+.label-northeast {
+    position: relative;
+    top: 20px;
+}
+
+.label-south {
+    position: relative;
+    top: 10px;
+}
+
+.label-central {
+    position: relative;
+    top: 40px;
+}
+
+.regional-fighter {
+    height: 60vh;
+    /* ขนาดนักมวย */
+    width: auto;
+    object-fit: contain;
+    opacity: 1;
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
+    /* drop shadow สีขาว */
+}
+
+.regional-fighter.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Era Indicator (Timeline + Circle + Title) */
+.era-indicator {
+    position: absolute;
+    left: 5vw;
+    /* Offset from left edge */
+    top: 86.85vh;
+    /* 938px / 1080px */
+    width: 500vw;
+    /* Extended timeline for all eras (Sukhothai to Present Day) */
+    z-index: 20;
+}
+
+.era-timeline-container {
+    position: relative;
+    width: 100%;
+    /* Full extended width for timeline */
+    height: 53px;
+    /* Same as circle height */
+}
+
+.era-timeline-line {
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background: var(--history-text);
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+
+.era-circle {
+    position: absolute;
+    left: 29.11vw;
+    /* 559px / 1920px - circle position from left edge */
+    top: 0;
+    width: 53px;
+    height: 53px;
+    border-radius: 50%;
+    background: var(--history-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    /* Above the timeline line */
+    transform: translateX(-50%);
+    /* Center the circle on the position */
+}
+
+.era-number {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--history-bg);
+}
+
+.era-title {
+    position: absolute;
+    left: 29.11vw;
+    /* Same as circle position */
+    top: 68px;
+    /* 53px circle + 15px gap */
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--history-text);
+    text-align: center;
+    white-space: nowrap;
+    transform: translateX(-50%);
+    /* Center the title under the circle */
+}
+
+/* ============================================
+   AYUTTHAYA ERA - PRECISE POSITIONING
+   ============================================ */
+
+/* Ayutthaya Section - Continues horizontally from Sukhothai */
+[data-era="ayutthaya"] {
+    left: 100vw;
+    /* Start right after Sukhothai section */
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    /* DEBUG: Uncomment to see section boundaries */
+    /* background: rgba(255, 0, 0, 0.1); */
+}
+
+/* Ayutthaya Temple Complex (3 Layers Overlay) */
+.ayutthaya-temples {
+    position: absolute;
+    left: 0;
+    /* Left edge of Ayutthaya section */
+    top: 9.72vh;
+    /* 105px / 1080px */
+    width: 66.67vw;
+    /* 1280px / 1920px */
+    height: 79vh;
+    /* 853px / 1080px */
+    z-index: 10;
+    /* Above dark overlay (z-index: 6) */
+}
+
+.temple-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 1;
+}
+
+.temple-right {
+    z-index: 1;
+}
+
+.temple-left {
+    z-index: 2;
+}
+
+.temple-center {
+    z-index: 3;
+}
+
+/* Ayutthaya Decorative Trees */
+.ayutthaya-tree {
+    position: absolute;
+    z-index: 3;
+    /* ต่ำกว่าวัด แต่สูงกว่าภูเขา */
+    opacity: 0.85;
+    object-fit: contain;
+}
+
+.tree-1 {
+    left: 206vw;
+    top: 55vh;
+    height: 27.69vh;
+    width: auto;
+}
+
+.tree-2 {
+    left: 142vw;
+    top: 55vh;
+    height: 27.13vh;
+    width: auto;
+}
+
+/* Ayutthaya Era Indicator */
+.era-indicator-ayutthaya {
+    left: 60vw;
+    /* Align with Sukhothai timeline start */
+    top: 86.85vh;
+    /* 938px / 1080px */
+    width: auto;
+    /* Override timeline width for this indicator */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.era-indicator-ayutthaya .era-timeline-container {
+    display: flex;
+    /* Show container but hide line */
+    align-items: center;
+    justify-content: center;
+}
+
+.era-indicator-ayutthaya .era-timeline-line {
+    display: none;
+    /* Hide timeline line for Ayutthaya */
+}
+
+.era-indicator-ayutthaya .era-circle {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    /* Reset transform for centered layout */
+}
+
+.era-indicator-ayutthaya .era-title {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+}
+
+/* ============================================
+   REGIONAL STYLES ERA - TEMPLATE SECTION
+   ============================================ */
+
+/* Regional Styles Section - Continues after Ayutthaya */
+[data-era="regional-styles"] {
+    left: 200vw;
+    /* Start right after Ayutthaya section */
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+}
+
+/* Regional Styles Text Boxes */
+.text-box-regional-1 {
+    left: 15vw;
+    top: 30vh;
+    width: 25vw;
+}
+
+.text-box-regional-2 {
+    left: 50vw;
+    top: 45vh;
+    width: 28vw;
+}
+
+/* Regional Styles Era Indicator */
+.era-indicator-regional {
+    left: 186vw;
+    top: 87vh;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.era-indicator-regional .era-timeline-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.era-indicator-regional .era-timeline-line {
+    display: none;
+}
+
+.era-indicator-regional .era-circle {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+}
+
+.era-indicator-regional .era-title {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+}
+
+/* ============================================
+   LEGACY STYLES (Keep for compatibility)
+   ============================================ */
+
+/* Sukhothai Background Container */
+.sukhothai-bg-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.sukhothai-bg-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 66vw;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sukhothai-bg-layer.ruins-back {
+    z-index: 1;
+    opacity: 0.7;
+}
+
+.sukhothai-bg-layer.ruins-middle {
+    z-index: 2;
+    opacity: 0.6;
+}
+
+.sukhothai-bg-layer.ruins-front {
+    z-index: 3;
+    opacity: 0.5;
+}
+
+/* Sukhothai Kick Poses - Left Bottom */
+.sukhothai-kicks {
+    position: absolute;
+    left: 80.1vw;
+    /* 1538px / 1920px */
+    top: 14.63vh;
+    /* 158px / 1080px */
+    display: grid;
+    grid-template-columns: max-content;
+    grid-template-rows: max-content;
+    z-index: 10;
+}
+
+.sukhothai-kicks .kick-pose {
+    position: absolute;
+    height: 44.69vh;
+    /* 482.61px / 1080px */
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.6s ease;
+}
+
+.sukhothai-kicks .kick-pose.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.sukhothai-kicks .kick-1 {
+    left: 0;
+    top: 0;
+    transition-delay: 0.1s;
+}
+
+.sukhothai-kicks .kick-2 {
+    left: 8.37vw;
+    /* 160.68px / 1920px */
+    top: 1.65vh;
+    /* 17.78px / 1080px */
+    transition-delay: 0.2s;
+}
+
+.sukhothai-kicks .kick-3 {
+    left: 14.5vw;
+    /* 278.42px / 1920px */
+    top: 1.65vh;
+    transition-delay: 0.3s;
+}
+
+.sukhothai-kicks .kick-4 {
+    left: 24.03vw;
+    /* 461.41px / 1920px */
+    top: 1.65vh;
+    transition-delay: 0.4s;
+}
+
+/* Sukhothai Fighters - Bottom Center */
+.sukhothai-fighters {
+    position: absolute;
+    left: 11.35vw;
+    /* 218px / 1920px */
+    top: 59.07vh;
+    /* 638px / 1080px */
+    display: flex;
+    gap: 0;
+    z-index: 8;
+}
+
+.sukhothai-fighters .fighter {
+    position: absolute;
+    height: 34.63vh;
+    /* 373.971px / 1080px */
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+}
+
+.sukhothai-fighters .fighter-1 {
+    left: 0;
+    /* _0034 */
+}
+
+.sukhothai-fighters .fighter-2 {
+    left: 1.17vw;
+    /* 22.54px offset: 240.54 - 218 */
+}
+
+.sukhothai-fighters .fighter-3 {
+    left: 6.5vw;
+    /* 124.88px offset: 342.88 - 218 */
+}
+
+.sukhothai-fighters .fighter-4 {
+    left: 15.42vw;
+    /* 296.16px offset: 516.16 - 218 + some spacing */
+}
+
+.sukhothai-fighters .fighter-5 {
+    left: 20.86vw;
+    /* 400.49px offset: 618.49 - 218 */
+}
+
+.sukhothai-fighters .fighter-6 {
+    left: 29.88vw;
+    /* 573.78px offset: 791.78 - 218 */
+}
+
+.sukhothai-fighters .fighter-7 {
+    left: 34.04vw;
+    /* 653.56px offset: 871.56 - 218 */
+}
+
+/* Text Box Styles */
+[data-era="sukhothai"] .text-box {
+    position: absolute;
+    padding: 15px 15px;
+    z-index: 15;
+}
+
+[data-era="sukhothai"] .text-box p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    line-height: 1.4;
+    color: #fdf0d5;
+    margin: 0;
+    text-align: center;
+}
+
+[data-era="sukhothai"] .text-box .highlight {
+    color: #e9c824;
+    font-weight: 700;
+}
+
+/* Text Box 1 - Muay Boran (Top Center-Left) */
+[data-era="sukhothai"] .text-box-1 {
+    left: 60vw;
+    top: 25vh;
+    width: 150vw;
+    min-height: 20.65vh;
+    /* 223px / 1080px */
+}
+
+/* Text Box 2 - Royal Curriculum (Top Right) */
+[data-era="sukhothai"] .text-box-2 {
+    left: 115vw;
+    top: 25vh;
+    width: 100vw;
+    min-height: 30.56vh;
+    /* 330px / 1080px */
+}
+
+/* Era Label Indicator (Bottom Center) */
+.era-label-indicator {
+    position: absolute;
+    left: 50%;
+    bottom: 8.7vh;
+    /* 94px from bottom (1080-986=94) */
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    z-index: 20;
+}
+
+.era-circle-number {
+    width: 53px;
+    height: 53px;
+    background-color: #fdf0d5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #272727;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.era-label-indicator .era-name {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #fdf0d5;
+    text-align: center;
+    margin: 0;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    white-space: nowrap;
+}
+
+/* ============================================
+   AYUTTHAYA ERA - PRECISE POSITIONING
+   ============================================ */
+
+/* Ayutthaya Background Wash (Gradient Overlay) */
+[data-era="ayutthaya"] .ayutthaya-bg-wash {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 70% 35%, rgba(216, 33, 33, 0.18), transparent 46%),
+        radial-gradient(circle at 20% 25%, rgba(233, 200, 36, 0.1), transparent 42%),
+        linear-gradient(180deg, rgba(20, 14, 14, 0.46), rgba(39, 39, 39, 0.78));
+    z-index: 4;
+    pointer-events: none;
+}
+
+/* Ayutthaya Temple Layers Container */
+.ayutthaya-temples {
+    position: absolute;
+    left: 50vw;
+    top: 13vh;
+    width: 66vw;
+    height: 79vh;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.ayutthaya-temples .temple-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center bottom;
+}
+
+.ayutthaya-temples .temple-right {
+    z-index: 1;
+    opacity: 0.9;
+}
+
+.ayutthaya-temples .temple-left {
+    z-index: 2;
+    opacity: 0.95;
+}
+
+.ayutthaya-temples .temple-center {
+    z-index: 3;
+    opacity: 1;
+}
+
+/* Ayutthaya Text Box (Overlap with Sukhothai) */
+[data-era="ayutthaya"] .ayutthaya-text-box {
+    position: absolute;
+    left: -19.9vw;
+    /* -382px / 1920px - Negative to create overlap */
+    top: 23.52vh;
+    /* 254px / 1080px */
+    width: 18.28vw;
+    /* 351px / 1920px */
+    min-height: 30.56vh;
+    /* 330px / 1080px */
+    background: rgba(0, 0, 0, 0.65);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-radius: 10px;
+    padding: 20px 25px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    z-index: 15;
+}
+
+[data-era="ayutthaya"] .ayutthaya-text-box p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    line-height: 1.5;
+    color: #fdf0d5;
+    margin: 0;
+    text-align: center;
+}
+
+[data-era="ayutthaya"] .ayutthaya-text-box .highlight {
+    color: #e9c824;
+    font-weight: 700;
+}
+
+/* Ayutthaya Era Indicator */
+[data-era="ayutthaya"] .ayutthaya-indicator {
+    /* Inherits from .era-label-indicator - centered at bottom */
+    bottom: 8.7vh;
+}
+
+/* Legacy styles - keep for compatibility */
+.fighters-group {
+    position: absolute;
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+    z-index: 10;
+}
+
+.fighter {
+    height: 240px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+}
+
+/* Content Group (Text & UI) */
+.content-group {
+    position: absolute;
+    z-index: 15;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Transition Group (Overlapping elements) */
+.transition-group {
+    position: absolute;
+    z-index: 12;
+}
+
+.kick-poses-transition {
+    display: flex;
+    gap: 60px;
+    align-items: flex-end;
+}
+
+.kick-pose-transition {
+    height: 400px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
+}
+
+/* Temple Group */
+.temple-group {
+    position: absolute;
+    width: 60vw;
+    height: 65vh;
+    z-index: 11;
+}
+
+.temple-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.temple-right {
+    z-index: 1;
+    left: 5%;
+}
+
+.temple-left {
+    z-index: 2;
+    left: 0;
+}
+
+.temple-center {
+    z-index: 3;
+    left: 2.5%;
+}
+
+/* Placeholder Styles */
+.era-placeholder {
+    opacity: 0.6;
+}
+
+.placeholder-text {
+    text-align: center;
+}
+
+.placeholder-note {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    color: var(--history-text);
+    opacity: 0.5;
+    font-style: italic;
+}
+
+/* Content Layer (Highest z-index) */
+.content-layer {
+    position: relative;
+    z-index: 10;
+    width: 85%;
+    max-width: 1200px;
+    padding: 120px 40px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Era Number */
+.era-number {
+    width: 53px;
+    height: 53px;
+    background-color: var(--history-text);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.era-number span {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--history-bg);
+}
+
+/* Era Title */
+.era-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    color: var(--history-text);
+    text-align: center;
+    margin: 0;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Text Box */
+.text-box {
+    padding: 15px 2px;
+    max-width: 420px;
+}
+
+.text-box p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    line-height: 1.4;
+    color: var(--history-text);
+    margin: 0;
+}
+
+.text-box .highlight {
+    color: var(--history-highlight);
+    font-weight: 600;
+}
+
+/* Text positioning */
+.left-text {
+    align-self: flex-start;
+    margin-left: 10%;
+}
+
+.right-text {
+    align-self: flex-end;
+    margin-right: 10%;
+}
+
+.center-text {
+    align-self: center;
+    text-align: center;
+    max-width: 550px;
+}
+
+/* Text Reveal Animation */
+.text-reveal {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.text-reveal.revealed {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+}
+
+/* Kick Poses */
+.kick-poses {
+    display: flex;
+    gap: 40px;
+    align-items: flex-end;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.kick-pose {
+    height: 320px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
+    opacity: 1;
+    transform: translateY(50px);
+    transition: all 0.6s ease;
+}
+
+.kick-pose.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.kick-pose.kick-1 {
+    transition-delay: 0.1s;
+}
+
+.kick-pose.kick-2 {
+    transition-delay: 0.2s;
+}
+
+.kick-pose.kick-3 {
+    transition-delay: 0.3s;
+}
+
+.kick-pose.kick-4 {
+    transition-delay: 0.4s;
+}
+
+/* ============================================
+   AYUTTHAYA ERA - TRANSITION & OVERLAP STYLES
+   ============================================ */
+
+/* Transition Layer: Sukhothai elements overlapping into Ayutthaya */
+.transition-sukhothai-kicks {
+    position: absolute;
+    left: -30%;
+    top: 25%;
+    width: 50%;
+    z-index: 11;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 1s ease-out;
+}
+
+.kick-poses-transition {
+    display: flex;
+    gap: 60px;
+    align-items: flex-end;
+    justify-content: flex-start;
+    margin-bottom: 30px;
+}
+
+.kick-pose-transition {
+    height: 400px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
+}
+
+.text-box-transition {
+    background: rgba(0, 0, 0, 0.7);
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    border-radius: 10px;
+    padding: 25px 35px;
+    max-width: 400px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.left-transition {
+    margin-left: 20px;
+}
+
+.text-box-transition p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--history-text);
+    margin: 0;
+}
+
+/* Ayutthaya Temple Complex */
+.temple-complex {
+    position: absolute;
+    right: 10%;
+    top: 15%;
+    width: 60vw;
+    height: 65vh;
+    z-index: 9;
+    pointer-events: none;
+}
+
+.temple-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.temple-right {
+    z-index: 1;
+    left: 5%;
+}
+
+.temple-left {
+    z-index: 2;
+    left: 0;
+}
+
+.temple-center {
+    z-index: 3;
+    left: 2.5%;
+}
+
+/* Era Divider Line */
+.era-divider-line {
+    position: absolute;
+    bottom: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 6px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.divider-line {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    opacity: 0.8;
+}
+
+/* Ayutthaya Content Layer */
+.ayutthaya-content {
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 8%;
+}
+
+/* Era Indicator (Circle + Number + Title) */
+.era-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 15;
+}
+
+.era-circle-wrapper {
+    position: relative;
+    width: 60px;
+    height: 60px;
+}
+
+.era-circle-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.era-number-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Poppins', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--history-bg);
+    line-height: 1;
+}
+
+.era-title-small {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--history-text);
+    text-align: center;
+    margin: 0;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    white-space: nowrap;
+}
+
+/* Regional Styles Section */
+.regional-section .content-layer {
+    max-width: 1600px;
+}
+
+.regional-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    width: 100%;
+    margin-top: 40px;
+}
+
+.regional-card {
+    background: rgba(0, 0, 0, 0.7);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(253, 240, 213, 0.1);
+    transition: all 0.4s ease;
+}
+
+.regional-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--history-highlight);
+    box-shadow: 0 12px 40px rgba(233, 200, 36, 0.3);
+}
+
+.region-number {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--history-highlight), var(--history-accent));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--history-bg);
+    margin: 0 auto 20px;
+}
+
+.regional-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: var(--history-text);
+    margin: 15px 0 5px;
+}
+
+.region-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: var(--history-highlight);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.regional-card p:not(.region-label) {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--history-text);
+}
+
+/* Placeholder Elements */
+.placeholder-fighters {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.placeholder-box {
+    width: 200px;
+    height: 300px;
+    background: linear-gradient(135deg, rgba(253, 240, 213, 0.1), rgba(233, 200, 36, 0.05));
+    border: 2px dashed rgba(253, 240, 213, 0.3);
+    border-radius: 12px;
+    animation: pulse-placeholder 2s ease-in-out infinite;
+}
+
+@keyframes pulse-placeholder {
+
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 0.6;
+    }
+}
+
+/* ============================================
+   ERA-SPECIFIC STYLES
+   ============================================ */
+
+/* Ayutthaya Background Wash 
+.ayutthaya-bg-wash {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 70% 35%, rgba(216, 33, 33, 0.18), transparent 46%),
+        radial-gradient(circle at 20% 25%, rgba(233, 200, 36, 0.1), transparent 42%),
+        linear-gradient(180deg, rgba(20, 14, 14, 0.46), rgba(39, 39, 39, 0.78));
+    z-index: 6;
+}*/
+
+/* Regional Background Wash (Muay Boran) */
+.regional-bg-wash {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 25% 40%, rgba(233, 200, 36, 0.11), transparent 40%),
+        radial-gradient(circle at 78% 55%, rgba(216, 33, 33, 0.1), transparent 46%),
+        linear-gradient(180deg, rgba(24, 24, 24, 0.55), rgba(39, 39, 39, 0.82));
+    z-index: 6;
+}
+
+/* Era Divider Line (Updated for absolute positioning) */
+.era-divider-line {
+    width: 1.5px;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 14;
+}
+
+.divider-line-img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));
+}
+
+.era-circle {
+    position: absolute;
+    width: 53px;
+    height: 53px;
+    object-fit: contain;
+}
+
+/* Era Indicator (Updated styles) */
+.era-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    z-index: 20;
+}
+
+.era-number {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.era-thai-name {
+    font-family: 'Prompt', sans-serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--history-text);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.era-subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--history-text);
+    opacity: 0.8;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* Content Container */
+.content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    max-width: 600px;
+    padding: 0 40px;
+}
+
+.era-title {
+    font-family: 'Prompt', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--history-text);
+    text-align: center;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+    letter-spacing: 1.5px;
+}
+
+.era-body {
+    font-family: 'Prompt', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.8;
+    color: var(--history-text);
+    text-align: center;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+}
+
+/* Footer Section */
+.footer-section {
+    min-width: 100vw;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--history-bg);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1440px) {
+    .era-title {
+        font-size: 24px;
+    }
+
+    .kick-poses {
+        gap: 40px;
+    }
+
+    .kick-pose {
+        height: 350px;
+    }
+
+    .regional-grid {
+        gap: 30px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .era-title {
+        font-size: 24px;
+    }
+
+    .text-box {
+        max-width: 400px;
+        padding: 25px 30px;
+    }
+
+    .text-box p {
+        font-size: 16px;
+    }
+
+    .kick-poses {
+        gap: 30px;
+    }
+
+    .kick-pose {
+        height: 300px;
+    }
+
+    .fighter {
+        height: 250px;
+    }
+
+    .regional-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .history-wrapper {
+        height: 100vh;
+    }
+
+    .era-title {
+        font-size: 24px;
+    }
+
+    .text-box {
+        max-width: 350px;
+        padding: 20px 25px;
+    }
+
+    .text-box p {
+        font-size: 14px;
+    }
+
+    .kick-poses {
+        gap: 20px;
+    }
+
+    .kick-pose {
+        height: 250px;
+    }
+
+    .fighter {
+        height: 200px;
+    }
+
+    .fighters-layer {
+        gap: 10px;
+        padding: 0 50px;
+    }
+
+    .regional-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .placeholder-box {
+        width: 150px;
+        height: 250px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .era-title {
+        font-size: 24px;
+    }
+
+    .era-number {
+        width: 50px;
+        height: 50px;
+    }
+
+    .era-number span {
+        font-size: 24px;
+    }
+
+    .text-box {
+        padding: 15px 20px;
+    }
+
+    .text-box p {
+        font-size: 13px;
+    }
+
+    .kick-poses {
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .kick-pose {
+        height: 200px;
+    }
+
+    .fighter {
+        height: 150px;
+    }
+
+    .regional-card {
+        padding: 30px 20px;
+    }
+
+    .regional-card h3 {
+        font-size: 26px;
+    }
+}
