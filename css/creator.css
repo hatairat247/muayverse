@@ -346,7 +346,7 @@ body {
 }
 
 /* Mobile (หน้าจอขนาดเล็กกว่า 768px) */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     .creator-title {
         font-size: 56px;
         padding: 10px 0;
