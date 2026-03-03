@@ -1,7 +1,8 @@
 // History Page - Horizontal Scrolling Timeline
 // Using GSAP ScrollTrigger
 
-document.addEventListener('DOMContentLoaded', () => {
+// Use 'load' instead of 'DOMContentLoaded' to ensure CSS is fully loaded
+window.addEventListener('load', () => {
     // Initialize GSAP & ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
 
@@ -21,6 +22,7 @@ function initHorizontalScroll() {
 
     // Calculate total width based on timeline-track width
     const totalWidth = timelineTrack.offsetWidth;
+    console.log('Timeline total width:', totalWidth, 'px');
 
     // Create horizontal scroll animation
     gsap.to(timelineTrack, {
@@ -37,6 +39,11 @@ function initHorizontalScroll() {
             id: 'horizontal-scroll'
         }
     });
+
+    // Refresh ScrollTrigger after a brief delay to ensure layout is complete
+    setTimeout(() => {
+        ScrollTrigger.refresh();
+    }, 100);
 }
 
 // ===== Text Reveal Animation =====

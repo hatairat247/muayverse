@@ -42,8 +42,8 @@ body::before {
    ============================================ */
 #timeline-track {
     position: relative;
-    width: 780vw;
-    /* Total width: ~780vw for 7 eras */
+    width: 1200vw;
+    /* Total width: ~1200vw for 11 eras */
     height: 100vh;
     will-change: transform;
 }
@@ -192,8 +192,7 @@ body::before {
     /* ใช้ cover เพื่อให้ใหญ่เต็มพื้นที่ */
     object-position: center bottom;
     z-index: 0;
-    transform: scaleY(-1) rotate(180deg);
-    opacity: 0.9;
+    opacity: 1;
     overflow: visible;
 }
 
@@ -204,9 +203,26 @@ body::before {
 
 /* Ayutthaya-specific mountain positioning */
 [data-era="ayutthaya"] .bg-mountain {
-    left: 24vw;
+    left: 19vw;
     bottom: 40px;
 }
+
+/* Korat-specific mountain positioning */
+[data-era="korat"] .bg-mountain {
+    bottom: 60px;
+}
+
+/* Individual Korat Mountain Positioning - Horizontal Layout */
+.bg-mountain-korat-1 {
+    position: absolute;
+    left: 145vw;
+}
+
+.bg-mountain-korat-2 {
+    position: absolute;
+    left: 247vw;
+}
+
 
 /* Background Floor (2 Artboards positioned to connect seamlessly) */
 .bg-floor {
@@ -273,7 +289,35 @@ body::before {
     height: 100vh;
 }
 
+/* Floor Artboard 8 - Regional Styles section */
+.bg-floor-8 {
+    left: 6500px;
+    bottom: -33px;
+    width: 2369px;
+    height: 100vh;
+}
 
+/* Floor Artboard 9 - Regional Styles section */
+.bg-floor-9 {
+    left: 7500px;
+    bottom: -33px;
+    width: 2369px;
+    height: 100vh;
+}
+
+.bg-floor-10 {
+    left: 9000px;
+    bottom: -33px;
+    width: 2369px;
+    height: 100vh;
+}
+
+.bg-floor-11 {
+    left: 10600px;
+    bottom: -33px;
+    width: 2369px;
+    height: 100vh;
+}
 
 /* Dark Overlay */
 .bg-dark-overlay {
@@ -465,50 +509,108 @@ body::before {
 /* Text Box 1 (Muay Boran Context) */
 .text-box-1 {
     left: 55vw;
-    /* 1049px / 1920px */
     top: 30vh;
-    /* 319px / 1080px */
     width: 22vw;
-    /* 416px / 1920px */
 }
 
 /* Text Box 2 (Royal Curriculum) */
 .text-box-2 {
     left: 120vw;
-    /* 2319px / 1920px - extends beyond first viewport */
     top: 29vh;
-    /* 311px / 1080px */
     width: 19vw;
-    /* 351px / 1920px */
 }
 
 /* Text Box 3 (Ayutthaya - Muay Boran 4 Regions) */
 .text-box-3 {
-    left: 120vw;
+    left: 115vw;
     top: 40vh;
     width: 30vw;
 }
 
-/* Text Box 4 (Ayutthaya - Royal Boxing Department) */
 .text-box-4 {
-    left: 222vw;
+    left: 223vw;
     top: 27vh;
     width: 32vw;
 }
 
-/* Text Box 4 (Ayutthaya - Royal Boxing Department) */
 .text-box-5 {
-    left: 288vw;
+    left: 290vw;
     top: 31vh;
     width: 28vw;
+}
+
+.text-box-6 {
+    left: 251vw;
+    top: 33vh;
+    width: 25vw;
+}
+
+.text-box-7 {
+    left: 245vw;
+    top: 33vh;
+    width: 32vw;
+}
+
+.text-box-8 {
+    left: 350vw;
+    top: 40vh;
+    width: 32vw;
+}
+
+.text-box-9 {
+    left: 418vw;
+    top: 40vh;
+    width: 32vw;
+}
+
+
+/* Korat Buffalo Swing Poses */
+.korat-poses {
+    position: absolute;
+    left: 275vw;
+    top: 10vh;
+    z-index: 100;
+    width: 30vw;
+    height: 50vh;
+}
+
+.pose-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.pose-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--history-text-highlight);
+    text-align: center;
+    white-space: nowrap;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    position: relative;
+    left: 50px;
+    top: 80px;
+}
+
+.korat-pose {
+    position: relative;
+    height: 75vh;
+    width: auto;
+    object-fit: contain;
+    opacity: 1;
+    display: block;
+    cursor: pointer;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
 }
 
 /* Khanom Tom Fighter */
 .khanom-tom-fighter {
     position: absolute;
-    left: 255vw;
-    bottom: 200px;
-    height: 50vh;
+    left: 256vw;
+    bottom: 180px;
+    height: 55vh;
     /* ขนาดนักมวย */
     width: auto;
     object-fit: contain;
@@ -519,7 +621,7 @@ body::before {
 /* Regional 4 Styles Fighters (Ayutthaya) */
 .regional-fighters {
     position: absolute;
-    left: 153vw;
+    left: 148vw;
     top: 130px;
     display: flex;
     z-index: 12;
@@ -600,7 +702,7 @@ body::before {
 
 .era-timeline-container {
     position: relative;
-    width: 100%;
+    width: 400%;
     /* Full extended width for timeline */
     height: 53px;
     /* Same as circle height */
@@ -608,7 +710,7 @@ body::before {
 
 .era-timeline-line {
     position: absolute;
-    width: 100%;
+    width: 400%;
     height: 3px;
     background: var(--history-text);
     top: 50%;
@@ -657,6 +759,45 @@ body::before {
     white-space: nowrap;
     transform: translateX(-50%);
     /* Center the title under the circle */
+}
+
+/* Sukhothai Era Indicator */
+.era-indicator-sukhothai {
+    position: absolute;
+    left: 5vw;
+    top: 87vh;
+    width: 1100vw;
+    z-index: 20;
+}
+
+.era-indicator-sukhothai .era-timeline-container {
+    position: relative;
+    width: 100%;
+    height: 53px;
+}
+
+.era-indicator-sukhothai .era-timeline-line {
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background: var(--history-text);
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+
+.era-indicator-sukhothai .era-circle {
+    position: absolute;
+    left: 29.11vw;
+    top: 0;
+    transform: translateX(-50%);
+}
+
+.era-indicator-sukhothai .era-title {
+    position: absolute;
+    left: 29.11vw;
+    top: 68px;
+    transform: translateX(-50%);
 }
 
 /* ============================================
@@ -717,21 +858,21 @@ body::before {
     position: absolute;
     z-index: 3;
     /* ต่ำกว่าวัด แต่สูงกว่าภูเขา */
-    opacity: 0.85;
+    opacity: 1;
     object-fit: contain;
 }
 
 .tree-1 {
-    left: 206vw;
+    left: 210vw;
     top: 55vh;
-    height: 27.69vh;
+    height: 27vh;
     width: auto;
 }
 
 .tree-2 {
-    left: 142vw;
+    left: 136vw;
     top: 55vh;
-    height: 27.13vh;
+    height: 27vh;
     width: auto;
 }
 
@@ -790,6 +931,20 @@ body::before {
     top: 0;
 }
 
+/* Muay Boran Thailand Image */
+.boran-thailand-image {
+    position: absolute;
+    left: 224vw;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 60vh;
+    width: auto;
+    object-fit: contain;
+    opacity: 1;
+    z-index: 10;
+    filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.7));
+}
+
 /* Regional Styles Text Boxes */
 .text-box-regional-1 {
     left: 15vw;
@@ -832,6 +987,765 @@ body::before {
 }
 
 .era-indicator-regional .era-title {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+}
+
+/* ============================================
+   KORAT STYLE ERA - TEMPLATE SECTION
+   ============================================ */
+
+/* Korat Section - Continues after Regional Styles */
+[data-era="korat"] {
+    left: 300vw;
+    /* Start right after Regional Styles section */
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+}
+
+/* Korat Background Image */
+.korat-background {
+    position: absolute;
+    left: 172vw;
+    top: 13vh;
+    width: 70vw;
+    height: 79vh;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.korat-background .korat-bg-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    object-fit: contain;
+    object-position: center bottom;
+
+}
+
+/* Korat Text Boxes */
+.text-box-korat-1 {
+    position: absolute;
+    left: 315vw;
+    top: 30vh;
+    width: 25vw;
+    z-index: 15;
+}
+
+.text-box-korat-2 {
+    position: absolute;
+    left: 350vw;
+    top: 45vh;
+    width: 28vw;
+    z-index: 15;
+}
+
+/* Korat Era Indicator */
+.era-indicator-korat {
+    position: absolute;
+    left: 180vw;
+    top: 87vh;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 20;
+}
+
+.era-indicator-korat .era-timeline-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.era-indicator-korat .era-timeline-line {
+    display: none;
+}
+
+.era-indicator-korat .era-circle {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+}
+
+.era-indicator-korat .era-title {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+}
+
+/* ============================================
+   LOPBURI STYLE ERA - TEMPLATE SECTION
+   ============================================ */
+
+/* Lopburi Section */
+[data-era="lopburi"] {
+    left: 400vw;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+}
+
+/* Individual Lopburi Mountain Positioning */
+.bg-mountain-lopburi-1 {
+    position: absolute;
+    left: 145vw;
+}
+
+.bg-mountain-lopburi-2 {
+    position: absolute;
+    left: 247vw;
+}
+
+/* Lopburi Background Complex (3 Layers) */
+.lopburi-background {
+    position: absolute;
+    left: 212vw;
+    top: 16vh;
+    width: 70vw;
+    height: 75vh;
+    z-index: 10;
+}
+
+.lopburi-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    opacity: 1;
+}
+
+.lopburi-right {
+    z-index: 1;
+}
+
+.lopburi-left {
+    z-index: 2;
+}
+
+.lopburi-center {
+    z-index: 3;
+}
+
+/* Lopburi Fighters (4 poses) */
+.lopburi-fighters {
+    position: absolute;
+    left: 285vw;
+    top: 110px;
+    display: flex;
+    z-index: 12;
+}
+
+.lopburi-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: -13vw;
+}
+
+.lopburi-container:first-child {
+    margin-left: 0;
+}
+
+.lopburi-fighter {
+    height: 60vh;
+    width: auto;
+    object-fit: contain;
+    opacity: 1;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+}
+
+/* Individual fighter positioning for overlap effect */
+.lopburi-fighter-1 {
+    position: relative;
+    top: 10px;
+}
+
+.lopburi-fighter-2 {
+    position: relative;
+    top: 40px;
+    left: -20px;
+}
+
+.lopburi-fighter-3 {
+    position: relative;
+    top: 20px;
+    left: 10px;
+}
+
+.lopburi-fighter-4 {
+    position: relative;
+    top: 30px;
+}
+
+/* Lopburi Fighters Set 2 (2 more poses) */
+.lopburi-fighters-2 {
+    position: absolute;
+    left: 377vw;
+    top: 100px;
+    display: flex;
+    z-index: 12;
+}
+
+.lopburi-fighters-2 .lopburi-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: -14vw;
+}
+
+.lopburi-fighters-2 .lopburi-container:first-child {
+    margin-left: 0;
+}
+
+.lopburi-fighters-2 .lopburi-fighter-2 {
+    height: 70vh;
+    width: auto;
+    object-fit: contain;
+    opacity: 1;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+}
+
+.lopburi-fighter-5 {
+    position: relative;
+    top: -30px;
+}
+
+.lopburi-fighter-6 {
+    position: relative;
+    top: 5px;
+}
+
+/* Lopburi Text Boxes */
+.text-box-lopburi-1 {
+    position: absolute;
+    left: 415vw;
+    top: 30vh;
+    width: 25vw;
+    z-index: 15;
+}
+
+.text-box-lopburi-2 {
+    position: absolute;
+    left: 450vw;
+    top: 45vh;
+    width: 28vw;
+    z-index: 15;
+}
+
+/* Lopburi Era Indicator */
+.era-indicator-lopburi {
+    position: absolute;
+    left: 235vw;
+    top: 87vh;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 20;
+}
+
+.era-indicator-lopburi .era-timeline-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.era-indicator-lopburi .era-timeline-line {
+    display: none;
+}
+
+.era-indicator-lopburi .era-circle {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+}
+
+.era-indicator-lopburi .era-title {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+}
+
+/* ============================================
+   CHAIYA STYLE ERA - TEMPLATE SECTION
+   ============================================ */
+
+/* Chaiya Section */
+[data-era="chaiya"] {
+    left: 500vw;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+}
+
+/* Individual Chaiya Mountain Positioning */
+.bg-mountain-chaiya-1 {
+    position: absolute;
+    left: 145vw;
+}
+
+.bg-mountain-chaiya-2 {
+    position: absolute;
+    left: 247vw;
+}
+
+/* Chaiya Text Boxes */
+.text-box-chaiya-1 {
+    position: absolute;
+    left: 515vw;
+    top: 30vh;
+    width: 25vw;
+    z-index: 15;
+}
+
+.text-box-chaiya-2 {
+    position: absolute;
+    left: 550vw;
+    top: 45vh;
+    width: 28vw;
+    z-index: 15;
+}
+
+/* Chaiya Era Indicator */
+.era-indicator-chaiya {
+    position: absolute;
+    left: 380vw;
+    top: 87vh;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 20;
+}
+
+.era-indicator-chaiya .era-timeline-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.era-indicator-chaiya .era-timeline-line {
+    display: none;
+}
+
+.era-indicator-chaiya .era-circle {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+}
+
+.era-indicator-chaiya .era-title {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+}
+
+/* ============================================
+   THA SAO STYLE ERA - TEMPLATE SECTION
+   ============================================ */
+
+/* Tha Sao Section */
+[data-era="tha-sao"] {
+    left: 600vw;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+}
+
+/* Individual Tha Sao Mountain Positioning */
+.bg-mountain-tha-sao-1 {
+    position: absolute;
+    left: 145vw;
+}
+
+.bg-mountain-tha-sao-2 {
+    position: absolute;
+    left: 247vw;
+}
+
+/* Tha Sao Text Boxes */
+.text-box-tha-sao-1 {
+    position: absolute;
+    left: 615vw;
+    top: 30vh;
+    width: 25vw;
+    z-index: 15;
+}
+
+.text-box-tha-sao-2 {
+    position: absolute;
+    left: 650vw;
+    top: 45vh;
+    width: 28vw;
+    z-index: 15;
+}
+
+/* Tha Sao Era Indicator */
+.era-indicator-tha-sao {
+    position: absolute;
+    left: 480vw;
+    top: 87vh;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 20;
+}
+
+.era-indicator-tha-sao .era-timeline-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.era-indicator-tha-sao .era-timeline-line {
+    display: none;
+}
+
+.era-indicator-tha-sao .era-circle {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+}
+
+.era-indicator-tha-sao .era-title {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+}
+
+/* ============================================
+   THONBURI ERA - TEMPLATE SECTION
+   ============================================ */
+
+/* Thonburi Section */
+[data-era="thonburi"] {
+    left: 700vw;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+}
+
+/* Individual Thonburi Mountain Positioning */
+.bg-mountain-thonburi-1 {
+    position: absolute;
+    left: 145vw;
+}
+
+.bg-mountain-thonburi-2 {
+    position: absolute;
+    left: 247vw;
+}
+
+/* Thonburi Text Boxes */
+.text-box-thonburi-1 {
+    position: absolute;
+    left: 715vw;
+    top: 30vh;
+    width: 25vw;
+    z-index: 15;
+}
+
+.text-box-thonburi-2 {
+    position: absolute;
+    left: 750vw;
+    top: 45vh;
+    width: 28vw;
+    z-index: 15;
+}
+
+/* Thonburi Era Indicator */
+.era-indicator-thonburi {
+    position: absolute;
+    left: 580vw;
+    top: 87vh;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 20;
+}
+
+.era-indicator-thonburi .era-timeline-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.era-indicator-thonburi .era-timeline-line {
+    display: none;
+}
+
+.era-indicator-thonburi .era-circle {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+}
+
+.era-indicator-thonburi .era-title {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+}
+
+/* ============================================
+   EARLY RATTANAKOSIN ERA - TEMPLATE SECTION
+   ============================================ */
+
+/* Early Rattanakosin Section */
+[data-era="early-rattanakosin"] {
+    left: 800vw;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+}
+
+/* Individual Early Rattanakosin Mountain Positioning */
+.bg-mountain-early-ratana-1 {
+    position: absolute;
+    left: 145vw;
+}
+
+.bg-mountain-early-ratana-2 {
+    position: absolute;
+    left: 247vw;
+}
+
+/* Early Rattanakosin Text Boxes */
+.text-box-early-ratana-1 {
+    position: absolute;
+    left: 815vw;
+    top: 30vh;
+    width: 25vw;
+    z-index: 15;
+}
+
+.text-box-early-ratana-2 {
+    position: absolute;
+    left: 850vw;
+    top: 45vh;
+    width: 28vw;
+    z-index: 15;
+}
+
+/* Early Rattanakosin Era Indicator */
+.era-indicator-early-ratana {
+    position: absolute;
+    left: 680vw;
+    top: 87vh;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 20;
+}
+
+.era-indicator-early-ratana .era-timeline-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.era-indicator-early-ratana .era-timeline-line {
+    display: none;
+}
+
+.era-indicator-early-ratana .era-circle {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+}
+
+.era-indicator-early-ratana .era-title {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+}
+
+/* ============================================
+   MID RATTANAKOSIN ERA - TEMPLATE SECTION
+   ============================================ */
+
+/* Mid Rattanakosin Section */
+[data-era="mid-rattanakosin"] {
+    left: 900vw;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+}
+
+/* Individual Mid Rattanakosin Mountain Positioning */
+.bg-mountain-mid-ratana-1 {
+    position: absolute;
+    left: 145vw;
+}
+
+.bg-mountain-mid-ratana-2 {
+    position: absolute;
+    left: 247vw;
+}
+
+/* Mid Rattanakosin Text Boxes */
+.text-box-mid-ratana-1 {
+    position: absolute;
+    left: 915vw;
+    top: 30vh;
+    width: 25vw;
+    z-index: 15;
+}
+
+.text-box-mid-ratana-2 {
+    position: absolute;
+    left: 950vw;
+    top: 45vh;
+    width: 28vw;
+    z-index: 15;
+}
+
+/* Mid Rattanakosin Era Indicator */
+.era-indicator-mid-ratana {
+    position: absolute;
+    left: 780vw;
+    top: 87vh;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 20;
+}
+
+.era-indicator-mid-ratana .era-timeline-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.era-indicator-mid-ratana .era-timeline-line {
+    display: none;
+}
+
+.era-indicator-mid-ratana .era-circle {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+}
+
+.era-indicator-mid-ratana .era-title {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+}
+
+/* ============================================
+   PRESENT DAY ERA - TEMPLATE SECTION
+   ============================================ */
+
+/* Present Day Section */
+[data-era="present-day"] {
+    left: 1000vw;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+}
+
+/* Individual Present Day Mountain Positioning */
+.bg-mountain-present-1 {
+    position: absolute;
+    left: 145vw;
+}
+
+.bg-mountain-present-2 {
+    position: absolute;
+    left: 247vw;
+}
+
+/* Present Day Text Boxes */
+.text-box-present-1 {
+    position: absolute;
+    left: 1015vw;
+    top: 30vh;
+    width: 25vw;
+    z-index: 15;
+}
+
+.text-box-present-2 {
+    position: absolute;
+    left: 1050vw;
+    top: 45vh;
+    width: 28vw;
+    z-index: 15;
+}
+
+/* Present Day Era Indicator */
+.era-indicator-present {
+    position: absolute;
+    left: 880vw;
+    top: 87vh;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 20;
+}
+
+.era-indicator-present .era-timeline-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.era-indicator-present .era-timeline-line {
+    display: none;
+}
+
+.era-indicator-present .era-circle {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+}
+
+.era-indicator-present .era-title {
     position: relative;
     left: auto;
     top: auto;

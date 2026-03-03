@@ -15,10 +15,6 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/history.css">
-
-    <!-- GSAP for Horizontal Scroll -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 
 <body>
@@ -75,7 +71,7 @@
             <!-- Sukhothai Era -->
             <section class="era-section" data-era="sukhothai">
                 <!-- Background Mountain (Farthest Layer) -->
-                <img class="bg-mountain bg-mountain-1" src="img/building/history-mountain.png"
+                <img class="bg-mountain bg-mountain-1" src="img/building/history-mountain3.png"
                     alt="Mountain Background">
 
                 <!-- Background Floor (2 Artboards) -->
@@ -86,6 +82,10 @@
                 <img class="bg-floor bg-floor-5" src="img/floor/floor-artboard-2.png" alt="Floor 5">
                 <img class="bg-floor bg-floor-6" src="img/floor/floor-artboard-2.png" alt="Floor 6">
                 <img class="bg-floor bg-floor-7" src="img/floor/floor-artboard-3.png" alt="Floor 7">
+                <img class="bg-floor bg-floor-8" src="img/floor/floor-artboard-3.png" alt="Floor 8">
+                <img class="bg-floor bg-floor-9" src="img/floor/floor-artboard-3.png" alt="Floor 9">
+                <img class="bg-floor bg-floor-10" src="img/floor/floor-artboard-4.png" alt="Floor 10">
+                <img class="bg-floor bg-floor-11" src="img/floor/floor-artboard-4.png" alt="Floor 11">
 
                 <!-- Dark Overlay -->
                 <div class="bg-dark-overlay"></div>
@@ -105,17 +105,11 @@
                 <!-- Fighters (7 fighters) - Bottom Row -->
                 <div class="fighters">
                     <img class="fighter" src="img/sukhothai/sukhothai-fighter-1.png" alt="Fighter 1">
-                    <img class="fighter" src="img/sukhothai/sukhothai-fighter-2.png" alt="Fighter 2">
-                    <img class="fighter" src="img/sukhothai/sukhothai-fighter-3.png" alt="Fighter 3">
-                    <img class="fighter" src="img/sukhothai/sukhothai-fighter-4.png" alt="Fighter 4">
-                    <img class="fighter" src="img/sukhothai/sukhothai-fighter-5.png" alt="Fighter 5">
-                    <img class="fighter" src="img/sukhothai/sukhothai-fighter-6.png" alt="Fighter 6">
-                    <img class="fighter" src="img/sukhothai/sukhothai-fighter-7.png" alt="Fighter 7">
                 </div>
 
                 <!-- Text Box 1 (Muay Boran Context) -->
                 <div class="text-box text-box-1">
-                    <p>Although not yet distinctly classified as<span class="highlight">"Muay Boran,"</span>historical
+                    <p>Although not yet distinctly classified as<span class="highlight">"Muay Boran"</span>, historical
                         evidence confirms the use of limbs as weapons within the military, marking the inception of
                         unarmed combat.</p>
                 </div>
@@ -128,7 +122,7 @@
                 </div>
 
                 <!-- Era Indicator (Timeline + Circle + Title) -->
-                <div class="era-indicator">
+                <div class="era-indicator era-indicator-sukhothai">
                     <div class="era-timeline-container">
                         <div class="era-timeline-line"></div>
                         <div class="era-circle">
@@ -226,24 +220,19 @@
 
             <!-- Muay Boran: The 4 Regional Styles -->
             <section class="era-section" data-era="regional-styles">
-                <!-- Background Mountain (Farthest Layer) -->
-                <img class="bg-mountain" src="img/building/history-mountain.png" alt="Mountain Background">
-
 
                 <!-- Dark Overlay  -->
                 <div class="bg-dark-overlay"></div>
 
-                Content Area
-                <div class="text-box text-box-regional-1">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. <span class="highlight">Ut enim ad minim veniam</span>, quis
-                        nostrud exercitation ullamco laboris.</p>
-                </div>
+                <!-- Muay Boran Thailand Image -->
+                <img class="boran-thailand-image" src="img/muay-boran/boran-thailand.png" alt="Muay Boran Thailand">
 
-                <div class="text-box text-box-regional-2">
-                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                        pariatur. <span class="highlight">Excepteur sint occaecat</span> cupidatat non proident, sunt in
-                        culpa qui officia deserunt mollit anim id est laborum.</p>
+                <!-- Content Area -->
+                <div class="text-box text-box-6">
+                    <p>Ancient Muay Thai varies by region, each with unique characteristics, summarized by the saying:
+                        <span class="highlight">"Heavy Punch Korat,Smart Lopburi, Good Posture Chaiya, Faster
+                            ThaSao."</span>
+                    </p>
                 </div>
 
                 <!-- Era Indicator (Timeline + Circle + Title) -->
@@ -256,13 +245,323 @@
                     <h2 class="era-title">Muay Boran: The 4 Regional Styles</h2>
                 </div>
             </section>
+
+            <!-- Muay Korat (Northeast) -->
+            <section class="era-section" data-era="korat">
+                <!-- Background Mountain -->
+                <img class="bg-mountain bg-mountain-korat-1" src="img/building/history-mountain2.png"
+                    alt="Mountain Background">
+                <img class="bg-mountain bg-mountain-korat-2" src="img/building/history-mountain3.png"
+                    alt="Mountain Background">
+
+                <!-- Dark Overlay -->
+                <div class="bg-dark-overlay"></div>
+
+                <!-- Korat Background -->
+                <div class="korat-background">
+                    <img class="korat-bg-layer" src="img/muay-boran/northeast/muay-korat-bg.png"
+                        alt="Muay Korat Background">
+                </div>
+
+                <!-- Content Area -->
+                <div class="text-box text-box-7">
+                    <p>Distinguished by wrapping ropes from the elbows down to the fists.This technique supports its
+                        signature style, which features <span class="highlight">wide, powerful</span> kicks and the
+                        <span class="highlight">"Buffalo Swing"</span> punch, providing effective
+                        defense against heavy strikes.
+                    </p>
+                </div>
+
+                <!-- Buffalo Swing Pose -->
+                <div class="korat-poses">
+                    <div class="pose-container">
+                        <h3 class="pose-label">"Buffalo Swing"</h3>
+                        <img class="korat-pose" src="img/muay-boran/northeast/muay-korat-buffalo-swing.png"
+                            alt="Buffalo Swing">
+                    </div>
+                </div>
+
+                <!-- Era Indicator (Timeline + Circle + Title) -->
+                <div class="era-indicator era-indicator-korat">
+                    <div class="era-timeline-container">
+                        <div class="era-circle">
+                            <span class="era-number">4</span>
+                        </div>
+                    </div>
+                    <h2 class="era-title">"Muay Korat" (Northeast)</h2>
+                </div>
+            </section>
+
+            <!-- Muay Lopburi (Central) -->
+            <section class="era-section" data-era="lopburi">
+                <!-- Background Mountain -->
+
+                <!-- Dark Overlay -->
+                <div class="bg-dark-overlay"></div>
+
+                <!-- Lopburi Background Complex (3 Layers) -->
+                <div class="lopburi-background">
+                    <img class="lopburi-layer lopburi-right" src="img/muay-boran/central/muay-lopburi-bg-right.png"
+                        alt="Lopburi Background Right">
+                    <img class="lopburi-layer lopburi-left" src="img/muay-boran/central/muay-lopburi-bg-left.png"
+                        alt="Lopburi Background Left">
+                    <img class="lopburi-layer lopburi-center" src="img/muay-boran/central/muay-lopburi-bg-center.png"
+                        alt="Lopburi Background Center">
+                </div>
+
+                <!-- Lopburi Fighters (4 poses without labels) -->
+                <div class="lopburi-fighters">
+                    <div class="lopburi-container">
+                        <img class="lopburi-fighter lopburi-fighter-1" src="img/muay-boran/central/muay-lopburi-1.png"
+                            alt="Lopburi Fighter 1">
+                    </div>
+                    <div class="lopburi-container">
+                        <img class="lopburi-fighter lopburi-fighter-2" src="img/muay-boran/central/muay-lopburi-2.png"
+                            alt="Lopburi Fighter 2">
+                    </div>
+                    <div class="lopburi-container">
+                        <img class="lopburi-fighter lopburi-fighter-3" src="img/muay-boran/central/muay-lopburi-3.png"
+                            alt="Lopburi Fighter 3">
+                    </div>
+                    <div class="lopburi-container">
+                        <img class="lopburi-fighter lopburi-fighter-4" src="img/muay-boran/central/muay-lopburi-4.png"
+                            alt="Lopburi Fighter 4">
+                    </div>
+                </div>
+
+                <!-- Content Area -->
+                <div class="text-box text-box-8">
+                    <p>Known as <span class="highlight">"Muay Kiao"</span>, this style emphasizes intelligence, agility,
+                        and precision. Fighters use
+                        <span class="highlight">accurate straight punches</span>, move constantly, and employ deceptive
+                        feints.
+                    </p>
+                </div>
+
+                <!-- Lopburi Fighters Set 2 (2 more poses) -->
+                <div class="lopburi-fighters-2">
+                    <div class="lopburi-container">
+                        <img class="lopburi-fighter-2 lopburi-fighter-5" src="img/muay-boran/central/muay-lopburi-5.png"
+                            alt="Lopburi Fighter 5">
+                    </div>
+                    <div class="lopburi-container">
+                        <img class="lopburi-fighter-2 lopburi-fighter-6" src="img/muay-boran/central/muay-lopburi-6.png"
+                            alt="Lopburi Fighter 6">
+                    </div>
+                </div>
+
+                <div class="text-box text-box-9">
+                    <p>A unique characteristic is the hand wrapping that <span class="highlight">covers half the
+                            arm</span>, and distinctively, the
+                        ankles.</p>
+                </div>
+
+                <!-- Era Indicator -->
+                <div class="era-indicator era-indicator-lopburi">
+                    <div class="era-timeline-container">
+                        <div class="era-circle">
+                            <span class="era-number">5</span>
+                        </div>
+                    </div>
+                    <h2 class="era-title">"Muay Lopburi" (Central)</h2>
+                </div>
+            </section>
+
+            <!-- Muay Chaiya (South) -->
+            <section class="era-section" data-era="chaiya">
+                <!-- Background Mountain -->
+
+                <!-- Dark Overlay -->
+                <div class="bg-dark-overlay"></div>
+
+                <!-- Content Area -->
+                <div class="text-box text-box-chaiya-1">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <span class="highlight">Muay
+                            Chaiya</span> emphasizes solid stance and defensive posture. Fighters from the South are
+                        known for their strong defensive techniques.</p>
+                </div>
+
+                <div class="text-box text-box-chaiya-2">
+                    <p>The saying goes <span class="highlight">"Good Posture Chaiya"</span> - referring to the excellent
+                        defensive stance of Chaiya boxers. Their training emphasizes balance and defense.</p>
+                </div>
+
+                <!-- Era Indicator -->
+                <div class="era-indicator era-indicator-chaiya">
+                    <div class="era-timeline-container">
+                        <div class="era-circle">
+                            <span class="era-number">6</span>
+                        </div>
+                    </div>
+                    <h2 class="era-title">"Muay Chaiya" (South)</h2>
+                </div>
+            </section>
+
+            <!-- Muay Tha Sao (North) -->
+            <section class="era-section" data-era="tha-sao">
+                <!-- Background Mountain -->
+
+                <!-- Dark Overlay -->
+                <div class="bg-dark-overlay"></div>
+
+                <!-- Content Area -->
+                <div class="text-box text-box-tha-sao-1">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <span class="highlight">Muay Tha
+                            Sao</span> emphasizes speed and agility. Fighters from this region are known for their quick
+                        movements and fast strikes.</p>
+                </div>
+
+                <div class="text-box text-box-tha-sao-2">
+                    <p>The saying goes <span class="highlight">"Faster Tha Sao"</span> - referring to the incredible
+                        speed of Tha Sao boxers. Their training focuses on quick reflexes and rapid combinations.</p>
+                </div>
+
+                <!-- Era Indicator -->
+                <div class="era-indicator era-indicator-tha-sao">
+                    <div class="era-timeline-container">
+                        <div class="era-circle">
+                            <span class="era-number">7</span>
+                        </div>
+                    </div>
+                    <h2 class="era-title">"Muay Tha Sao" (North)</h2>
+                </div>
+            </section>
+
+            <!-- Thonburi Era -->
+            <section class="era-section" data-era="thonburi">
+                <!-- Background Mountain -->
+
+                <!-- Dark Overlay -->
+                <div class="bg-dark-overlay"></div>
+
+                <!-- Content Area -->
+                <div class="text-box text-box-thonburi-1">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. During the <span
+                            class="highlight">Thonburi Era</span>, Muay Thai continued to flourish under King Taksin the
+                        Great, who was himself a skilled martial artist.</p>
+                </div>
+
+                <div class="text-box text-box-thonburi-2">
+                    <p>This brief but significant period saw the preservation and development of Muay Thai traditions
+                        during the <span class="highlight">reconstruction of the Thai kingdom</span> after the fall of
+                        Ayutthaya.</p>
+                </div>
+
+                <!-- Era Indicator -->
+                <div class="era-indicator era-indicator-thonburi">
+                    <div class="era-timeline-container">
+                        <div class="era-circle">
+                            <span class="era-number">8</span>
+                        </div>
+                    </div>
+                    <h2 class="era-title">Thonburi Era</h2>
+                </div>
+            </section>
+
+            <!-- Early Rattanakosin Era (Rama I - Rama V) -->
+            <section class="era-section" data-era="early-rattanakosin">
+                <!-- Background Mountain -->
+
+                <!-- Dark Overlay -->
+                <div class="bg-dark-overlay"></div>
+
+                <!-- Content Area -->
+                <div class="text-box text-box-early-ratana-1">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. The <span class="highlight">Early
+                            Rattanakosin Era</span> marked the golden age of Muay Thai, with royal patronage and formal
+                        recognition.</p>
+                </div>
+
+                <div class="text-box text-box-early-ratana-2">
+                    <p>Kings Rama I through Rama V promoted Muay Thai as part of <span class="highlight">military
+                            training and national identity</span>, establishing formal rules and competitive frameworks.
+                    </p>
+                </div>
+
+                <!-- Era Indicator -->
+                <div class="era-indicator era-indicator-early-ratana">
+                    <div class="era-timeline-container">
+                        <div class="era-circle">
+                            <span class="era-number">9</span>
+                        </div>
+                    </div>
+                    <h2 class="era-title">Early Rattanakosin Era</h2>
+                </div>
+            </section>
+
+            <!-- Mid-to-Late Rattanakosin Era -->
+            <section class="era-section" data-era="mid-rattanakosin">
+                <!-- Background Mountain -->
+
+                <!-- Dark Overlay -->
+                <div class="bg-dark-overlay"></div>
+
+                <!-- Content Area -->
+                <div class="text-box text-box-mid-ratana-1">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. The <span class="highlight">Mid-to-Late
+                            Rattanakosin Era</span> saw Muay Thai's modernization and standardization for international
+                        competition.</p>
+                </div>
+
+                <div class="text-box text-box-mid-ratana-2">
+                    <p>Introduction of <span class="highlight">boxing gloves, weight classes, and timed rounds</span>
+                        transformed traditional Muay Thai into the modern sport we know today.</p>
+                </div>
+
+                <!-- Era Indicator -->
+                <div class="era-indicator era-indicator-mid-ratana">
+                    <div class="era-timeline-container">
+                        <div class="era-circle">
+                            <span class="era-number">10</span>
+                        </div>
+                    </div>
+                    <h2 class="era-title">Mid-to-Late Rattanakosin</h2>
+                </div>
+            </section>
+
+            <!-- Present Day -->
+            <section class="era-section" data-era="present-day">
+                <!-- Background Mountain -->
+
+                <!-- Dark Overlay -->
+                <div class="bg-dark-overlay"></div>
+
+                <!-- Content Area -->
+                <div class="text-box text-box-present-1">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <span class="highlight">Present Day Muay
+                            Thai</span> has evolved into a global phenomenon, practiced in over 100 countries worldwide.
+                    </p>
+                </div>
+
+                <div class="text-box text-box-present-2">
+                    <p>From traditional stadiums in Thailand to <span class="highlight">international arenas and mixed
+                            martial arts</span>, Muay Thai continues to honor its ancient roots while embracing modern
+                        evolution.</p>
+                </div>
+
+                <!-- Era Indicator -->
+                <div class="era-indicator era-indicator-present">
+                    <div class="era-timeline-container">
+                        <div class="era-circle">
+                            <span class="era-number">11</span>
+                        </div>
+                    </div>
+                    <h2 class="era-title">Present Day</h2>
+                </div>
+            </section>
+
+
         </div>
     </div>
 
     <!-- Scripts -->
+    <!-- GSAP for Horizontal Scroll - Load before history.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
     <script defer src="js/navbar.js"></script>
     <script defer src="js/history.js"></script>
-    <script src="js/main.js"></script>
+    <script defer src="js/main.js"></script>
 </body>
 
 </html>
