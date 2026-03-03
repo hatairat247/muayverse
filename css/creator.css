@@ -332,18 +332,29 @@ body {
         max-width: 900px;
     }
 
-    /* 1.รูปภาพปกติ */
     .card-image {
         width: 260px;
         height: 450px;
     }
 
-    /* 2.Hover:*/
+    .card-name {
+        width: fit-content;
+        min-width: 150px;
+        padding: 0 20px;
+    }
+
+    .card-name span {
+        font-size: 14px;
+    }
+
+    /*Hover:*/
     .creator-card:hover .card-image {
         width: 320px;
         height: 486px;
     }
 }
+
+
 
 /* Mobile (หน้าจอขนาดเล็กกว่า 768px) */
 @media (max-width: 768px) {
