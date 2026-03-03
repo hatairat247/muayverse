@@ -99,32 +99,109 @@
 
             <!-- Content -->
             <div class="gaoyord-content">
-                <!-- Left: Stacked Paper Images -->
-                <div class="gaoyord-papers">
-                    <!-- Front paper (hateaw) - main paper in flow, rotated -6.92deg -->
-                    <div class="paper paper-front">
-                        <img src="img/sakyant/kaoyod.png" alt="Gao Yord Yant" class="paper-img">
+                <!-- Left: Stacked Paper Images (click to cycle) -->
+                <div class="gaoyord-papers" data-slide="0">
+                    <!-- 5 paper layers — JS controls which is front/back/hidden -->
+                    <div class="paper paper-slide" data-yant="kaoyod">
+                        <img src="img/sakyant/kaoyod.png" alt="Gao Yord Yant" class="paper-img" draggable="false">
                     </div>
-                    <!-- Back paper (kaoyod) - absolute behind, rotated +6.91deg -->
-                    <div class="paper paper-back">
-                        <img src="img/sakyant/hateaw.png" alt="Ha Teaw Yant" class="paper-img">
+                    <div class="paper paper-slide" data-yant="hateaw">
+                        <img src="img/sakyant/hateaw.png" alt="Ha Taew Yant" class="paper-img" draggable="false">
+                    </div>
+                    <div class="paper paper-slide" data-yant="hanuman">
+                        <img src="img/sakyant/hanuman.png" alt="Hanuman Yant" class="paper-img" draggable="false">
+                    </div>
+                    <div class="paper paper-slide" data-yant="sueku">
+                        <img src="img/sakyant/sueku.png" alt="Suea Ku Yant" class="paper-img" draggable="false">
+                    </div>
+                    <div class="paper paper-slide" data-yant="padtid">
+                        <img src="img/sakyant/padtid.png" alt="Paed Tidt Yant" class="paper-img" draggable="false">
                     </div>
                 </div>
 
                 <!-- Right: Text Content -->
                 <div class="gaoyord-text">
-                    <h2 class="gaoyord-title">Gao Yord (Nine Peaks)</h2>
-                    <p class="gaoyord-desc">
-                        Typically inked at the base of the neck, the Gao Yord is regarded as the "Yant Kru" (Master
-                        Yant). It offers
-                        supreme protection against weapons and danger while bestowing "Metta Mahaniyom" (Great
-                        Popularity
-                        and Loving Kindness) upon the wearer.
-                    </p>
+                    <!-- 0: Gao Yord -->
+                    <div class="yant-text-content active" data-text="kaoyod">
+                        <h2 class="gaoyord-title">Gao Yord (Nine Peaks)</h2>
+                        <p class="gaoyord-desc">
+                            Typically inked at the base of the neck, the Gao Yord is regarded as the "Yant Kru" (Master
+                            Yant). It offers supreme protection against weapons and danger while bestowing "Metta
+                            Mahaniyom" (Great Popularity and Loving Kindness) upon the wearer.
+                        </p>
+                    </div>
+                    <!-- 1: Hah Taew -->
+                    <div class="yant-text-content" data-text="hateaw">
+                        <h2 class="gaoyord-title">Hah Taew (Five Lines)</h2>
+                        <p class="gaoyord-desc">
+                            A renowned design for enhancing destiny, career success, and warding off negativity. Each of the five sacred lines carries a specific blessing:<br>
+                            <strong class="row-highlight">Row 1:</strong> Protects against unjust punishment, cleanses unwanted spirits, and safeguards the home.<br>
+                            <strong class="row-highlight">Row 2:</strong> Reverses bad horoscopes and protects against bad luck.<br>
+                            <strong class="row-highlight">Row 3:</strong> Shields against black magic, curses, and malevolent intent.<br>
+                            <strong class="row-highlight">Row 4:</strong> Enhances good fortune, success, and ambition.<br>
+                            <strong class="row-highlight">Row 5:</strong> Boosts charm (Metta) and attraction to the opposite sex, while amplifying the fourth row.
+                        </p>
+                    </div>
+                    <!-- 2: Hanuman -->
+                    <div class="yant-text-content" data-text="hanuman">
+                        <h2 class="gaoyord-title">Hanuman (The Monkey God)</h2>
+                        <p class="gaoyord-desc">
+                            Hanuman symbolizes invincibility, agility, and immense bravery. It is believed that this Yant grants the
+                            wearer the Monkey God's strength and the ability to evade danger effortlessly. Many boxers believe it
+                            provides the mental fortitude and courage required to conquer opponents in the ring.
+                        </p>
+                    </div>
+                    <!-- 3: Suea Ku -->
+                    <div class="yant-text-content" data-text="sueku">
+                        <h2 class="gaoyord-title">Suea Ku (Twin Tigers)</h2>
+                        <p class="gaoyord-desc">
+                            One of the most popular designs for fighters, the Twin Tigers represent absolute strength, power, and
+                            authority (Barami). Usually tattooed on the mid-back, this Yant is believed to offer protection and instill
+                            fear and hesitation in opponents.
+                        </p>
+                    </div>
+                    <!-- 4: Paed Tidt -->
+                    <div class="yant-text-content" data-text="padtid">
+                        <h2 class="gaoyord-title">Paed Tidt (Eight Directions)</h2>
+                        <p class="gaoyord-desc">
+                            This sacred Yant represents protection from all eight compass directions. It is believed to
+                            offer universal safeguarding, ensuring the wearer is shielded from harm no matter where they travel
+                            or which direction danger may come from.
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
     </div><!-- end sakyant-page-wrapper -->
+
+    <!-- Hamburger Menu -->
+    <div class="hamburger-menu" id="hamburgerMenu">
+        <div class="menu-content">
+            <a href="history.html" class="menu-item">
+                <span>History Of Muay Thai</span>
+            </a>
+            <div class="menu-divider"></div>
+
+            <a href="/VR_waikru 3Dvista D2/index.htm" class="menu-item" target="_blank" rel="noopener noreferrer">
+                <span>Wai Kru Muay Thai</span>
+            </a>
+            <div class="menu-divider"></div>
+
+            <a href="/3dvistra/index.htm" class="menu-item" target="_blank" rel="noopener noreferrer">
+                <span>Art Of Eight Lims</span>
+            </a>
+            <div class="menu-divider"></div>
+
+            <a href="creator.html" class="menu-item">
+                <span>Creator</span>
+            </a>
+            <div class="menu-divider"></div>
+
+            <a href="https://forms.gle/U1odRp1tjZMavh9R6" class="menu-item" target="_blank" rel="noopener noreferrer">
+                <span>Satisfaction Questionnaire</span>
+            </a>
+        </div>
+    </div>
 
     <!-- Footer -->
     <div id="footer"></div>
