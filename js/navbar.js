@@ -3,18 +3,31 @@ class Navbar {
     constructor() {
         this.navbar = document.getElementById('navbar');
         this.isMusicPlaying = false;
+        
+        // ลำดับความสำคัญ: page-audio > bg-video > default audio
+        this.pageAudio = document.querySelector('.page-audio');
         this.bgVideo = document.querySelector('.bg-video');
         this.audioElement = null;
 
-        // ถ้าไม่มี bg-video ให้สร้าง audio element สำรอง
-        if (!this.bgVideo) {
+        if (this.pageAudio) {
+            // ใช้เสียงเฉพาะหน้า
+            this.pageAudio.volume = 0.4;
+            this.pageAudio.muted = true;
+            this.pageAudio.loop = true;
+            console.log('Using page-specific audio');
+        } else if (this.bgVideo) {
+            // ใช้ bg-video (หน้า home)
+            this.bgVideo.volume = 0.4;
+            this.bgVideo.muted = true;
+            this.bgVideo.loop = true;
+            console.log('Using bg-video audio');
+        } else {
+            // สำรองสำหรับหน้าอื่นๆ
             this.audioElement = new Audio('https://res.cloudinary.com/muayverse/video/upload/v1767956196/8sec_9_1_iczxae.mp4');
             this.audioElement.loop = true;
             this.audioElement.volume = 0.4;
             this.audioElement.muted = true;
-        } else {
-            this.bgVideo.volume = 0.4;
-            this.bgVideo.muted = true;
+            console.log('Using default audio');
         }
 
         this.init();
@@ -305,7 +318,7 @@ class Navbar {
     }
 
     toggleMusic() {
-        const mediaElement = this.bgVideo || this.audioElement;
+        const mediaElement = this.pageAudio || this.bgVideo || this.audioElement;
         if (!mediaElement) return;
 
         const musicBtn = document.getElementById('musicBtn');
@@ -313,8 +326,9 @@ class Navbar {
         if (this.isMusicPlaying) {
             // Mute media
             mediaElement.muted = true;
-            if (this.audioElement) {
-                this.audioElement.pause();
+            // Pause only audio elements (not videos which may have visual component)
+            if (mediaElement.tagName === 'AUDIO') {
+                mediaElement.pause();
             }
             musicBtn.classList.remove('playing');
             musicBtn.classList.add('muted');
@@ -403,7 +417,7 @@ class Navbar {
 
     // เริ่มเล่นเพลงอัตโนมัติ
     startAutoPlayMusic() {
-        const mediaElement = this.bgVideo || this.audioElement;
+        const mediaElement = this.pageAudio || this.bgVideo || this.audioElement;
         if (!mediaElement) {
             console.log('Media element not found');
             return;
@@ -447,7 +461,7 @@ class Navbar {
     // เรียกคืนสถานะเสียงจาก localStorage
     restoreMusicState() {
         const musicPlaying = localStorage.getItem('muayverse_music_playing');
-        const mediaElement = this.bgVideo || this.audioElement;
+        const mediaElement = this.pageAudio || this.bgVideo || this.audioElement;
         const musicBtn = document.getElementById('musicBtn');
 
         if (!mediaElement || !musicBtn) return;
@@ -468,8 +482,9 @@ class Navbar {
             }, 500);
         } else if (musicPlaying === 'false') {
             mediaElement.muted = true;
-            if (this.audioElement) {
-                this.audioElement.pause();
+            // Pause only audio elements
+            if (mediaElement.tagName === 'AUDIO') {
+                mediaElement.pause();
             }
             this.isMusicPlaying = false;
             musicBtn.classList.remove('playing');

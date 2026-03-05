@@ -28,6 +28,20 @@ class SakYantAnim {
         this.decoLeft = document.querySelector('.gaoyord-deco-left');
         this.decoRight = document.querySelector('.gaoyord-deco-right');
 
+        // Sound effects
+        this.pickupSound = new Audio('SFX/Sakyant SFX/Pickuppaper.MP3');
+        this.swipeSound = new Audio('SFX/Sakyant SFX/Swipe Paper.MP3');
+        this.slidePaperSound = new Audio('SFX/Sakyant SFX/Slide Paper.MP3');
+        this.typingSound = new Audio('SFX/Sakyant SFX/typing.MP3');
+        this.pickupSound.volume = 0.5;
+        this.swipeSound.volume = 0.5;
+        this.slidePaperSound.volume = 0.6;
+        this.typingSound.volume = 0.6;
+        this.typingSound.loop = true; // Loop continuously
+        
+        this.isTypingSoundPlaying = false; // Track typing sound state
+        this.typingStopTimeout = null; // Timeout to stop sound when scroll stops
+
         this._splitTitle();
         this._wrapDescriptionChars();
         this._wrapYantDescWords();
@@ -231,6 +245,34 @@ class SakYantAnim {
         const total = this.descWords.length;
         const activeCount = Math.min(Math.floor(t * total), total);
 
+        // Start typing sound when revealing and not yet complete
+        if (t > 0 && t < 1) {
+            if (!this.isTypingSoundPlaying) {
+                this.typingSound.play().catch(e => console.log('Typing sound failed:', e));
+                this.isTypingSoundPlaying = true;
+            }
+            
+            // Clear any existing timeout
+            if (this.typingStopTimeout) {
+                clearTimeout(this.typingStopTimeout);
+            }
+            
+            // Set timeout to stop sound if no more scroll activity
+            this.typingStopTimeout = setTimeout(() => {
+                this.typingSound.pause();
+                this.isTypingSoundPlaying = false;
+            }, 300); // Stop after 300ms of no scroll - longer for smoother experience
+        } else if (t >= 1 || t <= 0) {
+            // Stop sound when complete or at start
+            if (this.isTypingSoundPlaying) {
+                this.typingSound.pause();
+                this.isTypingSoundPlaying = false;
+            }
+            if (this.typingStopTimeout) {
+                clearTimeout(this.typingStopTimeout);
+            }
+        }
+
         this.descWords.forEach((word, i) => {
             if (i < activeCount) {
                 word.classList.add('active');
@@ -308,6 +350,10 @@ class SakYantAnim {
         s.startY = y;
         s.currentX = 0;
 
+        // Play pickup sound
+        this.pickupSound.currentTime = 0;
+        this.pickupSound.play().catch(e => console.log('Audio play failed:', e));
+
         // Disable word hover during swipe for performance
         this.wordHoverEnabled = false;
         
@@ -364,6 +410,10 @@ class SakYantAnim {
             // Swipe accepted — determine direction
             const direction = dx < 0 ? 'left' : 'right';
             this.isAnimating = true;
+
+            // Play swipe sound
+            this.swipeSound.currentTime = 0;
+            this.swipeSound.play().catch(e => console.log('Audio play failed:', e));
 
             // Fling the paper out
             const flingX = direction === 'left' ? -600 : 600;
@@ -514,6 +564,10 @@ class SakYantAnim {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
+                    // Play slide paper sound when section comes into view
+                    this.slidePaperSound.currentTime = 0;
+                    this.slidePaperSound.play().catch(e => console.log('Slide paper sound failed:', e));
+                    
                     // Stagger: papers → text → deco
                     if (this.gaoyordPapers) {
                         this.gaoyordPapers.classList.add('visible');
@@ -572,10 +626,17 @@ class SakYantAnim {
                         return '<br>';
                     }
                     const tag = node.tagName.toLowerCase();
+                    // Preserve all attributes (especially class)
+                    let attrs = '';
+                    if (node.attributes) {
+                        Array.from(node.attributes).forEach(attr => {
+                            attrs += ` ${attr.name}="${attr.value}"`;
+                        });
+                    }
                     const children = Array.from(node.childNodes)
                         .map(child => processNode(child))
                         .join('');
-                    return `<${tag}>${children}</${tag}>`;
+                    return `<${tag}${attrs}>${children}</${tag}>`;
                 }
                 return '';
             };
