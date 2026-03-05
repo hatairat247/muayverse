@@ -1,6 +1,10 @@
 // History Page - Horizontal Scrolling Timeline
 // Using GSAP ScrollTrigger
 
+// Store the horizontal scroll tween for containerAnimation references
+let horizontalScrollTween = null;
+let isInitialized = false;
+
 // Use 'load' instead of 'DOMContentLoaded' to ensure CSS is fully loaded
 window.addEventListener('load', () => {
     // Initialize GSAP & ScrollTrigger
@@ -9,6 +13,7 @@ window.addEventListener('load', () => {
     initHorizontalScroll();
     initTextReveal();
     initFighterStagger();
+    isInitialized = true;
 });
 
 // ===== Horizontal Scroll Setup =====
@@ -24,8 +29,8 @@ function initHorizontalScroll() {
     const totalWidth = timelineTrack.offsetWidth;
     console.log('Timeline total width:', totalWidth, 'px');
 
-    // Create horizontal scroll animation
-    gsap.to(timelineTrack, {
+    // Create horizontal scroll animation and store the tween
+    horizontalScrollTween = gsap.to(timelineTrack, {
         x: () => -(totalWidth - window.innerWidth),
         ease: 'none',
         scrollTrigger: {
@@ -48,10 +53,12 @@ function initHorizontalScroll() {
 
 // ===== Text Reveal Animation =====
 function initTextReveal() {
+    if (!horizontalScrollTween) return;
+
     const textBoxes = document.querySelectorAll('.text-box');
 
     textBoxes.forEach((textBox) => {
-        // Use GSAP to add 'revealed' class when scrolled into view
+        // Use the stored tween as containerAnimation (not ScrollTrigger.getById)
         ScrollTrigger.create({
             trigger: textBox,
             start: 'left 80%',
@@ -62,13 +69,15 @@ function initTextReveal() {
             onLeaveBack: () => {
                 textBox.classList.remove('revealed');
             },
-            containerAnimation: ScrollTrigger.getById('horizontal-scroll')
+            containerAnimation: horizontalScrollTween
         });
     });
 }
 
 // ===== Fighter Stagger Animation =====
 function initFighterStagger() {
+    if (!horizontalScrollTween) return;
+
     const fighters = document.querySelectorAll('.fighter');
 
     fighters.forEach((fighter, index) => {
@@ -86,12 +95,21 @@ function initFighterStagger() {
             onLeaveBack: () => {
                 fighter.classList.remove('revealed');
             },
-            containerAnimation: ScrollTrigger.getById('horizontal-scroll')
+            containerAnimation: horizontalScrollTween
         });
     });
 }
 
-// ===== Resize Handler =====
+// ===== Resize Handler (debounced) =====
+let resizeTimer;
 window.addEventListener('resize', () => {
-    ScrollTrigger.refresh();
+    if (!isInitialized) return;
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+        try {
+            ScrollTrigger.refresh();
+        } catch (e) {
+            console.warn('ScrollTrigger refresh error on resize:', e.message);
+        }
+    }, 250);
 });
