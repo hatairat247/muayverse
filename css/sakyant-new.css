@@ -264,7 +264,7 @@
     /* Gao Yord Section */
     .gaoyord-content {
         max-width: 1500px;
-        gap: clamp(45px, 8vw, 109px);
+        gap: clamp(35px, 2.8vw, 38px);
         padding: 40px 40px 70px;
     }
 
@@ -273,7 +273,8 @@
     }
 
     .gaoyord-text {
-        max-width: 680px;
+        max-width: 720px;
+        flex: 1;
     }
 
     .gaoyord-title {
@@ -282,7 +283,7 @@
 
     .gaoyord-desc {
         font-size: clamp(0.96rem, 1.12vw, 21px);
-        max-width: 620px;
+        max-width: 100%;
     }
 
     .gaoyord-deco-left {
@@ -300,9 +301,9 @@
 @media (max-width: 1180px) {
     .center-content {
         max-width: 1100px;
-        gap: 38px;
-        padding: 0 30px 55px;
-        margin-top: -30px;
+        gap: 34px;
+        padding: 0 30px 45px;
+        margin-top: -15px;
     }
 
     .main-title {
@@ -334,8 +335,8 @@
     /* Gao Yord Section */
     .gaoyord-content {
         max-width: 1350px;
-        gap: clamp(40px, 7.8vw, 92px);
-        padding: 35px 35px 65px;
+        gap: clamp(30px, 2.6vw, 31px);
+        padding: 30px 40px 50px;
     }
 
     .gaoyord-papers {
@@ -343,8 +344,9 @@
     }
 
     .gaoyord-text {
-        max-width: 630px;
+        max-width: 680px;
         gap: 30px;
+        flex: 1;
     }
 
     .gaoyord-title {
@@ -353,8 +355,8 @@
 
     .gaoyord-desc {
         font-size: clamp(0.93rem, 1.1vw, 20px);
-        max-width: 590px;
-        line-height: 1.6;
+        max-width: 100%;
+        line-height: 1.65;
     }
 
     .gaoyord-deco-left {
@@ -442,9 +444,9 @@
 
     .center-content {
         max-width: 950px;
-        gap: 32px;
-        padding: 0 25px 50px;
-        margin-top: -25px;
+        gap: 28px;
+        padding: 0 25px 35px;
+        margin-top: -10px;
     }
 
     .main-title {
@@ -475,13 +477,13 @@
 
     /* Gao Yord Section */
     .gaoyord-section {
-        margin-top: -3vh;
+        margin-top: 0;
     }
 
     .gaoyord-content {
         max-width: 100%;
-        gap: clamp(40px, 7.5vw, 77px);
-        padding: 30px 30px 60px;
+        gap: clamp(28px, 2.8vw, 29px);
+        padding: 25px 35px 45px;
         align-items: center;
     }
 
@@ -490,8 +492,9 @@
     }
 
     .gaoyord-text {
-        max-width: 540px;
+        max-width: 580px;
         gap: 25px;
+        flex: 1;
     }
 
     .gaoyord-title {
@@ -501,7 +504,7 @@
     .gaoyord-desc {
         font-size: clamp(0.9rem, 1.7vw, 18px);
         max-width: 100%;
-        line-height: 1.62;
+        line-height: 1.68;
     }
 
     .gaoyord-deco-left {
@@ -525,9 +528,9 @@
 
     .center-content {
         max-width: 700px;
-        gap: 28px;
-        padding: 0 20px 40px;
-        margin-top: -20px;
+        gap: 24px;
+        padding: 0 20px 30px;
+        margin-top: -8px;
     }
 
     .main-title {
@@ -558,12 +561,12 @@
 
     /* Gao Yord Section */
     .gaoyord-section {
-        margin-top: -2vh;
+        margin-top: 0;
     }
 
     .gaoyord-content {
-        gap: clamp(35px, 7vw, 54px);
-        padding: 25px 20px 50px;
+        gap: clamp(30px, 3.5vw, 27px);
+        padding: 20px 20px 40px;
     }
 
     .gaoyord-papers {
@@ -640,7 +643,7 @@
 
     /* Gao Yord Section */
     .gaoyord-content {
-        gap: clamp(25px, 6vw, 29px);
+        gap: clamp(22px, 3vw, 14px);
         padding: 20px 15px 40px;
     }
 
@@ -892,15 +895,16 @@
     font-weight: 400;
     color: var(--color-text-light);
     text-shadow: 0 4px 5.2px rgba(0, 0, 0, 0.82);
-    line-height: 1.6;
+    line-height: 1.65;
     margin: 0;
     max-width: 598px;
     cursor: pointer;
     position: relative;
     word-break: keep-all;
-    overflow-wrap: break-word;
+    overflow-wrap: anywhere;
     hyphens: none;
     white-space: normal;
+    word-spacing: normal;
 }
 
 /* Glow layer behind text - animate this instead of text-shadow */
@@ -929,7 +933,8 @@
 .yant-word {
     display: inline;
     color: inherit;
-    white-space: nowrap;
+    white-space: pre-wrap;
+    word-break: keep-all;
     transition: color 0.2s ease-out,
                 text-shadow 0.2s ease-out;
 }
@@ -1019,10 +1024,13 @@
     .gaoyord-desc {
         text-align: left;
         width: 100%;
+        word-break: normal;
+        overflow-wrap: break-word;
     }
     
     .yant-word {
         white-space: normal;
+        word-break: normal;
     }
 }
 
@@ -1033,9 +1041,12 @@
     
     .gaoyord-desc {
         width: 100%;
+        word-break: normal;
+        overflow-wrap: break-word;
     }
     
     .yant-word {
         white-space: normal;
+        word-break: normal;
     }
 }
