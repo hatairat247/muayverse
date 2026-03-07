@@ -19,7 +19,7 @@
     width: 100%;
     height: 100%;
     z-index: -1;
-    background-image: url('../img/homepage/boxingstadium.webp');
+    background-image: url('https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772868927/boxingstadium_vui8f4.webp');
     background-size: cover;
     background-position: center center;
     transform: translateY(80px);
@@ -55,8 +55,7 @@
     max-width: 1600px;
     width: 100%;
     overflow: visible;
-    padding-top: 80px;
-    /* space for lamp to slide into */
+    padding-top: 80px;  /* space for lamp to slide into */
     opacity: 0;
     transform: translateY(50px);
     animation: fadeInUp 1s ease-out forwards;
@@ -170,75 +169,92 @@
     text-shadow: 2px 2px 12px rgba(120, 0, 0, 0.9);
 }
 
-/* Responsive Design */
+cards-section 
+/* ===== Responsive Design ===== */
 
-/* Large screens */
-@media (max-width: 1400px) {
+/* Desktop (1025px ขึ้นไป) - ใช้ Default Styles */
+@media screen and (min-width: 1025px) {
+
+    /* Desktop default: cards แสดงเป็นแนวนอน */
     .cards-container {
-        gap: 50px;
+        flex-direction: row;
+    }
+}
+
+/* Tablet (768px - 1024px) */
+@media screen and (max-width: 1024px) and (min-width: 768px) {
+    .cards-section {
+        padding: 60px 20px;
+        margin-top: -350px;
+    }
+
+    .cards-container {
+        display: flex;
+        /* ใช้ flexbox แทน grid */
+        flex-direction: row;
+        /* เรียงแนวนอน */
+        justify-content: center;
+        align-items: flex-start;
+        gap: 40px;
+        /* ช่องว่างระหว่างการ์ด */
+        max-width: 100%;
+        padding-top: 60px;
+        flex-wrap: nowrap;
+        /* ไม่ให้ขึ้นบรรทัดใหม่ */
+    }
+
+    .card {
+        flex: 0 1 auto;
+        /* ให้การ์ดยืดหยุ่นตามขนาด */
     }
 
     .card-image-wrapper {
-        width: 350px;
-        height: 525px;
+        width: 240px;
+        height: 360px;
+    }
+
+    .card-title {
+        font-size: 30px;
+    }
+
+    .card-lamp {
+        top: -250px;
+        width: 420px;
+    }
+
+    /* Disable parallax on tablet for better performance */
+    .cards-background {
+        background-attachment: scroll;
+    }
+}
+
+/* Mobile (น้อยกว่า 768px) */
+@media screen and (max-width: 767px) {
+    .cards-section {
+        padding: 50px 20px;
+        margin-top: -100px;
+    }
+
+    .cards-container {
+        flex-direction: column;
+        /* แสดง 1 คอลัมน์ */
+        gap: 50px;
+        align-items: center;
+        padding-top: 40px;
+    }
+
+    .card-image-wrapper {
+        width: 300px;
+        height: 450px;
     }
 
     .card-title {
         font-size: 36px;
     }
-}
 
-/* Medium screens */
-@media (max-width: 1200px) {
-    .cards-container {
-        gap: 30px;
-    }
-
-    .card-image-wrapper {
-        width: 300px;
-        height: 450px;
-    }
-
-    .card-title {
-        font-size: 32px;
-    }
-}
-
-/* Tablet landscape */
-@media (max-width: 992px) {
-    .cards-container {
-        gap: 20px;
-    }
-
-    .card-image-wrapper {
-        width: 250px;
-        height: 375px;
-    }
-
-    .card-title {
-        font-size: 28px;
-    }
-}
-
-/* Tablet portrait / Large mobile landscape */
-@media (max-width: 768px) {
-    .cards-section {
-        padding: 60px 20px;
-    }
-
-    .cards-container {
-        flex-direction: column;
-        gap: 20px;
-        align-items: center;
-    }
-
-    .card-image-wrapper {
-        width: 300px;
-        height: 450px;
-    }
-
-    .card-title {
-        font-size: 32px;
+    .card-lamp {
+        top: -260px;
+        width: 450px;
     }
 
     /* Disable parallax on mobile for better performance */
@@ -247,54 +263,62 @@
     }
 }
 
-/* Mobile portrait */
-@media (max-width: 480px) {
+/* Mobile จอเล็กมาก (480px ลงมา) */
+@media screen and (max-width: 480px) {
     .cards-section {
         padding: 40px 15px;
     }
 
+    .cards-container {
+        gap: 40px;
+    }
+
     .card-image-wrapper {
-        width: 250px;
-        height: 375px;
+        width: 260px;
+        height: 390px;
     }
 
     .card-title {
-        font-size: 28px;
+        font-size: 30px;
+    }
+
+    .card-lamp {
+        top: -240px;
+        width: 400px;
     }
 }
 
-/* Landscape Orientation Enforcement for Mobile/Tablet */
-@media (max-width: 992px) and (orientation: portrait) {
+/* Mobile Landscape (แนวนอน) */
+@media screen and (orientation: landscape) and (max-height: 600px) {
     .cards-section {
-        position: relative;
+        padding: 30px 20px;
+        min-height: auto;
     }
 
-    .cards-section::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.95);
-        z-index: 9998;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    .cards-container {
+        flex-direction: row;
+        /* แสดงแนวนอนเมื่อหมุนจอ */
+        gap: 30px;
+        padding-top: 30px;
+        overflow-x: auto;
     }
 
-    .cards-section::after {
-        content: 'Please rotate your device to landscape mode for the best experience';
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 9999;
-        color: #FFF9F9;
-        font-family: 'Poppins', sans-serif;
-        font-size: 20px;
-        text-align: center;
-        padding: 20px;
-        max-width: 80%;
+    .card-image-wrapper {
+        width: 220px;
+        height: 330px;
+    }
+
+    .card-title {
+        font-size: 24px;
+    }
+
+    .card-lamp {
+        top: -200px;
+        width: 350px;
+    }
+
+    .card:hover {
+        transform: translateY(-10px) scale(1.03);
     }
 }
+

@@ -216,85 +216,138 @@
 
 /* ===== Responsive Design ===== */
 
-/* Tablets and below (1200px) */
-@media screen and (max-width: 1200px) {
+
+
+/* ===== Responsive Design ===== */
+
+/* Desktop (1025px ขึ้นไป) - ใช้ Default Styles */
+
+    
+@media screen and (min-width: 1367px) {
+    /* Desktop default styles */
+}
+
+
+
+
+/* Tablet (768px - 1024px) */
+@media screen and (max-width: 1024px) and (min-width: 768px) {
     .hero-container {
-        padding: 40px;
+        padding: 40px 30px;
         gap: 30px;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
+        position: relative;
     }
 
     .hero-content-left {
         max-width: 100%;
     }
 
+    .hero-title-wrapper {
+        justify-content: center;
+    }
+
     .hero-title-figma {
-        font-size: 80px;
+        font-size: 74px;
+    }
+
+    .hero-description-wrapper {
+        justify-content: center;
     }
 
     .hero-description-figma {
-        font-size: 28px;
+        font-size: 20px;
     }
 
     .hero-content-right {
-        max-width: 100%;
+        max-width: 600px;
         height: auto;
     }
 
     .punching-bag-wrapper {
         width: 100%;
+        max-width: 550px;
         height: auto;
-        max-width: 600px;
+        right: 110px;
     }
 
     .punching-bag-img {
         max-width: 100%;
     }
 
+    .bag-shockwave {
+        width: 160px;
+        height: 160px;
+    }
+
+    .bag-flash {
+        width: 160px;
+        height: 160px;
+    }
+
     .continue-journey {
-        right: 40px;
-        bottom: 40px;
+        right: 80px;
+        bottom: 30px;
     }
 
     .continue-text {
-        font-size: 20px;
+        font-size: 16px;
     }
 }
 
-/* Mobile devices (768px and below) */
-@media screen and (max-width: 768px) {
+/* Mobile (น้อยกว่า 768px) */
+@media screen and (max-width: 767px) {
     .hero-section-figma {
-        padding: 106px 0 20px 0;
+        padding: 100px 0 20px 0;
+        margin-top: -100px;
+        overflow: hidden;
     }
 
     .hero-container {
         padding: 20px;
         gap: 20px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-content-left {
+        align-items: center;
     }
 
     .hero-title-wrapper {
         padding: 5px;
+        justify-content: center;
     }
 
     .hero-title-figma {
-        font-size: 48px;
+        font-size: 56px;
+        /* ลดขนาดฟอนต์ */
+        text-align: center;
     }
 
     .hero-description-wrapper {
         padding: 10px 5px;
+        justify-content: center;
     }
 
     .hero-description-figma {
         font-size: 18px;
+        text-align: center;
     }
 
     .hero-content-right {
         height: auto;
+        max-width: 400px;
     }
 
     .punching-bag-wrapper {
-        max-width: 400px;
+        max-width: 380px;
+        /* ลดขนาดกระสอบ */
+    }
+
+    .punching-bag-img {
+        max-width: 100%;
     }
 
     .continue-journey {
@@ -312,10 +365,10 @@
     }
 }
 
-/* Extra small devices (480px and below) */
+/* Mobile จอเล็กมาก (480px ลงมา) */
 @media screen and (max-width: 480px) {
     .hero-title-figma {
-        font-size: 36px;
+        font-size: 42px;
     }
 
     .hero-description-figma {
@@ -330,3 +383,64 @@
         font-size: 14px;
     }
 }
+
+/* Mobile Landscape (แนวนอน) */
+@media screen and (orientation: landscape) and (max-height: 600px) {
+    .hero-section-figma {
+        padding: 70px 0 20px 0;
+        margin-top: -80px;
+    }
+
+    .hero-container {
+        flex-direction: row;
+        /* กลับเป็นแนวขวา-ซ้าย */
+        gap: 20px;
+        padding: 20px 30px;
+        align-items: center;
+    }
+
+    .hero-content-left {
+        max-width: 50%;
+        align-items: flex-start;
+    }
+
+    .hero-title-wrapper {
+        justify-content: flex-start;
+        padding: 5px;
+    }
+
+    .hero-title-figma {
+        font-size: 48px;
+        text-align: left;
+    }
+
+    .hero-description-wrapper {
+        justify-content: flex-start;
+        padding: 10px 5px;
+    }
+
+    .hero-description-figma {
+        font-size: 16px;
+        text-align: left;
+    }
+
+    .hero-content-right {
+        max-width: 50%;
+        height: auto;
+    }
+
+    .punching-bag-wrapper {
+        max-width: 280px;
+    }
+
+    .continue-journey {
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+    }
+
+    .continue-text {
+        font-size: 14px;
+    }
+}
+
