@@ -611,6 +611,17 @@ body::before {
     color: var(--history-highlight);
 }
 
+/* Karaoke chars (text-box-10) */
+.text-box-10 .karaoke-char {
+    display: inline;
+    opacity: 0.15;
+    filter: blur(4px);
+}
+
+.text-box-10 .highlight .karaoke-char {
+    color: var(--history-highlight);
+}
+
 /* Text Box 1 (Muay Boran Context) */
 .text-box-1 {
     left: 55vw;
@@ -1702,7 +1713,8 @@ body::before {
     height: 100%;
     object-fit: contain;
     object-position: center center;
-    opacity: 1;
+    opacity: 0;
+    transform: translateY(80px) scale(0.85);
 }
 
 .chaiya-back {
@@ -1807,12 +1819,18 @@ body::before {
 .chaiya-fighter-1 {
     position: relative;
     top: 70px;
+    opacity: 0;
+    transform: translateY(120px) scale(0.8);
 }
 
 .chaiya-fighter-2 {
     position: relative;
     top: 15px;
+    opacity: 0;
+    transform: translateY(120px) scale(0.8);
+    animation: fighter-idle 3.2s ease-in-out infinite;
 }
+
 
 .chaiya-fighter-3 {
     position: relative;
@@ -1822,11 +1840,21 @@ body::before {
 .chaiya-fighter-4 {
     position: relative;
     top: 10px;
+    transform: translateY(120px) scale(0.8);
+}
+
+.chaiya-fighter-4.idle {
+    animation: fighter-idle 3.4s ease-in-out infinite;
 }
 
 .chaiya-fighter-5 {
     position: relative;
     top: 30px;
+    transform: translateY(120px) scale(0.8);
+}
+
+.chaiya-fighter-5.idle {
+    animation: fighter-idle 2.8s ease-in-out infinite;
 }
 
 .chaiya-fighter-6 {
@@ -3795,4 +3823,28 @@ body::before {
     align-items: center;
     justify-content: center;
     background-color: var(--history-bg);
+}
+
+@keyframes fighter-idle {
+
+    0%,
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    25% {
+        transform: translateY(-6px) rotate(0.3deg);
+    }
+
+    50% {
+        transform: translateY(-9px) rotate(-0.3deg);
+    }
+
+    75% {
+        transform: translateY(-4px) rotate(0.15deg);
+    }
+}
+
+.chaiya-fighter-1.idle {
+    animation: fighter-idle 1.9s ease-in-out infinite;
 }
