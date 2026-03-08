@@ -392,8 +392,8 @@ body::before {
 .bg-ruins {
     position: absolute;
     left: 0;
-    top: 4%;
-    /* ปรับลงมาจาก 2% */
+    top: 8%;
+    /* 96px / 1080px */
     width: 66.67vw;
     /* 1280px / 1920px */
     height: 78.98%;
@@ -409,35 +409,24 @@ body::before {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    will-change: transform, opacity;
-    /* Prepare for parallax animation */
 }
 
 .ruins-back {
     z-index: 1;
     /* Relative to .bg-ruins container */
-    opacity: 0;
-    /* Start invisible */
-    transform: translateY(120px);
-    /* Start from bottom - slowest layer */
+    opacity: 1.0;
 }
 
 .ruins-middle {
     z-index: 2;
     /* Relative to .bg-ruins container */
-    opacity: 0;
-    /* Start invisible */
-    transform: translateY(80px);
-    /* Start from bottom - medium speed */
+    opacity: 1.0;
 }
 
 .ruins-front {
     z-index: 3;
     /* Relative to .bg-ruins container */
-    opacity: 0;
-    /* Start invisible */
-    transform: translateY(40px);
-    /* Start from bottom - fastest layer */
+    opacity: 1.0;
 }
 
 /* Kick Poses (Between Text Boxes) */
@@ -462,35 +451,9 @@ body::before {
     opacity: 1;
     display: block;
     /* Ensure display */
-    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.4, 1), 
-                filter 0.3s ease;
+    transition: transform 0.3s ease, filter 0.3s ease;
     cursor: pointer;
-    /* เพิ่ม aura pulse animation ตลอดเวลา */
-    animation: kickAuraPulse 1.5s ease-in-out infinite;
-    will-change: filter, transform;
-}
-
-/* Hover Effect for Kick Poses - Aura Glow Effect */
-.kick-pose:hover {
-    transform: scale(1.05);
-    filter: drop-shadow(0 0 8px rgba(255, 245, 200, 0.4)) 
-            drop-shadow(0 0 20px rgba(255, 235, 160, 0.25))
-            drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
-    animation: kickAuraPulse 1.5s ease-in-out infinite;
-}
-
-/* Aura pulse animation */
-@keyframes kickAuraPulse {
-    0%, 100% { 
-        filter: drop-shadow(0 0 8px rgba(255, 245, 200, 0.35)) 
-                drop-shadow(0 0 20px rgba(255, 235, 160, 0.2))
-                drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
-    }
-    50% { 
-        filter: drop-shadow(0 0 16px rgba(255, 245, 200, 0.6)) 
-                drop-shadow(0 0 32px rgba(255, 235, 160, 0.35))
-                drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
-    }
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
 }
 
 /* Individual Kick Positioning (Grid Layout from Figma) */
@@ -499,6 +462,12 @@ body::before {
     top: -90px;
     height: 35vw;
 }
+
+/* Hover Effect for Kick Poses
+.kick-pose:hover {
+    filter: brightness(1.2) drop-shadow(0 0 20px rgba(233, 200, 36, 0.6));
+    z-index: 11;
+} */
 
 /* Fighters (7 fighters) - Bottom Row */
 .fighters {
@@ -519,34 +488,7 @@ body::before {
     object-fit: contain;
     opacity: 0;
     transform: translateY(30px);
-    /* ลบ filter ออกจาก transition */
-    transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.4, 1), 
-                transform 0.8s cubic-bezier(0.2, 0.8, 0.4, 1);
-    will-change: opacity, transform;
-}
-
-/* Revealed State for Fighters - มี Aura Glow ตลอดเวลา */
-.fighter.revealed {
-    opacity: 1;
-    transform: translateY(0);
-    /* กำหนด animation โดยตรง */
-    animation: fighterAuraPulse 2s ease-in-out infinite;
-    /* ให้แน่ใจว่า animation ทำงาน */
-    animation-fill-mode: forwards;
-}
-
-/* Aura glow animation สำหรับนักมวย - Loop ตลอดเวลา */
-@keyframes fighterAuraPulse {
-    0%, 100% { 
-        filter: drop-shadow(0 0 10px rgba(255, 245, 200, 0.6)) 
-                drop-shadow(0 0 25px rgba(255, 235, 160, 0.4))
-                drop-shadow(0 0 40px rgba(255, 220, 100, 0.25)); 
-    }
-    50% { 
-        filter: drop-shadow(0 0 20px rgba(255, 245, 200, 0.9)) 
-                drop-shadow(0 0 50px rgba(255, 235, 160, 0.7))
-                drop-shadow(0 0 80px rgba(255, 220, 100, 0.5)); 
-    }
+    transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 /* Individual Fighter Positioning (Exact Figma Coordinates) */
@@ -584,6 +526,12 @@ body::before {
     /* 653.40px / 1920px */
 }
 
+/* Revealed State for Fighters (Stagger Animation) */
+.fighter.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 /* Text Boxes (General Styles) */
 .text-box {
     position: absolute;
@@ -612,44 +560,6 @@ body::before {
     color: var(--history-highlight);
 }
 
-<<<<<<< HEAD
-/* Karaoke Text Animation - Character by Character with Blur */
-.karaoke-text {
-    line-height: 1.6;
-}
-
-/* word wrapper — keeps characters together, allows break between words */
-.karaoke-word {
-    display: inline;
-    white-space: nowrap;
-}
-
-.karaoke-char {
-    display: inline;
-    opacity: 0.2;
-    filter: blur(4px);
-    transition: 
-        opacity 0.5s cubic-bezier(0.2, 0, 0.2, 1),
-        filter 0.5s cubic-bezier(0.2, 0, 0.2, 1),
-        color 0.5s cubic-bezier(0.2, 0, 0.2, 1);
-}
-
-.karaoke-char.active {
-    opacity: 1;
-    filter: blur(0px);
-}
-
-/* Highlight characters - สีเหลือง */
-.karaoke-char.highlight {
-    color: var(--history-text);
-}
-
-.karaoke-char.highlight.active {
-    opacity: 1;
-    filter: blur(0px);
-    color: var(--history-highlight);
-    font-weight: 700;
-=======
 /* Karaoke chars (text-box-10) */
 .text-box-10 .karaoke-char {
     display: inline;
@@ -659,7 +569,6 @@ body::before {
 
 .text-box-10 .highlight .karaoke-char {
     color: var(--history-highlight);
->>>>>>> 5a3222f95436aef57883316cf804ca0647b202a2
 }
 
 /* Text Box 1 (Muay Boran Context) */
@@ -1045,16 +954,6 @@ body::before {
     text-align: center;
     white-space: nowrap;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-    
-    /* Initial state: hidden and positioned lower */
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.fighter-label.revealed {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 /* Individual label positioning */
@@ -1078,16 +977,6 @@ body::before {
     top: 40px;
 }
 
-/* Floating Animation (Breathing Effect) */
-@keyframes floatUpDown {
-    0%, 100% {
-        transform: rotateX(0deg) translateY(0px);
-    }
-    50% {
-        transform: rotateX(0deg) translateY(-15px);
-    }
-}
-
 .regional-fighter {
     height: 55vmin;
     /* ขนาดนักมวย - ใช้ vmin เพื่อจำกัดทั้งกว้างและสูง */
@@ -1095,39 +984,14 @@ body::before {
     max-width: 22vw;
     /* จำกัดความกว้างสูงสุดต่อคน */
     object-fit: contain;
+    opacity: 1;
     filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
     /* drop shadow สีขาว */
-    
-    /* Initial state: flat on ground (rotateX 90deg = lying flat) */
-    opacity: 0;
-    transform: rotateX(90deg);
-    transform-origin: bottom center;
-    transition: opacity 0.8s ease-out, transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .regional-fighter.revealed {
-    /* Final state: standing upright (rotateX 0deg = perpendicular to ground) */
     opacity: 1;
-    transform: rotateX(0deg);
-    /* Add floating animation after reveal */
-    animation: floatUpDown 3s ease-in-out infinite;
-}
-
-/* Individual animation delays for natural effect */
-.fighter-north {
-    animation-delay: 0s;
-}
-
-.fighter-northeast {
-    animation-delay: 0.3s;
-}
-
-.fighter-south {
-    animation-delay: 0.6s;
-}
-
-.fighter-central {
-    animation-delay: 0.9s;
+    transform: translateY(0);
 }
 
 /* Era Indicator (Timeline + Circle + Title) */
@@ -1272,25 +1136,22 @@ body::before {
     position: absolute;
     left: 0;
     /* Left edge of Ayutthaya section */
-    top: auto;
-    bottom: 0;
-    /* Align to bottom of section */
+    top: 9.72%;
+    /* 105px / 1080px */
     width: 66.67vw;
     /* 1280px / 1920px */
-    height: 85vh;
-    /* Increased height to extend upward */
+    height: 79%;
+    /* 853px / 1080px */
     z-index: 10;
 }
 
 .temple-layer {
     position: absolute;
-    top: auto;
-    bottom: 0;
+    top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    object-position: center bottom;
+    object-fit: cover;
     opacity: 1;
 }
 
@@ -1333,8 +1194,8 @@ body::before {
 .era-indicator-ayutthaya {
     left: 60vw;
     /* Align with Sukhothai timeline start */
-    top: 87%;
-    /* Match regional indicator position */
+    top: 86.85%;
+    /* 938px / 1080px */
     width: auto;
     /* Override timeline width for this indicator */
     display: flex;
@@ -1906,103 +1767,28 @@ body::before {
 .chaiya-fighter-1 {
     position: relative;
     top: 70px;
-}
-
-.chaiya-fighter-1.idle {
-    animation: fighter-idle 3s ease-in-out infinite;
+    opacity: 0;
+    transform: translateY(120px) scale(0.8);
 }
 
 .chaiya-fighter-2 {
     position: relative;
     top: 15px;
-}
-
-.chaiya-fighter-2.idle {
+    opacity: 0;
+    transform: translateY(120px) scale(0.8);
     animation: fighter-idle 3.2s ease-in-out infinite;
 }
+
 
 .chaiya-fighter-3 {
     position: relative;
     top: -30px;
 }
 
-/* Wai Kru hover swap */
-.wai-kru-swap {
-    position: relative;
-    cursor: pointer;
-    filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.4));
-    animation: wai-kru-glow 2s ease-in-out infinite;
-}
-
-@keyframes wai-kru-glow {
-
-    0%,
-    100% {
-        filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3));
-    }
-
-    50% {
-        filter: drop-shadow(0 0 20px rgba(253, 240, 213, 0.8)) drop-shadow(0 0 40px rgba(253, 240, 213, 0.4));
-    }
-}
-
-/* Idle แบบ 2 - โยกซ้ายขวา */
-@keyframes fighter-idle-sway {
-
-    0%,
-    100% {
-        transform: translateX(0px) rotate(0deg);
-    }
-
-    25% {
-        transform: translateX(4px) rotate(0.4deg);
-    }
-
-    50% {
-        transform: translateX(-4px) rotate(-0.3deg);
-    }
-
-    75% {
-        transform: translateX(2px) rotate(0.2deg);
-    }
-}
-
-/* Idle แบบ 3 - ย่อยืด (หายใจ) */
-@keyframes fighter-idle-breathe {
-
-    0%,
-    100% {
-        transform: scaleY(1) translateY(0);
-    }
-
-    50% {
-        transform: scaleY(1.015) translateY(-5px);
-    }
-}
-
-.wai-kru-hover {
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.wai-kru-default {
-    transition: opacity 0.3s ease;
-}
-
-.wai-kru-swap:hover .wai-kru-default {
-    opacity: 0;
-}
-
-.wai-kru-swap:hover .wai-kru-hover {
-    opacity: 1;
-}
-
 .chaiya-fighter-4 {
     position: relative;
     top: 10px;
+    transform: translateY(120px) scale(0.8);
 }
 
 .chaiya-fighter-4.idle {
@@ -2012,33 +1798,21 @@ body::before {
 .chaiya-fighter-5 {
     position: relative;
     top: 30px;
+    transform: translateY(120px) scale(0.8);
 }
 
 .chaiya-fighter-5.idle {
     animation: fighter-idle 2.8s ease-in-out infinite;
 }
-
 
 .chaiya-fighter-6 {
     position: relative;
     top: -20px;
 }
 
-.chaiya-fighter-5.idle {
-    animation: fighter-idle 2.8s ease-in-out infinite;
-}
-
-.chaiya-fighter-6.idle {
-    animation: fighter-idle 3.0s ease-in-out infinite;
-}
-
 .chaiya-fighter-7 {
     position: relative;
     top: 50px;
-}
-
-.chaiya-fighter-7.idle {
-    animation: fighter-idle-sway 3.5s ease-in-out infinite;
 }
 
 .chaiya-fighter-8 {
@@ -2570,7 +2344,7 @@ body::before {
 .mid-ratana-background {
     position: absolute;
     left: 805vw;
-    top: 30%;
+    top: 15%;
     width: 100vw;
     height: 75%;
     z-index: 10;
@@ -3678,7 +3452,7 @@ body::before {
 .temple-complex {
     position: absolute;
     right: 10%;
-    top: 30%;
+    top: 15%;
     width: 60vw;
     height: 65%;
     z-index: 9;
