@@ -1,33 +1,32 @@
 class ParallaxScroll {
     constructor() {
-        this.heroVideo    = document.getElementById('heroVideo');
+        this.heroVideo = document.getElementById('heroVideo');
         this.videoWrapper = document.getElementById('video-wrapper');
-        this.heroFigma    = document.getElementById('heroFigma');
+        this.heroFigma = document.getElementById('heroFigma');
         this.cardsSection = document.getElementById('cardsSection');
         this.heroDescription = document.querySelector('.hero-description-figma');
 
         this.originalText = '';
-        this.words        = [];
+        this.words = [];
         this.currentSection = 1;
         this.isKaraokeStarted = false;
 
-        // Lerp state — animation chases scroll smoothly
+        // Lerp state
         this.targetProgress = 0;
         this.lerpedProgress = 0;
 
         // Parallax bag
-        this.punchingBag     = document.querySelector('.punching-bag-wrapper');
-        this.lastScrollY     = 0;
-        this.bagExtraRot     = 0;
-        this.bagExtraTarget  = 0;
-        // Spring physics for click-punch
-        this.bagSpringAngle  = 0;
-        this.bagSpringVel    = 0;
-        this.bagIsPunching   = false;
+        this.punchingBag = document.querySelector('.punching-bag-wrapper');
+        this.lastScrollY = 0;
+        this.bagExtraRot = 0;
+        this.bagExtraTarget = 0;
+        this.bagSpringAngle = 0;
+        this.bagSpringVel = 0;
+        this.bagIsPunching = false;
 
         // Hero Figma slide-up
-        this.figmaYTarget  = 1;   // 1 = off-screen below, 0 = in place
-        this.figmaYLerped  = 1;
+        this.figmaYTarget = 1;
+        this.figmaYLerped = 1;
 
         // Continue Journey parallax
         this.continueJourney = document.querySelector('.continue-journey');
@@ -40,33 +39,26 @@ class ParallaxScroll {
     }
 
     init() {
-        // เก็บข้อความเดิมและแบ่งเป็นตัวอักษร
         if (this.heroDescription) {
             this.originalText = this.heroDescription.textContent.trim();
             this.setupKaraokeText();
         }
 
-        // Setup scroll event
         window.addEventListener('scroll', () => this.handleScroll(), { passive: true });
 
-        // Preload sandbag SFX
         this.sandbagSFX = new Audio('SFX/sandbag.MP3');
         this.sandbagSFX.preload = 'auto';
         this.sandbagSFX.volume = 0.7;
 
-        // Click-to-punch bag interaction
         if (this.punchingBag) {
             this.punchingBag.addEventListener('click', () => {
-                // Spring impulse kick
                 this.bagSpringVel -= 15;
                 this.bagIsPunching = true;
                 this.punchingBag.classList.add('bag-punched');
 
-                // Play sandbag SFX (restart if already playing)
                 this.sandbagSFX.currentTime = 0;
-                this.sandbagSFX.play().catch(() => {});
+                this.sandbagSFX.play().catch(() => { });
 
-                // Spawn shockwave + flash impact behind bag
                 const shockwave = document.createElement('div');
                 const flash = document.createElement('div');
                 shockwave.className = 'bag-shockwave';
@@ -79,44 +71,33 @@ class ParallaxScroll {
         }
 
         this.setupSections();
-
-        // Initial check
         this.handleScroll();
-
-        // Start smooth render loop
         this.startRenderLoop();
     }
 
     setupSections() {
-        // Hero 1 (Video) - sticky shrink animation
         if (this.heroVideo) {
             this.heroVideo.style.position = 'relative';
-            this.heroVideo.style.display  = 'block';
-            // Height is controlled by CSS (260vh) — don't override
+            this.heroVideo.style.display = 'block';
         }
-        // videoWrapper clip-path is handled by startRenderLoop
 
-        // Hero 2 (Figma) - start off-screen below, slide up during pause
         if (this.heroFigma) {
-            this.heroFigma.style.transform  = 'translateY(80vh)';
-            this.heroFigma.style.opacity    = '0';
-            this.heroFigma.style.transition = 'none'; // JS-driven, no CSS transition
+            this.heroFigma.style.transform = 'translateY(80vh)';
+            this.heroFigma.style.opacity = '0';
+            this.heroFigma.style.transition = 'none';
             this.heroFigma.style.willChange = 'transform, opacity';
         }
 
-        // Hero 2 (Figma) - initially hidden
         if (this.heroFigma) {
             this.heroFigma.style.minHeight = '100vh';
             this.heroFigma.style.opacity = '0';
             this.heroFigma.style.transition = 'opacity 0.8s ease-out';
         }
 
-        // Hero 3 (Cards) - background handled by JS parallax
         if (this.cardsSection) {
             this.cardsSection.style.minHeight = '100vh';
         }
         if (this.cardsBackground) {
-            // IntersectionObserver triggers slide-up CSS transition
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -130,15 +111,12 @@ class ParallaxScroll {
 
     setupKaraokeText() {
         const text = this.originalText;
-        // Split into words, keep spaces as separate tokens
         const tokens = text.split(/(\s+)/);
 
         const karaokeHTML = tokens.map(token => {
             if (/^\s+$/.test(token)) {
-                // Whitespace — render as plain space between words
                 return ' ';
             }
-            // Wrap each character inside a word-span so line breaks only happen between words
             const chars = Array.from(token).map((char, i) => {
                 return `<span class="karaoke-char">${char}</span>`;
             }).join('');
@@ -155,13 +133,10 @@ class ParallaxScroll {
             .hero-description-figma {
                 line-height: 1.6;
             }
-
-            /* word wrapper — keeps characters together, allows break between words */
             .karaoke-word {
                 display: inline;
                 white-space: nowrap;
             }
-
             .karaoke-char {
                 display: inline;
                 opacity: 0.2;
@@ -170,7 +145,6 @@ class ParallaxScroll {
                     opacity 0.5s cubic-bezier(0.2, 0, 0.2, 1),
                     filter 0.5s cubic-bezier(0.2, 0, 0.2, 1);
             }
-
             .karaoke-char.active {
                 opacity: 1;
                 filter: blur(0px);
@@ -180,71 +154,77 @@ class ParallaxScroll {
     }
 
     startRenderLoop() {
-        const navbarH        = 80;
-        const LERP_FACTOR    = 0.065;  // lower = more lag/float, higher = snappier
-        const MAX_BLUR       = 7;      // px
+        const navbarH = 80;
+        const LERP_FACTOR = 0.065;
+        const MAX_BLUR = 7;
         const BLUR_VELOCITY_SCALE = 60;
+        const isMobile = () => window.innerWidth <= 767;
 
         const tick = () => {
-            // Lerp toward scroll target — this IS the easing
             const prev = this.lerpedProgress;
             this.lerpedProgress += (this.targetProgress - this.lerpedProgress) * LERP_FACTOR;
-
-            // Velocity drives the motion blur naturally
-            const velocity   = Math.abs(this.lerpedProgress - prev);
+            const velocity = Math.abs(this.lerpedProgress - prev);
             const blurAmount = Math.min(velocity * BLUR_VELOCITY_SCALE, MAX_BLUR);
 
             if (this.videoWrapper) {
                 const t = this.lerpedProgress;
 
-                // clip-path values
-                const topClip    = t * (navbarH + 20);                        // 0 → 100px (gap below navbar)
-                const sideClip   = t * 40;                                    // 0 → 40px
-                const bottomClip = t * (window.innerHeight * 0.28);          // 0 → 28vh
-                const radius     = t * 16;                                    // 0 → 16px
+                if (isMobile()) {
+                    // ===== Mobile: หดตัวคล้าย desktop แต่ปรับสัดส่วนให้เหมาะกับจอเล็ก =====
+                    const topClip = t * (navbarH + 10);                    // 0 → ~90px
+                    const sideClip = t * 20;                                // 0 → 20px
+                    const bottomClip = t * (window.innerHeight * 0.25);       // 0 → 25vh
+                    const radius = t * 14;                                // 0 → 14px
 
-                this.videoWrapper.style.clipPath =
-                    `inset(${topClip.toFixed(2)}px ${sideClip.toFixed(2)}px ${bottomClip.toFixed(2)}px ${sideClip.toFixed(2)}px round ${radius.toFixed(2)}px)`;
+                    this.videoWrapper.style.clipPath =
+                        `inset(${topClip.toFixed(2)}px ${sideClip.toFixed(2)}px ${bottomClip.toFixed(2)}px ${sideClip.toFixed(2)}px round ${radius.toFixed(2)}px)`;
+                    this.videoWrapper.style.filter =
+                        blurAmount > 0.15 ? `blur(${blurAmount.toFixed(2)}px)` : 'none';
+                    this.videoWrapper.style.zIndex = this.targetProgress >= 1 ? '997' : '1000';
 
-                this.videoWrapper.style.filter =
-                    blurAmount > 0.15 ? `blur(${blurAmount.toFixed(2)}px)` : 'none';
+                } else {
+                    // ===== Desktop =====
+                    const topClip = t * (navbarH + 20);
+                    const sideClip = t * 40;
+                    const bottomClip = t * (window.innerHeight * 0.28);
+                    const radius = t * 16;
 
-                // Drop below navbar once fully shrunk
-                this.videoWrapper.style.zIndex = this.targetProgress >= 1 ? '997' : '1000';
+                    this.videoWrapper.style.clipPath =
+                        `inset(${topClip.toFixed(2)}px ${sideClip.toFixed(2)}px ${bottomClip.toFixed(2)}px ${sideClip.toFixed(2)}px round ${radius.toFixed(2)}px)`;
+                    this.videoWrapper.style.filter =
+                        blurAmount > 0.15 ? `blur(${blurAmount.toFixed(2)}px)` : 'none';
+                    this.videoWrapper.style.zIndex = this.targetProgress >= 1 ? '997' : '1000';
+                }
             }
 
             // ===== Hero Figma slide-up =====
             this.figmaYLerped += (this.figmaYTarget - this.figmaYLerped) * 0.07;
             if (this.heroFigma) {
-                const translateY = this.figmaYLerped * 80;  // 0 → 80vh
-                const opacity    = 1 - this.figmaYLerped;
+                const translateY = this.figmaYLerped * 80;
+                const opacity = 1 - this.figmaYLerped;
                 this.heroFigma.style.transform = `translateY(${translateY.toFixed(2)}vh)`;
-                this.heroFigma.style.opacity   = Math.max(0, opacity).toFixed(3);
+                this.heroFigma.style.opacity = Math.max(0, opacity).toFixed(3);
             }
 
             // ===== Punching Bag Parallax =====
             if (this.punchingBag) {
-                // Scroll-driven rotation (decays to 0)
                 this.bagExtraTarget *= 0.85;
                 this.bagExtraRot += (this.bagExtraTarget - this.bagExtraRot) * 0.08;
 
-                // Spring physics for click-punch (runs every frame, blends smoothly)
                 const springForce = -0.055 * this.bagSpringAngle;
-                const dragForce   = -0.10 * this.bagSpringVel;
-                this.bagSpringVel   += springForce + dragForce;
+                const dragForce = -0.10 * this.bagSpringVel;
+                this.bagSpringVel += springForce + dragForce;
                 this.bagSpringAngle += this.bagSpringVel;
 
-                // Detect settled → remove bag-punched class
                 if (this.bagIsPunching &&
                     Math.abs(this.bagSpringAngle) < 0.08 &&
                     Math.abs(this.bagSpringVel) < 0.08) {
                     this.bagSpringAngle = 0;
-                    this.bagSpringVel   = 0;
-                    this.bagIsPunching  = false;
+                    this.bagSpringVel = 0;
+                    this.bagIsPunching = false;
                     this.punchingBag.classList.remove('bag-punched');
                 }
 
-                // Combine scroll + spring into one CSS variable
                 const totalRot = this.bagExtraRot + this.bagSpringAngle;
                 this.punchingBag.style.setProperty('--bag-rot', `${totalRot.toFixed(2)}deg`);
             }
@@ -252,9 +232,9 @@ class ParallaxScroll {
             // ===== Continue Journey Parallax =====
             if (this.continueJourney) {
                 const shrinkEndPx = window.innerHeight * 0.55;
-                const pauseEndPx  = shrinkEndPx + (window.innerHeight * 0.30);
+                const pauseEndPx = shrinkEndPx + (window.innerHeight * 0.30);
                 const rawCJ = Math.max(window.scrollY - pauseEndPx, 0);
-                const cjTarget = rawCJ * -0.12;  // scrolling down = floats up
+                const cjTarget = rawCJ * -0.12;
                 this.cjParallaxLerped += (cjTarget - this.cjParallaxLerped) * 0.05;
                 this.continueJourney.style.setProperty('--cj-parallax', `${this.cjParallaxLerped.toFixed(2)}px`);
             }
@@ -266,46 +246,39 @@ class ParallaxScroll {
     }
 
     handleScroll() {
-        const scrollY      = window.scrollY;
+        const scrollY = window.scrollY;
         const windowHeight = window.innerHeight;
-        const shrinkEnd = windowHeight * 0.55;  // animation spans 55vh
+        const shrinkEnd = windowHeight * 0.55;
 
-        // Update lerp target (raw, clamped — lerp handles easing)
         this.targetProgress = Math.min(Math.max(scrollY / shrinkEnd, 0), 1);
 
-        // Punching bag: kick extra rotation from scroll velocity
         const scrollDelta = scrollY - this.lastScrollY;
-        this.bagExtraTarget += scrollDelta * 0.04;  // scale scroll speed → degrees
-        this.bagExtraTarget  = Math.max(-10, Math.min(10, this.bagExtraTarget)); // clamp ±10deg
+        this.bagExtraTarget += scrollDelta * 0.04;
+        this.bagExtraTarget = Math.max(-10, Math.min(10, this.bagExtraTarget));
         this.lastScrollY = scrollY;
 
-        // Calculate which section we're in
-        const shrinkEndPx  = windowHeight * 0.55;
-        const pauseEndPx   = shrinkEndPx + (windowHeight * 0.30); // 30vh pause after shrink
-        const videoBottom  = this.heroVideo ? this.heroVideo.offsetHeight : windowHeight;
-        const figmaBottom  = videoBottom + (this.heroFigma ? this.heroFigma.offsetHeight : windowHeight);
+        // Mobile: fade out video เมื่อ scroll เข้าใกล้ cards section
 
-        // Figma slide-up: starts at 40% into pause, fully up by end of pause
-        const pauseStart   = shrinkEndPx + (windowHeight * 0.10); // start sliding at 10vh into pause
-        const rawFigma     = (scrollY - pauseStart) / (pauseEndPx - pauseStart);
-        this.figmaYTarget  = 1 - Math.min(Math.max(rawFigma, 0), 1);
+        const shrinkEndPx = windowHeight * 0.55;
+        const pauseEndPx = shrinkEndPx + (windowHeight * 0.30);
+        const videoBottom = this.heroVideo ? this.heroVideo.offsetHeight : windowHeight;
+        const figmaBottom = videoBottom + (this.heroFigma ? this.heroFigma.offsetHeight : windowHeight);
 
-        // Section 1: Video
+        const pauseStart = shrinkEndPx + (windowHeight * 0.10);
+        const rawFigma = (scrollY - pauseStart) / (pauseEndPx - pauseStart);
+        this.figmaYTarget = 1 - Math.min(Math.max(rawFigma, 0), 1);
+
         if (scrollY < pauseEndPx) {
             this.currentSection = 1;
         }
-        // Section 2: Figma
         else if (scrollY >= pauseEndPx && scrollY < figmaBottom) {
             if (this.currentSection !== 2) {
                 this.currentSection = 2;
                 this.showHeroFigma();
             }
-
-            // Calculate progress within section 2
             const sectionProgress = (scrollY - pauseEndPx) / (this.heroFigma.offsetHeight);
             this.animateKaraokeText(sectionProgress);
         }
-        // Section 3: Cards (200vh+) - เปลี่ยนจาก 0.8 เป็น 0.95 เพื่อให้มีเวลาแสดงตัวอักษรให้ครบก่อน
         else if (scrollY >= figmaBottom * 0.95) {
             if (this.currentSection !== 3) {
                 this.currentSection = 3;
@@ -314,14 +287,10 @@ class ParallaxScroll {
         }
     }
 
-    showHeroFigma() {
-        // opacity & transform now driven by rAF loop via figmaYTarget — nothing to do here
-    }
+    showHeroFigma() { }
 
     animateKaraokeText(progress) {
         if (!this.heroDescription) return;
-
-        // คำนวณจำนวนตัวอักษรที่จะแสดงตาม scroll progress
         const charElements = this.heroDescription.querySelectorAll('.karaoke-char');
         const totalChars = charElements.length;
         const activeCharCount = Math.min(Math.floor(progress * totalChars * 1.8), totalChars);
@@ -336,7 +305,6 @@ class ParallaxScroll {
     }
 
     showCardsSection() {
-        // Make sure all characters are visible when reaching cards section
         const charElements = this.heroDescription?.querySelectorAll('.karaoke-char');
         if (charElements) {
             charElements.forEach(char => char.classList.add('active'));
@@ -347,7 +315,6 @@ class ParallaxScroll {
 // Initialize when DOM is ready
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-        // Wait a bit for page flow to complete
         setTimeout(() => new ParallaxScroll(), 500);
     });
 } else {
