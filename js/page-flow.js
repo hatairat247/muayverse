@@ -257,7 +257,7 @@ const overlayStyles = `
         pointer-events: none;
     }
 `;
-
+// เพิ่ม styles ลงใน document
 const style = document.createElement('style');
 style.textContent = overlayStyles;
 document.head.appendChild(style);
