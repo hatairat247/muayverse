@@ -244,86 +244,89 @@ body::before {
     width: 123.38vw;
     /* เปลี่ยนจาก 2369px */
     height: 100%;
+    bottom: 0;
+    /* เพิ่มบรรทัดนี้เพื่อล็อคชิ้นที่ไม่มีค่า bottom ให้ติดพื้นเสมอ */
 }
 
+/* แปลงค่า bottom จาก px เป็น vw ทั้งหมด เพื่อให้ยืดหดตามสัดส่วนจอ */
 .bg-floor-1 {
     left: -13.02vw;
-    bottom: -20px;
+    bottom: -1.2vw;
 }
 
 .bg-floor-2 {
     left: 5.21vw;
-    bottom: -20px;
+    bottom: -1.2vw;
 }
 
 .bg-floor-3 {
     left: 104.17vw;
-    bottom: -23px;
+    bottom: -1.3vw;
 }
 
 .bg-floor-4 {
     left: 192.71vw;
-    bottom: -23px;
+    bottom: -1.3vw;
 }
 
 .bg-floor-5 {
     left: 208.33vw;
-    bottom: -23px;
+    bottom: -1.3vw;
 }
 
 .bg-floor-6 {
     left: 260.42vw;
-    bottom: -23px;
+    bottom: -1.3vw;
 }
 
 .bg-floor-7 {
     left: 286.46vw;
-    bottom: -44px;
+    bottom: -2.4vw;
 }
 
 .bg-floor-8 {
     left: 338.54vw;
-    bottom: -44px;
+    bottom: -2.4vw;
 }
 
 .bg-floor-9 {
     left: 390.63vw;
-    bottom: -44px;
+    bottom: -2.4vw;
 }
 
 .bg-floor-10 {
     left: 468.75vw;
-    bottom: -44px;
+    bottom: -2.29vw;
 }
 
 .bg-floor-11 {
     left: 567.71vw;
-    bottom: -44px;
+    bottom: -2.29vw;
 }
 
 .bg-floor-12 {
     left: 625.00vw;
-    bottom: -44px;
+    bottom: -2.29vw;
 }
 
 .bg-floor-13 {
     left: 723.44vw;
-    bottom: -44px;
+    bottom: -2.29vw;
 }
 
 .bg-floor-14 {
     left: 822.92vw;
-    bottom: -53px;
+    bottom: -2.76vw;
 }
 
 .bg-floor-15 {
     left: 927.08vw;
-    bottom: -33px;
+    bottom: -1.72vw;
 }
 
 .bg-floor-16 {
     left: 1031.25vw;
-    bottom: -20px;
+    bottom: -1.04vw;
 }
 
 .bg-floor-17 {
@@ -344,12 +347,12 @@ body::before {
 
 .bg-floor-21 {
     left: 1531.25vw;
-    bottom: -30px;
+    bottom: -1.56vw;
 }
 
 .bg-floor-22 {
     left: 1635.42vw;
-    bottom: -30px;
+    bottom: -1.56vw;
 }
 
 .bg-floor-23 {
@@ -362,17 +365,17 @@ body::before {
 
 .bg-floor-25 {
     left: 1927.08vw;
-    bottom: -10px;
+    bottom: -0.52vw;
 }
 
 .bg-floor-26 {
     left: 2028.65vw;
-    bottom: -10px;
+    bottom: -0.52vw;
 }
 
 .bg-floor-27 {
     left: 2080.73vw;
-    bottom: -10px;
+    bottom: -0.52vw;
 }
 
 /* Dark Overlay */
