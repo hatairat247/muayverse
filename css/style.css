@@ -81,7 +81,8 @@ a {
 /* ===== Hero Video Section ===== */
 .hero-video-section {
     width: 100%;
-    height: 185vh;   /* 55vh shrink + 30vh pause + 100vh sticky */
+    height: 185vh;
+    /* 55vh shrink + 30vh pause + 100vh sticky */
     display: block;
     position: relative;
     background-color: #272727;
@@ -201,60 +202,63 @@ a {
     }
 }
 
-@media screen and (max-width: 768px) {
-    :root {
-        --hamburger-width: 220px;
-        --font-size-base: 16px;
+
+
+@media screen and (max-width: 767px) {
+
+    html,
+    body {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: clip !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
-    .hamburger-menu {
-        right: 15px;
-        max-width: 300px;
-    }
-
-    .main-logo {
-        max-width: 450px;
-    }
-
-    .menu-divider {
-        width: 180px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    :root {
-        --hamburger-width: 100px;
-        --font-size-base: 14px;
-    }
-
-    .hamburger-menu {
-        right: 10px;
-        padding: 4px 4px;
-        max-width: 150px;
-    }
-
-    .main-logo {
-        max-width: 280px;
-    }
-
-    .menu-divider {
-        width: 160px;
-    }
-
-    /* Hero Video Section Responsive */
     .hero-video-section {
-        /* padding removed — sticky layout handles this */
+        width: 100% !important;
+        height: 185vh !important;
+        overflow: visible !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     #video-wrapper {
-        max-width: 100%;
-        /* margin-bottom removed — sticky layout */
+        position: sticky !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100svh !important;
+        overflow: hidden !important;
+        transform: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        will-change: clip-path, filter;
+        -webkit-backface-visibility: hidden;
     }
 
-    .hero-video-section .main-logo {
-        max-width: 400px;
+    .bg-video {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
     }
 }
+
+/* Mobile จอเล็กมาก (480px ลงมา) */
+@media screen and (max-width: 480px) {
+    #video-wrapper {
+        height: 100svh;
+    }
+
+    .bg-video {
+        object-position: center center;
+    }
+}
+
+
 
 /* กันเว็บพังในจอที่เล็กกว่ามาตรฐาน */
 body {
@@ -274,7 +278,7 @@ body {
     background: var(--color-primary);
     border-radius: 5px;
 }
-
+//thumbnail hover effect
 ::-webkit-scrollbar-thumb:hover {
     background: var(--color-secondary);
 }*/

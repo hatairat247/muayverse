@@ -210,17 +210,18 @@ body::before {
 /* Sukhothai-specific mountain positioning */
 [data-era="sukhothai"] .bg-mountain {
     left: -20vw;
+    bottom: 150px;
 }
 
 /* Ayutthaya-specific mountain positioning */
 [data-era="ayutthaya"] .bg-mountain {
     left: 19vw;
-    bottom: 40px;
+    bottom: 80px;
 }
 
 /* Korat-specific mountain positioning */
 [data-era="korat"] .bg-mountain {
-    bottom: 60px;
+    bottom: 150px;
 }
 
 /* Individual Korat Mountain Positioning - Horizontal Layout */
@@ -236,192 +237,145 @@ body::before {
 
 .bg-floor {
     position: absolute;
-    object-fit: center bottom;
+    object-fit: cover;
+    object-position: center bottom;
     z-index: 4;
     pointer-events: none;
+    width: 123.38vw;
+    /* เปลี่ยนจาก 2369px */
+    height: 100%;
+    bottom: 0;
+    /* เพิ่มบรรทัดนี้เพื่อล็อคชิ้นที่ไม่มีค่า bottom ให้ติดพื้นเสมอ */
 }
 
+/* แปลงค่า bottom จาก px เป็น vw ทั้งหมด เพื่อให้ยืดหดตามสัดส่วนจอ */
 .bg-floor-1 {
-    left: -250px;
-    bottom: -20px;
-    width: 2369px;
-    height: 100%;
+    left: -13.02vw;
+    bottom: -1.2vw;
 }
 
 .bg-floor-2 {
-    left: 100px;
-    bottom: -20px;
-    width: 2369px;
-    height: 100%;
+    left: 5.21vw;
+    bottom: -1.2vw;
 }
 
 .bg-floor-3 {
-    left: 2000px;
-    bottom: -20px;
-    width: 2369px;
-    height: 100%;
+    left: 104.17vw;
+    bottom: -1.3vw;
 }
 
 .bg-floor-4 {
-    left: 3700px;
-    bottom: -20px;
-    width: 2369px;
-    height: 100%;
+    left: 192.71vw;
+    bottom: -1.3vw;
 }
 
 .bg-floor-5 {
-    left: 4000px;
-    bottom: -20px;
-    width: 2369px;
-    height: 100%;
+    left: 208.33vw;
+    bottom: -1.3vw;
 }
 
 .bg-floor-6 {
-    left: 5000px;
-    bottom: -20px;
-    width: 2369px;
-    height: 100%;
+    left: 260.42vw;
+    bottom: -1.3vw;
 }
 
 .bg-floor-7 {
-    left: 5500px;
-    bottom: -33px;
-    width: 2369px;
-    height: 100%;
+    left: 286.46vw;
+    bottom: -2.4vw;
 }
 
 .bg-floor-8 {
-    left: 6500px;
-    bottom: -33px;
-    width: 2369px;
-    height: 100%;
+    left: 338.54vw;
+    bottom: -2.4vw;
 }
 
 .bg-floor-9 {
-    left: 7500px;
-    bottom: -33px;
-    width: 2369px;
-    height: 100%;
+    left: 390.63vw;
+    bottom: -2.4vw;
 }
 
 .bg-floor-10 {
-    left: 9000px;
-    bottom: -33px;
-    width: 2369px;
-    height: 100%;
+    left: 468.75vw;
+    bottom: -2.29vw;
 }
 
 .bg-floor-11 {
-    left: 10900px;
-    bottom: -33px;
-    width: 2369px;
-    height: 100%;
+    left: 567.71vw;
+    bottom: -2.29vw;
 }
 
 .bg-floor-12 {
-    left: 12000px;
-    bottom: -33px;
-    width: 2369px;
-    height: 100%;
+    left: 625.00vw;
+    bottom: -2.29vw;
 }
 
 .bg-floor-13 {
-    left: 13890px;
-    bottom: -33px;
-    width: 2369px;
-    height: 100%;
+    left: 723.44vw;
+    bottom: -2.29vw;
 }
 
 .bg-floor-14 {
-    left: 15800px;
-    bottom: -40px;
-    width: 2369px;
-    height: 100%;
+    left: 822.92vw;
+    bottom: -2.76vw;
 }
 
 .bg-floor-15 {
-    left: 17800px;
-    bottom: -29px;
-    width: 2369px;
-    height: 100%;
+    left: 927.08vw;
+    bottom: -1.72vw;
 }
 
 .bg-floor-16 {
-    left: 19800px;
-    bottom: -20px;
-    width: 2369px;
-    height: 100%;
+    left: 1031.25vw;
+    bottom: -1.04vw;
 }
 
 .bg-floor-17 {
-    left: 21800px;
-    width: 2369px;
-    height: 100%;
+    left: 1135.42vw;
 }
 
 .bg-floor-18 {
-    left: 23800px;
-    width: 2369px;
-    height: 100%;
+    left: 1239.58vw;
 }
 
 .bg-floor-19 {
-    left: 25900px;
-    width: 2369px;
-    height: 100%;
+    left: 1348.96vw;
 }
 
 .bg-floor-20 {
-    left: 27400px;
-    width: 2369px;
-    height: 100%;
+    left: 1427.08vw;
 }
 
 .bg-floor-21 {
-    left: 29400px;
-    width: 2369px;
-    height: 100%;
-    bottom: -23px;
+    left: 1531.25vw;
+    bottom: -1.56vw;
 }
 
 .bg-floor-22 {
-    left: 31400px;
-    width: 2369px;
-    height: 100%;
-    bottom: -23px;
+    left: 1635.42vw;
+    bottom: -1.56vw;
 }
 
 .bg-floor-23 {
-    left: 32900px;
-    width: 2369px;
-    height: 100%;
+    left: 1713.54vw;
 }
 
 .bg-floor-24 {
-    left: 34950px;
-    width: 2369px;
-    height: 100%;
+    left: 1820.31vw;
 }
 
 .bg-floor-25 {
-    left: 37000px;
-    width: 2369px;
-    height: 100%;
-    bottom: -10px;
+    left: 1927.08vw;
+    bottom: -0.52vw;
 }
 
 .bg-floor-26 {
-    left: 38950px;
-    width: 2369px;
-    height: 100%;
-    bottom: -10px;
+    left: 2028.65vw;
+    bottom: -0.52vw;
 }
 
 .bg-floor-27 {
-    left: 39950px;
-    width: 2369px;
-    height: 100%;
-    bottom: -10px;
+    left: 2080.73vw;
+    bottom: -0.52vw;
 }
 
 /* Dark Overlay */
@@ -663,6 +617,7 @@ body::before {
     color: var(--history-highlight);
 }
 
+<<<<<<< HEAD
 /* Karaoke Text Animation - Character by Character with Blur */
 .karaoke-text {
     line-height: 1.6;
@@ -699,6 +654,17 @@ body::before {
     filter: blur(0px);
     color: var(--history-highlight);
     font-weight: 700;
+=======
+/* Karaoke chars (text-box-10) */
+.text-box-10 .karaoke-char {
+    display: inline;
+    opacity: 0.15;
+    filter: blur(4px);
+}
+
+.text-box-10 .highlight .karaoke-char {
+    color: var(--history-highlight);
+>>>>>>> 5a3222f95436aef57883316cf804ca0647b202a2
 }
 
 /* Text Box 1 (Muay Boran Context) */
@@ -819,7 +785,7 @@ body::before {
 }
 
 .text-box-18 {
-    left: 890vw;
+    left: 885vw;
     top: 37%;
     width: 32vw;
 }
@@ -838,12 +804,12 @@ body::before {
 
 .text-box-21 {
     left: 1013vw;
-    top: 28%;
+    top: 24%;
     width: 32vw;
 }
 
 .text-box-22 {
-    left: 1143vw;
+    left: 1148vw;
     top: 30%;
     width: 32vw;
 }
@@ -852,7 +818,7 @@ body::before {
 .tha-sao-fighters {
     position: absolute;
     left: 630vw;
-    top: 240px;
+    top: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -908,7 +874,7 @@ body::before {
 .tha-sao-fighters-2 {
     position: absolute;
     left: 675vw;
-    top: 240px;
+    top: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -954,7 +920,7 @@ body::before {
 .tha-sao-fighters-3 {
     position: absolute;
     left: 705vw;
-    top: 240px;
+    top: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1357,14 +1323,14 @@ body::before {
 
 .tree-1 {
     left: 206vw;
-    top: 55%;
+    top: 47%;
     height: 27%;
     width: auto;
 }
 
 .tree-2 {
     left: 134vw;
-    top: 55%;
+    top: 46%;
     height: 27%;
     width: auto;
 }
@@ -1605,7 +1571,7 @@ body::before {
 .lopburi-background {
     position: absolute;
     left: 212vw;
-    top: 16%;
+    top: 12%;
     width: 70vw;
     height: 75%;
     z-index: 10;
@@ -1644,14 +1610,14 @@ body::before {
 
 .lopburi-tree-1 {
     left: 328vw;
-    top: 54%;
+    top: 48%;
     height: 25%;
     width: auto;
 }
 
 .lopburi-tree-2 {
     left: 404vw;
-    top: 50%;
+    top: 45%;
     height: 30%;
     width: auto;
     transform: scaleX(-1);
@@ -1659,7 +1625,7 @@ body::before {
 
 .lopburi-tree-3 {
     left: 390vw;
-    top: 55%;
+    top: 50%;
     height: 25%;
     width: auto;
 }
@@ -1840,7 +1806,8 @@ body::before {
     height: 100%;
     object-fit: contain;
     object-position: center center;
-    opacity: 1;
+    opacity: 0;
+    transform: translateY(80px) scale(0.85);
 }
 
 .chaiya-back {
@@ -1947,9 +1914,17 @@ body::before {
     top: 70px;
 }
 
+.chaiya-fighter-1.idle {
+    animation: fighter-idle 3s ease-in-out infinite;
+}
+
 .chaiya-fighter-2 {
     position: relative;
     top: 15px;
+}
+
+.chaiya-fighter-2.idle {
+    animation: fighter-idle 3.2s ease-in-out infinite;
 }
 
 .chaiya-fighter-3 {
@@ -1957,9 +1932,87 @@ body::before {
     top: -30px;
 }
 
+/* Wai Kru hover swap */
+.wai-kru-swap {
+    position: relative;
+    cursor: pointer;
+    filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.4));
+    animation: wai-kru-glow 2s ease-in-out infinite;
+}
+
+@keyframes wai-kru-glow {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 20px rgba(253, 240, 213, 0.8)) drop-shadow(0 0 40px rgba(253, 240, 213, 0.4));
+    }
+}
+
+/* Idle แบบ 2 - โยกซ้ายขวา */
+@keyframes fighter-idle-sway {
+
+    0%,
+    100% {
+        transform: translateX(0px) rotate(0deg);
+    }
+
+    25% {
+        transform: translateX(4px) rotate(0.4deg);
+    }
+
+    50% {
+        transform: translateX(-4px) rotate(-0.3deg);
+    }
+
+    75% {
+        transform: translateX(2px) rotate(0.2deg);
+    }
+}
+
+/* Idle แบบ 3 - ย่อยืด (หายใจ) */
+@keyframes fighter-idle-breathe {
+
+    0%,
+    100% {
+        transform: scaleY(1) translateY(0);
+    }
+
+    50% {
+        transform: scaleY(1.015) translateY(-5px);
+    }
+}
+
+.wai-kru-hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.wai-kru-default {
+    transition: opacity 0.3s ease;
+}
+
+.wai-kru-swap:hover .wai-kru-default {
+    opacity: 0;
+}
+
+.wai-kru-swap:hover .wai-kru-hover {
+    opacity: 1;
+}
+
 .chaiya-fighter-4 {
     position: relative;
     top: 10px;
+}
+
+.chaiya-fighter-4.idle {
+    animation: fighter-idle 3.4s ease-in-out infinite;
 }
 
 .chaiya-fighter-5 {
@@ -1967,14 +2020,31 @@ body::before {
     top: 30px;
 }
 
+.chaiya-fighter-5.idle {
+    animation: fighter-idle 2.8s ease-in-out infinite;
+}
+
+
 .chaiya-fighter-6 {
     position: relative;
     top: -20px;
 }
 
+.chaiya-fighter-5.idle {
+    animation: fighter-idle 2.8s ease-in-out infinite;
+}
+
+.chaiya-fighter-6.idle {
+    animation: fighter-idle 3.0s ease-in-out infinite;
+}
+
 .chaiya-fighter-7 {
     position: relative;
     top: 50px;
+}
+
+.chaiya-fighter-7.idle {
+    animation: fighter-idle-sway 3.5s ease-in-out infinite;
 }
 
 .chaiya-fighter-8 {
@@ -2124,29 +2194,29 @@ body::before {
 }
 
 .tha-sao-tree-1 {
-    left: 548vw;
-    top: 45%;
+    left: 538vw;
+    top: 39%;
     height: 30%;
     width: auto;
 }
 
 .tha-sao-tree-2 {
     left: 580vw;
-    top: 36%;
+    top: 29%;
     height: 40%;
     width: auto;
 }
 
 .tha-sao-tree-3 {
     left: 645vw;
-    top: 46%;
+    top: 39%;
     height: 30%;
     width: auto;
 }
 
 .tha-sao-tree-4 {
     left: 690vw;
-    top: 45%;
+    top: 36%;
     height: 35%;
     width: auto;
 }
@@ -2161,21 +2231,21 @@ body::before {
 
 .thonburi-tree-1 {
     left: 657vw;
-    top: 36%;
+    top: 29%;
     height: 40%;
     width: auto;
 }
 
 .thonburi-tree-2 {
     left: 700vw;
-    top: 41%;
+    top: 34%;
     height: 35%;
     width: auto;
 }
 
 .thonburi-tree-3 {
     left: 755vw;
-    top: 50%;
+    top: 43%;
     height: 25%;
     width: auto;
     transform: scaleX(-1);
@@ -2183,7 +2253,7 @@ body::before {
 
 .thonburi-tree-4 {
     left: 800vw;
-    top: 45%;
+    top: 39%;
     height: 30%;
     width: auto;
     transform: scaleX(-1);
@@ -2199,14 +2269,14 @@ body::before {
 
 .early-ratana-tree-1 {
     left: 728vw;
-    top: 45%;
+    top: 38%;
     height: 30%;
     width: auto;
 }
 
 .early-ratana-tree-2 {
-    left: 787vw;
-    top: 50%;
+    left: 785vw;
+    top: 43%;
     height: 25%;
     width: auto;
     transform: scaleX(-1);
@@ -2214,7 +2284,7 @@ body::before {
 
 .early-ratana-tree-3 {
     left: 877vw;
-    top: 50%;
+    top: 42%;
     height: 25%;
     width: auto;
 }
@@ -2229,21 +2299,21 @@ body::before {
 
 .mid-ratana-building-1 {
     left: 905vw;
-    top: 49%;
+    top: 43%;
     height: 25%;
     width: auto;
 }
 
 .mid-ratana-building-2 {
     left: 963vw;
-    top: 48%;
+    top: 40%;
     height: 28%;
     width: auto;
 }
 
 .mid-ratana-building-3 {
     left: 997vw;
-    top: 47%;
+    top: 41%;
     height: 28%;
     width: auto;
 }
@@ -2258,29 +2328,29 @@ body::before {
 
 .present-building-1 {
     left: 1005vw;
-    top: 46%;
+    top: 40%;
     height: 29%;
     width: auto;
 }
 
 .present-building-2 {
     left: 1026vw;
-    top: 50%;
+    top: 44%;
     height: 25%;
     width: auto;
 }
 
 .present-building-3 {
     left: 1110vw;
-    top: 35%;
+    top: 28%;
     height: 40%;
     width: auto;
     transform: scaleX(-1);
 }
 
 .present-building-4 {
-    left: 1125vw;
-    top: 32%;
+    left: 1127vw;
+    top: 27%;
     height: 42%;
     width: auto;
 }
@@ -2288,8 +2358,8 @@ body::before {
 /* Present Day Pictures */
 .present-fighters {
     position: absolute;
-    left: 1042vw;
-    top: 230px;
+    left: 1040vw;
+    top: 220px;
     display: flex;
     z-index: 12;
 }
@@ -2333,7 +2403,7 @@ body::before {
 .tha-sao-background {
     position: absolute;
     left: 530vw;
-    top: 16%;
+    top: 12%;
     width: 100vw;
     height: 75%;
     z-index: 10;
@@ -2440,7 +2510,7 @@ body::before {
 .thonburi-background {
     position: absolute;
     left: 640vw;
-    top: 19%;
+    top: 16%;
     width: 100vw;
     height: 75%;
     z-index: 10;
@@ -2473,7 +2543,7 @@ body::before {
 .early-ratana-background {
     position: absolute;
     left: 716vw;
-    top: 10%;
+    top: 6%;
     width: 100vw;
     height: 75%;
     z-index: 10;
@@ -2930,7 +3000,7 @@ body::before {
 .present-background {
     position: absolute;
     left: 915vw;
-    top: 11%;
+    top: 10%;
     width: 100vw;
     height: 75%;
     z-index: 10;
@@ -3260,7 +3330,7 @@ body::before {
 /* Ayutthaya Temple Layers Container */
 .ayutthaya-temples {
     position: absolute;
-    left: 50vw;
+    left: 45vw;
     top: 13%;
     width: 66vw;
     height: 79%;
@@ -3933,4 +4003,28 @@ body::before {
     align-items: center;
     justify-content: center;
     background-color: var(--history-bg);
+}
+
+@keyframes fighter-idle {
+
+    0%,
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    25% {
+        transform: translateY(-6px) rotate(0.3deg);
+    }
+
+    50% {
+        transform: translateY(-9px) rotate(-0.3deg);
+    }
+
+    75% {
+        transform: translateY(-4px) rotate(0.15deg);
+    }
+}
+
+.chaiya-fighter-1.idle {
+    animation: fighter-idle 1.9s ease-in-out infinite;
 }

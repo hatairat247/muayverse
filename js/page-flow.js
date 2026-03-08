@@ -31,9 +31,8 @@ class PageFlow {
             this.hideLoading();
             this.startVideoAndMusic(true); // force music on when returning
         } else if (hasSeenWarning === 'true') {
-            // refresh → ข้าม warning แต่ยังแสดง loading
-            this.hideWarning();
-            this.showLoading();
+            // refresh → redirect ไป return=true เพื่อข้ามทุก overlay
+            window.location.href = window.location.pathname + '?return=true';
         } else {
             // แสดง warning ก่อน
             this.showWarning();
@@ -258,7 +257,7 @@ const overlayStyles = `
         pointer-events: none;
     }
 `;
-
+// เพิ่ม styles ลงใน document
 const style = document.createElement('style');
 style.textContent = overlayStyles;
 document.head.appendChild(style);

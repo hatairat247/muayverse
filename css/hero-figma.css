@@ -110,8 +110,15 @@
 
 /* Aura glow — follows exact bag silhouette via drop-shadow */
 @keyframes bagAuraPulse {
-    0%, 100% { filter: drop-shadow(0 0 6px rgba(255, 245, 200, 0.20)) drop-shadow(0 0 16px rgba(255, 235, 160, 0.10)); }
-    50%       { filter: drop-shadow(0 0 14px rgba(255, 245, 200, 0.55)) drop-shadow(0 0 36px rgba(255, 235, 160, 0.25)); }
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 6px rgba(255, 245, 200, 0.20)) drop-shadow(0 0 16px rgba(255, 235, 160, 0.10));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 14px rgba(255, 245, 200, 0.55)) drop-shadow(0 0 36px rgba(255, 235, 160, 0.25));
+    }
 }
 
 .punching-bag-wrapper.bag-punched .punching-bag-img {
@@ -120,15 +127,33 @@
 
 /* Impact shockwave ring */
 @keyframes bagShockwave {
-    0%   { transform: translate(-50%, -50%) scale(0.2); opacity: 0.85; }
-    100% { transform: translate(-50%, -50%) scale(2.8); opacity: 0; }
+    0% {
+        transform: translate(-50%, -50%) scale(0.2);
+        opacity: 0.85;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(2.8);
+        opacity: 0;
+    }
 }
 
 /* Impact flash burst */
 @keyframes bagFlash {
-    0%   { opacity: 0.6; transform: translate(-50%, -50%) scale(0.5); }
-    40%  { opacity: 0.25; transform: translate(-50%, -50%) scale(1.4); }
-    100% { opacity: 0; transform: translate(-50%, -50%) scale(2.0); }
+    0% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+
+    40% {
+        opacity: 0.25;
+        transform: translate(-50%, -50%) scale(1.4);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(2.0);
+    }
 }
 
 .bag-shockwave {
@@ -140,7 +165,7 @@
     border-radius: 50%;
     border: 3px solid rgba(255, 240, 160, 0.85);
     box-shadow: 0 0 18px 4px rgba(255, 230, 100, 0.5),
-                inset 0 0 18px 4px rgba(255, 230, 100, 0.2);
+        inset 0 0 18px 4px rgba(255, 230, 100, 0.2);
     transform: translate(-50%, -50%) scale(0.2);
     pointer-events: none;
     z-index: 1;
@@ -155,9 +180,9 @@
     height: 220px;
     border-radius: 50%;
     background: radial-gradient(ellipse at center,
-        rgba(255, 255, 220, 0.7) 0%,
-        rgba(255, 230, 100, 0.35) 45%,
-        transparent 75%);
+            rgba(255, 255, 220, 0.7) 0%,
+            rgba(255, 230, 100, 0.35) 45%,
+            transparent 75%);
     transform: translate(-50%, -50%) scale(0.5);
     pointer-events: none;
     z-index: 0;
@@ -167,12 +192,20 @@
 .punching-bag-wrapper.bag-punched {
     /* rotation is entirely JS-spring driven — no CSS animation */
 }
-}
+
 
 @keyframes bagSwing {
-    0%   { transform: rotate(-6deg); }
-    50%  { transform: rotate(6deg);  }
-    100% { transform: rotate(-6deg); }
+    0% {
+        transform: rotate(-6deg);
+    }
+
+    50% {
+        transform: rotate(6deg);
+    }
+
+    100% {
+        transform: rotate(-6deg);
+    }
 }
 
 .punching-bag-img {
@@ -198,8 +231,15 @@
 }
 
 @keyframes continueFloat {
-    0%, 100% { transform: translateY(0px); }
-    50%       { transform: translateY(-10px); }
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 .continue-text {
@@ -216,19 +256,139 @@
 
 /* ===== Responsive Design ===== */
 
-
-
-/* ===== Responsive Design ===== */
-
 /* Desktop (1025px ขึ้นไป) - ใช้ Default Styles */
-
-    
 @media screen and (min-width: 1367px) {
     /* Desktop default styles */
 }
 
 
+/* ipadPro  (1366px) */
+@media screen and (max-width: 1366px) {
+    .hero-container {
+        padding: 40px 30px;
+        gap: 30px;
+        flex-direction: row;
+        align-items: center;
+        position: relative;
+    }
 
+    .hero-content-left {
+        max-width: 100%;
+    }
+
+    .hero-title-figma {
+        font-size: 100px;
+    }
+
+    .hero-description-wrapper {
+        justify-content: center;
+    }
+
+    .hero-description-figma {
+        font-size: 32 px;
+    }
+
+    .hero-section-figma {
+        margin-top: -250px;
+    }
+
+    .hero-content-right {
+        max-width: 900px;
+        height: auto;
+    }
+
+    .punching-bag-wrapper {
+        width: 100%;
+        max-width: 900px;
+        height: auto;
+        right: 150px;
+    }
+
+    .punching-bag-img {
+        max-width: 120%;
+    }
+
+    .bag-shockwave {
+        width: 200px;
+        height: 200px;
+    }
+
+    .bag-flash {
+        width: 200px;
+        height: 200px;
+    }
+
+    .continue-journey {
+        right: 80px;
+        bottom: 30px;
+    }
+
+    .continue-text {
+        font-size: 24px;
+    }
+}
+
+/* IpadAir  (1180px) */
+@media screen and (max-width: 1180px) {
+    .hero-container {
+        padding: 40px 30px;
+        gap: 30px;
+        flex-direction: row;
+        align-items: center;
+        position: relative;
+    }
+
+    .hero-content-left {
+        max-width: 100%;
+    }
+
+    .hero-title-figma {
+        font-size: 80px;
+    }
+
+    .hero-description-wrapper {
+        justify-content: center;
+    }
+
+    .hero-description-figma {
+        font-size: 28px;
+    }
+
+    .hero-content-right {
+        max-width: 600px;
+        height: auto;
+    }
+
+    .punching-bag-wrapper {
+        width: 100%;
+        max-width: 550px;
+        height: auto;
+        right: 110px;
+    }
+
+    .punching-bag-img {
+        max-width: 100%;
+    }
+
+    .bag-shockwave {
+        width: 160px;
+        height: 160px;
+    }
+
+    .bag-flash {
+        width: 160px;
+        height: 160px;
+    }
+
+    .continue-journey {
+        right: 80px;
+        bottom: 30px;
+    }
+
+    .continue-text {
+        font-size: 20px;
+    }
+}
 
 /* Tablet (768px - 1024px) */
 @media screen and (max-width: 1024px) and (min-width: 768px) {
@@ -298,70 +458,72 @@
 
 /* Mobile (น้อยกว่า 768px) */
 @media screen and (max-width: 767px) {
-    .hero-section-figma {
-        padding: 100px 0 20px 0;
-        margin-top: -100px;
-        overflow: hidden;
+    .hero-container {
+        padding: 30px 40px;
+        flex-direction: row;
+        align-items: center;
+        position: relative;
     }
 
-    .hero-container {
-        padding: 20px;
-        gap: 20px;
-        flex-direction: column;
-        align-items: center;
+    .hero-section-figma {
+        margin-top: -100px;
     }
 
     .hero-content-left {
-        align-items: center;
-    }
-
-    .hero-title-wrapper {
-        padding: 5px;
-        justify-content: center;
+        max-width: 100%;
     }
 
     .hero-title-figma {
-        font-size: 56px;
-        /* ลดขนาดฟอนต์ */
-        text-align: center;
-    }
-
-    .hero-description-wrapper {
-        padding: 10px 5px;
-        justify-content: center;
+        font-size: 48px;
     }
 
     .hero-description-figma {
-        font-size: 18px;
-        text-align: center;
+        font-size: 16px;
+        padding: 0px;
+        text-align: left;
+    }
+
+    .hero-description-wrapper {
+        justify-content: flex-start;
+        margin-top: -20px;
+        align-items: flex-start;
+        padding: 0 10px;
+        margin-top: -10px;
     }
 
     .hero-content-right {
+        max-width: 900px;
         height: auto;
-        max-width: 400px;
     }
 
     .punching-bag-wrapper {
-        max-width: 380px;
-        /* ลดขนาดกระสอบ */
+        width: 100%;
+        max-width: 900px;
+        height: auto;
+        top: 35px;
     }
 
     .punching-bag-img {
         max-width: 100%;
     }
 
-    .continue-journey {
-        position: relative;
-        right: auto;
-        bottom: auto;
-        margin-top: 20px;
-        width: 100%;
-        justify-content: center;
+    .bag-shockwave {
+        width: 200px;
+        height: 200px;
+    }
+
+    .bag-flash {
+        width: 200px;
+        height: 200px;
     }
 
     .continue-text {
-        font-size: 16px;
-        text-align: center;
+        font-size: 12px;
+    }
+
+    .continue-journey {
+        right: 45px;
+        bottom: 5px;
     }
 }
 
@@ -385,7 +547,8 @@
 }
 
 /* Mobile Landscape (แนวนอน) */
-@media screen and (orientation: landscape) and (max-height: 600px) {
+
+/*@media screen and (orientation: landscape) and (max-height: 600px) {
     .hero-section-figma {
         padding: 70px 0 20px 0;
         margin-top: -80px;
@@ -393,7 +556,6 @@
 
     .hero-container {
         flex-direction: row;
-        /* กลับเป็นแนวขวา-ซ้าย */
         gap: 20px;
         padding: 20px 30px;
         align-items: center;
@@ -443,4 +605,3 @@
         font-size: 14px;
     }
 }
-
