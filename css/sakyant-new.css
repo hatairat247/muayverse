@@ -5,28 +5,8 @@
     --karaoke-scroll-length: 100vh; /* extra scroll distance for karaoke + pause */
 }
 
-/* ===== Landscape Orientation Optimization ===== */
-/* This website is optimized for landscape (horizontal) orientation */
-@media (max-width: 1024px) and (orientation: portrait) {
-    body::before {
-        content: "กรุณาหมุนหน้าจอเป็นแนวนอน / Please rotate to landscape mode";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.95);
-        color: #E9C824;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-        text-align: center;
-        z-index: 9999;
-        padding: 20px;
-        font-family: 'Poppins', sans-serif;
-    }
-}
+/* ===== Mobile Responsive Design ===== */
+/* Optimized for both portrait and landscape orientations */
 
 /* ===== Text Highlight ===== */
 .text-highlight {
@@ -477,13 +457,13 @@
 
     /* Gao Yord Section */
     .gaoyord-section {
-        margin-top: 0;
+        margin-top: 35px;
     }
 
     .gaoyord-content {
         max-width: 100%;
         gap: clamp(28px, 2.8vw, 29px);
-        padding: 25px 35px 45px;
+        padding: 30px 35px 45px;
         align-items: center;
     }
 
@@ -520,8 +500,108 @@
     }
 }
 
-/* iPad Mini minimum and mobile landscape - 768px */
-@media (max-width: 768px) {
+/* iPhone SE, iPhone 8 and similar landscape - 480px to 768px */
+@media (max-width: 768px) and (min-width: 481px) and (orientation: landscape) {
+    .sakyant-scroll-lock {
+        height: calc(var(--sakyant-height) + 30vh);
+    }
+
+    .center-content {
+        max-width: 620px;
+        gap: 12px;
+        padding: 20px 18px 18px;
+        margin-top: 0;
+    }
+
+    .main-title {
+        font-size: clamp(1.25rem, 3.8vw, 2.4rem);
+        max-width: 580px;
+        line-height: 1.1;
+    }
+
+    .description-section {
+        max-width: 620px;
+        gap: 8px;
+    }
+
+    .description-section p {
+        font-size: clamp(0.65rem, 2vw, 0.85rem);
+        line-height: 1.45;
+    }
+
+    .yantra-left {
+        width: clamp(200px, 32vw, 380px);
+        left: clamp(-180px, -13vw, -100px);
+        opacity: 0.35;
+    }
+
+    .yantra-right {
+        width: clamp(220px, 35vw, 420px);
+        right: clamp(-200px, -15vw, -115px);
+        top: 36%;
+        opacity: 0.35;
+    }
+
+    /* Gao Yord Section */
+    .gaoyord-section {
+        margin-top: 80px;
+        min-height: auto;
+    }
+
+    .gaoyord-content {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: clamp(10px, 1.8vw, 14px);
+        padding: 50px 15px 30px;
+        align-items: flex-start;
+        justify-content: center;
+        margin-top: 0;
+        max-width: 100%;
+    }
+
+    .gaoyord-papers {
+        width: clamp(160px, 32vw, 250px);
+        flex-shrink: 0;
+        order: 1;
+    }
+
+    .gaoyord-text {
+        max-width: 100%;
+        flex: 1;
+        gap: 10px;
+        order: 2;
+        text-align: left;
+    }
+
+    .gaoyord-title {
+        font-size: clamp(1rem, 2.9vw, 1.45rem);
+        line-height: 1.2;
+        margin-bottom: 3px;
+    }
+
+    .gaoyord-desc {
+        font-size: clamp(0.64rem, 1.9vw, 0.8rem);
+        line-height: 1.6;
+        word-spacing: 0.03em;
+    }
+
+    .gaoyord-deco-left {
+        width: clamp(230px, 40vw, 420px);
+        left: clamp(-210px, -17vw, -120px);
+        top: 28%;
+        opacity: 0.35;
+    }
+
+    .gaoyord-deco-right {
+        width: clamp(200px, 38vw, 400px);
+        right: clamp(-190px, -15vw, -110px);
+        top: 52%;
+        opacity: 0.35;
+    }
+}
+
+/* iPad Mini and tablets portrait mode - 768px */
+@media (max-width: 768px) and (orientation: portrait) {
     .sakyant-scroll-lock {
         height: calc(var(--sakyant-height) + 40vh);
     }
@@ -561,12 +641,12 @@
 
     /* Gao Yord Section */
     .gaoyord-section {
-        margin-top: 0;
+        margin-top: 40px;
     }
 
     .gaoyord-content {
         gap: clamp(30px, 3.5vw, 27px);
-        padding: 20px 20px 40px;
+        padding: 28px 20px 40px;
     }
 
     .gaoyord-papers {
@@ -601,7 +681,7 @@
 }
 
 /* Small mobile landscape - below 768px */
-@media (max-width: 480px) {
+@media (max-width: 480px) and (orientation: landscape) {
     .sakyant-scroll-lock {
         height: calc(var(--sakyant-height) + 30vh);
     }
@@ -612,22 +692,23 @@
     }
 
     .center-content {
-        gap: 20px;
-        padding: 0 15px 30px;
-        margin-top: -15px;
+        gap: 14px;
+        padding: 0 15px 20px;
+        margin-top: -5px;
     }
 
     .main-title {
-        font-size: clamp(1.4rem, 6vw, 50px);
+        font-size: clamp(1.2rem, 5vw, 42px);
+        line-height: 1.1;
     }
 
     .description-section {
-        gap: 10px;
+        gap: 8px;
     }
 
     .description-section p {
-        font-size: clamp(0.75rem, 3.2vw, 14px);
-        line-height: 1.7;
+        font-size: clamp(0.65rem, 2.8vw, 12px);
+        line-height: 1.5;
     }
 
     .yantra-left {
@@ -642,39 +723,251 @@
     }
 
     /* Gao Yord Section */
+    .gaoyord-section {
+        margin-top: 40px;
+    }
+
     .gaoyord-content {
-        gap: clamp(22px, 3vw, 14px);
-        padding: 20px 15px 40px;
+        gap: clamp(18px, 3vw, 20px);
+        padding: 25px 10px 30px;
+        flex-direction: column;
     }
 
     .gaoyord-papers {
-        width: clamp(230px, 56vw, 330px);
+        width: clamp(200px, 50vw, 280px);
     }
 
     .gaoyord-text {
         max-width: 100%;
-        gap: 15px;
+        gap: 12px;
+        text-align: center;
     }
 
     .gaoyord-title {
-        font-size: clamp(1.25rem, 5.2vw, 25px);
+        font-size: clamp(1.1rem, 4.5vw, 22px);
     }
 
     .gaoyord-desc {
-        font-size: clamp(0.78rem, 3.2vw, 14.5px);
+        font-size: clamp(0.68rem, 2.8vw, 13px);
+        line-height: 1.6;
+    }
+
+    .gaoyord-deco-left {
+        width: clamp(180px, 45vw, 350px);
+        left: clamp(-160px, -20vw, -100px);
+        top: 15%;
+    }
+
+    .gaoyord-deco-right {
+        width: clamp(160px, 42vw, 330px);
+        right: clamp(-150px, -18vw, -90px);
+        top: 58%;
+    }
+}
+
+/* Mobile Portrait Mode - Vertical Orientation */
+@media (max-width: 768px) and (orientation: portrait) {
+    .sakyant-scroll-lock {
+        height: calc(var(--sakyant-height) + 60vh);
+    }
+
+    .center-content {
+        max-width: 100%;
+        gap: 32px;
+        padding: 0 24px 40px;
+        margin-top: 0;
+    }
+
+    .main-title {
+        font-size: clamp(2rem, 8vw, 3.5rem);
+        line-height: 1.2;
+        margin-bottom: 8px;
+    }
+
+    .description-section {
+        gap: 20px;
+    }
+
+    .description-section p {
+        font-size: clamp(0.9rem, 3.8vw, 1.1rem);
+        line-height: 1.75;
+        word-spacing: 0.05em;
+    }
+
+    /* Hide br tags on mobile for better text flow */
+    .description-section br {
+        display: none;
+    }
+
+    .yantra-left {
+        width: clamp(280px, 50vw, 450px);
+        left: clamp(-220px, -22vw, -150px);
+    }
+
+    .yantra-right {
+        width: clamp(300px, 52vw, 480px);
+        right: clamp(-240px, -24vw, -160px);
+        top: 35%;
+    }
+
+    /* Gao Yord Section */
+    .gaoyord-section {
+        margin-top: 50px;
+        min-height: auto;
+    }
+
+    .gaoyord-content {
+        flex-direction: column;
+        gap: 25px;
+        padding: 30px 20px 45px;
+    }
+
+    .gaoyord-papers {
+        width: clamp(280px, 60vw, 400px);
+    }
+
+    .gaoyord-text {
+        text-align: center;
+        gap: 18px;
+    }
+
+    .gaoyord-title {
+        font-size: clamp(1.6rem, 5.5vw, 2.2rem);
+    }
+
+    .gaoyord-desc {
+        font-size: clamp(0.95rem, 3.8vw, 1.1rem);
         line-height: 1.7;
     }
 
     .gaoyord-deco-left {
-        width: clamp(200px, 50vw, 400px);
-        left: clamp(-180px, -22vw, -110px);
+        width: clamp(300px, 55vw, 500px);
+        left: clamp(-250px, -25vw, -180px);
         top: 20%;
     }
 
     .gaoyord-deco-right {
-        width: clamp(180px, 48vw, 380px);
-        right: clamp(-170px, -20vw, -100px);
-        top: 55%;
+        width: clamp(280px, 52vw, 460px);
+        right: clamp(-230px, -23vw, -160px);
+        top: 65%;
+    }
+}
+
+/* iPhone SE (667x375) and similar small devices */
+@media (max-width: 430px) and (orientation: portrait) {
+    .sakyant-scroll-lock {
+        height: calc(var(--sakyant-height) + 70vh) !important;
+    }
+
+    .center-content {
+        gap: 40px !important;
+        padding: 15px 26px 50px !important;
+        margin-top: 5px !important;
+    }
+
+    .main-title {
+        font-size: 1.85rem !important;
+        line-height: 1.4 !important;
+        margin-bottom: 12px !important;
+    }
+
+    .description-section {
+        gap: 26px !important;
+    }
+
+    .description-section p {
+        font-size: 0.92rem !important;
+        line-height: 2 !important;
+        word-spacing: 0.18em !important;
+        text-align: left !important;
+        letter-spacing: 0.025em !important;
+        margin-bottom: 0 !important;
+    }
+
+    /* Hide br tags for better text flow */
+    .description-section br {
+        display: none !important;
+    }
+
+    .yantra-left {
+        width: 280px !important;
+        left: -200px !important;
+        opacity: 0.3 !important;
+    }
+
+    .yantra-right {
+        width: 300px !important;
+        right: -220px !important;
+        top: 38% !important;
+        opacity: 0.3 !important;
+    }
+
+    /* Gao Yord Section - เพิ่มระยะห่างมากขึ้น */
+    .gaoyord-section {
+        margin-top: 140px !important;
+        min-height: auto !important;
+        padding-top: 40px !important;
+    }
+
+    .gaoyord-content {
+        flex-direction: column !important;
+        gap: 40px !important;
+        padding: 50px 24px 55px !important;
+        align-items: center !important;
+    }
+
+    .gaoyord-papers {
+        width: 280px !important;
+        margin-bottom: 18px !important;
+    }
+
+    /* ปรับตำแหน่งกระดาษด้านหลังให้ชัดเจน */
+    .paper-slide.paper-back {
+        width: 107% !important;
+        left: -6px !important;
+        top: 28px !important;
+        transform: rotate(6.91deg) scale(0.97) translateZ(0) !important;
+    }
+
+    .gaoyord-text {
+        text-align: center !important;
+        gap: 24px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .gaoyord-title {
+        font-size: 1.6rem !important;
+        line-height: 1.35 !important;
+        margin-bottom: 4px !important;
+    }
+
+    .gaoyord-desc {
+        font-size: 0.93rem !important;
+        line-height: 1.9 !important;
+        text-align: left !important;
+        word-spacing: 0.12em !important;
+        letter-spacing: 0.01em !important;
+    }
+
+    .gaoyord-desc br {
+        display: block !important;
+        content: "" !important;
+        margin-top: 0.5em !important;
+    }
+
+    .gaoyord-deco-left {
+        width: 300px !important;
+        left: -230px !important;
+        top: 24% !important;
+        opacity: 0.35 !important;
+    }
+
+    .gaoyord-deco-right {
+        width: 280px !important;
+        right: -210px !important;
+        top: 70% !important;
+        opacity: 0.35 !important;
     }
 }
 
