@@ -218,7 +218,6 @@ function initChaiyaFighterScrubReveal() {
         { selector: ".wai-kru-swap", offset: 5 },
         { selector: ".chaiya-fighter-4", offset: 7 },
         { selector: ".chaiya-fighter-5", offset: 9 },
-        { selector: ".chaiya-fighter-6", offset: 11 },
         { selector: ".chaiya-fighter-7", offset: 13 },
     ];
 
@@ -229,9 +228,61 @@ function initChaiyaFighterScrubReveal() {
         { selector: ".label-chaiya-3", offset: 6.5 },
         { selector: ".label-chaiya-4", offset: 8.5 },
         { selector: ".label-chaiya-5", offset: 10.5 },
-        { selector: ".label-chaiya-6", offset: 12.5 },
         { selector: ".label-chaiya-7", offset: 14.5 },
     ];
+
+    const fighter6Elements = [
+        { selector: ".chaiya-fighter-6", isLabel: false },
+        { selector: ".label-chaiya-6", isLabel: true },
+
+    ];
+
+    fighter6Elements.forEach((item) => {
+        const el = document.querySelector(item.selector);
+        if (!el) return;
+
+        const startY = item.isLabel ? 60 : 120;
+        const startScale = item.isLabel ? 1 : 0.8;
+
+        gsap.set(el, { opacity: 0, y: startY, scale: startScale });
+
+        gsap.to(el, {
+            opacity: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: ".text-box-11",              // ← ใช้ text-box-11 เป็น trigger
+                containerAnimation: horizontalScrollTween,
+                start: "left 30%",                     // ← เริ่มหลัง karaoke เสร็จ
+                end: "left 10%",
+                scrub: 1,
+                onEnter: () => {
+                    gsap.to(el, {
+                        y: 0,
+                        scale: 1,
+                        duration: 0.8,
+                        ease: "power2.out",
+                    });
+                },
+                onUpdate: (self) => {
+                    if (self.progress > 0.5 && !el.classList.contains('idle')) {
+                        el.classList.add('idle');
+                    }
+                },
+                onEnterBack: () => el.classList.remove('idle'),
+                onLeaveBack: () => {
+                    el.classList.remove('idle');
+                    gsap.to(el, {
+                        opacity: 0,
+                        duration: 0.3,
+                        ease: "power1.in",
+                        onComplete: () => {
+                            gsap.set(el, { y: startY, scale: startScale });
+                        }
+                    });
+                },
+            }
+        });
+    });
 
     // Fighter reveal
     fighters.forEach((fighter) => {
