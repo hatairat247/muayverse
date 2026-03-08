@@ -13,6 +13,10 @@ window.addEventListener('load', () => {
     initHorizontalScroll();
     initTextReveal();
     initFighterStagger();
+    initChaiyaBounceReveal();
+    initKaraokeBox10();
+    initChaiyaFighterReveal();
+    initChaiyaFighterScrubReveal();
     isInitialized = true;
 });
 
@@ -49,6 +53,56 @@ function initHorizontalScroll() {
     setTimeout(() => {
         ScrollTrigger.refresh();
     }, 100);
+}
+
+// ===== Karaoke – text-box-10 only =====
+function wrapCharsInNode(node) {
+    Array.from(node.childNodes).forEach(child => {
+        if (child.nodeType === Node.TEXT_NODE) {
+            const frag = document.createDocumentFragment();
+            Array.from(child.textContent).forEach(char => {
+                if (/\s/.test(char)) {
+                    frag.appendChild(document.createTextNode(char));
+                } else {
+                    const s = document.createElement('span');
+                    s.className = 'karaoke-char';
+                    s.textContent = char;
+                    frag.appendChild(s);
+                }
+            });
+            node.replaceChild(frag, child);
+        } else if (child.nodeType === Node.ELEMENT_NODE) {
+            wrapCharsInNode(child);
+        }
+    });
+}
+
+function initKaraokeBox10() {
+    if (!horizontalScrollTween) return;
+    const box = document.querySelector('.text-box-10');
+    if (!box) return;
+
+    box.querySelectorAll('p').forEach(p => wrapCharsInNode(p));
+    const chars = Array.from(box.querySelectorAll('.karaoke-char'));
+    if (!chars.length) return;
+
+    gsap.fromTo(chars,
+        { opacity: 0.15, filter: 'blur(4px)' },
+        {
+            opacity: 1,
+            filter: 'blur(0px)',
+            stagger: 0.02,
+            ease: 'none',
+            duration: 0.6,
+            scrollTrigger: {
+                trigger: box,
+                start: 'left 85%',
+                end: 'left 45%',
+                scrub: 0.3,
+                containerAnimation: horizontalScrollTween
+            }
+        }
+    );
 }
 
 // ===== Text Reveal Animation =====
@@ -113,3 +167,132 @@ window.addEventListener('resize', () => {
         }
     }, 250);
 });
+
+// ===== Chaiya Background Bounce Reveal (Scrub) =====
+function initChaiyaBounceReveal() {
+    if (!horizontalScrollTween) return;
+
+    // ลำดับ: Left → Right → Center → Back
+    const chaiyaLayers = [
+        ".chaiya-left",
+        ".chaiya-right",
+        ".chaiya-center",
+        ".chaiya-back"
+    ];
+
+    chaiyaLayers.forEach((selector, index) => {
+        const el = document.querySelector(selector);
+        if (!el) return;
+
+        gsap.to(el, {
+            keyframes: [
+                // ช่วงแรก: พุ่งขึ้นเกินจุดหมายนิดนึง (overshoot = เด้ง)
+                { y: -30, scale: 1.08, opacity: 1, duration: 0.65 },
+                // ช่วงสอง: เด้งกลับลงมาตำแหน่งปกติ
+                { y: 0, scale: 1, duration: 0.35 }
+            ],
+            scrollTrigger: {
+                trigger: ".chaiya-background",
+                containerAnimation: horizontalScrollTween,
+                start: `left+=${index * 10}% 85%`,
+                end: `left+=${index * 8 + 8}% 45%`,
+                scrub: 0.5,   // ← ผูกกับ scroll ตลอด
+            }
+        });
+    });
+}
+
+function initChaiyaFighterReveal() {
+    if (!horizontalScrollTween) return;
+
+    const fighters = [
+        { selector: ".chaiya-fighter-1", delay: 0 },
+        { selector: ".chaiya-fighter-2", delay: 0.4 },
+    ];
+
+    fighters.forEach((fighter) => {
+        const el = document.querySelector(fighter.selector);
+        if (!el) return;
+
+        gsap.set(el, { opacity: 0, y: 120, scale: 0.8 });
+
+        ScrollTrigger.create({
+            trigger: el,
+            containerAnimation: horizontalScrollTween,
+            start: "left 85%",
+            end: "left 20%",
+            onEnter: () => {
+                el.classList.remove('idle');
+                gsap.to(el, {
+                    y: -25,
+                    scale: 1.05,
+                    opacity: 1,
+                    duration: 0.5,
+                    delay: fighter.delay,    // ← fighter-2 เด้งหลัง fighter-1
+                    ease: "power2.out",
+                    onComplete: () => {
+                        gsap.to(el, {
+                            y: 0,
+                            scale: 1,
+                            duration: 0.4,
+                            ease: "bounce.out",
+                            onComplete: () => {
+                                el.classList.add('idle');
+                            }
+                        });
+                    }
+                });
+            },
+            onLeaveBack: () => {
+                el.classList.remove('idle');
+                gsap.killTweensOf(el);
+                gsap.to(el, {
+                    y: 120,
+                    scale: 0.8,
+                    opacity: 0,
+                    duration: 0.6,
+                    ease: "power1.inOut",
+                });
+            }
+        });
+    });
+}
+
+// ===== Chaiya Fighter 4 & 5 Scrub Reveal =====
+function initChaiyaFighterScrubReveal() {
+    if (!horizontalScrollTween) return;
+
+    const fighters = [
+        { selector: ".chaiya-fighter-4", offset: 0 },
+        { selector: ".chaiya-fighter-5", offset: 5 },
+    ];
+
+    fighters.forEach((fighter) => {
+        const el = document.querySelector(fighter.selector);
+        if (!el) return;
+
+        gsap.set(el, { opacity: 0, y: 120, scale: 0.8 });
+
+        // ค่อยๆ ขึ้นมาตาม scroll
+        gsap.to(el, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: el,
+                containerAnimation: horizontalScrollTween,
+                start: `left+=${fighter.offset}% 85%`,
+                end: `left+=${fighter.offset}% 40%`,
+                scrub: 0.8,
+                onEnter: () => el.classList.remove('idle'),
+                onLeave: () => el.classList.add('idle'),       // ขึ้นเสร็จ → ขยับ
+                onEnterBack: () => el.classList.remove('idle'),
+                onLeaveBack: () => {
+                    el.classList.remove('idle');
+                    gsap.set(el, { opacity: 0, y: 120, scale: 0.8 });
+                },
+            }
+        });
+    });
+}
