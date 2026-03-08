@@ -1770,28 +1770,103 @@ body::before {
 .chaiya-fighter-1 {
     position: relative;
     top: 70px;
-    opacity: 0;
-    transform: translateY(120px) scale(0.8);
+}
+
+.chaiya-fighter-1.idle {
+    animation: fighter-idle 3s ease-in-out infinite;
 }
 
 .chaiya-fighter-2 {
     position: relative;
     top: 15px;
-    opacity: 0;
-    transform: translateY(120px) scale(0.8);
-    animation: fighter-idle 3.2s ease-in-out infinite;
 }
 
+.chaiya-fighter-2.idle {
+    animation: fighter-idle 3.2s ease-in-out infinite;
+}
 
 .chaiya-fighter-3 {
     position: relative;
     top: -30px;
 }
 
+/* Wai Kru hover swap */
+.wai-kru-swap {
+    position: relative;
+    cursor: pointer;
+    filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.4));
+    animation: wai-kru-glow 2s ease-in-out infinite;
+}
+
+@keyframes wai-kru-glow {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 20px rgba(253, 240, 213, 0.8)) drop-shadow(0 0 40px rgba(253, 240, 213, 0.4));
+    }
+}
+
+/* Idle แบบ 2 - โยกซ้ายขวา */
+@keyframes fighter-idle-sway {
+
+    0%,
+    100% {
+        transform: translateX(0px) rotate(0deg);
+    }
+
+    25% {
+        transform: translateX(4px) rotate(0.4deg);
+    }
+
+    50% {
+        transform: translateX(-4px) rotate(-0.3deg);
+    }
+
+    75% {
+        transform: translateX(2px) rotate(0.2deg);
+    }
+}
+
+/* Idle แบบ 3 - ย่อยืด (หายใจ) */
+@keyframes fighter-idle-breathe {
+
+    0%,
+    100% {
+        transform: scaleY(1) translateY(0);
+    }
+
+    50% {
+        transform: scaleY(1.015) translateY(-5px);
+    }
+}
+
+.wai-kru-hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.wai-kru-default {
+    transition: opacity 0.3s ease;
+}
+
+.wai-kru-swap:hover .wai-kru-default {
+    opacity: 0;
+}
+
+.wai-kru-swap:hover .wai-kru-hover {
+    opacity: 1;
+}
+
 .chaiya-fighter-4 {
     position: relative;
     top: 10px;
-    transform: translateY(120px) scale(0.8);
 }
 
 .chaiya-fighter-4.idle {
@@ -1801,21 +1876,33 @@ body::before {
 .chaiya-fighter-5 {
     position: relative;
     top: 30px;
-    transform: translateY(120px) scale(0.8);
 }
 
 .chaiya-fighter-5.idle {
     animation: fighter-idle 2.8s ease-in-out infinite;
 }
 
+
 .chaiya-fighter-6 {
     position: relative;
     top: -20px;
 }
 
+.chaiya-fighter-5.idle {
+    animation: fighter-idle 2.8s ease-in-out infinite;
+}
+
+.chaiya-fighter-6.idle {
+    animation: fighter-idle 3.0s ease-in-out infinite;
+}
+
 .chaiya-fighter-7 {
     position: relative;
     top: 50px;
+}
+
+.chaiya-fighter-7.idle {
+    animation: fighter-idle-sway 3.5s ease-in-out infinite;
 }
 
 .chaiya-fighter-8 {
