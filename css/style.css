@@ -278,7 +278,7 @@ body {
     background: var(--color-primary);
     border-radius: 5px;
 }
-
+//thumbnail hover effect
 ::-webkit-scrollbar-thumb:hover {
     background: var(--color-secondary);
 }*/
