@@ -53,7 +53,7 @@ body::before {
    ============================================ */
 #timeline-track {
     position: relative;
-    width: 2000vw;
+    width: 2200vw;
     /* Total width: ขยายได้เรื่อย ๆ — เพิ่มได้ไม่จำกัด */
     height: 100%;
     will-change: transform;
@@ -365,6 +365,64 @@ body::before {
     height: 100%;
 }
 
+.bg-floor-19 {
+    left: 25900px;
+    width: 2369px;
+    height: 100%;
+}
+
+.bg-floor-20 {
+    left: 27400px;
+    width: 2369px;
+    height: 100%;
+}
+
+.bg-floor-21 {
+    left: 29400px;
+    width: 2369px;
+    height: 100%;
+    bottom: -23px;
+}
+
+.bg-floor-22 {
+    left: 31400px;
+    width: 2369px;
+    height: 100%;
+    bottom: -23px;
+}
+
+.bg-floor-23 {
+    left: 32900px;
+    width: 2369px;
+    height: 100%;
+}
+
+.bg-floor-24 {
+    left: 34950px;
+    width: 2369px;
+    height: 100%;
+}
+
+.bg-floor-25 {
+    left: 37000px;
+    width: 2369px;
+    height: 100%;
+    bottom: -10px;
+}
+
+.bg-floor-26 {
+    left: 38950px;
+    width: 2369px;
+    height: 100%;
+    bottom: -10px;
+}
+
+.bg-floor-27 {
+    left: 39950px;
+    width: 2369px;
+    height: 100%;
+    bottom: -10px;
+}
 
 /* Dark Overlay */
 .bg-dark-overlay {
@@ -605,7 +663,7 @@ body::before {
 }
 
 .text-box-9 {
-    left: 380vw;
+    left: 385vw;
     top: 35%;
     width: 32vw;
 }
@@ -634,11 +692,77 @@ body::before {
     width: 32vw;
 }
 
+.text-box-14 {
+    left: 727vw;
+    top: 35%;
+    width: 32vw;
+}
+
+.text-box-15 {
+    left: 777vw;
+    top: 34%;
+    width: 32vw;
+}
+
+.text-box-16 {
+    left: 803vw;
+    top: 34%;
+    width: 32vw;
+}
+
+/* Early Rattanakosin Rama V Portrait */
+.early-ratana-pic-rama5 {
+    position: absolute;
+    left: 830vw;
+    bottom: 12vw;
+    height: 55%;
+    width: auto;
+    object-fit: contain;
+    z-index: 12;
+    opacity: 1;
+}
+
+.text-box-17 {
+    left: 895vw;
+    top: 33%;
+    width: 32vw;
+}
+
+.text-box-18 {
+    left: 890vw;
+    top: 37%;
+    width: 32vw;
+}
+
+.text-box-19 {
+    left: 975vw;
+    top: 32%;
+    width: 32vw;
+}
+
+.text-box-20 {
+    left: 1015vw;
+    top: 32%;
+    width: 32vw;
+}
+
+.text-box-21 {
+    left: 1013vw;
+    top: 28%;
+    width: 32vw;
+}
+
+.text-box-22 {
+    left: 1143vw;
+    top: 30%;
+    width: 32vw;
+}
+
 /* Tha Sao Fighters (Kick & Elbow group) */
 .tha-sao-fighters {
     position: absolute;
     left: 630vw;
-    top: 190px;
+    top: 240px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -694,7 +818,7 @@ body::before {
 .tha-sao-fighters-2 {
     position: absolute;
     left: 675vw;
-    top: 200px;
+    top: 240px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -740,7 +864,7 @@ body::before {
 .tha-sao-fighters-3 {
     position: absolute;
     left: 705vw;
-    top: 220px;
+    top: 240px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -994,7 +1118,7 @@ body::before {
 
 .era-indicator-sukhothai .era-timeline-container {
     position: relative;
-    width: 300%;
+    width: 297%;
     height: 53px;
 }
 
@@ -1004,7 +1128,7 @@ body::before {
     height: 3px;
     background: var(--history-text);
     top: 50%;
-    left: 0;
+    left: 20vw;
     transform: translateY(-50%);
 }
 
@@ -1012,6 +1136,15 @@ body::before {
     position: absolute;
     left: 29.11vw;
     top: 0;
+    width: 53px;
+    height: 53px;
+    border-radius: 50%;
+    background: var(--history-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    z-index: 21;
     transform: translateX(-50%);
 }
 
@@ -1880,6 +2013,184 @@ body::before {
     width: auto;
 }
 
+/* Thonburi Decorative Trees */
+.thonburi-tree {
+    position: absolute;
+    z-index: 3;
+    opacity: 1;
+    object-fit: contain;
+}
+
+.thonburi-tree-1 {
+    left: 657vw;
+    top: 36%;
+    height: 40%;
+    width: auto;
+}
+
+.thonburi-tree-2 {
+    left: 700vw;
+    top: 41%;
+    height: 35%;
+    width: auto;
+}
+
+.thonburi-tree-3 {
+    left: 755vw;
+    top: 50%;
+    height: 25%;
+    width: auto;
+    transform: scaleX(-1);
+}
+
+.thonburi-tree-4 {
+    left: 800vw;
+    top: 45%;
+    height: 30%;
+    width: auto;
+    transform: scaleX(-1);
+}
+
+/* Early Rattanakosin Decorative Trees */
+.early-ratana-tree {
+    position: absolute;
+    z-index: 3;
+    opacity: 1;
+    object-fit: contain;
+}
+
+.early-ratana-tree-1 {
+    left: 728vw;
+    top: 45%;
+    height: 30%;
+    width: auto;
+}
+
+.early-ratana-tree-2 {
+    left: 787vw;
+    top: 50%;
+    height: 25%;
+    width: auto;
+    transform: scaleX(-1);
+}
+
+.early-ratana-tree-3 {
+    left: 877vw;
+    top: 50%;
+    height: 25%;
+    width: auto;
+}
+
+/* Mid Rattanakosin Decorative Buildings */
+.mid-ratana-building {
+    position: absolute;
+    z-index: 3;
+    opacity: 1;
+    object-fit: contain;
+}
+
+.mid-ratana-building-1 {
+    left: 905vw;
+    top: 49%;
+    height: 25%;
+    width: auto;
+}
+
+.mid-ratana-building-2 {
+    left: 963vw;
+    top: 48%;
+    height: 28%;
+    width: auto;
+}
+
+.mid-ratana-building-3 {
+    left: 997vw;
+    top: 47%;
+    height: 28%;
+    width: auto;
+}
+
+/* Present Day Decorative Buildings */
+.present-building {
+    position: absolute;
+    z-index: 3;
+    opacity: 1;
+    object-fit: contain;
+}
+
+.present-building-1 {
+    left: 1005vw;
+    top: 46%;
+    height: 29%;
+    width: auto;
+}
+
+.present-building-2 {
+    left: 1026vw;
+    top: 50%;
+    height: 25%;
+    width: auto;
+}
+
+.present-building-3 {
+    left: 1110vw;
+    top: 35%;
+    height: 40%;
+    width: auto;
+    transform: scaleX(-1);
+}
+
+.present-building-4 {
+    left: 1125vw;
+    top: 32%;
+    height: 42%;
+    width: auto;
+}
+
+/* Present Day Pictures */
+.present-fighters {
+    position: absolute;
+    left: 1042vw;
+    top: 230px;
+    display: flex;
+    z-index: 12;
+}
+
+.present-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: -2vw;
+}
+
+.present-container:first-child {
+    margin-left: 0;
+}
+
+.present-fighter {
+    height: 30vmin;
+    max-width: 30vw;
+    width: auto;
+    object-fit: contain;
+    opacity: 1;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+}
+
+.present-fighter-1 {
+    position: relative;
+    transform: rotate(-18deg);
+}
+
+.present-fighter-2 {
+    position: relative;
+    transform: rotate(4deg);
+}
+
+.present-fighter-3 {
+    position: relative;
+    transform: rotate(12deg);
+}
+
 /* Tha Sao Background Complex */
 .tha-sao-background {
     position: absolute;
@@ -1987,6 +2298,251 @@ body::before {
     top: 0;
 }
 
+/* Thonburi Background Complex */
+.thonburi-background {
+    position: absolute;
+    left: 640vw;
+    top: 19%;
+    width: 100vw;
+    height: 75%;
+    z-index: 10;
+}
+
+.thonburi-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    opacity: 1;
+}
+
+.thonburi-under {
+    z-index: 2;
+}
+
+.thonburi-center {
+    z-index: 1;
+}
+
+.thonburi-above {
+    z-index: 3;
+}
+
+/* Early Rattanakosin Background Complex */
+.early-ratana-background {
+    position: absolute;
+    left: 716vw;
+    top: 10%;
+    width: 100vw;
+    height: 75%;
+    z-index: 10;
+}
+
+.early-ratana-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    opacity: 1;
+}
+
+.early-ratana-left {
+    z-index: 1;
+}
+
+.early-ratana-right {
+    z-index: 1;
+}
+
+.early-ratana-under {
+    z-index: 3;
+}
+
+/* Mid Rattanakosin Background Complex */
+.mid-ratana-background {
+    position: absolute;
+    left: 805vw;
+    top: 15%;
+    width: 100vw;
+    height: 75%;
+    z-index: 10;
+}
+
+.mid-ratana-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    opacity: 1;
+}
+
+.mid-ratana-under {
+    z-index: 1;
+}
+
+.mid-ratana-above {
+    z-index: 2;
+}
+
+/* Thonburi Fighters (5 poses without labels) */
+.thonburi-fighters {
+    position: absolute;
+    left: 749vw;
+    top: 140px;
+    display: flex;
+    z-index: 12;
+}
+
+.thonburi-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: -9vw;
+}
+
+.thonburi-container:first-child {
+    margin-left: 0;
+}
+
+.thonburi-fighter {
+    height: 75vmin;
+    max-width: 30vw;
+    width: auto;
+    object-fit: contain;
+    opacity: 1;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+}
+
+/* Individual fighter positioning for overlap effect */
+.thonburi-fighter-1 {
+    position: relative;
+
+}
+
+.thonburi-fighter-2 {
+    position: relative;
+
+}
+
+.thonburi-fighter-3 {
+    position: relative;
+
+}
+
+.thonburi-fighter-4 {
+    position: relative;
+
+}
+
+.thonburi-fighter-5 {
+    position: relative;
+
+}
+
+/* Early Rattanakosin Fighters (4 poses without labels) */
+.early-ratana-fighters {
+    position: absolute;
+    left: 863vw;
+    top: 190px;
+    display: flex;
+    z-index: 12;
+}
+
+.early-ratana-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: -12vw;
+}
+
+.early-ratana-container:first-child {
+    margin-left: 0;
+}
+
+.early-ratana-fighter {
+    height: 65vmin;
+    max-width: 30vw;
+    width: auto;
+    object-fit: contain;
+    opacity: 1;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+}
+
+.early-ratana-fighter-1 {
+    position: relative;
+}
+
+.early-ratana-fighter-2 {
+    position: relative;
+}
+
+.early-ratana-fighter-3 {
+    position: relative;
+}
+
+.early-ratana-fighter-4 {
+    position: relative;
+}
+
+/* Mid Rattanakosin Fighters (4 poses without labels) */
+.mid-ratana-fighters {
+    position: absolute;
+    left: 910vw;
+    top: 180px;
+    display: flex;
+    z-index: 12;
+}
+
+.mid-ratana-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: -12vw;
+}
+
+.mid-ratana-container:first-child {
+    margin-left: 0;
+}
+
+.mid-ratana-fighter {
+    height: 65vmin;
+    max-width: 30vw;
+    width: auto;
+    object-fit: contain;
+    opacity: 1;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+}
+
+.mid-ratana-fighter-1 {
+    position: relative;
+    height: 75vmin;
+    top: -40px;
+}
+
+.mid-ratana-fighter-2 {
+    position: relative;
+}
+
+.mid-ratana-fighter-3 {
+    position: relative;
+    height: 60vmin;
+    top: 50px;
+}
+
+.mid-ratana-fighter-4 {
+    position: relative;
+    top: 50px;
+}
+
 /* Individual Thonburi Mountain Positioning */
 .bg-mountain-thonburi-1 {
     position: absolute;
@@ -2018,7 +2574,7 @@ body::before {
 /* Thonburi Era Indicator */
 .era-indicator-thonburi {
     position: absolute;
-    left: 580vw;
+    left: 675vw;
     top: 87%;
     width: auto;
     display: flex;
@@ -2096,7 +2652,7 @@ body::before {
 /* Early Rattanakosin Era Indicator */
 .era-indicator-early-ratana {
     position: absolute;
-    left: 680vw;
+    left: 750vw;
     top: 87%;
     width: auto;
     display: flex;
@@ -2174,7 +2730,7 @@ body::before {
 /* Mid Rattanakosin Era Indicator */
 .era-indicator-mid-ratana {
     position: absolute;
-    left: 780vw;
+    left: 845vw;
     top: 87%;
     width: auto;
     display: flex;
@@ -2232,6 +2788,36 @@ body::before {
     left: 247vw;
 }
 
+/* Present Day Background Complex */
+.present-background {
+    position: absolute;
+    left: 915vw;
+    top: 11%;
+    width: 100vw;
+    height: 75%;
+    z-index: 10;
+}
+
+.present-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    opacity: 1;
+}
+
+.present-under {
+    z-index: 1;
+}
+
+.present-above {
+    z-index: 2;
+    top: 40px;
+}
+
 /* Present Day Text Boxes */
 .text-box-present-1 {
     position: absolute;
@@ -2252,7 +2838,7 @@ body::before {
 /* Present Day Era Indicator */
 .era-indicator-present {
     position: absolute;
-    left: 880vw;
+    left: 962vw;
     top: 87%;
     width: auto;
     display: flex;
