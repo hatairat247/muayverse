@@ -1,6 +1,7 @@
-/* History Page - Horizontal Scrolling Parallax */
+/* =========================================================================
+   HISTORY PAGE - MASTER SCALED & CLEANED (100% VW)
+   ========================================================================= */
 
-/* Variables */
 :root {
     --history-bg: #272727;
     --history-text: #fdf0d5;
@@ -9,7 +10,6 @@
     --history-text-highlight: #ffffff;
 }
 
-/* Base Styles */
 body {
     overflow-x: hidden;
     background-color: var(--history-bg);
@@ -26,7 +26,6 @@ body::before {
     pointer-events: none;
 }
 
-/* History Wrapper - Full Viewport */
 .history-wrapper {
     position: fixed;
     top: 0;
@@ -40,7 +39,6 @@ body::before {
     background: var(--history-bg);
 }
 
-/* Aspect-Ratio Locked Viewport (16:9 Letterboxing) */
 .history-viewport {
     position: relative;
     width: 100%;
@@ -48,36 +46,48 @@ body::before {
     overflow: hidden;
 }
 
-/* ============================================
-   SINGLE CONTINUOUS TIMELINE TRACK
-   ============================================ */
 #timeline-track {
     position: relative;
     width: 2200vw;
-    /* Total width: ขยายได้เรื่อย ๆ — เพิ่มได้ไม่จำกัด */
     height: 100%;
     will-change: transform;
 }
 
-/* ============================================
-   GLOBAL SEAMLESS BACKGROUND LAYERS
-   ============================================ */
+/* =========================================
+   DARK OVERLAY (1 แผ่น คลุมยาวทั้งโปรเจกต์)
+   ========================================= */
+#timeline-track::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../img/history-dark-overlay.png');
+    background-size: 100vw 100%;
+    background-repeat: repeat-x;
+    opacity: 0.5;
+    z-index: 6;
+    pointer-events: none;
+}
 
-/* Global Sky/Base Layer */
+.bg-dark-overlay {
+    display: none;
+}
+
+/* =========================================
+   GLOBAL BACKGROUNDS
+   ========================================= */
 .layer-sky {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(180deg,
-            rgba(39, 39, 39, 0.95) 0%,
-            rgba(60, 50, 45, 0.85) 50%,
-            rgba(39, 39, 39, 0.9) 100%);
+    background: linear-gradient(180deg, rgba(39, 39, 39, 0.95) 0%, rgba(60, 50, 45, 0.85) 50%, rgba(39, 39, 39, 0.9) 100%);
     z-index: 1;
 }
 
-/* Global Mountains Layer (parallax) */
 .layer-mountains {
     position: absolute;
     top: 0;
@@ -98,7 +108,6 @@ body::before {
     opacity: 0.3;
 }
 
-/* Global Ground Layer (seamless floor) */
 .layer-ground {
     position: absolute;
     bottom: 0;
@@ -108,34 +117,69 @@ body::before {
     background-size: cover;
     background-position: center bottom;
     z-index: 6;
-    /* อยู่หลังนักมวย (z-index: 8) แต่อยู่หน้าภูเขา (z-index: 2) */
     background: var(--history-bg) url('../img/history-floor.jpg') repeat-x bottom left;
     pointer-events: none;
 }
 
-/* Global Dark Overlay */
-.layer-overlay {
+/* =========================================
+   ERA SECTIONS
+   ========================================= */
+.era-section {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    width: 100vw;
     height: 100%;
-    background: url('../img/history-dark-overlay.png') repeat-x;
-    background-size: 100vw 100%;
-    opacity: 0.5;
-    z-index: 4;
-    pointer-events: none;
+    top: 0;
 }
 
-/* ============================================
-   ERA CONTENT CONTAINERS (Absolute Positioning)
-   ============================================ */
+[data-era="sukhothai"] {
+    left: 0;
+}
+
+[data-era="ayutthaya"] {
+    left: 100vw;
+}
+
+[data-era="regional-styles"] {
+    left: 200vw;
+}
+
+[data-era="korat"] {
+    left: 300vw;
+}
+
+[data-era="lopburi"] {
+    left: 400vw;
+}
+
+[data-era="chaiya"] {
+    left: 500vw;
+}
+
+[data-era="tha-sao"] {
+    left: 600vw;
+}
+
+[data-era="thonburi"] {
+    left: 700vw;
+}
+
+[data-era="early-rattanakosin"] {
+    left: 800vw;
+}
+
+[data-era="mid-rattanakosin"] {
+    left: 900vw;
+}
+
+[data-era="present-day"] {
+    left: 1000vw;
+}
+
 .era-content {
     position: absolute;
     top: 0;
     height: 100%;
     width: 100vw;
-    /*  บังคับให้กว้างเท่าจอเสมอ */
     pointer-events: none;
 }
 
@@ -143,7 +187,6 @@ body::before {
     pointer-events: auto;
 }
 
-/* Era Backgrounds (per-era styling) */
 .era-background {
     position: absolute;
     top: 0;
@@ -153,88 +196,105 @@ body::before {
     pointer-events: none;
 }
 
-.sukhothai-bg .bg-layer {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.ruins-back {
-    z-index: 1;
-    opacity: 0.6;
-}
-
-.ruins-middle {
-    z-index: 2;
-    opacity: 0.5;
-}
-
-.ruins-front {
-    z-index: 3;
-    opacity: 0.4;
-}
-
-/* ============================================
-   SUKHOTHAI ERA - PRECISE POSITIONING
-   ============================================ */
-
-/* Era Section Container */
-.era-section {
-    position: absolute;
-    width: 100vw;
-    height: 100%;
-    top: 0;
-}
-
-/* Sukhothai Section - First section at origin */
-[data-era="sukhothai"] {
-    left: 0;
-}
-
-/* Background Mountain (Farthest Layer) */
+/* =========================================
+   MOUNTAINS
+   ========================================= */
 .bg-mountain {
     position: absolute;
-    bottom: 80px;
     width: 120%;
-    /* เพิ่มความกว้างให้เกินพื้นที่ */
-    height: 50%;
     object-fit: cover;
-    /* ใช้ cover เพื่อให้ใหญ่เต็มพื้นที่ */
     object-position: center bottom;
     z-index: 0;
     opacity: 1;
     overflow: visible;
+    top: 23.97vw;
+    height: 28.12vw;
 }
 
-/* Sukhothai-specific mountain positioning */
 [data-era="sukhothai"] .bg-mountain {
     left: -20vw;
-    bottom: 150px;
+    top: 20.32vw;
 }
 
-/* Ayutthaya-specific mountain positioning */
 [data-era="ayutthaya"] .bg-mountain {
     left: 19vw;
-    bottom: 80px;
 }
 
-/* Korat-specific mountain positioning */
 [data-era="korat"] .bg-mountain {
-    bottom: 150px;
+    top: 20.32vw;
 }
 
-/* Individual Korat Mountain Positioning - Horizontal Layout */
 .bg-mountain-korat-1 {
-    position: absolute;
     left: 145vw;
 }
 
 .bg-mountain-korat-2 {
-    position: absolute;
     left: 247vw;
 }
 
+.bg-mountain-lopburi-1 {
+    left: 145vw;
+}
+
+.bg-mountain-lopburi-2 {
+    left: 247vw;
+}
+
+.bg-mountain-chaiya-1 {
+    left: 335vw;
+}
+
+.bg-mountain-chaiya-2 {
+    left: 420vw;
+}
+
+.bg-mountain-chaiya-3 {
+    left: 520vw;
+}
+
+.bg-mountain-tha-sao-1 {
+    left: 145vw;
+}
+
+.bg-mountain-tha-sao-2 {
+    left: 247vw;
+}
+
+.bg-mountain-thonburi-1 {
+    left: 145vw;
+}
+
+.bg-mountain-thonburi-2 {
+    left: 247vw;
+}
+
+.bg-mountain-early-ratana-1 {
+    left: 145vw;
+}
+
+.bg-mountain-early-ratana-2 {
+    left: 247vw;
+}
+
+.bg-mountain-mid-ratana-1 {
+    left: 145vw;
+}
+
+.bg-mountain-mid-ratana-2 {
+    left: 247vw;
+}
+
+.bg-mountain-present-1 {
+    left: 145vw;
+}
+
+.bg-mountain-present-2 {
+    left: 247vw;
+}
+
+/* =========================================
+   FLOORS
+   ========================================= */
 .bg-floor {
     position: absolute;
     object-fit: cover;
@@ -242,13 +302,10 @@ body::before {
     z-index: 4;
     pointer-events: none;
     width: 123.38vw;
-    /* เปลี่ยนจาก 2369px */
     height: 100%;
     bottom: 0;
-    /* เพิ่มบรรทัดนี้เพื่อล็อคชิ้นที่ไม่มีค่า bottom ให้ติดพื้นเสมอ */
 }
 
-/* แปลงค่า bottom จาก px เป็น vw ทั้งหมด เพื่อให้ยืดหดตามสัดส่วนจอ */
 .bg-floor-1 {
     left: -13.02vw;
     bottom: -1.2vw;
@@ -378,33 +435,16 @@ body::before {
     bottom: -0.52vw;
 }
 
-/* Dark Overlay */
-.bg-dark-overlay {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('../img/history-dark-overlay.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.5;
-    z-index: 6;
-}
-
-/* Background Ruins (3 Layers - Overlay) */
+/* =========================================
+   BACKGROUND STRUCTURES (RUINS, TEMPLES, ETC)
+   ========================================= */
 .bg-ruins {
     position: absolute;
     left: 0;
-    top: 8%;
-    /* 96px / 1080px */
-    width: 66.67vw;
-    /* 1280px / 1920px */
-    height: 78.98%;
-    /* 853px / 1080px */
     z-index: 5;
-    /* Above mountain, floor, and dark overlay */
+    top: 4.5vw;
+    height: 44.42vw;
+    width: 66.67vw;
 }
 
 .ruins-layer {
@@ -418,737 +458,26 @@ body::before {
 
 .ruins-back {
     z-index: 1;
-    /* Relative to .bg-ruins container */
     opacity: 1.0;
 }
 
 .ruins-middle {
     z-index: 2;
-    /* Relative to .bg-ruins container */
     opacity: 1.0;
 }
 
 .ruins-front {
     z-index: 3;
-    /* Relative to .bg-ruins container */
     opacity: 1.0;
 }
 
-/* Kick Poses (Between Text Boxes) */
-.kick-poses {
-    position: absolute;
-    left: 85vw;
-    /* Position between text-box-1 and text-box-2 */
-    top: 30%;
-    /* Vertically centered with text boxes */
-    z-index: 100;
-    /* Very high z-index to ensure visibility */
-    width: 30vw;
-    height: 50%;
-}
-
-.kick-pose {
-    position: relative;
-    /* Changed from absolute */
-    height: 45%;
-    width: auto;
-    object-fit: contain;
-    opacity: 1;
-    display: block;
-    /* Ensure display */
-    transition: transform 0.3s ease, filter 0.3s ease;
-    cursor: pointer;
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
-}
-
-/* Individual Kick Positioning (Grid Layout from Figma) */
-.kick-pose:nth-child(1) {
-    left: 50px;
-    top: -90px;
-    height: 35vw;
-}
-
-/* Hover Effect for Kick Poses
-.kick-pose:hover {
-    filter: brightness(1.2) drop-shadow(0 0 20px rgba(233, 200, 36, 0.6));
-    z-index: 11;
-} */
-
-/* Fighters (7 fighters) - Bottom Row */
-.fighters {
-    position: absolute;
-    left: 11.35vw;
-    /* 218px / 1920px */
-    top: 59.07%;
-    /* 638px / 1080px */
-    z-index: 8;
-}
-
-.fighter {
-    position: absolute;
-    width: 12.99vw;
-    /* 249.435px / 1920px */
-    height: 34.63%;
-    /* 373.971px / 1080px */
-    object-fit: contain;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-/* Individual Fighter Positioning (Exact Figma Coordinates) */
-.fighter:nth-child(1) {
-    left: 0;
-}
-
-.fighter:nth-child(2) {
-    left: 1.17vw;
-    /* 22.54px / 1920px */
-}
-
-.fighter:nth-child(3) {
-    left: 6.5vw;
-    /* 124.88px / 1920px */
-}
-
-.fighter:nth-child(4) {
-    left: 15.53vw;
-    /* 298.29px / 1920px */
-}
-
-.fighter:nth-child(5) {
-    left: 20.86vw;
-    /* 400.62px / 1920px */
-}
-
-.fighter:nth-child(6) {
-    left: 29.88vw;
-    /* 573.62px / 1920px */
-}
-
-.fighter:nth-child(7) {
-    left: 34.04vw;
-    /* 653.40px / 1920px */
-}
-
-/* Revealed State for Fighters (Stagger Animation) */
-.fighter.revealed {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Text Boxes (General Styles) */
-.text-box {
-    position: absolute;
-    padding: 20px 30px;
-    z-index: 15;
-    opacity: 1;
-    transition: opacity 0.8s ease, filter 0.8s ease;
-}
-
-.text-box.revealed {
-    opacity: 1;
-    filter: blur(0);
-}
-
-.text-box p {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px;
-    line-height: 1.6;
-    color: var(--history-text);
-    text-align: center;
-}
-
-.text-box .highlight {
-    font-weight: 700;
-    color: var(--history-highlight);
-}
-
-/* Karaoke chars (text-box-10) */
-.text-box-10 .karaoke-char {
-    display: inline;
-    opacity: 0.15;
-    filter: blur(4px);
-}
-
-.text-box-10 .highlight .karaoke-char {
-    color: var(--history-highlight);
-}
-
-/* Text Box 1 (Muay Boran Context) */
-.text-box-1 {
-    left: 55vw;
-    top: 30%;
-    width: 22vw;
-}
-
-/* Text Box 2 (Royal Curriculum) */
-.text-box-2 {
-    left: 120vw;
-    top: 29%;
-    width: 19vw;
-}
-
-/* Text Box 3 (Ayutthaya - Muay Boran 4 Regions) */
-.text-box-3 {
-    left: 117vw;
-    top: 40%;
-    width: 30vw;
-}
-
-.text-box-4 {
-    left: 223vw;
-    top: 27%;
-    width: 32vw;
-}
-
-.text-box-5 {
-    left: 290vw;
-    top: 31%;
-    width: 28vw;
-}
-
-.text-box-6 {
-    left: 246vw;
-    top: 33%;
-    width: 25vw;
-}
-
-.text-box-7 {
-    left: 243vw;
-    top: 29%;
-    width: 32vw;
-}
-
-.text-box-8 {
-    left: 335vw;
-    top: 33%;
-    width: 32vw;
-}
-
-.text-box-9 {
-    left: 385vw;
-    top: 35%;
-    width: 32vw;
-}
-
-.text-box-10 {
-    left: 380vw;
-    top: 28%;
-    width: 25vw;
-}
-
-.text-box-11 {
-    left: 490vw;
-    top: 28%;
-    width: 20vw;
-}
-
-.text-box-12 {
-    left: 546vw;
-    top: 37%;
-    width: 15vw;
-}
-
-.text-box-13 {
-    left: 605vw;
-    top: 35%;
-    width: 32vw;
-}
-
-.text-box-14 {
-    left: 727vw;
-    top: 35%;
-    width: 32vw;
-}
-
-.text-box-15 {
-    left: 777vw;
-    top: 34%;
-    width: 32vw;
-}
-
-.text-box-16 {
-    left: 803vw;
-    top: 34%;
-    width: 32vw;
-}
-
-/* Early Rattanakosin Rama V Portrait */
-.early-ratana-pic-rama5 {
-    position: absolute;
-    left: 830vw;
-    bottom: 12vw;
-    height: 55%;
-    width: auto;
-    object-fit: contain;
-    z-index: 12;
-    opacity: 1;
-}
-
-.text-box-17 {
-    left: 895vw;
-    top: 33%;
-    width: 32vw;
-}
-
-.text-box-18 {
-    left: 885vw;
-    top: 37%;
-    width: 32vw;
-}
-
-.text-box-19 {
-    left: 975vw;
-    top: 32%;
-    width: 32vw;
-}
-
-.text-box-20 {
-    left: 1015vw;
-    top: 32%;
-    width: 32vw;
-}
-
-.text-box-21 {
-    left: 1013vw;
-    top: 24%;
-    width: 32vw;
-}
-
-.text-box-22 {
-    left: 1148vw;
-    top: 30%;
-    width: 32vw;
-}
-
-/* Tha Sao Fighters (Kick & Elbow group) */
-.tha-sao-fighters {
-    position: absolute;
-    left: 630vw;
-    top: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 12;
-}
-
-.tha-sao-group-label {
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px;
-    font-weight: 400;
-    color: var(--history-text);
-    text-align: center;
-    white-space: nowrap;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-    width: 100%;
-}
-
-.tha-sao-fighters-row {
-    display: flex;
-}
-
-.tha-sao-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    margin-left: -7vw;
-}
-
-.tha-sao-container:first-child {
-    margin-left: 0;
-}
-
-.tha-sao-label {
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px;
-    font-weight: 400;
-    color: var(--history-text);
-    text-align: center;
-    white-space: nowrap;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-}
-
-.tha-sao-fighter {
-    height: 65vmin;
-    max-width: 40vw;
-    width: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
-}
-
-/* Tha Sao Fighters Set 2 (4 poses) */
-.tha-sao-fighters-2 {
-    position: absolute;
-    left: 675vw;
-    top: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 12;
-}
-
-.tha-sao-group-label-2 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px;
-    font-weight: 400;
-    color: var(--history-text);
-    text-align: center;
-    white-space: nowrap;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-    width: 100%;
-}
-
-.tha-sao-fighters-row-2 {
-    display: flex;
-}
-
-.tha-sao-container-2 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    margin-left: -12vw;
-}
-
-.tha-sao-container-2:first-child {
-    margin-left: 0;
-}
-
-.tha-sao-fighter-2 {
-    height: 65vmin;
-    max-width: 40vw;
-    width: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
-}
-
-/* Tha Sao Fighters Set 3 (Defend, Parry, Attacks) */
-.tha-sao-fighters-3 {
-    position: absolute;
-    left: 705vw;
-    top: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 12;
-}
-
-.tha-sao-group-label-3 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px;
-    font-weight: 400;
-    color: var(--history-text);
-    text-align: center;
-    white-space: nowrap;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-    width: 100%;
-}
-
-.tha-sao-fighters-row-3 {
-    display: flex;
-}
-
-.tha-sao-container-3 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    margin-left: -12vw;
-}
-
-.tha-sao-container-3:first-child {
-    margin-left: 0;
-}
-
-.tha-sao-fighter-3 {
-    height: 65vmin;
-    max-width: 40vw;
-    width: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
-}
-
-
-/* Korat Buffalo Swing Poses */
-.korat-poses {
-    position: absolute;
-    left: 270vw;
-    top: 10%;
-    z-index: 100;
-    width: 30vw;
-    height: 50%;
-}
-
-.pose-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-}
-
-.pose-label {
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--history-text-highlight);
-    text-align: center;
-    white-space: nowrap;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-    position: relative;
-    left: 50px;
-    top: 90px;
-}
-
-.korat-pose {
-    position: relative;
-    height: 75vmin;
-    max-width: 30vw;
-    width: auto;
-    object-fit: contain;
-    opacity: 1;
-    display: block;
-    cursor: pointer;
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
-}
-
-/* Khanom Tom Fighter */
-.khanom-tom-fighter {
-    position: absolute;
-    left: 256vw;
-    bottom: 14vw;
-    height: 55%;
-    /* ขนาดนักมวย */
-    width: auto;
-    object-fit: contain;
-    opacity: 1;
-    z-index: 12;
-}
-
-/* Regional 4 Styles Fighters (Ayutthaya) */
-.regional-fighters {
-    position: absolute;
-    left: 150vw;
-    top: 150px;
-    display: flex;
-    z-index: 12;
-    /* เหนือพื้นแต่ต่ำกว่า text-box */
-}
-
-.fighter-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    margin-left: -7vw;
-    /* ให้กรอบเหลื่อมกัน */
-}
-
-.fighter-container:first-child {
-    margin-left: 0;
-    /* คนแรกไม่เหลื่อม */
-}
-
-.fighter-label {
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--history-text-highlight);
-    text-align: center;
-    white-space: nowrap;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-}
-
-/* Individual label positioning */
-.label-north {
-    position: relative;
-    top: 60px;
-}
-
-.label-northeast {
-    position: relative;
-    top: 20px;
-}
-
-.label-south {
-    position: relative;
-    top: 10px;
-}
-
-.label-central {
-    position: relative;
-    top: 40px;
-}
-
-.regional-fighter {
-    height: 55vmin;
-    /* ขนาดนักมวย - ใช้ vmin เพื่อจำกัดทั้งกว้างและสูง */
-    width: auto;
-    max-width: 22vw;
-    /* จำกัดความกว้างสูงสุดต่อคน */
-    object-fit: contain;
-    opacity: 1;
-    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
-    /* drop shadow สีขาว */
-}
-
-.regional-fighter.revealed {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Era Indicator (Timeline + Circle + Title) */
-.era-indicator {
-    position: absolute;
-    left: 5vw;
-    /* Offset from left edge */
-    top: 86.85%;
-    /* 938px / 1080px */
-    width: 500vw;
-    /* Extended timeline for all eras (Sukhothai to Present Day) */
-    z-index: 20;
-}
-
-.era-timeline-container {
-    position: relative;
-    width: 400%;
-    /* Full extended width for timeline */
-    height: 53px;
-    /* Same as circle height */
-}
-
-.era-timeline-line {
-    position: absolute;
-    width: 400%;
-    height: 3px;
-    background: var(--history-text);
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-}
-
-.era-circle {
-    position: absolute;
-    left: 29.11vw;
-    /* 559px / 1920px - circle position from left edge */
-    top: 0;
-    width: 53px;
-    height: 53px;
-    border-radius: 50%;
-    background: var(--history-text);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    z-index: 1;
-    /* Above the timeline line */
-    transform: translateX(-50%);
-    /* Center the circle on the position */
-}
-
-.era-number {
-    font-family: 'Poppins', sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--history-bg);
-}
-
-.era-title {
-    position: absolute;
-    left: 29.11vw;
-    /* Same as circle position */
-    top: 68px;
-    /* 53px circle + 15px gap */
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--history-text);
-    text-align: center;
-    white-space: nowrap;
-    transform: translateX(-50%);
-    /* Center the title under the circle */
-}
-
-/* Sukhothai Era Indicator */
-.era-indicator-sukhothai {
-    position: absolute;
-    left: 5vw;
-    top: 87%;
-    width: 1100vw;
-    z-index: 20;
-}
-
-.era-indicator-sukhothai .era-timeline-container {
-    position: relative;
-    width: 297%;
-    height: 53px;
-}
-
-.era-indicator-sukhothai .era-timeline-line {
-    position: absolute;
-    width: 100%;
-    height: 3px;
-    background: var(--history-text);
-    top: 50%;
-    left: 20vw;
-    transform: translateY(-50%);
-}
-
-.era-indicator-sukhothai .era-circle {
-    position: absolute;
-    left: 29.11vw;
-    top: 0;
-    width: 53px;
-    height: 53px;
-    border-radius: 50%;
-    background: var(--history-text);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    z-index: 21;
-    transform: translateX(-50%);
-}
-
-.era-indicator-sukhothai .era-title {
-    position: absolute;
-    left: 29.11vw;
-    top: 68px;
-    transform: translateX(-50%);
-}
-
-/* ============================================
-   AYUTTHAYA ERA - PRECISE POSITIONING
-   ============================================ */
-
-/* Ayutthaya Section - Continues horizontally from Sukhothai */
-[data-era="ayutthaya"] {
-    left: 100vw;
-    /* Start right after Sukhothai section */
-    position: absolute;
-    width: 100vw;
-    height: 100%;
-    top: 0;
-    /* DEBUG: Uncomment to see section boundaries */
-    /* background: rgba(255, 0, 0, 0.1); */
-}
-
-/* Ayutthaya Temple Complex (3 Layers Overlay) */
 .ayutthaya-temples {
     position: absolute;
-    left: 0;
-    /* Left edge of Ayutthaya section */
-    top: 9.72%;
-    /* 105px / 1080px */
-    width: 66.67vw;
-    /* 1280px / 1920px */
-    height: 79%;
-    /* 853px / 1080px */
+    left: 33vw;
     z-index: 10;
-    /* Above dark overlay (z-index: 6) */
+    width: 66.67vw;
+    top: 5.46vw;
+    height: 44.43vw;
 }
 
 .temple-layer {
@@ -1173,169 +502,14 @@ body::before {
     z-index: 3;
 }
 
-/* Ayutthaya Decorative Trees */
-.ayutthaya-tree {
-    position: absolute;
-    z-index: 3;
-    /* ต่ำกว่าวัด แต่สูงกว่าภูเขา */
-    opacity: 1;
-    object-fit: contain;
-}
-
-.tree-1 {
-    left: 206vw;
-    top: 47%;
-    height: 27%;
-    width: auto;
-}
-
-.tree-2 {
-    left: 134vw;
-    top: 46%;
-    height: 27%;
-    width: auto;
-}
-
-/* Ayutthaya Era Indicator */
-.era-indicator-ayutthaya {
-    left: 60vw;
-    /* Align with Sukhothai timeline start */
-    top: 86.85%;
-    /* 938px / 1080px */
-    width: auto;
-    /* Override timeline width for this indicator */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-}
-
-.era-indicator-ayutthaya .era-timeline-container {
-    display: flex;
-    /* Show container but hide line */
-    align-items: center;
-    justify-content: center;
-}
-
-.era-indicator-ayutthaya .era-timeline-line {
-    display: none;
-    /* Hide timeline line for Ayutthaya */
-}
-
-.era-indicator-ayutthaya .era-circle {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-    /* Reset transform for centered layout */
-}
-
-.era-indicator-ayutthaya .era-title {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-}
-
-/* ============================================
-   REGIONAL STYLES ERA - TEMPLATE SECTION
-   ============================================ */
-
-/* Regional Styles Section - Continues after Ayutthaya */
-[data-era="regional-styles"] {
-    left: 200vw;
-    /* Start right after Ayutthaya section */
-    position: absolute;
-    width: 100vw;
-    height: 100%;
-    top: 0;
-}
-
-/* Muay Boran Thailand Image */
-.boran-thailand-image {
-    position: absolute;
-    left: 220vw;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 65%;
-    width: auto;
-    object-fit: contain;
-    opacity: 1;
-    z-index: 10;
-    filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.7));
-}
-
-/* Regional Styles Text Boxes */
-.text-box-regional-1 {
-    left: 15vw;
-    top: 30%;
-    width: 25vw;
-}
-
-.text-box-regional-2 {
-    left: 50vw;
-    top: 45%;
-    width: 28vw;
-}
-
-/* Regional Styles Era Indicator */
-.era-indicator-regional {
-    left: 180vw;
-    top: 87%;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-}
-
-.era-indicator-regional .era-timeline-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.era-indicator-regional .era-timeline-line {
-    display: none;
-}
-
-.era-indicator-regional .era-circle {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-}
-
-.era-indicator-regional .era-title {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-}
-
-/* ============================================
-   KORAT STYLE ERA - TEMPLATE SECTION
-   ============================================ */
-
-/* Korat Section - Continues after Regional Styles */
-[data-era="korat"] {
-    left: 300vw;
-    /* Start right after Regional Styles section */
-    position: absolute;
-    width: 100vw;
-    height: 100%;
-    top: 0;
-}
-
-/* Korat Background Image */
 .korat-background {
     position: absolute;
     left: 172vw;
-    top: 13%;
     width: 70vw;
-    height: 79%;
     z-index: 10;
     pointer-events: none;
+    top: 7.31vw;
+    height: 44.43vw;
 }
 
 .korat-background .korat-bg-layer {
@@ -1347,95 +521,15 @@ body::before {
     z-index: 5;
     object-fit: contain;
     object-position: center bottom;
-
 }
 
-/* Korat Text Boxes */
-.text-box-korat-1 {
-    position: absolute;
-    left: 315vw;
-    top: 30%;
-    width: 25vw;
-    z-index: 15;
-}
-
-.text-box-korat-2 {
-    position: absolute;
-    left: 350vw;
-    top: 45%;
-    width: 28vw;
-    z-index: 15;
-}
-
-/* Korat Era Indicator */
-.era-indicator-korat {
-    position: absolute;
-    left: 180vw;
-    top: 87%;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    z-index: 20;
-}
-
-.era-indicator-korat .era-timeline-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.era-indicator-korat .era-timeline-line {
-    display: none;
-}
-
-.era-indicator-korat .era-circle {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-}
-
-.era-indicator-korat .era-title {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-}
-
-/* ============================================
-   LOPBURI STYLE ERA - TEMPLATE SECTION
-   ============================================ */
-
-/* Lopburi Section */
-[data-era="lopburi"] {
-    left: 400vw;
-    position: absolute;
-    width: 100vw;
-    height: 100%;
-    top: 0;
-}
-
-/* Individual Lopburi Mountain Positioning */
-.bg-mountain-lopburi-1 {
-    position: absolute;
-    left: 145vw;
-}
-
-.bg-mountain-lopburi-2 {
-    position: absolute;
-    left: 247vw;
-}
-
-/* Lopburi Background Complex (3 Layers) */
 .lopburi-background {
     position: absolute;
     left: 212vw;
-    top: 12%;
     width: 70vw;
-    height: 75%;
     z-index: 10;
+    height: 42.18vw;
+    top: 6.75vw;
 }
 
 .lopburi-layer {
@@ -1461,202 +555,13 @@ body::before {
     z-index: 3;
 }
 
-/* Lopburi Decorative Trees */
-.lopburi-tree {
-    position: absolute;
-    z-index: 3;
-    opacity: 1;
-    object-fit: contain;
-}
-
-.lopburi-tree-1 {
-    left: 328vw;
-    top: 48%;
-    height: 25%;
-    width: auto;
-}
-
-.lopburi-tree-2 {
-    left: 404vw;
-    top: 45%;
-    height: 30%;
-    width: auto;
-    transform: scaleX(-1);
-}
-
-.lopburi-tree-3 {
-    left: 390vw;
-    top: 50%;
-    height: 25%;
-    width: auto;
-}
-
-/* Lopburi Fighters (4 poses) */
-.lopburi-fighters {
-    position: absolute;
-    left: 275vw;
-    top: 90px;
-    display: flex;
-    z-index: 12;
-}
-
-.lopburi-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: -10vw;
-}
-
-.lopburi-container:first-child {
-    margin-left: 0;
-}
-
-.lopburi-fighter {
-    height: 60vmin;
-    max-width: 22vw;
-    width: auto;
-    object-fit: contain;
-    opacity: 1;
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
-}
-
-/* Individual fighter positioning for overlap effect */
-.lopburi-fighter-1 {
-    position: relative;
-    top: 10px;
-}
-
-.lopburi-fighter-2 {
-    position: relative;
-    top: 40px;
-    left: -20px;
-}
-
-.lopburi-fighter-3 {
-    position: relative;
-    top: 20px;
-    left: 10px;
-}
-
-.lopburi-fighter-4 {
-    position: relative;
-    top: 30px;
-}
-
-/* Lopburi Fighters Set 2 (2 more poses) */
-.lopburi-fighters-2 {
-    position: absolute;
-    left: 360vw;
-    top: 100px;
-    display: flex;
-    z-index: 12;
-}
-
-.lopburi-fighters-2 .lopburi-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: -7vw;
-}
-
-.lopburi-fighters-2 .lopburi-container:first-child {
-    margin-left: 0;
-}
-
-.lopburi-fighters-2 .lopburi-fighter-2 {
-    height: 70vmin;
-    max-width: 60vw;
-    width: auto;
-    object-fit: contain;
-    opacity: 1;
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
-}
-
-.lopburi-fighter-5 {
-    position: relative;
-    top: -30px;
-}
-
-.lopburi-fighter-6 {
-    position: relative;
-    top: 5px;
-}
-
-/* Lopburi Text Boxes */
-.text-box-lopburi-1 {
-    position: absolute;
-    left: 415vw;
-    top: 30%;
-    width: 25vw;
-    z-index: 15;
-}
-
-.text-box-lopburi-2 {
-    position: absolute;
-    left: 450vw;
-    top: 45%;
-    width: 28vw;
-    z-index: 15;
-}
-
-/* Lopburi Era Indicator */
-.era-indicator-lopburi {
-    position: absolute;
-    left: 235vw;
-    top: 87%;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    z-index: 20;
-}
-
-.era-indicator-lopburi .era-timeline-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.era-indicator-lopburi .era-timeline-line {
-    display: none;
-}
-
-.era-indicator-lopburi .era-circle {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-}
-
-.era-indicator-lopburi .era-title {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-}
-
-/* ============================================
-   CHAIYA STYLE ERA - TEMPLATE SECTION
-   ============================================ */
-
-/* Chaiya Section */
-[data-era="chaiya"] {
-    left: 500vw;
-    position: absolute;
-    width: 100vw;
-    height: 100%;
-    top: 0;
-}
-
-/* Chaiya Background Complex (4 Layers) */
 .chaiya-background {
     position: absolute;
     left: 323vw;
-    top: 14%;
     width: 70vw;
-    height: 75%;
     z-index: 10;
+    height: 42.18vw;
+    top: 7.87vw;
 }
 
 .chaiya-layer {
@@ -1687,371 +592,205 @@ body::before {
     z-index: 4;
 }
 
-/* Chaiya Fighters (5 poses) */
-.chaiya-fighters {
+.tha-sao-background {
     position: absolute;
-    left: 405vw;
-    top: 110px;
-    display: flex;
-    z-index: 12;
+    left: 530vw;
+    width: 100vw;
+    z-index: 10;
+    height: 42.18vw;
+    top: 6.75vw;
 }
 
-.chaiya-fighters-2 {
-    position: absolute;
-    left: 510vw;
-    top: 130px;
-    display: flex;
-    z-index: 12;
-}
-
-.chaiya-fighters-3 {
-    position: absolute;
-    left: 560vw;
-    top: 130px;
-    display: flex;
-    z-index: 12;
-}
-
-.chaiya-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    margin-left: -3vw;
-}
-
-.chaiya-container:first-child {
-    margin-left: 0;
-}
-
-.chaiya-label {
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px;
-    font-weight: 400;
-    color: var(--history-text);
-    text-align: center;
-    white-space: nowrap;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-}
-
-/* Individual Chaiya label positioning */
-.label-chaiya-1 {
-    position: relative;
-    top: 130px;
-}
-
-.label-chaiya-2 {
-    position: relative;
-    top: 60px;
-}
-
-.label-chaiya-3 {
-    position: relative;
-    top: 150px;
-}
-
-.label-chaiya-4 {
-    position: relative;
-    top: 50px;
-}
-
-.label-chaiya-5 {
-    position: relative;
-    top: 70px;
-}
-
-.chaiya-fighter {
-    height: 55vmin;
-    max-width: 22vw;
-    width: auto;
-    object-fit: contain;
-    opacity: 1;
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
-}
-
-/* Individual fighter positioning for overlap effect */
-.chaiya-fighter-1 {
-    position: relative;
-    top: 70px;
-}
-
-.chaiya-fighter-1.idle {
-    animation: fighter-idle 3s ease-in-out infinite;
-}
-
-.chaiya-fighter-2 {
-    position: relative;
-    top: 15px;
-}
-
-.chaiya-fighter-2.idle {
-    animation: fighter-idle 3.2s ease-in-out infinite;
-}
-
-.chaiya-fighter-3 {
-    position: relative;
-    top: -30px;
-}
-
-/* Wai Kru hover swap */
-.wai-kru-swap {
-    position: relative;
-    cursor: pointer;
-    filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.4));
-    animation: wai-kru-glow 2s ease-in-out infinite;
-}
-
-@keyframes wai-kru-glow {
-
-    0%,
-    100% {
-        filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3));
-    }
-
-    50% {
-        filter: drop-shadow(0 0 20px rgba(253, 240, 213, 0.8)) drop-shadow(0 0 40px rgba(253, 240, 213, 0.4));
-    }
-}
-
-/* Idle แบบ 2 - โยกซ้ายขวา */
-@keyframes fighter-idle-sway {
-
-    0%,
-    100% {
-        transform: translateX(0px) rotate(0deg);
-    }
-
-    25% {
-        transform: translateX(4px) rotate(0.4deg);
-    }
-
-    50% {
-        transform: translateX(-4px) rotate(-0.3deg);
-    }
-
-    75% {
-        transform: translateX(2px) rotate(0.2deg);
-    }
-}
-
-/* Idle แบบ 3 - ย่อยืด (หายใจ) */
-@keyframes fighter-idle-breathe {
-
-    0%,
-    100% {
-        transform: scaleY(1) translateY(0);
-    }
-
-    50% {
-        transform: scaleY(1.015) translateY(-5px);
-    }
-}
-
-.wai-kru-hover {
+.tha-sao-layer {
     position: absolute;
     top: 0;
     left: 0;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.wai-kru-default {
-    transition: opacity 0.3s ease;
-}
-
-.wai-kru-swap:hover .wai-kru-default {
-    opacity: 0;
-}
-
-.wai-kru-swap:hover .wai-kru-hover {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
     opacity: 1;
 }
 
-.chaiya-fighter-4 {
-    position: relative;
-    top: 10px;
+.tha-sao-under {
+    z-index: 1;
 }
 
-.chaiya-fighter-4.idle {
-    animation: fighter-idle 3.4s ease-in-out infinite;
+.tha-sao-above {
+    z-index: 2;
 }
 
-.chaiya-fighter-5 {
-    position: relative;
-    top: 30px;
-}
-
-.chaiya-fighter-5.idle {
-    animation: fighter-idle 2.8s ease-in-out infinite;
-}
-
-
-.chaiya-fighter-6 {
-    position: relative;
-    top: -20px;
-}
-
-.chaiya-fighter-5.idle {
-    animation: fighter-idle 2.8s ease-in-out infinite;
-}
-
-.chaiya-fighter-6.idle {
-    animation: fighter-idle 3.0s ease-in-out infinite;
-}
-
-.chaiya-fighter-7 {
-    position: relative;
-    top: 50px;
-}
-
-.chaiya-fighter-7.idle {
-    animation: fighter-idle-sway 3.5s ease-in-out infinite;
-}
-
-.chaiya-fighter-8 {
-    position: relative;
-    top: -40px;
-}
-
-.chaiya-fighter-9 {
-    position: relative;
-    top: 25px;
-}
-
-.chaiya-fighter-10 {
-    position: relative;
-    top: -10px;
-}
-
-.chaiya-fighter-11 {
-    position: relative;
-    top: 40px;
-}
-
-/* Individual Chaiya label positioning (6-11) */
-.label-chaiya-6 {
-    position: relative;
-    top: 20px;
-}
-
-.label-chaiya-7 {
-    position: relative;
-    top: 90px;
-}
-
-.label-chaiya-8 {
-    position: relative;
-    top: 20px;
-    left: 50px;
-}
-
-.label-chaiya-9 {
-    position: relative;
-    top: 70px;
-    left: 60px;
-}
-
-.label-chaiya-10 {
-    position: relative;
-    top: 40px;
-    left: 80px;
-}
-
-.label-chaiya-11 {
-    position: relative;
-    top: 80px;
-    left: 50px;
-}
-
-/* Individual Chaiya Mountain Positioning */
-.bg-mountain-chaiya-1 {
+.thonburi-background {
     position: absolute;
-    left: 335vw;
-}
-
-.bg-mountain-chaiya-2 {
-    position: absolute;
-    left: 420vw;
-}
-
-.bg-mountain-chaiya-3 {
-    position: absolute;
-    left: 520vw;
-}
-
-/* Chaiya Text Boxes */
-.text-box-chaiya-1 {
-    position: absolute;
-    left: 515vw;
-    top: 30%;
-    width: 25vw;
-    z-index: 15;
-}
-
-.text-box-chaiya-2 {
-    position: absolute;
-    left: 550vw;
-    top: 45%;
-    width: 28vw;
-    z-index: 15;
-}
-
-/* Chaiya Era Indicator */
-.era-indicator-chaiya {
-    position: absolute;
-    left: 352vw;
-    top: 87%;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    z-index: 20;
-}
-
-.era-indicator-chaiya .era-timeline-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.era-indicator-chaiya .era-timeline-line {
-    display: none;
-}
-
-.era-indicator-chaiya .era-circle {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-}
-
-.era-indicator-chaiya .era-title {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-}
-
-/* ============================================
-   THA SAO STYLE ERA - TEMPLATE SECTION
-   ============================================ */
-
-/* Tha Sao Section */
-[data-era="tha-sao"] {
-    left: 600vw;
-    position: absolute;
+    left: 640vw;
     width: 100vw;
-    height: 100%;
-    top: 0;
+    z-index: 10;
+    height: 42.18vw;
+    top: 9vw;
 }
 
-/* Tha Sao Decorative Trees */
-.tha-sao-tree {
+.thonburi-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    opacity: 1;
+}
+
+.thonburi-under {
+    z-index: 2;
+}
+
+.thonburi-center {
+    z-index: 1;
+}
+
+.thonburi-above {
+    z-index: 3;
+}
+
+.early-ratana-background {
+    position: absolute;
+    left: 716vw;
+    width: 100vw;
+    z-index: 10;
+    height: 42.18vw;
+    top: 3.37vw;
+}
+
+.early-ratana-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    opacity: 1;
+}
+
+.early-ratana-left {
+    z-index: 1;
+}
+
+.early-ratana-right {
+    z-index: 1;
+}
+
+.early-ratana-under {
+    z-index: 3;
+}
+
+.mid-ratana-background {
+    position: absolute;
+    left: 805vw;
+    width: 100vw;
+    z-index: 10;
+    height: 42.18vw;
+    top: 7vw;
+}
+
+.mid-ratana-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    opacity: 1;
+}
+
+.mid-ratana-under {
+    z-index: 1;
+}
+
+.mid-ratana-above {
+    z-index: 2;
+}
+
+.present-background {
+    position: absolute;
+    left: 915vw;
+    width: 100vw;
+    z-index: 10;
+    height: 42.18vw;
+    top: 5.62vw;
+}
+
+.present-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    opacity: 1;
+}
+
+.present-under {
+    z-index: 1;
+}
+
+.present-above {
+    z-index: 2;
+    top: 40px;
+}
+
+/* =========================================
+   DECORATIONS (TREES & BUILDINGS)
+   ========================================= */
+.ayutthaya-tree,
+.lopburi-tree,
+.tha-sao-tree,
+.thonburi-tree,
+.early-ratana-tree,
+.mid-ratana-building,
+.present-building {
     position: absolute;
     z-index: 3;
     opacity: 1;
     object-fit: contain;
+}
+
+.tree-1 {
+    left: 195vw;
+    top: 47%;
+    height: 27%;
+    width: auto;
+}
+
+.tree-2 {
+    left: 134vw;
+    top: 46%;
+    height: 27%;
+    width: auto;
+}
+
+.lopburi-tree-1 {
+    left: 328vw;
+    top: 48%;
+    height: 25%;
+    width: auto;
+}
+
+.lopburi-tree-2 {
+    left: 404vw;
+    top: 45%;
+    height: 30%;
+    width: auto;
+    transform: scaleX(-1);
+}
+
+.lopburi-tree-3 {
+    left: 390vw;
+    top: 50%;
+    height: 25%;
+    width: auto;
 }
 
 .tha-sao-tree-1 {
@@ -2080,14 +819,6 @@ body::before {
     top: 36%;
     height: 35%;
     width: auto;
-}
-
-/* Thonburi Decorative Trees */
-.thonburi-tree {
-    position: absolute;
-    z-index: 3;
-    opacity: 1;
-    object-fit: contain;
 }
 
 .thonburi-tree-1 {
@@ -2120,14 +851,6 @@ body::before {
     transform: scaleX(-1);
 }
 
-/* Early Rattanakosin Decorative Trees */
-.early-ratana-tree {
-    position: absolute;
-    z-index: 3;
-    opacity: 1;
-    object-fit: contain;
-}
-
 .early-ratana-tree-1 {
     left: 728vw;
     top: 38%;
@@ -2150,14 +873,6 @@ body::before {
     width: auto;
 }
 
-/* Mid Rattanakosin Decorative Buildings */
-.mid-ratana-building {
-    position: absolute;
-    z-index: 3;
-    opacity: 1;
-    object-fit: contain;
-}
-
 .mid-ratana-building-1 {
     left: 905vw;
     top: 43%;
@@ -2177,14 +892,6 @@ body::before {
     top: 41%;
     height: 28%;
     width: auto;
-}
-
-/* Present Day Decorative Buildings */
-.present-building {
-    position: absolute;
-    z-index: 3;
-    opacity: 1;
-    object-fit: contain;
 }
 
 .present-building-1 {
@@ -2216,13 +923,575 @@ body::before {
     width: auto;
 }
 
-/* Present Day Pictures */
+/* =========================================
+   FIGHTERS & POSES
+   ========================================= */
+.fighters {
+    position: absolute;
+    left: 11.35vw;
+    z-index: 8;
+    top: 33.22vw;
+}
+
+.fighters .fighter {
+    position: absolute;
+    object-fit: contain;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    height: 19.47vw;
+}
+
+.fighter:nth-child(1) {
+    left: 0;
+}
+
+.fighter:nth-child(2) {
+    left: 1.17vw;
+}
+
+.fighter:nth-child(3) {
+    left: 6.5vw;
+}
+
+.fighter:nth-child(4) {
+    left: 15.53vw;
+}
+
+.fighter:nth-child(5) {
+    left: 20.86vw;
+}
+
+.fighter:nth-child(6) {
+    left: 29.88vw;
+}
+
+.fighter:nth-child(7) {
+    left: 34.04vw;
+}
+
+.fighter.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.kick-poses {
+    position: absolute;
+    left: 90vw;
+    z-index: 100;
+    width: 30vw;
+    top: 16.87vw;
+    height: 28.12vw;
+}
+
+.kick-pose {
+    position: relative;
+    width: auto;
+    object-fit: contain;
+    opacity: 1;
+    display: block;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    cursor: pointer;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
+    height: 35vw;
+}
+
+.kick-pose:nth-child(1) {
+    left: -30px;
+    top: -120px;
+}
+
+.boran-thailand-image {
+    position: absolute;
+    left: 220vw;
+    width: auto;
+    object-fit: contain;
+    opacity: 1;
+    z-index: 10;
+    filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.7));
+    height: 36.56vw;
+    top: 28.12vw;
+    transform: translateY(-50%);
+}
+
+.khanom-tom-fighter {
+    position: absolute;
+    left: 254vw;
+    width: auto;
+    object-fit: contain;
+    opacity: 1;
+    z-index: 12;
+    height: 30.93vw;
+    top: 11.32vw;
+}
+
+.early-ratana-pic-rama5 {
+    position: absolute;
+    left: 830vw;
+    width: auto;
+    object-fit: contain;
+    z-index: 12;
+    opacity: 1;
+    height: 30.93vw;
+    top: 13.32vw;
+}
+
+.regional-fighters {
+    position: absolute;
+    left: 135vw;
+    display: flex;
+    z-index: 12;
+    top: 7.81vw;
+}
+
+.fighter-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin-left: -7vw;
+}
+
+.fighter-container:first-child {
+    margin-left: 0;
+}
+
+.regional-fighter {
+    width: auto;
+    max-width: 22vw;
+    object-fit: contain;
+    opacity: 1;
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
+    height: 30.93vw;
+}
+
+.korat-poses {
+    position: absolute;
+    left: 270vw;
+    z-index: 100;
+    width: 30vw;
+    top: 5.62vw;
+}
+
+.pose-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.korat-pose {
+    position: relative;
+    width: auto;
+    object-fit: contain;
+    opacity: 1;
+    display: block;
+    cursor: pointer;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+    height: 42.18vw;
+}
+
+.lopburi-fighters {
+    position: absolute;
+    left: 275vw;
+    display: flex;
+    z-index: 12;
+    top: 4.68vw;
+}
+
+.lopburi-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: -10vw;
+}
+
+.lopburi-container:first-child {
+    margin-left: 0;
+}
+
+.lopburi-fighter {
+    max-width: 22vw;
+    width: auto;
+    object-fit: contain;
+    opacity: 1;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+    height: 33.75vw;
+}
+
+.lopburi-fighter-1 {
+    position: relative;
+    top: 0.52vw;
+}
+
+.lopburi-fighter-2 {
+    position: relative;
+    top: 2.08vw;
+    left: -1.04vw;
+}
+
+.lopburi-fighter-3 {
+    position: relative;
+    top: 1.04vw;
+    left: 0.52vw;
+}
+
+.lopburi-fighter-4 {
+    position: relative;
+    top: 1.56vw;
+}
+
+.lopburi-fighters-2 {
+    position: absolute;
+    left: 360vw;
+    display: flex;
+    z-index: 12;
+    top: 5.2vw;
+}
+
+.lopburi-fighters-2 .lopburi-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: -7vw;
+}
+
+.lopburi-fighters-2 .lopburi-container:first-child {
+    margin-left: 0;
+}
+
+.lopburi-fighters-2 .lopburi-fighter-2 {
+    max-width: 60vw;
+    width: auto;
+    object-fit: contain;
+    opacity: 1;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+    height: 39.37vw;
+}
+
+.lopburi-fighter-5 {
+    position: relative;
+    top: -1.56vw;
+}
+
+.lopburi-fighter-6 {
+    position: relative;
+    top: 0.26vw;
+}
+
+.chaiya-fighters {
+    position: absolute;
+    left: 405vw;
+    display: flex;
+    z-index: 12;
+    top: 5.72vw;
+}
+
+.chaiya-fighters-2 {
+    position: absolute;
+    left: 510vw;
+    display: flex;
+    z-index: 12;
+    top: 6.77vw;
+}
+
+.chaiya-fighters-3 {
+    position: absolute;
+    left: 560vw;
+    display: flex;
+    z-index: 12;
+    top: 6.77vw;
+}
+
+.chaiya-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin-left: -3vw;
+}
+
+.chaiya-container:first-child {
+    margin-left: 0;
+}
+
+.chaiya-fighter {
+    max-width: 22vw;
+    width: auto;
+    object-fit: contain;
+    opacity: 1;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+    height: 30.93vw;
+}
+
+.chaiya-fighter-1 {
+    position: relative;
+    opacity: 0;
+    transform: translateY(120px) scale(0.8);
+    top: 3.64vw;
+}
+
+.chaiya-fighter-2 {
+    position: relative;
+    opacity: 0;
+    transform: translateY(120px) scale(0.8);
+    top: 0.78vw;
+}
+
+.chaiya-fighter-3 {
+    position: relative;
+    top: -1.56vw;
+}
+
+.chaiya-fighter-4 {
+    position: relative;
+    transform: translateY(120px) scale(0.8);
+    top: 0.52vw;
+}
+
+.chaiya-fighter-5 {
+    position: relative;
+    transform: translateY(120px) scale(0.8);
+    top: 1.56vw;
+}
+
+.chaiya-fighter-6 {
+    position: relative;
+    top: -1.04vw;
+}
+
+.chaiya-fighter-7 {
+    position: relative;
+    top: 2.6vw;
+}
+
+.chaiya-fighter-8 {
+    position: relative;
+    top: -2.08vw;
+}
+
+.chaiya-fighter-9 {
+    position: relative;
+    top: 1.3vw;
+}
+
+.chaiya-fighter-10 {
+    position: relative;
+    top: -0.52vw;
+}
+
+.chaiya-fighter-11 {
+    position: relative;
+    top: 2.08vw;
+}
+
+.tha-sao-fighters {
+    position: absolute;
+    left: 630vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 12;
+    top: 10.41vw;
+}
+
+.tha-sao-fighters-2 {
+    position: absolute;
+    left: 675vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 12;
+    top: 10.41vw;
+}
+
+.tha-sao-fighters-3 {
+    position: absolute;
+    left: 705vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 12;
+    top: 10.41vw;
+}
+
+.tha-sao-group-label,
+.tha-sao-group-label-2,
+.tha-sao-group-label-3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--history-text);
+    text-align: center;
+    white-space: nowrap;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    width: 100%;
+}
+
+.tha-sao-fighters-row,
+.tha-sao-fighters-row-2,
+.tha-sao-fighters-row-3 {
+    display: flex;
+}
+
+.tha-sao-container,
+.tha-sao-container-2,
+.tha-sao-container-3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin-left: -7vw;
+}
+
+.tha-sao-container-2 {
+    margin-left: -12vw;
+}
+
+.tha-sao-container-3 {
+    margin-left: -12vw;
+}
+
+.tha-sao-container:first-child,
+.tha-sao-container-2:first-child,
+.tha-sao-container-3:first-child {
+    margin-left: 0;
+}
+
+.tha-sao-fighter,
+.tha-sao-fighter-2,
+.tha-sao-fighter-3 {
+    max-width: 40vw;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+    height: 36.56vw;
+}
+
+.thonburi-fighters {
+    position: absolute;
+    left: 749vw;
+    display: flex;
+    z-index: 12;
+    top: 7.29vw;
+}
+
+.thonburi-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: -9vw;
+}
+
+.thonburi-container:first-child {
+    margin-left: 0;
+}
+
+.thonburi-fighter {
+    max-width: 30vw;
+    width: auto;
+    object-fit: contain;
+    opacity: 1;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+    height: 42.18vw;
+}
+
+.thonburi-fighter-1,
+.thonburi-fighter-2,
+.thonburi-fighter-3,
+.thonburi-fighter-4,
+.thonburi-fighter-5 {
+    position: relative;
+}
+
+.early-ratana-fighters {
+    position: absolute;
+    left: 863vw;
+    display: flex;
+    z-index: 12;
+    top: 9.89vw;
+}
+
+.early-ratana-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: -12vw;
+}
+
+.early-ratana-container:first-child {
+    margin-left: 0;
+}
+
+.early-ratana-fighter {
+    max-width: 30vw;
+    width: auto;
+    object-fit: contain;
+    opacity: 1;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+    height: 36.56vw;
+}
+
+.early-ratana-fighter-1,
+.early-ratana-fighter-2,
+.early-ratana-fighter-3,
+.early-ratana-fighter-4 {
+    position: relative;
+}
+
+.mid-ratana-fighters {
+    position: absolute;
+    left: 910vw;
+    display: flex;
+    z-index: 12;
+    top: 9.37vw;
+}
+
+.mid-ratana-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: -12vw;
+}
+
+.mid-ratana-container:first-child {
+    margin-left: 0;
+}
+
+.mid-ratana-fighter {
+    max-width: 30vw;
+    width: auto;
+    object-fit: contain;
+    opacity: 1;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+    height: 36.56vw;
+}
+
+.mid-ratana-fighter-1 {
+    position: relative;
+    top: -2.08vw;
+}
+
+.mid-ratana-fighter-2 {
+    position: relative;
+}
+
+.mid-ratana-fighter-3 {
+    position: relative;
+    top: 2.6vw;
+}
+
+.mid-ratana-fighter-4 {
+    position: relative;
+    top: 2.6vw;
+}
+
 .present-fighters {
     position: absolute;
     left: 1040vw;
-    top: 220px;
     display: flex;
     z-index: 12;
+    top: 11.45vw;
 }
 
 .present-container {
@@ -2237,12 +1506,12 @@ body::before {
 }
 
 .present-fighter {
-    height: 30vmin;
     max-width: 30vw;
     width: auto;
     object-fit: contain;
     opacity: 1;
     filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+    height: 16.87vw;
 }
 
 .present-fighter-1 {
@@ -2260,66 +1529,421 @@ body::before {
     transform: rotate(12deg);
 }
 
-/* Tha Sao Background Complex */
-.tha-sao-background {
-    position: absolute;
-    left: 530vw;
-    top: 12%;
-    width: 100vw;
-    height: 75%;
-    z-index: 10;
+/* =========================================
+   LABELS
+   ========================================= */
+.fighter-label,
+.pose-label,
+.chaiya-label,
+.tha-sao-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--history-text-highlight);
+    text-align: center;
+    white-space: nowrap;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
-.tha-sao-layer {
+.chaiya-label {
+    font-weight: 400;
+    color: var(--history-text);
+}
+
+.pose-label {
+    position: relative;
+    left: 2.6vw;
+    top: 4.68vw;
+}
+
+.label-north {
+    position: relative;
+    top: 3.12vw;
+}
+
+.label-northeast {
+    position: relative;
+    top: 1.04vw;
+}
+
+.label-south {
+    position: relative;
+    top: 0.52vw;
+}
+
+.label-central {
+    position: relative;
+    top: 2.08vw;
+}
+
+.label-chaiya-1 {
+    position: relative;
+    top: 6.77vw;
+}
+
+.label-chaiya-2 {
+    position: relative;
+    top: 3.12vw;
+}
+
+.label-chaiya-3 {
+    position: relative;
+    top: 7.81vw;
+}
+
+.label-chaiya-4 {
+    position: relative;
+    top: 2.6vw;
+}
+
+.label-chaiya-5 {
+    position: relative;
+    top: 3.64vw;
+}
+
+.label-chaiya-6 {
+    position: relative;
+    top: 1.04vw;
+}
+
+.label-chaiya-7 {
+    position: relative;
+    top: 4.68vw;
+}
+
+.label-chaiya-8 {
+    position: relative;
+    top: 1.04vw;
+    left: 2.6vw;
+}
+
+.label-chaiya-9 {
+    position: relative;
+    top: 3.64vw;
+    left: 3.12vw;
+}
+
+.label-chaiya-10 {
+    position: relative;
+    top: 2.08vw;
+    left: 4.16vw;
+}
+
+.label-chaiya-11 {
+    position: relative;
+    top: 4.16vw;
+    left: 2.6vw;
+}
+
+/* =========================================
+   TEXT BOXES
+   ========================================= */
+.text-box {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center center;
+    padding: 20px 20px;
+    z-index: 15;
     opacity: 1;
+    transition: opacity 0.8s ease, filter 0.8s ease;
 }
 
-.tha-sao-under {
-    z-index: 1;
+.text-box.revealed {
+    opacity: 1;
+    filter: blur(0);
 }
 
-.tha-sao-above {
-    z-index: 2;
+.text-box p {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--history-text);
+    text-align: center;
 }
 
-/* Individual Tha Sao Mountain Positioning */
-.bg-mountain-tha-sao-1 {
-    position: absolute;
-    left: 145vw;
+.text-box .highlight {
+    font-weight: 700;
+    color: var(--history-highlight);
 }
 
-.bg-mountain-tha-sao-2 {
-    position: absolute;
-    left: 247vw;
+.text-box-10 .karaoke-char {
+    display: inline;
+    opacity: 0.15;
+    filter: blur(4px);
 }
 
-/* Tha Sao Text Boxes */
-.text-box-tha-sao-1 {
-    position: absolute;
-    left: 15vw;
-    top: 30%;
-    width: 25vw;
-    z-index: 15;
+.text-box-10 .highlight .karaoke-char {
+    color: var(--history-highlight);
 }
 
-.text-box-tha-sao-2 {
-    position: absolute;
-    left: 55vw;
-    top: 45%;
+.text-box-1 {
+    left: 58vw;
+    width: 30vw;
+    top: 12vw;
+}
+
+.text-box-2 {
+    left: 110vw;
+    width: 24vw;
+    top: 10vw;
+}
+
+.text-box-3 {
+    left: 100vw;
     width: 28vw;
-    z-index: 15;
+    top: 13vw;
 }
 
-/* Tha Sao Era Indicator */
-.era-indicator-tha-sao {
+.text-box-4 {
+    left: 215vw;
+    width: 32vw;
+    top: 12vw;
+}
+
+.text-box-5 {
+    left: 288vw;
+    width: 28vw;
+    top: 13vw;
+}
+
+.text-box-6 {
+    left: 246vw;
+    width: 25vw;
+    top: 18.56vw;
+}
+
+.text-box-7 {
+    left: 243vw;
+    width: 32vw;
+    top: 16.31vw;
+}
+
+.text-box-8 {
+    left: 335vw;
+    width: 32vw;
+    top: 18.56vw;
+}
+
+.text-box-9 {
+    left: 385vw;
+    width: 32vw;
+    top: 19.68vw;
+}
+
+.text-box-10 {
+    left: 380vw;
+    width: 25vw;
+    top: 15.75vw;
+}
+
+.text-box-11 {
+    left: 490vw;
+    width: 20vw;
+    top: 15.75vw;
+}
+
+.text-box-12 {
+    left: 546vw;
+    width: 15vw;
+    top: 20.81vw;
+}
+
+.text-box-13 {
+    left: 605vw;
+    width: 32vw;
+    top: 19.68vw;
+}
+
+.text-box-14 {
+    left: 727vw;
+    width: 32vw;
+    top: 19.68vw;
+}
+
+.text-box-15 {
+    left: 777vw;
+    width: 32vw;
+    top: 19.12vw;
+}
+
+.text-box-16 {
+    left: 803vw;
+    width: 32vw;
+    top: 19.12vw;
+}
+
+.text-box-17 {
+    left: 895vw;
+    width: 32vw;
+    top: 18.56vw;
+}
+
+.text-box-18 {
+    left: 885vw;
+    width: 32vw;
+    top: 20.81vw;
+}
+
+.text-box-19 {
+    left: 975vw;
+    width: 32vw;
+    top: 18vw;
+}
+
+.text-box-20 {
+    left: 1015vw;
+    width: 32vw;
+    top: 18vw;
+}
+
+.text-box-21 {
+    left: 1013vw;
+    width: 32vw;
+    top: 13.5vw;
+}
+
+.text-box-22 {
+    left: 1148vw;
+    width: 32vw;
+    top: 16.87vw;
+}
+
+/* =========================================
+   ERA INDICATORS (TIMELINE BOTTOM)
+   ========================================= */
+.era-indicator {
     position: absolute;
+    left: 5vw;
+    top: 86.85%;
+    width: 500vw;
+    z-index: 20;
+}
+
+.era-timeline-container {
+    position: relative;
+    width: 400%;
+    height: 53px;
+}
+
+.era-timeline-line {
+    position: absolute;
+    width: 400%;
+    height: 3px;
+    background: var(--history-text);
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+
+.era-circle {
+    position: absolute;
+    left: 30vw;
+    top: 0;
+    width: 53px;
+    height: 53px;
+    border-radius: 50%;
+    background: var(--history-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    transform: translateX(-50%);
+}
+
+.era-number {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--history-bg);
+}
+
+.era-title {
+    position: absolute;
+    left: 30vw;
+    top: 68px;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--history-text);
+    text-align: center;
+    white-space: nowrap;
+    transform: translateX(-50%);
+}
+
+.era-indicator-sukhothai {
+    left: -5vw;
+    top: 87%;
+    width: 1100vw;
+}
+
+.era-indicator-sukhothai .era-timeline-container {
+    width: 297%;
+}
+
+.era-indicator-sukhothai .era-timeline-line {
+    width: 100%;
+    left: 15vw;
+}
+
+.era-indicator-sukhothai .era-circle {
+    z-index: 21;
+}
+
+.era-indicator-ayutthaya {
+    left: 60vw;
+    top: 86.85%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.era-indicator-regional {
+    left: 180vw;
+    top: 87%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.era-indicator-korat {
+    left: 180vw;
+    top: 87%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 20;
+}
+
+.era-indicator-lopburi {
+    left: 235vw;
+    top: 87%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 20;
+}
+
+.era-indicator-chaiya {
+    left: 352vw;
+    top: 87%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 20;
+}
+
+.era-indicator-tha-sao {
     left: 570vw;
     top: 87%;
     width: auto;
@@ -2330,319 +1954,7 @@ body::before {
     z-index: 20;
 }
 
-.era-indicator-tha-sao .era-timeline-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.era-indicator-tha-sao .era-timeline-line {
-    display: none;
-}
-
-.era-indicator-tha-sao .era-circle {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-}
-
-.era-indicator-tha-sao .era-title {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-}
-
-/* ============================================
-   THONBURI ERA - TEMPLATE SECTION
-   ============================================ */
-
-/* Thonburi Section */
-[data-era="thonburi"] {
-    left: 700vw;
-    position: absolute;
-    width: 100vw;
-    height: 100%;
-    top: 0;
-}
-
-/* Thonburi Background Complex */
-.thonburi-background {
-    position: absolute;
-    left: 640vw;
-    top: 16%;
-    width: 100vw;
-    height: 75%;
-    z-index: 10;
-}
-
-.thonburi-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center center;
-    opacity: 1;
-}
-
-.thonburi-under {
-    z-index: 2;
-}
-
-.thonburi-center {
-    z-index: 1;
-}
-
-.thonburi-above {
-    z-index: 3;
-}
-
-/* Early Rattanakosin Background Complex */
-.early-ratana-background {
-    position: absolute;
-    left: 716vw;
-    top: 6%;
-    width: 100vw;
-    height: 75%;
-    z-index: 10;
-}
-
-.early-ratana-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center center;
-    opacity: 1;
-}
-
-.early-ratana-left {
-    z-index: 1;
-}
-
-.early-ratana-right {
-    z-index: 1;
-}
-
-.early-ratana-under {
-    z-index: 3;
-}
-
-/* Mid Rattanakosin Background Complex */
-.mid-ratana-background {
-    position: absolute;
-    left: 805vw;
-    top: 15%;
-    width: 100vw;
-    height: 75%;
-    z-index: 10;
-}
-
-.mid-ratana-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center center;
-    opacity: 1;
-}
-
-.mid-ratana-under {
-    z-index: 1;
-}
-
-.mid-ratana-above {
-    z-index: 2;
-}
-
-/* Thonburi Fighters (5 poses without labels) */
-.thonburi-fighters {
-    position: absolute;
-    left: 749vw;
-    top: 140px;
-    display: flex;
-    z-index: 12;
-}
-
-.thonburi-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: -9vw;
-}
-
-.thonburi-container:first-child {
-    margin-left: 0;
-}
-
-.thonburi-fighter {
-    height: 75vmin;
-    max-width: 30vw;
-    width: auto;
-    object-fit: contain;
-    opacity: 1;
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
-}
-
-/* Individual fighter positioning for overlap effect */
-.thonburi-fighter-1 {
-    position: relative;
-
-}
-
-.thonburi-fighter-2 {
-    position: relative;
-
-}
-
-.thonburi-fighter-3 {
-    position: relative;
-
-}
-
-.thonburi-fighter-4 {
-    position: relative;
-
-}
-
-.thonburi-fighter-5 {
-    position: relative;
-
-}
-
-/* Early Rattanakosin Fighters (4 poses without labels) */
-.early-ratana-fighters {
-    position: absolute;
-    left: 863vw;
-    top: 190px;
-    display: flex;
-    z-index: 12;
-}
-
-.early-ratana-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: -12vw;
-}
-
-.early-ratana-container:first-child {
-    margin-left: 0;
-}
-
-.early-ratana-fighter {
-    height: 65vmin;
-    max-width: 30vw;
-    width: auto;
-    object-fit: contain;
-    opacity: 1;
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
-}
-
-.early-ratana-fighter-1 {
-    position: relative;
-}
-
-.early-ratana-fighter-2 {
-    position: relative;
-}
-
-.early-ratana-fighter-3 {
-    position: relative;
-}
-
-.early-ratana-fighter-4 {
-    position: relative;
-}
-
-/* Mid Rattanakosin Fighters (4 poses without labels) */
-.mid-ratana-fighters {
-    position: absolute;
-    left: 910vw;
-    top: 180px;
-    display: flex;
-    z-index: 12;
-}
-
-.mid-ratana-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: -12vw;
-}
-
-.mid-ratana-container:first-child {
-    margin-left: 0;
-}
-
-.mid-ratana-fighter {
-    height: 65vmin;
-    max-width: 30vw;
-    width: auto;
-    object-fit: contain;
-    opacity: 1;
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
-}
-
-.mid-ratana-fighter-1 {
-    position: relative;
-    height: 75vmin;
-    top: -40px;
-}
-
-.mid-ratana-fighter-2 {
-    position: relative;
-}
-
-.mid-ratana-fighter-3 {
-    position: relative;
-    height: 60vmin;
-    top: 50px;
-}
-
-.mid-ratana-fighter-4 {
-    position: relative;
-    top: 50px;
-}
-
-/* Individual Thonburi Mountain Positioning */
-.bg-mountain-thonburi-1 {
-    position: absolute;
-    left: 145vw;
-}
-
-.bg-mountain-thonburi-2 {
-    position: absolute;
-    left: 247vw;
-}
-
-/* Thonburi Text Boxes */
-.text-box-thonburi-1 {
-    position: absolute;
-    left: 715vw;
-    top: 30%;
-    width: 25vw;
-    z-index: 15;
-}
-
-.text-box-thonburi-2 {
-    position: absolute;
-    left: 750vw;
-    top: 45%;
-    width: 28vw;
-    z-index: 15;
-}
-
-/* Thonburi Era Indicator */
 .era-indicator-thonburi {
-    position: absolute;
     left: 675vw;
     top: 87%;
     width: auto;
@@ -2653,74 +1965,7 @@ body::before {
     z-index: 20;
 }
 
-.era-indicator-thonburi .era-timeline-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.era-indicator-thonburi .era-timeline-line {
-    display: none;
-}
-
-.era-indicator-thonburi .era-circle {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-}
-
-.era-indicator-thonburi .era-title {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-}
-
-/* ============================================
-   EARLY RATTANAKOSIN ERA - TEMPLATE SECTION
-   ============================================ */
-
-/* Early Rattanakosin Section */
-[data-era="early-rattanakosin"] {
-    left: 800vw;
-    position: absolute;
-    width: 100vw;
-    height: 100%;
-    top: 0;
-}
-
-/* Individual Early Rattanakosin Mountain Positioning */
-.bg-mountain-early-ratana-1 {
-    position: absolute;
-    left: 145vw;
-}
-
-.bg-mountain-early-ratana-2 {
-    position: absolute;
-    left: 247vw;
-}
-
-/* Early Rattanakosin Text Boxes */
-.text-box-early-ratana-1 {
-    position: absolute;
-    left: 815vw;
-    top: 30%;
-    width: 25vw;
-    z-index: 15;
-}
-
-.text-box-early-ratana-2 {
-    position: absolute;
-    left: 850vw;
-    top: 45%;
-    width: 28vw;
-    z-index: 15;
-}
-
-/* Early Rattanakosin Era Indicator */
 .era-indicator-early-ratana {
-    position: absolute;
     left: 750vw;
     top: 87%;
     width: auto;
@@ -2731,74 +1976,7 @@ body::before {
     z-index: 20;
 }
 
-.era-indicator-early-ratana .era-timeline-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.era-indicator-early-ratana .era-timeline-line {
-    display: none;
-}
-
-.era-indicator-early-ratana .era-circle {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-}
-
-.era-indicator-early-ratana .era-title {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-}
-
-/* ============================================
-   MID RATTANAKOSIN ERA - TEMPLATE SECTION
-   ============================================ */
-
-/* Mid Rattanakosin Section */
-[data-era="mid-rattanakosin"] {
-    left: 900vw;
-    position: absolute;
-    width: 100vw;
-    height: 100%;
-    top: 0;
-}
-
-/* Individual Mid Rattanakosin Mountain Positioning */
-.bg-mountain-mid-ratana-1 {
-    position: absolute;
-    left: 145vw;
-}
-
-.bg-mountain-mid-ratana-2 {
-    position: absolute;
-    left: 247vw;
-}
-
-/* Mid Rattanakosin Text Boxes */
-.text-box-mid-ratana-1 {
-    position: absolute;
-    left: 915vw;
-    top: 30%;
-    width: 25vw;
-    z-index: 15;
-}
-
-.text-box-mid-ratana-2 {
-    position: absolute;
-    left: 950vw;
-    top: 45%;
-    width: 28vw;
-    z-index: 15;
-}
-
-/* Mid Rattanakosin Era Indicator */
 .era-indicator-mid-ratana {
-    position: absolute;
     left: 845vw;
     top: 87%;
     width: auto;
@@ -2809,104 +1987,7 @@ body::before {
     z-index: 20;
 }
 
-.era-indicator-mid-ratana .era-timeline-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.era-indicator-mid-ratana .era-timeline-line {
-    display: none;
-}
-
-.era-indicator-mid-ratana .era-circle {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-}
-
-.era-indicator-mid-ratana .era-title {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-}
-
-/* ============================================
-   PRESENT DAY ERA - TEMPLATE SECTION
-   ============================================ */
-
-/* Present Day Section */
-[data-era="present-day"] {
-    left: 1000vw;
-    position: absolute;
-    width: 100vw;
-    height: 100%;
-    top: 0;
-}
-
-/* Individual Present Day Mountain Positioning */
-.bg-mountain-present-1 {
-    position: absolute;
-    left: 145vw;
-}
-
-.bg-mountain-present-2 {
-    position: absolute;
-    left: 247vw;
-}
-
-/* Present Day Background Complex */
-.present-background {
-    position: absolute;
-    left: 915vw;
-    top: 10%;
-    width: 100vw;
-    height: 75%;
-    z-index: 10;
-}
-
-.present-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center center;
-    opacity: 1;
-}
-
-.present-under {
-    z-index: 1;
-}
-
-.present-above {
-    z-index: 2;
-    top: 40px;
-}
-
-/* Present Day Text Boxes */
-.text-box-present-1 {
-    position: absolute;
-    left: 1015vw;
-    top: 30%;
-    width: 25vw;
-    z-index: 15;
-}
-
-.text-box-present-2 {
-    position: absolute;
-    left: 1050vw;
-    top: 45%;
-    width: 28vw;
-    z-index: 15;
-}
-
-/* Present Day Era Indicator */
 .era-indicator-present {
-    position: absolute;
     left: 962vw;
     top: 87%;
     width: auto;
@@ -2917,16 +1998,43 @@ body::before {
     z-index: 20;
 }
 
+.era-indicator-ayutthaya .era-timeline-container,
+.era-indicator-regional .era-timeline-container,
+.era-indicator-korat .era-timeline-container,
+.era-indicator-lopburi .era-timeline-container,
+.era-indicator-chaiya .era-timeline-container,
+.era-indicator-tha-sao .era-timeline-container,
+.era-indicator-thonburi .era-timeline-container,
+.era-indicator-early-ratana .era-timeline-container,
+.era-indicator-mid-ratana .era-timeline-container,
 .era-indicator-present .era-timeline-container {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+.era-indicator-ayutthaya .era-timeline-line,
+.era-indicator-regional .era-timeline-line,
+.era-indicator-korat .era-timeline-line,
+.era-indicator-lopburi .era-timeline-line,
+.era-indicator-chaiya .era-timeline-line,
+.era-indicator-tha-sao .era-timeline-line,
+.era-indicator-thonburi .era-timeline-line,
+.era-indicator-early-ratana .era-timeline-line,
+.era-indicator-mid-ratana .era-timeline-line,
 .era-indicator-present .era-timeline-line {
     display: none;
 }
 
+.era-indicator-ayutthaya .era-circle,
+.era-indicator-regional .era-circle,
+.era-indicator-korat .era-circle,
+.era-indicator-lopburi .era-circle,
+.era-indicator-chaiya .era-circle,
+.era-indicator-tha-sao .era-circle,
+.era-indicator-thonburi .era-circle,
+.era-indicator-early-ratana .era-circle,
+.era-indicator-mid-ratana .era-circle,
 .era-indicator-present .era-circle {
     position: relative;
     left: auto;
@@ -2934,6 +2042,15 @@ body::before {
     transform: none;
 }
 
+.era-indicator-ayutthaya .era-title,
+.era-indicator-regional .era-title,
+.era-indicator-korat .era-title,
+.era-indicator-lopburi .era-title,
+.era-indicator-chaiya .era-title,
+.era-indicator-tha-sao .era-title,
+.era-indicator-thonburi .era-title,
+.era-indicator-early-ratana .era-title,
+.era-indicator-mid-ratana .era-title,
 .era-indicator-present .era-title {
     position: relative;
     left: auto;
@@ -2941,931 +2058,9 @@ body::before {
     transform: none;
 }
 
-/* ============================================
-   LEGACY STYLES (Keep for compatibility)
-   ============================================ */
-
-/* Sukhothai Background Container */
-.sukhothai-bg-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 5;
-    pointer-events: none;
-}
-
-.sukhothai-bg-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 66vw;
-    height: 100%;
-    object-fit: cover;
-}
-
-.sukhothai-bg-layer.ruins-back {
-    z-index: 1;
-    opacity: 0.7;
-}
-
-.sukhothai-bg-layer.ruins-middle {
-    z-index: 2;
-    opacity: 0.6;
-}
-
-.sukhothai-bg-layer.ruins-front {
-    z-index: 3;
-    opacity: 0.5;
-}
-
-/* Sukhothai Kick Poses - Left Bottom */
-.sukhothai-kicks {
-    position: absolute;
-    left: 80.1vw;
-    /* 1538px / 1920px */
-    top: 14.63%;
-    /* 158px / 1080px */
-    display: grid;
-    grid-template-columns: max-content;
-    grid-template-rows: max-content;
-    z-index: 10;
-}
-
-.sukhothai-kicks .kick-pose {
-    position: absolute;
-    height: 44.69%;
-    /* 482.61px / 1080px */
-    width: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
-    opacity: 0;
-    transform: translateY(50px);
-    transition: all 0.6s ease;
-}
-
-.sukhothai-kicks .kick-pose.revealed {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.sukhothai-kicks .kick-1 {
-    left: 0;
-    top: 0;
-    transition-delay: 0.1s;
-}
-
-.sukhothai-kicks .kick-2 {
-    left: 8.37vw;
-    /* 160.68px / 1920px */
-    top: 1.65%;
-    /* 17.78px / 1080px */
-    transition-delay: 0.2s;
-}
-
-.sukhothai-kicks .kick-3 {
-    left: 14.5vw;
-    /* 278.42px / 1920px */
-    top: 1.65%;
-    transition-delay: 0.3s;
-}
-
-.sukhothai-kicks .kick-4 {
-    left: 24.03vw;
-    /* 461.41px / 1920px */
-    top: 1.65%;
-    transition-delay: 0.4s;
-}
-
-/* Sukhothai Fighters - Bottom Center */
-.sukhothai-fighters {
-    position: absolute;
-    left: 11.35vw;
-    /* 218px / 1920px */
-    top: 59.07%;
-    /* 638px / 1080px */
-    display: flex;
-    gap: 0;
-    z-index: 8;
-}
-
-.sukhothai-fighters .fighter {
-    position: absolute;
-    height: 34.63%;
-    /* 373.971px / 1080px */
-    width: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
-}
-
-.sukhothai-fighters .fighter-1 {
-    left: 0;
-    /* _0034 */
-}
-
-.sukhothai-fighters .fighter-2 {
-    left: 1.17vw;
-    /* 22.54px offset: 240.54 - 218 */
-}
-
-.sukhothai-fighters .fighter-3 {
-    left: 6.5vw;
-    /* 124.88px offset: 342.88 - 218 */
-}
-
-.sukhothai-fighters .fighter-4 {
-    left: 15.42vw;
-    /* 296.16px offset: 516.16 - 218 + some spacing */
-}
-
-.sukhothai-fighters .fighter-5 {
-    left: 20.86vw;
-    /* 400.49px offset: 618.49 - 218 */
-}
-
-.sukhothai-fighters .fighter-6 {
-    left: 29.88vw;
-    /* 573.78px offset: 791.78 - 218 */
-}
-
-.sukhothai-fighters .fighter-7 {
-    left: 34.04vw;
-    /* 653.56px offset: 871.56 - 218 */
-}
-
-/* Text Box Styles */
-[data-era="sukhothai"] .text-box {
-    position: absolute;
-    padding: 15px 15px;
-    z-index: 15;
-}
-
-[data-era="sukhothai"] .text-box p {
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px;
-    line-height: 1.4;
-    color: #fdf0d5;
-    margin: 0;
-    text-align: center;
-}
-
-[data-era="sukhothai"] .text-box .highlight {
-    color: #e9c824;
-    font-weight: 700;
-}
-
-/* Text Box 1 - Muay Boran (Top Center-Left) */
-[data-era="sukhothai"] .text-box-1 {
-    left: 60vw;
-    top: 25%;
-    width: 150vw;
-    min-height: 20.65%;
-    /* 223px / 1080px */
-}
-
-/* Text Box 2 - Royal Curriculum (Top Right) */
-[data-era="sukhothai"] .text-box-2 {
-    left: 118vw;
-    top: 25%;
-    width: 100vw;
-    min-height: 31%;
-}
-
-/* Era Label Indicator (Bottom Center) */
-.era-label-indicator {
-    position: absolute;
-    left: 50%;
-    bottom: 8.7%;
-    /* 94px from bottom (1080-986=94) */
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    z-index: 20;
-}
-
-.era-circle-number {
-    width: 53px;
-    height: 53px;
-    background-color: #fdf0d5;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Poppins', sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    color: #272727;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-}
-
-.era-label-indicator .era-name {
-    font-family: 'Poppins', sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    color: #fdf0d5;
-    text-align: center;
-    margin: 0;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-    white-space: nowrap;
-}
-
-/* ============================================
-   AYUTTHAYA ERA - PRECISE POSITIONING
-   ============================================ */
-
-/* Ayutthaya Background Wash (Gradient Overlay) */
-[data-era="ayutthaya"] .ayutthaya-bg-wash {
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(circle at 70% 35%, rgba(216, 33, 33, 0.18), transparent 46%),
-        radial-gradient(circle at 20% 25%, rgba(233, 200, 36, 0.1), transparent 42%),
-        linear-gradient(180deg, rgba(20, 14, 14, 0.46), rgba(39, 39, 39, 0.78));
-    z-index: 4;
-    pointer-events: none;
-}
-
-/* Ayutthaya Temple Layers Container */
-.ayutthaya-temples {
-    position: absolute;
-    left: 45vw;
-    top: 13%;
-    width: 66vw;
-    height: 79%;
-    z-index: 5;
-    pointer-events: none;
-}
-
-.ayutthaya-temples .temple-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center bottom;
-}
-
-.ayutthaya-temples .temple-right {
-    z-index: 1;
-    opacity: 0.9;
-}
-
-.ayutthaya-temples .temple-left {
-    z-index: 2;
-    opacity: 0.95;
-}
-
-.ayutthaya-temples .temple-center {
-    z-index: 3;
-    opacity: 1;
-}
-
-/* Ayutthaya Text Box (Overlap with Sukhothai) */
-[data-era="ayutthaya"] .ayutthaya-text-box {
-    position: absolute;
-    left: -19.9vw;
-    /* -382px / 1920px - Negative to create overlap */
-    top: 23.52%;
-    /* 254px / 1080px */
-    width: 18.28vw;
-    /* 351px / 1920px */
-    min-height: 30.56%;
-    /* 330px / 1080px */
-    background: rgba(0, 0, 0, 0.65);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    border-radius: 10px;
-    padding: 20px 25px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-    z-index: 15;
-}
-
-[data-era="ayutthaya"] .ayutthaya-text-box p {
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px;
-    line-height: 1.5;
-    color: #fdf0d5;
-    margin: 0;
-    text-align: center;
-}
-
-[data-era="ayutthaya"] .ayutthaya-text-box .highlight {
-    color: #e9c824;
-    font-weight: 700;
-}
-
-/* Ayutthaya Era Indicator */
-[data-era="ayutthaya"] .ayutthaya-indicator {
-    /* Inherits from .era-label-indicator - centered at bottom */
-    bottom: 8.7%;
-}
-
-/* Legacy styles - keep for compatibility */
-.fighters-group {
-    position: absolute;
-    display: flex;
-    align-items: flex-end;
-    gap: 15px;
-    z-index: 10;
-}
-
-.fighter {
-    height: 240px;
-    width: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
-}
-
-/* Content Group (Text & UI) */
-.content-group {
-    position: absolute;
-    z-index: 15;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-/* Transition Group (Overlapping elements) */
-.transition-group {
-    position: absolute;
-    z-index: 12;
-}
-
-.kick-poses-transition {
-    display: flex;
-    gap: 60px;
-    align-items: flex-end;
-}
-
-.kick-pose-transition {
-    height: 400px;
-    width: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
-}
-
-/* Temple Group */
-.temple-group {
-    position: absolute;
-    width: 60vw;
-    height: 65%;
-    z-index: 11;
-}
-
-.temple-layer {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.temple-right {
-    z-index: 1;
-    left: 5%;
-}
-
-.temple-left {
-    z-index: 2;
-    left: 0;
-}
-
-.temple-center {
-    z-index: 3;
-    left: 2.5%;
-}
-
-/* Placeholder Styles */
-.era-placeholder {
-    opacity: 0.6;
-}
-
-.placeholder-text {
-    text-align: center;
-}
-
-.placeholder-note {
-    font-family: 'Poppins', sans-serif;
-    font-size: 18px;
-    color: var(--history-text);
-    opacity: 0.5;
-    font-style: italic;
-}
-
-/* Content Layer (Highest z-index) */
-.content-layer {
-    position: relative;
-    z-index: 10;
-    width: 85%;
-    max-width: 1200px;
-    padding: 120px 40px 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-/* Era Number */
-.era-number {
-    width: 53px;
-    height: 53px;
-    background-color: var(--history-text);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-.era-number span {
-    font-family: 'Poppins', sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--history-bg);
-}
-
-/* Era Title */
-.era-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 56px;
-    color: var(--history-text);
-    text-align: center;
-    margin: 0;
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-}
-
-/* Text Box */
-.text-box {
-    padding: 15px 2px;
-    max-width: 420px;
-}
-
-.text-box p {
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px;
-    line-height: 1.4;
-    color: var(--history-text);
-    margin: 0;
-}
-
-.text-box .highlight {
-    color: var(--history-highlight);
-    font-weight: 600;
-}
-
-/* Text positioning */
-.left-text {
-    align-self: flex-start;
-    margin-left: 10%;
-}
-
-.right-text {
-    align-self: flex-end;
-    margin-right: 10%;
-}
-
-.center-text {
-    align-self: center;
-    text-align: center;
-    max-width: 550px;
-}
-
-/* Text Reveal Animation */
-.text-reveal {
-    opacity: 0;
-    filter: blur(10px);
-    transform: translateY(30px);
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.text-reveal.revealed {
-    opacity: 1;
-    filter: blur(0);
-    transform: translateY(0);
-}
-
-/* Kick Poses */
-.kick-poses {
-    display: flex;
-    gap: 40px;
-    align-items: flex-end;
-    justify-content: center;
-    margin: 10px 0;
-}
-
-.kick-pose {
-    height: 320px;
-    width: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
-    opacity: 1;
-    transform: translateY(50px);
-    transition: all 0.6s ease;
-}
-
-.kick-pose.revealed {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.kick-pose.kick-1 {
-    transition-delay: 0.1s;
-}
-
-.kick-pose.kick-2 {
-    transition-delay: 0.2s;
-}
-
-.kick-pose.kick-3 {
-    transition-delay: 0.3s;
-}
-
-.kick-pose.kick-4 {
-    transition-delay: 0.4s;
-}
-
-/* ============================================
-   AYUTTHAYA ERA - TRANSITION & OVERLAP STYLES
-   ============================================ */
-
-/* Transition Layer: Sukhothai elements overlapping into Ayutthaya */
-.transition-sukhothai-kicks {
-    position: absolute;
-    left: -30%;
-    top: 25%;
-    width: 50%;
-    z-index: 11;
-    pointer-events: none;
-    opacity: 1;
-    transition: opacity 1s ease-out;
-}
-
-.kick-poses-transition {
-    display: flex;
-    gap: 60px;
-    align-items: flex-end;
-    justify-content: flex-start;
-    margin-bottom: 30px;
-}
-
-.kick-pose-transition {
-    height: 400px;
-    width: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
-}
-
-.text-box-transition {
-    background: rgba(0, 0, 0, 0.7);
-    -webkit-backdrop-filter: blur(15px);
-    backdrop-filter: blur(15px);
-    border-radius: 10px;
-    padding: 25px 35px;
-    max-width: 400px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-}
-
-.left-transition {
-    margin-left: 20px;
-}
-
-.text-box-transition p {
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--history-text);
-    margin: 0;
-}
-
-/* Ayutthaya Temple Complex */
-.temple-complex {
-    position: absolute;
-    right: 10%;
-    top: 15%;
-    width: 60vw;
-    height: 65%;
-    z-index: 9;
-    pointer-events: none;
-}
-
-.temple-layer {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.temple-right {
-    z-index: 1;
-    left: 5%;
-}
-
-.temple-left {
-    z-index: 2;
-    left: 0;
-}
-
-.temple-center {
-    z-index: 3;
-    left: 2.5%;
-}
-
-/* Era Divider Line */
-.era-divider-line {
-    position: absolute;
-    bottom: 12%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    height: 6px;
-    z-index: 10;
-    pointer-events: none;
-}
-
-.divider-line {
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
-    opacity: 0.8;
-}
-
-/* Ayutthaya Content Layer */
-.ayutthaya-content {
-    justify-content: flex-end;
-    align-items: center;
-    padding-bottom: 8%;
-}
-
-/* Era Indicator (Circle + Number + Title) */
-.era-indicator {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    z-index: 15;
-}
-
-.era-circle-wrapper {
-    position: relative;
-    width: 60px;
-    height: 60px;
-}
-
-.era-circle-bg {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.era-number-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: 'Poppins', sans-serif;
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--history-bg);
-    line-height: 1;
-}
-
-.era-title-small {
-    font-family: 'Poppins', sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--history-text);
-    text-align: center;
-    margin: 0;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-    white-space: nowrap;
-}
-
-/* Regional Styles Section */
-.regional-section .content-layer {
-    max-width: 1600px;
-}
-
-.regional-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 40px;
-    width: 100%;
-    margin-top: 40px;
-}
-
-.regional-card {
-    background: rgba(0, 0, 0, 0.7);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    border-radius: 16px;
-    padding: 40px 30px;
-    text-align: center;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-    border: 2px solid rgba(253, 240, 213, 0.1);
-    transition: all 0.4s ease;
-}
-
-.regional-card:hover {
-    transform: translateY(-10px);
-    border-color: var(--history-highlight);
-    box-shadow: 0 12px 40px rgba(233, 200, 36, 0.3);
-}
-
-.region-number {
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(135deg, var(--history-highlight), var(--history-accent));
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--history-bg);
-    margin: 0 auto 20px;
-}
-
-.regional-card h3 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 32px;
-    color: var(--history-text);
-    margin: 15px 0 5px;
-}
-
-.region-label {
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    color: var(--history-highlight);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 15px;
-}
-
-.regional-card p:not(.region-label) {
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--history-text);
-}
-
-/* Placeholder Elements */
-.placeholder-fighters {
-    display: flex;
-    gap: 30px;
-    justify-content: center;
-    margin: 30px 0;
-}
-
-.placeholder-box {
-    width: 200px;
-    height: 300px;
-    background: linear-gradient(135deg, rgba(253, 240, 213, 0.1), rgba(233, 200, 36, 0.05));
-    border: 2px dashed rgba(253, 240, 213, 0.3);
-    border-radius: 12px;
-    animation: pulse-placeholder 2s ease-in-out infinite;
-}
-
-@keyframes pulse-placeholder {
-
-    0%,
-    100% {
-        opacity: 0.3;
-    }
-
-    50% {
-        opacity: 0.6;
-    }
-}
-
-/* ============================================
-   ERA-SPECIFIC STYLES
-   ============================================ */
-
-/* Ayutthaya Background Wash 
-.ayutthaya-bg-wash {
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(circle at 70% 35%, rgba(216, 33, 33, 0.18), transparent 46%),
-        radial-gradient(circle at 20% 25%, rgba(233, 200, 36, 0.1), transparent 42%),
-        linear-gradient(180deg, rgba(20, 14, 14, 0.46), rgba(39, 39, 39, 0.78));
-    z-index: 6;
-}*/
-
-/* Regional Background Wash (Muay Boran) */
-.regional-bg-wash {
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(circle at 25% 40%, rgba(233, 200, 36, 0.11), transparent 40%),
-        radial-gradient(circle at 78% 55%, rgba(216, 33, 33, 0.1), transparent 46%),
-        linear-gradient(180deg, rgba(24, 24, 24, 0.55), rgba(39, 39, 39, 0.82));
-    z-index: 6;
-}
-
-/* Era Divider Line (Updated for absolute positioning) */
-.era-divider-line {
-    width: 1.5px;
-    height: 80%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 14;
-}
-
-.divider-line-img {
-    height: 100%;
-    width: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));
-}
-
-.era-circle {
-    position: absolute;
-    width: 53px;
-    height: 53px;
-    object-fit: contain;
-}
-
-/* Era Indicator (Updated styles) */
-.era-indicator {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    z-index: 20;
-}
-
-.era-number {
-    font-family: 'Poppins', sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-}
-
-.era-thai-name {
-    font-family: 'Prompt', sans-serif;
-    font-size: 36px;
-    font-weight: 600;
-    color: var(--history-text);
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-}
-
-.era-subtitle {
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--history-text);
-    opacity: 0.8;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
-}
-
-/* Content Container */
-.content-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 25px;
-    max-width: 600px;
-    padding: 0 40px;
-}
-
-.era-title {
-    font-family: 'Prompt', sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--history-text);
-    text-align: center;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
-    letter-spacing: 1.5px;
-}
-
-.era-body {
-    font-family: 'Prompt', sans-serif;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 1.8;
-    color: var(--history-text);
-    text-align: center;
-    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
-}
-
-/* Footer Section */
-.footer-section {
-    min-width: 100vw;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--history-bg);
-}
-
+/* =========================================
+   ANIMATIONS
+   ========================================= */
 @keyframes fighter-idle {
 
     0%,
@@ -3888,4 +2083,16 @@ body::before {
 
 .chaiya-fighter-1.idle {
     animation: fighter-idle 1.9s ease-in-out infinite;
+}
+
+.chaiya-fighter-2.idle {
+    animation: fighter-idle 3.2s ease-in-out infinite;
+}
+
+.chaiya-fighter-4.idle {
+    animation: fighter-idle 3.4s ease-in-out infinite;
+}
+
+.chaiya-fighter-5.idle {
+    animation: fighter-idle 2.8s ease-in-out infinite;
 }
