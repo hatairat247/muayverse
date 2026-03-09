@@ -16,6 +16,12 @@
     will-change: transform, opacity;
 }
 
+/* ทำให้พื้นหลังโปร่งใส เพื่อโชว์ลายกระดาษจาก body */
+.hero-section-figma,
+.hero-video-section {
+    background-color: transparent !important;
+}
+
 /* Hero Container */
 .hero-container {
     width: 100%;
