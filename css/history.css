@@ -614,10 +614,42 @@ body::before {
 
 .tha-sao-under {
     z-index: 1;
+    opacity: 0;
+    transform: translateY(100px) scale(0.8);
 }
 
 .tha-sao-above {
     z-index: 2;
+    opacity: 0;
+    transform: translateY(-120px) scale(0.8);
+}
+
+.tha-sao-under,
+.tha-sao-above {
+    opacity: 0;
+    transform: translateY(100px) scale(0.85);
+}
+
+.tha-sao-swap {
+    cursor: pointer;
+    pointer-events: auto;
+    width: auto;
+    max-width: none;
+    height: 36.56vw;
+    object-fit: contain;
+    animation: tha-sao-aura 2s ease-in-out infinite;
+}
+
+@keyframes tha-sao-aura {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.1));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 18px rgba(253, 240, 213, 0.7)) drop-shadow(0 0 40px rgba(253, 240, 213, 0.35)) drop-shadow(0 0 60px rgba(253, 240, 213, 0.15));
+    }
 }
 
 .thonburi-background {
@@ -1263,6 +1295,8 @@ body::before {
 .chaiya-fighter-7 {
     position: relative;
     top: 2.6vw;
+    opacity: 0;
+    transform: translateY(120px) scale(0.8);
 }
 
 .chaiya-fighter-8 {
@@ -1283,6 +1317,14 @@ body::before {
 .chaiya-fighter-11 {
     position: relative;
     top: 2.08vw;
+}
+
+.chaiya-fighter-8,
+.chaiya-fighter-9,
+.chaiya-fighter-10,
+.chaiya-fighter-11 {
+    opacity: 0;
+    transform: translateY(120px) scale(0.8);
 }
 
 .tha-sao-fighters {
@@ -1326,12 +1368,15 @@ body::before {
     white-space: nowrap;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
     width: 100%;
+    opacity: 0;
+    transform: translateY(30px);
 }
 
 .tha-sao-fighters-row,
 .tha-sao-fighters-row-2,
 .tha-sao-fighters-row-3 {
     display: flex;
+    pointer-events: none;
 }
 
 .tha-sao-container,
@@ -1346,6 +1391,10 @@ body::before {
 
 .tha-sao-container-2 {
     margin-left: -12vw;
+    width: fit-content;
+    display: flex;
+    pointer-events: none;
+
 }
 
 .tha-sao-container-3 {
@@ -1366,6 +1415,7 @@ body::before {
     object-fit: contain;
     filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
     height: 36.56vw;
+    opacity: 0;
 }
 
 .thonburi-fighters {
@@ -2058,10 +2108,8 @@ body::before {
     transform: none;
 }
 
-/* =========================================
-   ANIMATIONS
-   ========================================= */
-@keyframes fighter-idle {
+/* Chaiya fighters idle - ขยับแรงขึ้น */
+@keyframes chaiya-fighter-idle {
 
     0%,
     100% {
@@ -2069,30 +2117,154 @@ body::before {
     }
 
     25% {
-        transform: translateY(-6px) rotate(0.3deg);
+        transform: translateY(-12px) rotate(0.6deg);
     }
 
     50% {
-        transform: translateY(-9px) rotate(-0.3deg);
+        transform: translateY(-18px) rotate(-0.6deg);
     }
 
     75% {
-        transform: translateY(-4px) rotate(0.15deg);
+        transform: translateY(-8px) rotate(0.3deg);
     }
 }
 
 .chaiya-fighter-1.idle {
-    animation: fighter-idle 1.9s ease-in-out infinite;
+    animation: chaiya-fighter-idle 1.9s ease-in-out infinite;
 }
 
 .chaiya-fighter-2.idle {
-    animation: fighter-idle 3.2s ease-in-out infinite;
+    animation: chaiya-fighter-idle 3.2s ease-in-out infinite;
 }
 
+.chaiya-fighter-3.idle {
+    animation: chaiya-fighter-idle 2.6s ease-in-out infinite,
+        aura-glow 2s ease-in-out infinite;
+}
+
+/* Aura glow วับๆ สี fdf0d5 */
+@keyframes aura-glow {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.1));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 18px rgba(253, 240, 213, 0.7)) drop-shadow(0 0 40px rgba(253, 240, 213, 0.35)) drop-shadow(0 0 60px rgba(253, 240, 213, 0.15));
+    }
+}
+
+
 .chaiya-fighter-4.idle {
-    animation: fighter-idle 3.4s ease-in-out infinite;
+    animation: chaiya-fighter-idle 3.4s ease-in-out infinite;
 }
 
 .chaiya-fighter-5.idle {
-    animation: fighter-idle 2.8s ease-in-out infinite;
+    animation: chaiya-fighter-idle 2.8s ease-in-out infinite;
+}
+
+.wai-kru-swap {
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.chaiya-fighter-6.idle {
+    animation: chaiya-attack-idle 1.6s ease-in-out infinite;
+}
+
+.chaiya-fighter-7.idle {
+    animation: chaiya-attack-idle 2s ease-in-out infinite;
+}
+
+.chaiya-fighter-8.idle {
+    animation: chaiya-guard-idle 2.2s ease-in-out infinite;
+}
+
+.chaiya-fighter-9.idle {
+    animation: chaiya-guard-idle 2.6s ease-in-out infinite;
+}
+
+.chaiya-fighter-10.idle {
+    animation: chaiya-guard-idle 2s ease-in-out infinite;
+}
+
+.chaiya-fighter-11.idle {
+    animation: chaiya-guard-idle 2.8s ease-in-out infinite;
+}
+
+/* Fighter-6, 7 idle - ชาร์จพลังเตรียมชก */
+@keyframes chaiya-attack-idle {
+
+    0%,
+    100% {
+        transform: translateX(0) rotate(0deg);
+    }
+
+    25% {
+        transform: translateX(-6px) rotate(-1.5deg);
+    }
+
+    75% {
+        transform: translateX(6px) rotate(1.5deg);
+    }
+}
+
+/* Fighter 8-11 idle - ท่าตั้งรับโยกเบาๆ */
+@keyframes chaiya-guard-idle {
+
+    0%,
+    100% {
+        transform: translateY(0px) translateX(0) rotate(0deg);
+    }
+
+    30% {
+        transform: translateY(-4px) translateX(-3px) rotate(-0.8deg);
+    }
+
+    70% {
+        transform: translateY(-6px) translateX(3px) rotate(0.8deg);
+    }
+}
+
+
+/* Tha Sao fighters idle - โยกตัวเตรียมต่อสู้ */
+@keyframes tha-sao-sway {
+
+    0%,
+    100% {
+        transform: translateX(0) rotate(0deg);
+    }
+
+    25% {
+        transform: translateX(-5px) rotate(-1deg);
+    }
+
+    75% {
+        transform: translateX(5px) rotate(1deg);
+    }
+}
+
+.tha-sao-kick.idle {
+    animation: tha-sao-sway 1.8s ease-in-out infinite;
+}
+
+.tha-sao-elbow.idle {
+    animation: tha-sao-sway 2.2s ease-in-out infinite;
+}
+
+.tha-sao-fighter2-1.idle {
+    animation: tha-sao-sway 2s ease-in-out infinite;
+}
+
+.tha-sao-defend.idle {
+    animation: tha-sao-sway 2.4s ease-in-out infinite;
+}
+
+.tha-sao-parry.idle {
+    animation: tha-sao-sway 1.9s ease-in-out infinite;
+}
+
+.tha-sao-attacks.idle {
+    animation: tha-sao-sway 2.1s ease-in-out infinite;
 }
