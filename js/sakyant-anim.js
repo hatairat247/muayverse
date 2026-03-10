@@ -19,8 +19,11 @@ class SakYantAnim {
         this.gaoyordSection = document.querySelector('.gaoyord-section');
 
         this.scrollY = 0;
+        this.lastScrollY = 0;
+        this.scrollDirection = 0; // 1 = down, -1 = up
         this.ticking = false;
         this.karaokeComplete = false;
+        this.isSnapScrolling = false;
 
         // Mouse parallax state
         this.mouse = { x: 0, y: 0 };
@@ -37,10 +40,23 @@ class SakYantAnim {
         this.swipeSound.volume = 0.5;
         this.slidePaperSound.volume = 0.6;
         this.typingSound.volume = 0.6;
-        this.typingSound.loop = true; // Loop continuously
+        this.typingSound.loop = true;
         
-        this.isTypingSoundPlaying = false; // Track typing sound state
-        this.typingStopTimeout = null; // Timeout to stop sound when scroll stops
+        this.isTypingSoundPlaying = false;
+        this.typingStopTimeout = null;
+
+        // ── เช็คสถานะเสียงจาก navbar ──
+        this.pageAudio = document.querySelector('.page-audio');
+
+        // ── ใช้ getter แทน cache — เช็คทุกครั้งที่เรียกใช้ ──
+        this._seQuery = window.matchMedia('(max-width: 430px) and (orientation: portrait)');
+
+        // ── karaokeEnd: ค่าน้อย = karaoke จบเร็ว + pause นานขึ้น ──
+        this._isTablet = window.innerWidth >= 769 && window.innerWidth <= 1367;
+        this.karaokeEnd = this._isTablet ? 0.25 : 0.25;
+        this.snapTriggered = false;
+
+        console.log(`[SE] init: w=${window.innerWidth} h=${window.innerHeight} isSE=${this._seQuery.matches} isTablet=${this._isTablet} karaokeEnd=${this.karaokeEnd}`);
 
         this._splitTitle();
         this._wrapDescriptionChars();
@@ -48,16 +64,99 @@ class SakYantAnim {
         this._setupScrollObserver();
         this._setupPaperSwitch();
         this._bindEvents();
-        this._startEntrance();     // kick off the title entrance sequence
-        this.wordHoverEnabled = true; // Enable word hover by default
+        this._startEntrance();
+        this.wordHoverEnabled = true;
+
+        // ── FIX: ยึดความสูง gaoyord-section ตาม Hah Taew (slide ที่ยาวสุด) ──
+        // รอ fonts โหลดเสร็จก่อนวัด
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                this._fixGaoyordHeight();
+            });
+        } else {
+            // fallback: วัดหลัง 500ms
+            setTimeout(() => this._fixGaoyordHeight(), 500);
+        }
+
+        // วัดใหม่เมื่อ resize (debounced)
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                this._fixGaoyordHeight();
+                // อัปเดต karaokeEnd เมื่อ resize เปลี่ยน breakpoint
+                this._isTablet = window.innerWidth >= 769 && window.innerWidth <= 1367;
+                this.karaokeEnd = this._isTablet ? 0.25 : 0.25;
+                this.snapTriggered = false;
+            }, 150);
+        });
     }
 
+    /* ─────────────────────────────────────────────────────────────
+       FIX: ล็อค min-height ตาม Hah Taew — เฉพาะ mobile/tablet
+       Desktop (>1024px) ใช้ normal flow เหมือนเดิม ไม่แตะ
+       ───────────────────────────────────────────────────────────── */
+    _fixGaoyordHeight() {
+        const textContainer = this.gaoyordText;
+        const section = this.gaoyordSection;
+        if (!textContainer || !section) return;
+
+        // Desktop: reset กลับให้ natural flow ทำงานปกติ
+        if (window.matchMedia('(min-width: 1025px)').matches) {
+            textContainer.style.removeProperty('min-height');
+            section.style.removeProperty('min-height');
+            return;
+        }
+
+        const hateaw = section.querySelector('[data-text="hateaw"]');
+        if (!hateaw) return;
+
+        textContainer.style.minHeight = '';
+        section.style.minHeight = '';
+
+        // ชั่วคราว force Hah Taew เป็น relative เพื่อวัด
+        const saved = {
+            position:      hateaw.style.position,
+            opacity:       hateaw.style.opacity,
+            visibility:    hateaw.style.visibility,
+            pointerEvents: hateaw.style.pointerEvents,
+            filter:        hateaw.style.filter,
+        };
+        hateaw.style.setProperty('position',       'relative', 'important');
+        hateaw.style.setProperty('opacity',        '0',        'important');
+        hateaw.style.setProperty('visibility',     'hidden',   'important');
+        hateaw.style.setProperty('pointer-events', 'none',     'important');
+        hateaw.style.setProperty('filter',         'none',     'important');
+
+        const hateawH = hateaw.offsetHeight;
+
+        // restore
+        hateaw.style.position      = saved.position;
+        hateaw.style.opacity       = saved.opacity;
+        hateaw.style.visibility    = saved.visibility;
+        hateaw.style.pointerEvents = saved.pointerEvents;
+        hateaw.style.filter        = saved.filter;
+
+        if (hateawH <= 0) return;
+
+        const textMinH = hateawH + 8;
+        textContainer.style.setProperty('min-height', textMinH + 'px', 'important');
+
+        requestAnimationFrame(() => {
+            const contentEl = section.querySelector('.gaoyord-content');
+            if (contentEl) {
+                section.style.setProperty('min-height', (contentEl.offsetHeight + 40) + 'px', 'important');
+            }
+            console.log(`[fixHeight] mobile hateawH=${hateawH} textMinH=${textMinH}`);
+        });
+    }
+
+    /* ── วัด top ของ title แล้ว set top ของ papers ให้ตรงกัน ── */
     /* ─── Split title into individual <span class="char">, preserving <br> ─── */
     _splitTitle() {
         if (!this.title) return;
         this.titleChars = [];
 
-        // Collect child nodes (text + <br>)
         const nodes = Array.from(this.title.childNodes);
         this.title.innerHTML = '';
 
@@ -98,18 +197,13 @@ class SakYantAnim {
         });
     }
 
-    /**
-     * Recursively wrap text nodes inside an element, preserving <strong>, <br>, etc.
-     */
     _wrapNodeChars(node) {
         let html = '';
         node.childNodes.forEach(child => {
             if (child.nodeType === Node.TEXT_NODE) {
-                // Split into words then chars
                 const words = child.textContent.split(/(\s+)/);
                 words.forEach(word => {
                     if (/^\s+$/.test(word)) {
-                        // whitespace — keep as-is
                         html += word;
                     } else {
                         html += '<span class="word">';
@@ -123,7 +217,6 @@ class SakYantAnim {
                 if (child.tagName === 'BR') {
                     html += '<br>';
                 } else {
-                    // Preserve the element wrapper (e.g. <strong>)
                     const tag = child.tagName.toLowerCase();
                     const attrs = child.attributes;
                     let attrStr = '';
@@ -137,10 +230,26 @@ class SakYantAnim {
         return html;
     }
 
+    /* ─── เช็คว่าเสียงเปิดหรือปิดจาก navbar ─── */
+    _isMusicEnabled() {
+        // เช็คจาก localStorage ก่อน
+        const isMusicPlaying = localStorage.getItem('muayverse_music_playing') === 'true';
+        if (isMusicPlaying) return true;
+        
+        // เช็คจาก pageAudio.muted
+        if (this.pageAudio && !this.pageAudio.muted) return true;
+        
+        return false;
+    }
+
     /* ─── Event bindings ─── */
     _bindEvents() {
         window.addEventListener('scroll', () => {
-            this.scrollY = window.scrollY || window.pageYOffset;
+            const currentScrollY = window.scrollY || window.pageYOffset;
+            this.scrollDirection = currentScrollY > this.lastScrollY ? 1 : -1;
+            this.lastScrollY = currentScrollY;
+            this.scrollY = currentScrollY;
+            
             if (!this.ticking) {
                 requestAnimationFrame(() => {
                     this._onScroll();
@@ -150,7 +259,6 @@ class SakYantAnim {
             }
         }, { passive: true });
 
-        // Mouse parallax for deco elements
         window.addEventListener('mousemove', (e) => {
             this.mouse.x = e.clientX / window.innerWidth;
             this.mouse.y = e.clientY / window.innerHeight;
@@ -164,7 +272,6 @@ class SakYantAnim {
             }
         }, { passive: true });
 
-        // Setup word hover gradient effect
         this._setupYantWordHover();
     }
 
@@ -172,15 +279,10 @@ class SakYantAnim {
     _updateParallax() {
         if (!this.decoLeft || !this.decoRight) return;
 
-        // Smooth parallax movement: center = 0.5, edges = 0 or 1
-        const moveX = (this.mouse.x - 0.5) * 40; // max ±20px
+        const moveX = (this.mouse.x - 0.5) * 40;
         const moveY = (this.mouse.y - 0.5) * 40;
 
-        // Use translate3d for GPU acceleration
-        // Left deco moves opposite direction for depth
         this.decoLeft.style.transform = `rotate(18.66deg) translate3d(${-moveX}px, ${-moveY}px, 0)`;
-
-        // Right deco moves with cursor
         this.decoRight.style.transform = `rotate(31.94deg) translate3d(${moveX * 0.8}px, ${moveY * 0.8}px, 0)`;
     }
 
@@ -193,14 +295,13 @@ class SakYantAnim {
             }, 80 + i * 35);
         });
 
-        // After title finishes, glow yantras (description stays hidden until scroll)
         const titleDuration = 80 + this.titleChars.length * 35 + 400;
         setTimeout(() => {
             this._glowYantras();
         }, titleDuration);
     }
 
-    /* ─── Scroll handler — drives karaoke from scroll-lock progress ─── */
+    /* ─── Scroll handler ─── */
     _onScroll() {
         if (!this.scrollLock || !this.section) return;
 
@@ -209,17 +310,13 @@ class SakYantAnim {
         const sectionH = this.section.offsetHeight;
         const scrollableDistance = this.scrollLock.offsetHeight - sectionH;
 
-        // How far we've scrolled within the scroll-lock zone (0 → 1)
         const scrolled = -(lockRect.top - navbarH);
         const progress = Math.min(Math.max(scrolled / scrollableDistance, 0), 1);
 
-        // Karaoke word-by-word reveal: fills 0 → 0.5 of progress
-        const karaokeEnd = 0.5;
-        const karaokeProgress = Math.min(progress / karaokeEnd, 1);
+        // ── karaokeEnd ปรับตาม breakpoint (0.9 สำหรับ iPad, 0.5 สำหรับ desktop/mobile) ──
+        const karaokeProgress = Math.min(progress / this.karaokeEnd, 1);
         this._revealDescription(karaokeProgress);
 
-        // Pause zone: 0.5 → 0.7 — text stays fully visible, no fade
-        // Fade section 1 content smoothly (0.7 → 1.0) before sliding to section 2
         if (this.contentWrap) {
             const fadeStart = 0.7;
             if (progress > fadeStart) {
@@ -231,46 +328,49 @@ class SakYantAnim {
             }
         }
 
-        // Track karaoke completion / reset
-        if (progress >= 0.95) {
+        // ── Scroll Snap: แม่เหล็กดึงไป Section 2 หรือกลับ Section 1 ──
+        // Down scroll: ถ้า progress > 85% และกำลัง scroll ลง → snap ไป Section 2
+        if (progress >= 0.85 && this.scrollDirection > 0 && !this.snapTriggered && !this.isSnapScrolling) {
+            this.snapTriggered = true;
             this.karaokeComplete = true;
-        } else if (progress < 0.05) {
+            this._smoothScrollToSection2();
+        }
+        // Up scroll: เช็คว่าอยู่ระหว่าง Section 1 และ Section 2 และกำลัง scroll ขึ้น → snap กลับ Section 1
+        else if (progress > 0.88 && progress < 1 && this.scrollDirection < 0 && this.snapTriggered && !this.isSnapScrolling) {
+            this.snapTriggered = false;
+            this._smoothScrollToSection1();
+        }
+        // Reset snap trigger
+        else if (progress < 0.05) {
             this.karaokeComplete = false;
+            this.snapTriggered = false;
+        } else if (progress >= 0.95) {
+            this.karaokeComplete = true;
         }
     }
 
-    /* ─── Karaoke description reveal — word by word (t is 0→1) ─── */
+    /* ─── Karaoke description reveal ─── */
     _revealDescription(t) {
         if (!this.descWords || this.descWords.length === 0) return;
         const total = this.descWords.length;
         const activeCount = Math.min(Math.floor(t * total), total);
 
-        // Start typing sound when revealing and not yet complete
         if (t > 0 && t < 1) {
-            if (!this.isTypingSoundPlaying) {
+            if (!this.isTypingSoundPlaying && this._isMusicEnabled()) {
                 this.typingSound.play().catch(e => console.log('Typing sound failed:', e));
                 this.isTypingSoundPlaying = true;
             }
-            
-            // Clear any existing timeout
-            if (this.typingStopTimeout) {
-                clearTimeout(this.typingStopTimeout);
-            }
-            
-            // Set timeout to stop sound if no more scroll activity
+            if (this.typingStopTimeout) clearTimeout(this.typingStopTimeout);
             this.typingStopTimeout = setTimeout(() => {
                 this.typingSound.pause();
                 this.isTypingSoundPlaying = false;
-            }, 300); // Stop after 300ms of no scroll - longer for smoother experience
+            }, 300);
         } else if (t >= 1 || t <= 0) {
-            // Stop sound when complete or at start
             if (this.isTypingSoundPlaying) {
                 this.typingSound.pause();
                 this.isTypingSoundPlaying = false;
             }
-            if (this.typingStopTimeout) {
-                clearTimeout(this.typingStopTimeout);
-            }
+            if (this.typingStopTimeout) clearTimeout(this.typingStopTimeout);
         }
 
         this.descWords.forEach((word, i) => {
@@ -289,17 +389,15 @@ class SakYantAnim {
         });
     }
 
-    /* ─── 5-slide swipe carousel: gaoyod → hateaw → hanuman → sueku → padtid ─── */
+    /* ─── 5-slide swipe carousel ─── */
     _setupPaperSwitch() {
         const papersContainer = document.querySelector('.gaoyord-papers');
         if (!papersContainer) return;
 
-        // Slide order (matches data-yant / data-text attributes)
         this.slideOrder = ['kaoyod', 'hateaw', 'hanuman', 'sueku', 'padtid'];
         this.currentSlide = 0;
         this.isAnimating = false;
 
-        // Cache paper & text elements
         this.paperSlides = {};
         this.textSlides = {};
         this.slideOrder.forEach(key => {
@@ -307,21 +405,18 @@ class SakYantAnim {
             this.textSlides[key] = document.querySelector(`[data-text="${key}"]`);
         });
 
-        // Set initial state (slide 0)
         this._applySlideState();
 
-        // ── Swipe / drag handling ──
         this._swipeState = {
             isDragging: false,
             startX: 0,
             startY: 0,
             currentX: 0,
-            threshold: 60, // min px to trigger swipe
+            threshold: 60,
         };
 
-        // Mouse events
         papersContainer.addEventListener('mousedown', (e) => {
-            e.preventDefault(); // prevent native image drag
+            e.preventDefault();
             this._onSwipeStart(e.clientX, e.clientY, e);
         });
         window.addEventListener('mousemove', (e) => {
@@ -330,7 +425,6 @@ class SakYantAnim {
         });
         window.addEventListener('mouseup', () => this._onSwipeEnd());
 
-        // Touch events
         papersContainer.addEventListener('touchstart', (e) => {
             const t = e.touches[0];
             this._onSwipeStart(t.clientX, t.clientY, e);
@@ -350,21 +444,18 @@ class SakYantAnim {
         s.startY = y;
         s.currentX = 0;
 
-        // Play pickup sound
-        this.pickupSound.currentTime = 0;
-        this.pickupSound.play().catch(e => console.log('Audio play failed:', e));
+        if (this._isMusicEnabled()) {
+            this.pickupSound.currentTime = 0;
+            this.pickupSound.play().catch(e => console.log('Audio play failed:', e));
+        }
 
-        // Disable word hover during swipe for performance
         this.wordHoverEnabled = false;
-        
-        // Clear any existing word glows
         document.querySelectorAll('.yant-word').forEach(word => {
             word.classList.remove('glow');
             word.style.removeProperty('color');
             word.style.removeProperty('text-shadow');
         });
 
-        // Mark front paper as dragging (disable CSS transition)
         const frontKey = this.slideOrder[this.currentSlide];
         const frontPaper = this.paperSlides[frontKey];
         if (frontPaper) {
@@ -384,10 +475,9 @@ class SakYantAnim {
         const frontPaper = this.paperSlides[frontKey];
         if (!frontPaper) return;
 
-        // Calculate rotation + movement for Tinder-like feel
         const maxRotate = 15;
         const containerW = frontPaper.parentElement.offsetWidth || 500;
-        const progress = dx / containerW; // -1 to 1
+        const progress = dx / containerW;
         const rotate = -6.92 + progress * maxRotate;
         const opacity = Math.max(1 - Math.abs(progress) * 0.6, 0.3);
 
@@ -407,15 +497,14 @@ class SakYantAnim {
         const dx = s.currentX;
 
         if (Math.abs(dx) > s.threshold) {
-            // Swipe accepted — determine direction
             const direction = dx < 0 ? 'left' : 'right';
             this.isAnimating = true;
 
-            // Play swipe sound
-            this.swipeSound.currentTime = 0;
-            this.swipeSound.play().catch(e => console.log('Audio play failed:', e));
+            if (this._isMusicEnabled()) {
+                this.swipeSound.currentTime = 0;
+                this.swipeSound.play().catch(e => console.log('Audio play failed:', e));
+            }
 
-            // Fling the paper out
             const flingX = direction === 'left' ? -600 : 600;
             const flingRotate = direction === 'left' ? -30 : 20;
             frontPaper.classList.remove('paper-dragging');
@@ -423,7 +512,6 @@ class SakYantAnim {
             frontPaper.style.transform = `translateX(${flingX}px) rotate(${flingRotate}deg)`;
             frontPaper.style.opacity = '0';
 
-            // Advance slide: swipe right → next, swipe left → previous
             const prevSlide = this.currentSlide;
             if (direction === 'right') {
                 this.currentSlide = (this.currentSlide + 1) % this.slideOrder.length;
@@ -433,18 +521,14 @@ class SakYantAnim {
 
             this._animateSlideTransition(prevSlide);
         } else {
-            // Snap back — didn't swipe far enough
             frontPaper.classList.remove('paper-dragging');
             frontPaper.classList.add('paper-front');
             frontPaper.style.transform = '';
             frontPaper.style.opacity = '';
-            
-            // Re-enable word hover
             this.wordHoverEnabled = true;
         }
     }
 
-    /* Apply current slide state: front = current, back = next, rest hidden */
     _applySlideState() {
         const total = this.slideOrder.length;
         const frontKey = this.slideOrder[this.currentSlide];
@@ -455,7 +539,6 @@ class SakYantAnim {
             const text = this.textSlides[key];
             if (!paper) return;
 
-            // Remove all role classes & inline styles
             paper.classList.remove('paper-front', 'paper-back', 'paper-exit', 'paper-dragging', 'paper-promoting');
             paper.style.transform = '';
             paper.style.opacity = '';
@@ -472,14 +555,12 @@ class SakYantAnim {
         });
     }
 
-    /* Animate from prevSlide to currentSlide */
     _animateSlideTransition(prevIndex) {
         const total = this.slideOrder.length;
         const exitKey = this.slideOrder[prevIndex];
         const frontKey = this.slideOrder[this.currentSlide];
         const backKey = this.slideOrder[(this.currentSlide + 1) % total];
 
-        // Step 1: Instantly hide ALL papers except the exiting one
         this.slideOrder.forEach(key => {
             if (key === exitKey) return;
             const paper = this.paperSlides[key];
@@ -489,22 +570,18 @@ class SakYantAnim {
             paper.style.opacity = '0';
         });
 
-        // Step 2: Promote the new front paper from back position to front
         const frontPaper = this.paperSlides[frontKey];
         if (frontPaper) {
-            // Set it at back position first (no transition)
             frontPaper.classList.add('paper-back');
             frontPaper.style.opacity = '1';
-            // Use RAF instead of force reflow for better performance
             requestAnimationFrame(() => {
-                // Now animate to front
                 frontPaper.classList.remove('paper-back');
                 frontPaper.classList.add('paper-promoting');
                 frontPaper.style.opacity = '';
             });
         }
 
-        // Step 3: Switch text
+        // Switch text
         this.slideOrder.forEach(key => {
             const text = this.textSlides[key];
             if (key === frontKey) {
@@ -514,9 +591,7 @@ class SakYantAnim {
             }
         });
 
-        // Step 4: After transition done, finalize everything
         setTimeout(() => {
-            // Clean up exit paper
             const exitPaper = this.paperSlides[exitKey];
             if (exitPaper) {
                 exitPaper.classList.remove('paper-exit');
@@ -524,36 +599,31 @@ class SakYantAnim {
                 exitPaper.style.opacity = '';
             }
 
-            // Finalize front paper
             if (frontPaper) {
                 frontPaper.classList.remove('paper-promoting');
                 frontPaper.style.opacity = '';
                 frontPaper.classList.add('paper-front');
             }
 
-            // Now show back paper (only after transition is done)
             const backPaper = this.paperSlides[backKey];
             if (backPaper) {
                 backPaper.style.opacity = '';
                 backPaper.classList.add('paper-back');
             }
 
-            // Reset all other papers
             this.slideOrder.forEach(key => {
                 if (key === frontKey || key === backKey) return;
                 const p = this.paperSlides[key];
                 if (p) p.style.opacity = '';
             });
 
-            // Re-enable word hover after animation
             this.wordHoverEnabled = true;
             this.isAnimating = false;
-        }, 370); // Match 0.35s transition + 20ms buffer
+        }, 370);
     }
 
     /* ─── IntersectionObserver for Gao Yord section ─── */
     _setupScrollObserver() {
-        // Grab deco elements for animation
         this.gaoyordDecos = document.querySelectorAll('.gaoyord-deco');
 
         const observerOptions = {
@@ -564,31 +634,37 @@ class SakYantAnim {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Play slide paper sound when section comes into view
-                    this.slidePaperSound.currentTime = 0;
-                    this.slidePaperSound.play().catch(e => console.log('Slide paper sound failed:', e));
+                    if (this._isMusicEnabled()) {
+                        this.slidePaperSound.currentTime = 0;
+                        this.slidePaperSound.play().catch(e => console.log('Slide paper sound failed:', e));
+                    }
                     
-                    // Stagger: papers → text → deco
-                    if (this.gaoyordPapers) {
-                        this.gaoyordPapers.classList.add('visible');
+                    if (this.gaoyordPapers) this.gaoyordPapers.classList.add('visible');
+                    if (this.gaoyordText) this.gaoyordText.classList.add('visible');
+                    this.gaoyordDecos.forEach(deco => deco.classList.add('visible'));
+
+                    // ── FIX SE: After visible added, override inline transform/opacity ──
+                    if (this._seQuery.matches) {
+                        if (this.gaoyordPapers) {
+                            this.gaoyordPapers.style.setProperty('transform', 'none', 'important');
+                            this.gaoyordPapers.style.setProperty('opacity', '1', 'important');
+                            this.gaoyordPapers.style.setProperty('transition', 'none', 'important');
+                        }
+                        if (this.gaoyordText) {
+                            this.gaoyordText.style.setProperty('transform', 'none', 'important');
+                            this.gaoyordText.style.setProperty('opacity', '1', 'important');
+                            this.gaoyordText.style.setProperty('transition', 'none', 'important');
+                        }
                     }
-                    if (this.gaoyordText) {
-                        this.gaoyordText.classList.add('visible');
-                    }
-                    this.gaoyordDecos.forEach(deco => {
-                        deco.classList.add('visible');
-                    });
                 } else {
-                    // Reset when leaving viewport so animation replays on re-enter
-                    if (this.gaoyordPapers) {
-                        this.gaoyordPapers.classList.remove('visible');
+                    if (this._seQuery.matches) {
+                        // Only remove deco visible — keep papers and text visible
+                        this.gaoyordDecos.forEach(deco => deco.classList.remove('visible'));
+                    } else {
+                        if (this.gaoyordPapers) this.gaoyordPapers.classList.remove('visible');
+                        if (this.gaoyordText) this.gaoyordText.classList.remove('visible');
+                        this.gaoyordDecos.forEach(deco => deco.classList.remove('visible'));
                     }
-                    if (this.gaoyordText) {
-                        this.gaoyordText.classList.remove('visible');
-                    }
-                    this.gaoyordDecos.forEach(deco => {
-                        deco.classList.remove('visible');
-                    });
                 }
             });
         }, observerOptions);
@@ -598,17 +674,82 @@ class SakYantAnim {
         }
     }
 
-    /* ─── Wrap each word in gaoyord-desc for hover gradient effect ─── */
+    /* ─── Custom Smooth scroll to Section 2 (magnetic snap) ─── */
+    _smoothScrollToSection2() {
+        if (!this.gaoyordSection || this.isSnapScrolling) return;
+        
+        this.isSnapScrolling = true;
+        const navbarH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--navbar-height')) || 96;
+        const targetY = this.gaoyordSection.offsetTop - navbarH;
+        const startY = window.scrollY;
+        const distance = targetY - startY;
+        const duration = 800; // ms - ปรับความเร็ว
+        let startTime = null;
+
+        const easeInOutCubic = (t) => {
+            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        };
+
+        const animateScroll = (currentTime) => {
+            if (!startTime) startTime = currentTime;
+            const timeElapsed = currentTime - startTime;
+            const progress = Math.min(timeElapsed / duration, 1);
+            const ease = easeInOutCubic(progress);
+            
+            window.scrollTo(0, startY + (distance * ease));
+
+            if (progress < 1) {
+                requestAnimationFrame(animateScroll);
+            } else {
+                this.isSnapScrolling = false;
+            }
+        };
+
+        requestAnimationFrame(animateScroll);
+    }
+
+    /* ─── Custom Smooth scroll to Section 1 (magnetic snap back) ─── */
+    _smoothScrollToSection1() {
+        if (!this.scrollLock || this.isSnapScrolling) return;
+        
+        this.isSnapScrolling = true;
+        const targetY = 0; // scroll กลับไปด้านบนสุด
+        const startY = window.scrollY;
+        const distance = targetY - startY;
+        const duration = 800; // ms
+        let startTime = null;
+
+        const easeInOutCubic = (t) => {
+            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        };
+
+        const animateScroll = (currentTime) => {
+            if (!startTime) startTime = currentTime;
+            const timeElapsed = currentTime - startTime;
+            const progress = Math.min(timeElapsed / duration, 1);
+            const ease = easeInOutCubic(progress);
+            
+            window.scrollTo(0, startY + (distance * ease));
+
+            if (progress < 1) {
+                requestAnimationFrame(animateScroll);
+            } else {
+                this.isSnapScrolling = false;
+            }
+        };
+
+        requestAnimationFrame(animateScroll);
+    }
+
+    /* ─── Wrap each word in gaoyord-desc ─── */
     _wrapYantDescWords() {
         const descs = document.querySelectorAll('.gaoyord-desc');
         this.yantWords = [];
 
         descs.forEach(desc => {
-            // Store original HTML
             const originalHTML = desc.innerHTML;
             let wrappedHTML = '';
 
-            // Parse and wrap words
             const parser = new DOMParser();
             const doc = parser.parseFromString(originalHTML, 'text/html');
             
@@ -616,41 +757,27 @@ class SakYantAnim {
                 if (node.nodeType === Node.TEXT_NODE) {
                     const words = node.textContent.split(/(\s+)/);
                     return words.map(word => {
-                        if (/^\s+$/.test(word)) {
-                            return word; // preserve whitespace
-                        }
+                        if (/^\s+$/.test(word)) return word;
                         return `<span class="yant-word">${word}</span>`;
                     }).join('');
                 } else if (node.nodeType === Node.ELEMENT_NODE) {
-                    if (node.tagName === 'BR') {
-                        return '<br>';
-                    }
+                    if (node.tagName === 'BR') return '<br>';
                     const tag = node.tagName.toLowerCase();
-                    // Preserve all attributes (especially class)
                     let attrs = '';
                     if (node.attributes) {
                         Array.from(node.attributes).forEach(attr => {
                             attrs += ` ${attr.name}="${attr.value}"`;
                         });
                     }
-                    const children = Array.from(node.childNodes)
-                        .map(child => processNode(child))
-                        .join('');
+                    const children = Array.from(node.childNodes).map(child => processNode(child)).join('');
                     return `<${tag}${attrs}>${children}</${tag}>`;
                 }
                 return '';
             };
 
-            wrappedHTML = Array.from(doc.body.childNodes)
-                .map(node => processNode(node))
-                .join('');
-            
+            wrappedHTML = Array.from(doc.body.childNodes).map(node => processNode(node)).join('');
             desc.innerHTML = wrappedHTML;
-            
-            // Collect all word spans
-            desc.querySelectorAll('.yant-word').forEach(word => {
-                this.yantWords.push(word);
-            });
+            desc.querySelectorAll('.yant-word').forEach(word => this.yantWords.push(word));
         });
     }
 
@@ -662,12 +789,9 @@ class SakYantAnim {
         
         descs.forEach(desc => {
             desc.addEventListener('mousemove', (e) => {
-                // Skip if word hover is disabled (during animation)
                 if (!this.wordHoverEnabled) return;
-                
-                // Throttle more aggressively for performance
                 const now = Date.now();
-                if (now - throttleDelay < 32) return; // ~30fps max
+                if (now - throttleDelay < 32) return;
                 throttleDelay = now;
                 
                 if (!hoverTicking) {
@@ -680,7 +804,6 @@ class SakYantAnim {
             }, { passive: true });
 
             desc.addEventListener('mouseleave', () => {
-                // Clear ALL inline styles to ensure no color remains
                 desc.querySelectorAll('.yant-word').forEach(word => {
                     word.classList.remove('glow');
                     word.style.removeProperty('color');
@@ -693,33 +816,29 @@ class SakYantAnim {
     /* ─── Update word glow based on mouse position ─── */
     _updateWordGlow(desc, mouseX, mouseY) {
         const words = desc.querySelectorAll('.yant-word');
-        const threshold = 100; // Reduced from 120 for less calculation
+        const threshold = 100;
 
         words.forEach(word => {
             const rect = word.getBoundingClientRect();
             const wordCenterX = rect.left + rect.width / 2;
             const wordCenterY = rect.top + rect.height / 2;
 
-            // Calculate distance from mouse to word center
             const dx = mouseX - wordCenterX;
             const dy = mouseY - wordCenterY;
             const distance = Math.sqrt(dx * dx + dy * dy);
 
             if (distance < threshold) {
-                // Apply gradient effect based on distance
                 const intensity = 1 - (distance / threshold);
                 word.classList.add('glow');
                 
-                // Use CSS custom property for smooth gradient
                 if (intensity > 0.7) {
                     word.style.color = '#ECE342';
                     word.style.textShadow = `0 0 ${20 * intensity}px rgba(236, 227, 66, ${0.8 * intensity}),
                                             0 0 ${35 * intensity}px rgba(236, 227, 66, ${0.4 * intensity})`;
                 } else if (intensity > 0.3) {
-                    // Partial glow
                     const mixColor = this._interpolateColor(
-                        [253, 240, 213], // cream
-                        [236, 227, 66],   // bright yellow #ECE342
+                        [253, 240, 213],
+                        [236, 227, 66],
                         intensity
                     );
                     word.style.color = `rgb(${mixColor[0]}, ${mixColor[1]}, ${mixColor[2]})`;

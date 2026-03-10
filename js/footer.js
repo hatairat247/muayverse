@@ -110,6 +110,37 @@ class Footer {
                     max-width: 100%;
                 }
             }
+
+            /* iPhone SE and small phones - fixed footer height */
+            @media screen and (max-width: 430px) {
+                #footer {
+                    min-height: 250px !important;
+                }
+                
+                .footer-container {
+                    padding: 20px 25px !important;
+                    min-height: 250px !important;
+                }
+
+                .footer-content {
+                    padding: 20px 0 !important;
+                    gap: 20px !important;
+                    min-height: auto !important;
+                }
+
+                .footer-section h3 {
+                    font-size: 48px !important;
+                }
+
+                .footer-section p {
+                    font-size: 13px !important;
+                }
+
+                .footer-section p.copyright {
+                    font-size: 11px !important;
+                    margin-top: 10px !important;
+                }
+            }
         `;
         document.head.appendChild(style);
     }

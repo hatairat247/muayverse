@@ -211,6 +211,10 @@
 
 /* Desktop - 1367px and iPad Air landscape - 1366px */
 @media (max-width: 1367px) {
+    :root {
+        --karaoke-scroll-length: 20vh;
+    }
+
     .center-content {
         max-width: 1300px;
         gap: 42px;
@@ -242,6 +246,10 @@
     }
 
     /* Gao Yord Section */
+    .gaoyord-section {
+        margin-top: calc(-1 * var(--sakyant-height) - 10vh);
+    }
+
     .gaoyord-content {
         max-width: 1500px;
         gap: clamp(35px, 2.8vw, 38px);
@@ -279,6 +287,10 @@
 
 /* iPad Pro landscape - 1180px */
 @media (max-width: 1180px) {
+    :root {
+        --karaoke-scroll-length: 20vh;
+    }
+
     .center-content {
         max-width: 1100px;
         gap: 34px;
@@ -313,6 +325,10 @@
     }
 
     /* Gao Yord Section */
+    .gaoyord-section {
+        margin-top: calc(-1 * var(--sakyant-height) - 10vh);
+    }
+
     .gaoyord-content {
         max-width: 1350px;
         gap: clamp(30px, 2.6vw, 31px);
@@ -414,8 +430,12 @@
 
 /* iPad Mini landscape and smaller tablets - 768px to 1024px */
 @media (max-width: 1024px) {
+    :root {
+        --karaoke-scroll-length: 20vh;
+    }
+
     .sakyant-scroll-lock {
-        height: calc(var(--sakyant-height) + 50vh);
+        height: calc(var(--sakyant-height) + 20vh);
     }
 
     .sakyant-section {
@@ -457,7 +477,7 @@
 
     /* Gao Yord Section */
     .gaoyord-section {
-        margin-top: 35px;
+        margin-top: calc(-1 * var(--sakyant-height) - 15vh);
     }
 
     .gaoyord-content {
@@ -503,7 +523,7 @@
 /* iPhone SE, iPhone 8 and similar landscape - 480px to 768px */
 @media (max-width: 768px) and (min-width: 481px) and (orientation: landscape) {
     .sakyant-scroll-lock {
-        height: calc(var(--sakyant-height) + 30vh);
+        height: calc(var(--sakyant-height) + 60vh);
     }
 
     .center-content {
@@ -511,22 +531,32 @@
         gap: 12px;
         padding: 20px 18px 18px;
         margin-top: 0;
+        text-align: center;
+        align-items: center;
     }
 
     .main-title {
         font-size: clamp(1.25rem, 3.8vw, 2.4rem);
         max-width: 580px;
         line-height: 1.1;
+        text-align: center;
     }
 
     .description-section {
         max-width: 620px;
         gap: 8px;
+        text-align: center;
     }
-
+    .description-section br {
+        display: none;
+    }
     .description-section p {
-        font-size: clamp(0.65rem, 2vw, 0.85rem);
-        line-height: 1.45;
+        font-size: clamp(0.72rem, 1.9vw, 0.84rem);
+        line-height: 1.55;
+        text-align: center;
+        word-spacing: normal;
+        word-break: normal;
+        overflow-wrap: break-word;
     }
 
     .yantra-left {
@@ -544,7 +574,7 @@
 
     /* Gao Yord Section */
     .gaoyord-section {
-        margin-top: 80px;
+        margin-top: 160px;
         min-height: auto;
     }
 
@@ -552,7 +582,7 @@
         display: flex !important;
         flex-direction: row !important;
         gap: clamp(10px, 1.8vw, 14px);
-        padding: 50px 15px 30px;
+        padding: 10px 15px 30px;
         align-items: flex-start;
         justify-content: center;
         margin-top: 0;
@@ -563,6 +593,7 @@
         width: clamp(160px, 32vw, 250px);
         flex-shrink: 0;
         order: 1;
+        align-self: flex-start;
     }
 
     .gaoyord-text {
@@ -571,6 +602,7 @@
         gap: 10px;
         order: 2;
         text-align: left;
+        align-self: flex-start;
     }
 
     .gaoyord-title {
@@ -580,9 +612,9 @@
     }
 
     .gaoyord-desc {
-        font-size: clamp(0.64rem, 1.9vw, 0.8rem);
-        line-height: 1.6;
-        word-spacing: 0.03em;
+        font-size: clamp(0.72rem, 1.9vw, 0.84rem);
+        line-height: 1.5;
+        word-spacing: normal;
     }
 
     .gaoyord-deco-left {
@@ -600,8 +632,8 @@
     }
 }
 
-/* iPad Mini and tablets portrait mode - 768px */
-@media (max-width: 768px) and (orientation: portrait) {
+/* iPad Mini and tablets portrait mode - 431px to 768px */
+@media (max-width: 768px) and (min-width: 431px) and (orientation: portrait) {
     .sakyant-scroll-lock {
         height: calc(var(--sakyant-height) + 40vh);
     }
@@ -680,7 +712,7 @@
     }
 }
 
-/* Small mobile landscape - below 768px */
+/* Small mobile landscape - below 480px */
 @media (max-width: 480px) and (orientation: landscape) {
     .sakyant-scroll-lock {
         height: calc(var(--sakyant-height) + 30vh);
@@ -765,211 +797,7 @@
     }
 }
 
-/* Mobile Portrait Mode - Vertical Orientation */
-@media (max-width: 768px) and (orientation: portrait) {
-    .sakyant-scroll-lock {
-        height: calc(var(--sakyant-height) + 60vh);
-    }
 
-    .center-content {
-        max-width: 100%;
-        gap: 32px;
-        padding: 0 24px 40px;
-        margin-top: 0;
-    }
-
-    .main-title {
-        font-size: clamp(2rem, 8vw, 3.5rem);
-        line-height: 1.2;
-        margin-bottom: 8px;
-    }
-
-    .description-section {
-        gap: 20px;
-    }
-
-    .description-section p {
-        font-size: clamp(0.9rem, 3.8vw, 1.1rem);
-        line-height: 1.75;
-        word-spacing: 0.05em;
-    }
-
-    /* Hide br tags on mobile for better text flow */
-    .description-section br {
-        display: none;
-    }
-
-    .yantra-left {
-        width: clamp(280px, 50vw, 450px);
-        left: clamp(-220px, -22vw, -150px);
-    }
-
-    .yantra-right {
-        width: clamp(300px, 52vw, 480px);
-        right: clamp(-240px, -24vw, -160px);
-        top: 35%;
-    }
-
-    /* Gao Yord Section */
-    .gaoyord-section {
-        margin-top: 50px;
-        min-height: auto;
-    }
-
-    .gaoyord-content {
-        flex-direction: column;
-        gap: 25px;
-        padding: 30px 20px 45px;
-    }
-
-    .gaoyord-papers {
-        width: clamp(280px, 60vw, 400px);
-    }
-
-    .gaoyord-text {
-        text-align: center;
-        gap: 18px;
-    }
-
-    .gaoyord-title {
-        font-size: clamp(1.6rem, 5.5vw, 2.2rem);
-    }
-
-    .gaoyord-desc {
-        font-size: clamp(0.95rem, 3.8vw, 1.1rem);
-        line-height: 1.7;
-    }
-
-    .gaoyord-deco-left {
-        width: clamp(300px, 55vw, 500px);
-        left: clamp(-250px, -25vw, -180px);
-        top: 20%;
-    }
-
-    .gaoyord-deco-right {
-        width: clamp(280px, 52vw, 460px);
-        right: clamp(-230px, -23vw, -160px);
-        top: 65%;
-    }
-}
-
-/* iPhone SE (667x375) and similar small devices */
-@media (max-width: 430px) and (orientation: portrait) {
-    .sakyant-scroll-lock {
-        height: calc(var(--sakyant-height) + 70vh) !important;
-    }
-
-    .center-content {
-        gap: 40px !important;
-        padding: 15px 26px 50px !important;
-        margin-top: 5px !important;
-    }
-
-    .main-title {
-        font-size: 1.85rem !important;
-        line-height: 1.4 !important;
-        margin-bottom: 12px !important;
-    }
-
-    .description-section {
-        gap: 26px !important;
-    }
-
-    .description-section p {
-        font-size: 0.92rem !important;
-        line-height: 2 !important;
-        word-spacing: 0.18em !important;
-        text-align: left !important;
-        letter-spacing: 0.025em !important;
-        margin-bottom: 0 !important;
-    }
-
-    /* Hide br tags for better text flow */
-    .description-section br {
-        display: none !important;
-    }
-
-    .yantra-left {
-        width: 280px !important;
-        left: -200px !important;
-        opacity: 0.3 !important;
-    }
-
-    .yantra-right {
-        width: 300px !important;
-        right: -220px !important;
-        top: 38% !important;
-        opacity: 0.3 !important;
-    }
-
-    /* Gao Yord Section - เพิ่มระยะห่างมากขึ้น */
-    .gaoyord-section {
-        margin-top: 140px !important;
-        min-height: auto !important;
-        padding-top: 40px !important;
-    }
-
-    .gaoyord-content {
-        flex-direction: column !important;
-        gap: 40px !important;
-        padding: 50px 24px 55px !important;
-        align-items: center !important;
-    }
-
-    .gaoyord-papers {
-        width: 280px !important;
-        margin-bottom: 18px !important;
-    }
-
-    /* ปรับตำแหน่งกระดาษด้านหลังให้ชัดเจน */
-    .paper-slide.paper-back {
-        width: 107% !important;
-        left: -6px !important;
-        top: 28px !important;
-        transform: rotate(6.91deg) scale(0.97) translateZ(0) !important;
-    }
-
-    .gaoyord-text {
-        text-align: center !important;
-        gap: 24px !important;
-        width: 100% !important;
-        max-width: 100% !important;
-    }
-
-    .gaoyord-title {
-        font-size: 1.6rem !important;
-        line-height: 1.35 !important;
-        margin-bottom: 4px !important;
-    }
-
-    .gaoyord-desc {
-        font-size: 0.93rem !important;
-        line-height: 1.9 !important;
-        text-align: left !important;
-        word-spacing: 0.12em !important;
-        letter-spacing: 0.01em !important;
-    }
-
-    .gaoyord-desc br {
-        display: block !important;
-        content: "" !important;
-        margin-top: 0.5em !important;
-    }
-
-    .gaoyord-deco-left {
-        width: 300px !important;
-        left: -230px !important;
-        top: 24% !important;
-        opacity: 0.35 !important;
-    }
-
-    .gaoyord-deco-right {
-        width: 280px !important;
-        right: -210px !important;
-        top: 70% !important;
-        opacity: 0.35 !important;
-    }
-}
 
 /* ============================================================
    GAO YORD SECTION — Figma node 575:342
@@ -1007,8 +835,6 @@
     right: clamp(-360px, -14.6vw, -140px);
     top: 46%;
 }
-
-/* Removed keyframe animations - now controlled by mouse parallax */
 
 .deco-img {
     width: 100%;
@@ -1057,7 +883,6 @@
     will-change: transform;
     transform: translateZ(0);
     backface-visibility: hidden;
-    /* No transition on base state — hide instantly */
 }
 
 /* Front paper — the active one */
@@ -1074,7 +899,7 @@
     50% { transform: rotate(-5.5deg) translateY(-6px) translateZ(0); }
 }
 
-/* Front paper while being dragged — JS sets inline transform */
+/* Front paper while being dragged */
 .paper-slide.paper-dragging {
     transition: none;
     z-index: 5;
@@ -1082,7 +907,7 @@
     opacity: 1;
 }
 
-/* Back paper — the next one visible behind */
+/* Back paper */
 .paper-slide.paper-back {
     opacity: 1;
     width: 107%;
@@ -1095,7 +920,7 @@
                 opacity 0.35s ease;
 }
 
-/* Back paper promoting to front — smoothly moves into front position */
+/* Back paper promoting to front */
 .paper-slide.paper-promoting {
     opacity: 1;
     width: 100%;
@@ -1108,7 +933,7 @@
                 opacity 0.35s ease;
 }
 
-/* Exiting paper — swipes out with rotation */
+/* Exiting paper */
 .paper-slide.paper-exit {
     z-index: 4;
     pointer-events: none;
@@ -1124,6 +949,11 @@
     will-change: transform;
     backface-visibility: hidden;
 }
+
+/* ============================================================
+   GAO YORD TEXT — desktop: normal flow (ไม่แตก)
+   mobile จะ override เป็น absolute ใน breakpoint ด้านล่าง
+   ============================================================ */
 
 /* ── Text content (right) ── */
 .gaoyord-text {
@@ -1200,7 +1030,7 @@
     word-spacing: normal;
 }
 
-/* Glow layer behind text - animate this instead of text-shadow */
+/* Glow layer behind text */
 .gaoyord-desc::before {
     content: '';
     position: absolute;
@@ -1232,7 +1062,7 @@
                 text-shadow 0.2s ease-out;
 }
 
-/* Word glow effect based on mouse proximity (applied via JS) */
+/* Word glow effect based on mouse proximity */
 .yant-word.glow {
     color: #ECE342;
     text-shadow: 0 0 20px rgba(236, 227, 66, 0.8),
@@ -1244,16 +1074,11 @@
     font-weight: 600;
 }
 
-/* Glow pulse animation - only opacity, no layout changes */
+/* Glow pulse animation */
 @keyframes glowPulse {
-    0%, 100% {
-        opacity: 0.4;
-    }
-    50% {
-        opacity: 0.75;
-    }
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.75; }
 }
-
 
 /* ── Scroll-triggered entrance ── */
 .gaoyord-papers {
@@ -1290,20 +1115,16 @@
     opacity: 1;
 }
 
-/* ── Responsive ── */
-/* Note: Main responsive styles are consolidated above with other breakpoints */
-/* Additional Gao Yord specific adjustments if needed */
-
+/* ── Tablet landscape fine-tuning ── */
 @media (max-width: 1024px) and (min-width: 769px) {
-    /* Additional fine-tuning for landscape tablets in this range */
     .gaoyord-content {
         flex-direction: row;
         flex-wrap: nowrap;
     }
 }
 
-@media (max-width: 768px) {
-    /* Stack layout for smaller screens */
+/* ── 431px–768px portrait: stack column ── */
+@media (max-width: 768px) and (min-width: 431px) and (orientation: portrait) {
     .gaoyord-content {
         flex-direction: column;
         align-items: center;
@@ -1320,26 +1141,234 @@
         word-break: normal;
         overflow-wrap: break-word;
     }
-    
+
     .yant-word {
         white-space: normal;
         word-break: normal;
     }
 }
 
-@media (max-width: 480px) {
+/* =====================================================
+   iPhone SE and small phones portrait — MAX 430px
+   (ต้องอยู่ล่างสุด เพื่อ override ทุก block ด้านบน)
+   ===================================================== */
+@media (max-width: 430px) and (orientation: portrait) {
+
+    /* ── Section 1 ── */
+    .sakyant-scroll-lock {
+        height: calc(var(--sakyant-height) + 90vh) !important;
+    }
+
+    .sakyant-section {
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .sakyant-content {
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .center-content {
+        gap: 28px !important;
+        padding: 20px 24px 40px !important;
+        margin: 0 auto !important;
+        align-items: center !important;
+        text-align: center !important;
+        width: 100% !important;
+        max-width: 375px !important;
+        box-sizing: border-box !important;
+    }
+
+    .main-title {
+        font-size: 1.75rem !important;
+        line-height: 1.35 !important;
+        margin-bottom: 8px !important;
+        text-align: center !important;
+        width: 100% !important;
+        padding: 0 !important;
+    }
+
+    .description-section {
+        gap: 20px !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        text-align: center !important;
+    }
+
+    .description-section p {
+        font-size: 0.875rem !important;
+        line-height: 1.75 !important;
+        text-align: center !important;
+        word-spacing: normal !important;
+        letter-spacing: 0.01em !important;
+        margin-bottom: 0 !important;
+        word-break: normal !important;
+        overflow-wrap: break-word !important;
+        hyphens: none !important;
+        width: 100% !important;
+        padding: 0 !important;
+    }
+
+    .description-section .word {
+        white-space: normal !important;
+        display: inline !important;
+    }
+
+    .description-section .desc-char {
+        display: inline !important;
+    }
+
+    .description-section br {
+        display: none !important;
+    }
+
+    .yantra-left {
+        width: 280px !important;
+        left: -200px !important;
+        opacity: 0.3 !important;
+    }
+
+    .yantra-right {
+        width: 300px !important;
+        right: -220px !important;
+        top: 38% !important;
+        opacity: 0.3 !important;
+    }
+
+    /* ── Section 2 — row layout ── */
+    .gaoyord-section {
+        margin-top: 0 !important;
+        padding-top: 20px !important;
+        overflow: hidden !important;
+        display: flex !important;
+        align-items: flex-start !important;
+        justify-content: center !important;
+    }
+
     .gaoyord-content {
-        flex-direction: column;
+        position: relative !important;
+        flex-direction: row !important;
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+        gap: 0 !important;
+        padding: 0 16px 55px !important;
+        margin-top: 0 !important;
+        flex-wrap: nowrap !important;
+        overflow: visible !important;
     }
-    
+
+    .gaoyord-papers,
+    .gaoyord-papers.visible {
+        position: absolute !important;
+        left: 16px !important;
+        top: -20px !important;
+        width: 130px !important;
+        flex-shrink: 0 !important;
+        aspect-ratio: 693 / 727 !important;
+        overflow: visible !important;
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+
+    .paper-slide.paper-back {
+        width: 105% !important;
+        left: -4px !important;
+        top: 12px !important;
+        transform: rotate(5deg) scale(0.96) translateZ(0) !important;
+    }
+
+    .gaoyord-text,
+    .gaoyord-text.visible {
+        position: absolute !important;
+        left: 160px !important;
+        top: 0 !important;
+        right: 16px !important;
+        width: auto !important;
+        text-align: left !important;
+        gap: 8px !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        /* min-height set by JS — รองรับ Hah Taew */
+        overflow: visible !important;
+    }
+
+    /* ทุก slide content เป็น absolute ไม่ดัน gaoyord-section */
+    .yant-text-content,
+    .yant-text-content.active,
+    .yant-text-content:not(.active) {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        transition: opacity 0.5s ease, filter 0.5s ease !important;
+    }
+
+    .yant-text-content:not(.active) {
+        opacity: 0 !important;
+        pointer-events: none !important;
+        filter: blur(4px) !important;
+        overflow: hidden !important;
+    }
+
+    .yant-text-content.active {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        filter: none !important;
+        overflow: visible !important;
+    }
+
+    .gaoyord-title {
+        font-size: 0.95rem !important;
+        line-height: 1.3 !important;
+        margin-bottom: 4px !important;
+    }
+
     .gaoyord-desc {
-        width: 100%;
-        word-break: normal;
-        overflow-wrap: break-word;
+        font-size: 0.875rem !important;
+        line-height: 1.7 !important;
+        text-align: justify !important;
+        text-align-last: left !important;
+        word-spacing: normal !important;
+        letter-spacing: 0.01em !important;
+        word-break: normal !important;
+        overflow-wrap: break-word !important;
+        hyphens: none !important;
+        max-width: 100% !important;
     }
-    
-    .yant-word {
-        white-space: normal;
-        word-break: normal;
+
+    .gaoyord-desc br {
+        display: block !important;
+        content: "" !important;
+        margin-top: 0.4em !important;
+    }
+
+    .gaoyord-deco-left {
+        width: 300px !important;
+        left: -230px !important;
+        top: 24% !important;
+        opacity: 0.35 !important;
+    }
+
+    .gaoyord-deco-right {
+        width: 280px !important;
+        right: -210px !important;
+        top: 70% !important;
+        opacity: 0.35 !important;
+    }
+
+    #footer {
+        position: relative !important;
+        margin-top: 0 !important;
+    }
+
+    .sakyant-page-wrapper {
+        min-height: auto !important;
     }
 }
