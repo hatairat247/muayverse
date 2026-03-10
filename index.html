@@ -31,12 +31,25 @@
 </head>
 
 <body>
+    <!-- Force Landscape Overlay -->
+    <div id="landscape-overlay">
+        <div class="landscape-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#FDF0D5" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                <circle cx="12" cy="17" r="1" fill="#FDF0D5" stroke="none" />
+                <line x1="9" y1="5" x2="15" y2="5" />
+            </svg>
+        </div>
+        <p class="landscape-message">Please rotate your device to<br>landscape mode for the best experience.</p>
+    </div>
+
     <!-- Warning Overlay -->
     <div id="warningOverlay" class="warning-overlay active">
         <div class="warning-container">
             <!-- Logo -->
             <div class="logo-container">
-                <img src="img/logo_nav.png" alt="MuayVerse Logo" class="warning-logo">
+                <img src="img/logo-nav.png" alt="MuayVerse Logo" class="warning-logo">
             </div>
 
             <!-- Warning Content -->
@@ -210,7 +223,7 @@
             </a>
         </div>
     </section> <!-- Scripts -->
- <!-- Scriptsasd -->
+    <!-- Scriptsasd -->
     <!-- Hamburger Menu (เปิดจากปุ่ม 3 ขีดใน Navbar) -->
     <div class="hamburger-menu" id="hamburgerMenu">
         <div class="menu-content">
@@ -252,5 +265,6 @@
     <script src="js/main.js"></script>
     <script src="js/footer.js"></script>
 </body>
-<br><br/>
+<br><br />
+
 </html>

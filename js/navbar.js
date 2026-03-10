@@ -3,7 +3,7 @@ class Navbar {
     constructor() {
         this.navbar = document.getElementById('navbar');
         this.isMusicPlaying = false;
-        
+
         // ลำดับความสำคัญ: page-audio > bg-video > default audio
         this.pageAudio = document.querySelector('.page-audio');
         this.bgVideo = document.querySelector('.bg-video');
@@ -45,7 +45,7 @@ class Navbar {
             <div class="navbar">
                 <div class="navbar-logo">
                     <a href="index.html?return=true">
-                        <img src="img/logo_nav.png" alt="MuayVerse Logo" class="logo-nav">
+                        <img src="img/logo-nav.png" alt="MuayVerse Logo" class="logo-nav">
                     </a>
                 </div>
                 <div class="navbar-controls">

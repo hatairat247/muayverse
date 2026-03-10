@@ -19,24 +19,25 @@ class PageFlow {
 
         // ตรวจสอบว่าผู้ใช้เคยผ่านหน้า warning แล้วหรือไม่
         const hasSeenWarning = sessionStorage.getItem('muayverse_warning_seen');
-
-        // ตรวจสอบว่ากลับมาจากหน้าอื่นหรือไม่
         const urlParams = new URLSearchParams(window.location.search);
         const isReturn = urlParams.get('return') === 'true';
 
-        if (isReturn) {
-            // กลับมาจากหน้าอื่น → ข้ามทุก overlay, เล่นวิดีโอทันที
+        // ถ้ารีเฟรช หรือ กลับมาจากหน้าอื่น ให้ข้าม Overlay ไปเลยโดย "ไม่ต้องรีโหลดหน้าเว็บใหม่"
+        if (isReturn || hasSeenWarning === 'true') {
             sessionStorage.setItem('muayverse_warning_seen', 'true');
+
+            // ล้าง URL ให้สะอาด (เอา ?return=true ออกจาก Address Bar)
+            if (isReturn) {
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+
             this.hideWarning();
             this.hideLoading();
-            this.startVideoAndMusic(true); // force music on when returning
-        } else if (hasSeenWarning === 'true') {
-            // refresh → redirect ไป return=true เพื่อข้ามทุก overlay
-            window.location.href = window.location.pathname + '?return=true';
+            this.startVideoAndMusic(true); // บังคับเล่นเพลงเมื่อกลับมา
         } else {
-            // แสดง warning ก่อน
+            // แสดง warning กรณีเข้าเว็บครั้งแรก
             this.showWarning();
-            this.setupWarningAccept();
+            this.setupWarningAction();
         }
     }
 
