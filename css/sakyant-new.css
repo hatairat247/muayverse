@@ -109,6 +109,7 @@
     top: 50%;
     transform: translateY(-50%);
     animation: rotateSlow 30s linear infinite;
+    will-change: transform;
 }
 
 /* Right Yantra - Figma: 791px wide, rotated -15.24deg, positioned bottom-right */
@@ -119,6 +120,7 @@
     top: 26%;
     transform: rotate(-15.24deg);
     animation: floatRight 4s ease-in-out infinite;
+    will-change: transform;
 }
 
 .yantra-img {

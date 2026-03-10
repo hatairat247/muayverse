@@ -31,16 +31,12 @@ class SakYantAnim {
         this.decoLeft = document.querySelector('.gaoyord-deco-left');
         this.decoRight = document.querySelector('.gaoyord-deco-right');
 
-        // Sound effects
-        this.pickupSound = new Audio('SFX/Sakyant SFX/Pickuppaper.MP3');
-        this.swipeSound = new Audio('SFX/Sakyant SFX/Swipe Paper.MP3');
-        this.slidePaperSound = new Audio('SFX/Sakyant SFX/Slide Paper.MP3');
-        this.typingSound = new Audio('SFX/Sakyant SFX/typing.MP3');
-        this.pickupSound.volume = 0.5;
-        this.swipeSound.volume = 0.5;
-        this.slidePaperSound.volume = 0.6;
-        this.typingSound.volume = 0.6;
-        this.typingSound.loop = true;
+        // Sound effects - Lazy loaded for performance
+        this.pickupSound = null;
+        this.swipeSound = null;
+        this.slidePaperSound = null;
+        this.typingSound = null;
+        this.soundsLoaded = false;
         
         this.isTypingSoundPlaying = false;
         this.typingStopTimeout = null;
@@ -242,6 +238,25 @@ class SakYantAnim {
         return false;
     }
 
+    /* ─── Lazy load sound effects (performance optimization) ─── */
+    _loadSounds() {
+        if (this.soundsLoaded) return;
+        
+        this.pickupSound = new Audio('SFX/Sakyant SFX/Pickuppaper.MP3');
+        this.swipeSound = new Audio('SFX/Sakyant SFX/Swipe Paper.MP3');
+        this.slidePaperSound = new Audio('SFX/Sakyant SFX/Slide Paper.MP3');
+        this.typingSound = new Audio('SFX/Sakyant SFX/typing.MP3');
+        
+        this.pickupSound.volume = 0.5;
+        this.swipeSound.volume = 0.5;
+        this.slidePaperSound.volume = 0.6;
+        this.typingSound.volume = 0.6;
+        this.typingSound.loop = true;
+        
+        this.soundsLoaded = true;
+        console.log('[Performance] Sound effects loaded');
+    }
+
     /* ─── Event bindings ─── */
     _bindEvents() {
         window.addEventListener('scroll', () => {
@@ -357,16 +372,21 @@ class SakYantAnim {
 
         if (t > 0 && t < 1) {
             if (!this.isTypingSoundPlaying && this._isMusicEnabled()) {
-                this.typingSound.play().catch(e => console.log('Typing sound failed:', e));
-                this.isTypingSoundPlaying = true;
+                this._loadSounds(); // Lazy load sounds when first needed
+                if (this.typingSound) {
+                    this.typingSound.play().catch(e => console.log('Typing sound failed:', e));
+                    this.isTypingSoundPlaying = true;
+                }
             }
             if (this.typingStopTimeout) clearTimeout(this.typingStopTimeout);
             this.typingStopTimeout = setTimeout(() => {
-                this.typingSound.pause();
-                this.isTypingSoundPlaying = false;
+                if (this.typingSound) {
+                    this.typingSound.pause();
+                    this.isTypingSoundPlaying = false;
+                }
             }, 300);
         } else if (t >= 1 || t <= 0) {
-            if (this.isTypingSoundPlaying) {
+            if (this.isTypingSoundPlaying && this.typingSound) {
                 this.typingSound.pause();
                 this.isTypingSoundPlaying = false;
             }
@@ -445,8 +465,11 @@ class SakYantAnim {
         s.currentX = 0;
 
         if (this._isMusicEnabled()) {
-            this.pickupSound.currentTime = 0;
-            this.pickupSound.play().catch(e => console.log('Audio play failed:', e));
+            this._loadSounds(); // Lazy load sounds when first needed
+            if (this.pickupSound) {
+                this.pickupSound.currentTime = 0;
+                this.pickupSound.play().catch(e => console.log('Audio play failed:', e));
+            }
         }
 
         this.wordHoverEnabled = false;
@@ -501,8 +524,11 @@ class SakYantAnim {
             this.isAnimating = true;
 
             if (this._isMusicEnabled()) {
-                this.swipeSound.currentTime = 0;
-                this.swipeSound.play().catch(e => console.log('Audio play failed:', e));
+                this._loadSounds(); // Lazy load sounds when first needed
+                if (this.swipeSound) {
+                    this.swipeSound.currentTime = 0;
+                    this.swipeSound.play().catch(e => console.log('Audio play failed:', e));
+                }
             }
 
             const flingX = direction === 'left' ? -600 : 600;
@@ -635,8 +661,11 @@ class SakYantAnim {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     if (this._isMusicEnabled()) {
-                        this.slidePaperSound.currentTime = 0;
-                        this.slidePaperSound.play().catch(e => console.log('Slide paper sound failed:', e));
+                        this._loadSounds(); // Lazy load sounds when first needed
+                        if (this.slidePaperSound) {
+                            this.slidePaperSound.currentTime = 0;
+                            this.slidePaperSound.play().catch(e => console.log('Slide paper sound failed:', e));
+                        }
                     }
                     
                     if (this.gaoyordPapers) this.gaoyordPapers.classList.add('visible');
