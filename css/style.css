@@ -1,3 +1,38 @@
+/* =========================================
+   FIX: ล็อคโครงสร้าง Navbar ป้องกันการขยับ (Layout Shift)
+   ========================================= */
+#navbar,
+.navbar {
+    background-color: #003049 !important;
+    min-height: var(--navbar-height, 96px);
+    /* จองความสูงที่แน่นอน */
+    height: var(--navbar-height, 96px);
+    display: flex !important;
+    /* บังคับโครงสร้างกล่องไว้ก่อน */
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* ล็อคกล่องซ้าย (โลโก้) */
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    min-width: 150px;
+    height: 45px;
+    /* จองความสูงรูปไว้เลย */
+}
+
+/* ล็อคกล่องขวา (ปุ่ม) */
+.navbar-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2xl, 32px);
+    min-width: 120px;
+    height: 52px;
+    /* จองความสูงเท่าปุ่มที่ใหญ่ที่สุด */
+}
+
 :root {
     /* Colors from Figma */
     --color-primary: #003049;
@@ -37,6 +72,26 @@
 .warning-overlay:not(.active),
 .loading-overlay:not(.active) {
     display: none !important;
+}
+
+/* =========================================
+   FIX: Navbar Critical Layout (ป้องกัน FOUC ขณะรอ navbar.js inject styles)
+   z-index ต่ำพอที่จะไม่บัง warning-overlay / hamburger-menu / paper-transition
+   ========================================= */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background-color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--spacing-2xl);
+    z-index: 100;
+    /* navbar.js จะ override เป็น 999 ทีหลัง — ปลอดภัย */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 /* =========================================
@@ -385,3 +440,69 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--color-secondary);
 }*/
+
+/* =========================================
+   PAPER TEAR TRANSITION (History Page Only)
+   ========================================= */
+.paper-transition-wrapper {
+    position: fixed;
+    inset: 0;
+    z-index: 9999999;
+    /* ให้ลอยอยู่เหนือสุดๆ ทับ Navbar และ Loading */
+    display: none;
+    /* ซ่อนโดย default — แสดงผ่าน html.paper-entering เท่านั้น */
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Inline <script> ใน <head> เซ็ต class นี้แบบ synchronous ก่อน render frame แรก
+   ทำให้กระดาษบังหน้าจอตั้งแต่ 0ms — แก้ปัญหา Navbar FOUC */
+html.paper-entering .paper-transition-wrapper {
+    display: flex;
+}
+
+/* ซ่อนไว้ก่อน (backward-compat safety) */
+.paper-transition-wrapper.hidden {
+    display: none !important;
+}
+
+.paper-transition-wrapper.is-transitioning {
+    display: flex;
+    /* ใช้ในขาออก ก่อน paper-entering จะถูกเซ็ต */
+    pointer-events: all;
+    /* ล็อคไม่ให้กดปุ่มอื่นรัวๆ ตอนกำลังฉีกกระดาษ */
+}
+
+.paper-half {
+    width: 50vw;
+    height: 100vh;
+    background-color: #fdf0d5;
+    /* สีเนื้อกระดาษ */
+    background-image: url('../img/paper-texture.png');
+    background-size: 420px 420px;
+    position: relative;
+    transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+    filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
+}
+
+/* สร้างรอยหยักกระดาษด้วย Clip-path แบบ Responsive (%) */
+.paper-left {
+    transform: translateX(0);
+    clip-path: polygon(0% 0%, 100% 0%, 98% 5%, 100% 10%, 95% 15%, 100% 20%, 97% 25%, 100% 30%, 94% 35%, 100% 40%, 96% 45%, 100% 50%, 98% 55%, 100% 60%, 95% 65%, 100% 70%, 97% 75%, 100% 80%, 94% 85%, 100% 90%, 98% 95%, 100% 100%, 0% 100%);
+}
+
+.paper-right {
+    transform: translateX(0);
+    left: -2px;
+    /* เขยิบมาซ้อนทับกันนิดนึง ป้องกันช่องโหว่ 1px ตรงกลาง */
+    clip-path: polygon(2% 0%, 100% 0%, 100% 100%, 0% 100%, 2% 95%, 0% 90%, 5% 85%, 0% 80%, 3% 75%, 0% 70%, 6% 65%, 0% 60%, 2% 55%, 0% 50%, 4% 45%, 0% 40%, 6% 35%, 0% 30%, 3% 25%, 0% 20%, 5% 15%, 0% 10%, 2% 5%);
+}
+
+/* สถานะตอนฉีกออก */
+.paper-transition-wrapper.torn-apart .paper-left {
+    transform: translateX(-100%);
+}
+
+.paper-transition-wrapper.torn-apart .paper-right {
+    transform: translateX(100%);
+}

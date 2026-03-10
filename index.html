@@ -25,6 +25,10 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/warning.css">
+
+    <!-- FIX FOUC: เซ็ต html.paper-entering แบบ synchronous ก่อน render frame แรก
+         เพื่อให้กระดาษบังหน้าจอทันที ป้องกัน Navbar กระพริบตอน Page Transition -->
+    <script>if (sessionStorage.getItem('paperTransition') === 'true') { document.documentElement.classList.add('paper-entering'); }</script>
     <link rel="stylesheet" href="css/loading.css">
     <link rel="stylesheet" href="css/hero-figma.css">
     <link rel="stylesheet" href="css/cards-section.css">
@@ -42,6 +46,12 @@
             </svg>
         </div>
         <p class="landscape-message">Please rotate your device to<br>landscape mode for the best experience.</p>
+    </div>
+
+    <!-- Paper Tear Transition (Hardcoded: ต้องอยู่ใน HTML เพื่อให้ CSS html.paper-entering ทำงานได้ทันที) -->
+    <div id="paper-transition-wrapper" class="paper-transition-wrapper">
+        <div class="paper-half paper-left"></div>
+        <div class="paper-half paper-right"></div>
     </div>
 
     <!-- Warning Overlay -->
@@ -129,16 +139,16 @@
     <!-- Navbar Component -->
     <nav id="navbar" class="navbar">
         <div class="navbar-logo">
-            <img src="img/logo_nav.png" alt="MuayVerse Logo" class="logo-nav" href="index.html" class="menu-item">
+            <a href="index.html?return=true">
+                <img src="img/logo_nav.png" alt="MuayVerse Logo" class="logo-nav">
+            </a>
         </div>
 
         <div class="navbar-controls">
-            <!-- ปุ่ม Music (มี div หุ้ม img เพื่อให้ใส่เส้นขีดฆ่าได้) -->
             <div class="nav-btn music-btn" id="musicBtn" title="Background Music">
                 <img src="icon/Bell.svg" alt="Music" class="btn-icon">
             </div>
 
-            <!-- ปุ่ม Menu -->
             <div class="nav-btn menu-btn" id="menuBtn" title="Menu">
                 <img src="icon/Menu.svg" alt="Menu" class="btn-icon">
             </div>
@@ -186,7 +196,7 @@
     <section class="cards-section" id="cardsSection">
         <div class="cards-background"></div>
         <div class="cards-container">
-            <a href="#historySection" class="card" target="_blank" rel="noopener noreferrer">
+            <a href="history.html" class="card">
                 <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772868928/ramp_zhwugs.png"
                     alt="" class="card-lamp">
                 <div class="card-image-wrapper">
