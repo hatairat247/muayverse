@@ -20,8 +20,8 @@ body {
     min-height: 100vh;
     background-color: transparent !important;
     padding-top: 96px;
-    /* Height of navbar */
     padding-bottom: 40px;
+    overflow: hidden;
 }
 
 .creator-container {
@@ -32,9 +32,10 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 30px;
+    overflow: hidden;
 }
 
-/* Title Styling */
+/* ─── Title ─── */
 .creator-title {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 96px;
@@ -47,17 +48,21 @@ body {
     letter-spacing: 2px;
 }
 
-/* Cards Grid */
+/* ─── Cards wrapper ─── */
 .creator-cards {
     display: flex;
     flex-direction: row;
+    flex-wrap: nowrap;
     gap: 30px;
     justify-content: center;
     align-items: flex-start;
     padding: 20px 0;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
-/* Individual Card */
+/* ─── Individual Card ─── */
 .creator-card {
     display: flex;
     flex-direction: column;
@@ -65,10 +70,9 @@ body {
     gap: 20px;
     transition: all 0.3s ease;
     cursor: pointer;
-    --card-email: attr(data-email);
-    --card-badge: attr(data-badge);
 }
 
+/* ─── Card Image ─── */
 .card-image {
     width: 280px;
     height: 486px;
@@ -77,6 +81,7 @@ body {
     position: relative;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
 }
 
 .card-image img {
@@ -86,35 +91,33 @@ body {
     display: block;
 }
 
-/* Special hover for card */
-.creator-card:hover .card-image {
+.creator-card:hover .card-image,
+.creator-card[data-expanded="true"]:hover .card-image {
     width: 368px;
     height: 486px;
 }
 
-/* Card Info Section */
+/* ─── Card Info ─── */
 .card-info {
     display: flex;
     align-items: center;
     flex-direction: row;
     justify-content: center;
-    gap: 5px;
-    width: 100%;
-    min-height: 60px;
-    transition: all 0.3s ease;
+    gap: 6px;
+    width: 280px;
+    height: 44px;
+    min-height: 44px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: visible;
+    box-sizing: border-box;
 }
 
-/* Hide default info on hover for card */
 .creator-card:hover .card-info {
-    gap: 6px;
+    width: 368px;
 }
 
-.creator-card:hover .card-name {
-    min-width: 290px;
-}
-
+/* ─── Icon ─── */
 .card-icon {
     width: 60px;
     height: 60px;
@@ -135,7 +138,6 @@ body {
     object-fit: contain;
 }
 
-/* Icon animation on hover - เคลื่อนที่ไปขวาแล้วค่อยหายไป */
 .creator-card:hover .card-icon {
     transform: translateX(180px) scale(1.15);
     opacity: 0;
@@ -143,40 +145,27 @@ body {
     pointer-events: none;
 }
 
-.card-icon i {
-    font-size: 36px;
-    color: var(--card-icon-color);
-}
-
+/* ─── Card Name (ก่อน hover) ─── */
 .card-name {
     background-color: var(--card-bg);
     padding: 0 15px;
     border-radius: 100px;
-    width: 220px;
-    min-width: 220px;
-    height: 50px;
+    width: 100%;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 40px;
-    transform: translateX(0);
-    opacity: 0;
-    clip-path: inset(0 0 0 0);
-    transition: clip-path 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
-}
-
-/* Text animation - ปรากฏขึ้นหลัง icon หายไป */
-.creator-card:hover .card-name {
-    clip-path: inset(0 0 0 100%);
-    position: absolute;
-    opacity: 0;
-}
-
-/* Default state - แสดง card-name ตอนไม่ hover */
-.creator-card .card-name {
     opacity: 1;
     transform: translateX(0);
     transition: transform 0.3s ease, opacity 0.2s ease;
+    box-sizing: border-box;
+}
+
+.creator-card:hover .card-name {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    visibility: hidden;
 }
 
 .card-name span {
@@ -188,27 +177,11 @@ body {
     white-space: nowrap;
 }
 
-/* Email Badge ใช้ data attributes ทุกการ์ด */
+/* ─── Before/After ซ่อนก่อน hover ─── */
+.creator-card .card-info::before,
 .creator-card .card-info::after {
-    content: '';
     display: none;
-    transition: all 0.5s ease;
-}
-
-.card-info::before,
-.card-info::after {
-    display: flex;
-    /* แก้: ซ่อนไว้ก่อนในตอนแรก */
-    height: 30px;
     opacity: 0;
-    align-items: center;
-    justify-content: center;
-    border-radius: 100px;
-    white-space: nowrap;
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    animation: slideUpCenter 0.5s ease 0.3s forwards;
-    /* แก้: เพิ่ม Animation ให้สไลด์ขึ้นมาหลังจากหมัดต่อยจบ (Delay 0.3s) */
 }
 
 @keyframes slideUpCenter {
@@ -223,46 +196,43 @@ body {
     }
 }
 
+/* แสดงเมื่อ hover */
 .creator-card:hover .card-info::before,
-.creator-card:hover .card-info::after {
-    display: flex;
-    /* แก้: เมื่อ Hover ให้โผล่มาเป็นสมาชิกของ Flexbox (มันจะจัดกลางรูปให้เอง) */
-}
-
-/* กล่องขาว (Email) */
-.card-info::before {
-    background-color: var(--card-bg);
-    color: var(--card-text);
-    padding: 5px 22px;
-    max-width: 230px;
-    white-space: normal;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* กล่องแดง (Badge) */
-.card-info::after {
-    background-color: var(--card-icon-bg);
-    color: var(--card-icon-color);
-    padding: 8px 15px;
-    font-weight: 600;
-}
-
 .creator-card:hover .card-info::after {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--card-icon-bg);
-    color: var(--card-icon-color);
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    font-weight: 500;
-    padding: 8px 13px;
     border-radius: 100px;
-    height: 28px;
-    min-width: 64px;
+    font-family: 'Poppins', sans-serif;
+    height: 40px;
+    animation: slideUpCenter 0.5s ease 0.3s forwards;
+    opacity: 0;
 }
 
-/* แก้จากเดิมที่ใส่รวมกัน: แยกเนื้อหา Email ไว้ที่ ::before และ Badge ไว้ที่ ::after */
+/* กล่องขาว */
+.creator-card:hover .card-info::before {
+    background-color: var(--card-bg);
+    color: var(--card-text);
+    padding: 0 14px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+    white-space: normal;
+    font-size: 16px;
+}
+
+/* กล่องแดง */
+.creator-card:hover .card-info::after {
+    background-color: var(--card-icon-bg);
+    color: var(--card-icon-color);
+    font-size: 16px;
+    font-weight: 600;
+    padding: 0 16px;
+    flex-shrink: 0;
+}
+
+/* ─── Content per badge ─── */
 .creator-card[data-badge="MO"]:hover .card-info::before {
     content: "namo.sangd@gmail.com";
 }
@@ -288,104 +258,1131 @@ body {
 }
 
 .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
-    content: "Lecturer, Department of Computer \A and Information Technology, KMUTT";
-    white-space: pre-wrap;
-    /* เพิ่มคำสั่งนี้ เพื่อให้ \A สามารถปัดบรรทัดใหม่ได้จริงๆ */
-    max-width: 250px;
-    text-align: center;
-    font-size: 12px;
+    content: "Lecturer, Department of Computer and Information Technology, KMUTT";
+    font-size: 13px;
+    white-space: normal;
     line-height: 1.3;
-    padding: 5px 15px;
-    border-radius: 100px;
+    padding: 0 10px;
 }
 
 .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
     content: "ADVISOR";
-    font-size: 16px;
-    /* ปรับขนาด Badge ให้เล็กลงล้อไปกับกล่องขาว */
-    padding: 5px 12px;
+    font-size: 13px;
+    padding: 0 12px;
 }
 
-/* Expanded card (เฉพาะการ์ดที่มี data-expanded) */
-.creator-card[data-expanded="true"]:hover .card-image {
-    width: 368px;
-    height: 486px;
-}
+/* ════════════════════════════════════════
+   iPad Pro (1200–1366px)
+════════════════════════════════════════ */
+@media (min-width: 1200px) and (max-width: 1366px) {
 
-/* Desktop (หน้าจอที่กว้างกว่า 1024px ขึ้นไป) */
-@media (min-width: 1025px) {
-    .creator-cards {
-        flex-direction: row;
-        flex-wrap: nowrap;
-    }
-}
-
-/* Tablet (หน้าจอขนาด 768px ถึง 1024px) */
-@media (max-width: 1024px) and (min-width: 768px) {
     .creator-title {
-        font-size: 80px;
-    }
-
-    .creator-cards {
-        display: grid;
-        grid-template-columns: repeat(2, auto);
-        gap: 40px 60px;
-        max-width: 900px;
-    }
-
-    .card-image {
-        width: 260px;
-        height: 450px;
-    }
-
-    .card-name {
-        width: fit-content;
-        min-width: 150px;
-        padding: 0 20px;
-    }
-
-    .card-name span {
-        font-size: 14px;
-    }
-
-    /*Hover:*/
-    .creator-card:hover .card-image {
-        width: 320px;
-        height: 486px;
-    }
-}
-
-
-
-/* Mobile (หน้าจอขนาดเล็กกว่า 768px) */
-@media (max-width: 768px) {
-    .creator-title {
-        font-size: 56px;
-        padding: 10px 0;
+        font-size: clamp(72px, 8vw, 96px);
     }
 
     .creator-container {
-        padding: 20px 15px;
-        gap: 20px;
+        padding: 24px 20px;
+        gap: 24px;
+        overflow: hidden;
     }
 
     .creator-cards {
-        flex-direction: column;
-        align-items: center;
-        gap: 40px;
+        gap: clamp(16px, 2vw, 28px);
+        padding: 16px 0;
+        overflow: hidden;
+        justify-content: center;
+    }
+
+    .creator-card {
+        gap: 16px;
     }
 
     .card-image {
-        width: 280px;
-        height: 486px;
+        width: clamp(220px, 22vw, 290px);
+        height: clamp(381px, 38vw, 502px);
+        border-radius: 18px;
     }
 
-    .creator-card:hover .card-image {
-        width: 320px;
+    .creator-card:hover .card-image,
+    .creator-card[data-expanded="true"]:hover .card-image {
+        width: clamp(272px, 27vw, 358px);
+        height: clamp(381px, 38vw, 502px);
+    }
+
+    .card-info {
+        width: clamp(220px, 22vw, 290px);
+        height: 48px;
+        min-height: 48px;
+    }
+
+    .creator-card:hover .card-info {
+        width: clamp(272px, 27vw, 358px);
+    }
+
+    .card-icon {
+        width: 60px;
+        height: 60px;
+        flex-shrink: 0;
+    }
+
+    .card-icon img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .card-name {
+        height: 44px;
+        flex: 1 1 0;
+        min-width: 0;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    .card-name span {
+        font-size: 13px;
+        white-space: nowrap;
+        overflow: visible;
+        text-overflow: unset;
+        display: block;
+        max-width: 100%;
+    }
+
+    .creator-card:hover .card-info::before,
+    .creator-card:hover .card-info::after {
+        height: 44px;
+    }
+
+    .creator-card:hover .card-info::before {
+        font-size: 14px;
+        padding: 0 12px;
+    }
+
+    .creator-card:hover .card-info::after {
+        font-size: 15px;
+        padding: 0 14px;
     }
 
     .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
         font-size: 11px;
-        max-width: 220px;
+        padding: 0 10px;
     }
+
+    .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+        font-size: 12px;
+        padding: 0 12px;
+    }
+}
+
+/* ════════════════════════════════════════
+   iPad Air (1180–1199px)
+════════════════════════════════════════ */
+@media (max-width: 1199px) and (min-width: 1025px) {
+
+    .creator-title {
+        font-size: clamp(60px, 7vw, 96px);
+    }
+
+    .creator-container {
+        padding: 20px 16px;
+        gap: 20px;
+        overflow: hidden;
+    }
+
+    .creator-cards {
+        gap: clamp(10px, 1.5vw, 20px);
+        padding: 10px 0;
+        overflow: hidden;
+        justify-content: center;
+    }
+
+    .creator-card {
+        gap: 12px;
+    }
+
+    .card-image {
+        width: clamp(170px, 20vw, 235px);
+        height: clamp(294px, 34.6vw, 407px);
+        border-radius: 16px;
+    }
+
+    .creator-card:hover .card-image,
+    .creator-card[data-expanded="true"]:hover .card-image {
+        width: clamp(210px, 25vw, 292px);
+        height: clamp(294px, 34.6vw, 407px);
+    }
+
+    .card-info {
+        width: clamp(170px, 20vw, 235px);
+        height: 44px;
+        min-height: 44px;
+    }
+
+    .creator-card:hover .card-info {
+        width: clamp(210px, 25vw, 292px);
+    }
+
+    .card-icon {
+        width: 56px;
+        height: 56px;
+    }
+
+    .card-name {
+        height: 40px;
+        flex: 1 1 0;
+        min-width: 0;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    .card-name span {
+        font-size: clamp(10px, 1.1vw, 13px);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: clip;
+        display: block;
+        width: 100%;
+        letter-spacing: -0.3px;
+    }
+
+    .creator-card:hover .card-info::before,
+    .creator-card:hover .card-info::after {
+        height: 40px;
+    }
+
+    .creator-card:hover .card-info::before {
+        font-size: 12px;
+        padding: 0 10px;
+    }
+
+    .creator-card:hover .card-info::after {
+        font-size: 13px;
+        padding: 0 12px;
+    }
+
+    .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+        font-size: 10px;
+        padding: 0 8px;
+    }
+
+    .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+        font-size: 11px;
+        padding: 0 10px;
+    }
+}
+
+/* ════════════════════════════════════════
+   iPad Mini (768–1024px)
+════════════════════════════════════════ */
+@media (max-width: 1024px) and (min-width: 768px) {
+
+    .creator-title {
+        font-size: clamp(40px, 6vw, 60px);
+    }
+
+    .creator-container {
+        padding: 16px 8px;
+        gap: 16px;
+        overflow: hidden;
+    }
+
+    .creator-cards {
+        gap: 10px;
+        padding: 10px 6px;
+        overflow: hidden;
+    }
+
+    .creator-card {
+        gap: 10px;
+        min-width: 0;
+    }
+
+    .card-image {
+        width: clamp(165px, 21vw, 215px);
+        height: clamp(286px, 36vw, 372px);
+        border-radius: 14px;
+    }
+
+    .creator-card:hover .card-image,
+    .creator-card[data-expanded="true"]:hover .card-image {
+        width: clamp(206px, 26vw, 267px);
+        height: clamp(286px, 36vw, 372px);
+    }
+
+    .card-info {
+        width: clamp(165px, 21vw, 215px);
+        height: 40px;
+        min-height: 40px;
+        gap: 4px;
+        overflow: visible;
+        box-sizing: border-box;
+    }
+
+    .creator-card:hover .card-info {
+        width: clamp(206px, 26vw, 267px);
+    }
+
+    .card-icon {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        max-width: 36px !important;
+        flex: 0 0 36px !important;
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+    }
+
+    .card-icon img {
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    .card-name {
+        height: 36px;
+        flex: 1 1 0;
+        min-width: 0;
+        padding: 0 6px;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    .card-name span {
+        font-size: clamp(9px, 1.3vw, 12px);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: clip;
+        display: block;
+        width: 100%;
+        letter-spacing: -0.3px;
+    }
+
+    .creator-card:hover .card-info::before,
+    .creator-card:hover .card-info::after {
+        height: 36px;
+    }
+
+    .creator-card:hover .card-info::before {
+        font-size: 11px;
+        padding: 0 8px;
+    }
+
+    .creator-card:hover .card-info::after {
+        font-size: 12px;
+        padding: 0 10px;
+    }
+
+    .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+        font-size: 9px;
+        padding: 0 6px;
+    }
+
+    .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+        font-size: 10px;
+        padding: 0 8px;
+    }
+}
+
+/* ════════════════════════════════════════
+   TABLET — smaller tablets (600–767px)
+════════════════════════════════════════ */
+@media (max-width: 767px) and (min-width: 600px) {
+
+    .creator-title {
+        font-size: clamp(48px, 7vw, 80px);
+    }
+
+    .creator-container {
+        padding: 20px 8px;
+        gap: 20px;
+        overflow: hidden;
+    }
+
+    .creator-cards {
+        gap: clamp(6px, 1.2vw, 16px);
+        padding: 10px 0;
+        overflow: hidden;
+    }
+
+    .creator-card {
+        gap: 10px;
+    }
+
+    .card-image {
+        width: clamp(160px, 23vw, 250px);
+        height: clamp(225px, 38vw, 400px);
+        border-radius: 14px;
+    }
+
+    .creator-card:hover .card-image,
+    .creator-card[data-expanded="true"]:hover .card-image {
+        width: clamp(200px, 28vw, 310px);
+        height: clamp(225px, 38vw, 400px);
+    }
+
+    .card-info {
+        width: clamp(160px, 23vw, 250px);
+        height: 44px;
+        min-height: 44px;
+        gap: 5px;
+    }
+
+    .creator-card:hover .card-info {
+        width: clamp(200px, 28vw, 310px);
+    }
+
+    .card-icon {
+        width: clamp(32px, 4vw, 48px);
+        height: clamp(32px, 4vw, 48px);
+        margin-right: -3px;
+        flex-shrink: 0;
+    }
+
+    .card-name {
+        height: 36px;
+        width: 100%;
+        min-width: 0;
+        overflow: hidden;
+    }
+
+    .card-name span {
+        font-size: 15px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+        max-width: 100%;
+    }
+
+    .creator-card:hover .card-info::before,
+    .creator-card:hover .card-info::after {
+        height: 36px;
+    }
+
+    .creator-card:hover .card-info::before {
+        font-size: clamp(11px, 1.3vw, 14px);
+        padding: 0 8px;
+    }
+
+    .creator-card:hover .card-info::after {
+        font-size: clamp(12px, 1.4vw, 15px);
+        padding: 0 10px;
+    }
+
+    .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+        font-size: clamp(9px, 1vw, 12px);
+        padding: 0 6px;
+    }
+
+    .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+        font-size: clamp(10px, 1.1vw, 13px);
+        padding: 0 8px;
+    }
+}
+
+/* ════════════════════════════════════════
+   MOBILE — iPhone SE และเล็กกว่า (< 600px)
+════════════════════════════════════════ */
+@media (max-width: 599px) {
+
+    .creator-title {
+        font-size: clamp(26px, 7.5vw, 38px);
+        padding: 8px 0;
+        letter-spacing: 1px;
+    }
+
+    .creator-container {
+        padding: 8px 4px;
+        gap: 8px;
+        overflow: hidden;
+    }
+
+    .creator-cards {
+        gap: 3px;
+        padding: 4px 2px;
+        overflow: hidden;
+    }
+
+    .creator-card {
+        flex: 1 1 0;
+        min-width: 0;
+        gap: 5px;
+        align-items: center;
+        transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1), gap 0.3s ease;
+    }
+
+    /* ── hover ด้วย flex-grow แทน width ── */
+    .creator-card:hover {
+        flex: 1.5 1 0;
+    }
+
+    .card-image {
+        width: 100%;
+        aspect-ratio: 9 / 16;
+        height: auto;
+        border-radius: 8px;
+        transition: border-radius 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    /* รูปไม่ต้องเปลี่ยน width เพราะ 100% ขยายตาม card */
+    .creator-card:hover .card-image,
+    .creator-card[data-expanded="true"]:hover .card-image {
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-icon {
+        width: clamp(14px, 4.5vw, 22px);
+        height: clamp(14px, 4.5vw, 22px);
+        margin-right: 0;
+        flex-shrink: 0;
+    }
+
+    .card-info {
+        width: 100%;
+        height: 28px;
+        min-height: 28px;
+        gap: 2px;
+    }
+
+    .creator-card:hover .card-info {
+        width: 100%;
+    }
+
+    .card-name {
+        height: 28px;
+        width: 100%;
+        padding: 0 3px;
+        min-width: 0;
+    }
+
+    .card-name span {
+        font-size: clamp(9px, 2.8vw, 13px);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        display: block;
+    }
+
+    .creator-card:hover .card-info::before,
+    .creator-card:hover .card-info::after {
+        height: 28px;
+    }
+
+    .creator-card:hover .card-info::before {
+        font-size: clamp(8px, 2.3vw, 12px);
+        padding: 0 4px;
+    }
+
+    .creator-card:hover .card-info::after {
+        font-size: clamp(9px, 2.5vw, 13px);
+        padding: 0 5px;
+    }
+
+    .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+        font-size: clamp(7px, 2vw, 10px);
+        padding: 0 3px;
+    }
+
+    .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+        font-size: clamp(8px, 2.2vw, 11px);
+        padding: 0 4px;
+    }
+}
+
+/* ════════════════════════════════════════
+   iPhone SE — Portrait (max-width: 375px)
+════════════════════════════════════════ */
+@media (max-width: 375px) {
+
+    .creator-title {
+        font-size: 28px;
+        padding: 6px 0;
+        letter-spacing: 0.5px;
+    }
+
+    .creator-container {
+        padding: 6px 4px;
+        gap: 6px;
+        overflow: hidden;
+    }
+
+    .creator-cards {
+        gap: 4px;
+        padding: 4px 2px;
+        overflow: hidden;
+        flex-wrap: nowrap;
+    }
+
+    .creator-card {
+        flex: 1 1 0;
+        min-width: 0;
+        gap: 4px;
+        align-items: center;
+        transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1), gap 0.3s ease;
+    }
+
+    .creator-card:hover {
+        flex: 1.5 1 0;
+    }
+
+    .card-image {
+        width: 100%;
+        aspect-ratio: 9 / 16;
+        height: auto;
+        border-radius: 6px;
+        transition: border-radius 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .creator-card:hover .card-image,
+    .creator-card[data-expanded="true"]:hover .card-image {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-icon {
+        width: 16px;
+        height: 16px;
+        margin-right: 0;
+        flex-shrink: 0;
+    }
+
+    .card-icon img {
+        width: 16px;
+        height: 16px;
+    }
+
+    .card-info {
+        width: 100%;
+        height: 24px;
+        min-height: 24px;
+        gap: 2px;
+    }
+
+    .creator-card:hover .card-info {
+        width: 100%;
+    }
+
+    .card-name {
+        height: 24px;
+        width: 100%;
+        padding: 0 2px;
+        min-width: 0;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    .card-name span {
+        font-size: 8px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: clip;
+        letter-spacing: -0.5px;
+        display: block;
+        width: 100%;
+    }
+
+    .creator-card:hover .card-info::before,
+    .creator-card:hover .card-info::after {
+        height: 24px;
+    }
+
+    .creator-card:hover .card-info::before {
+        font-size: 7px;
+        padding: 0 3px;
+    }
+
+    .creator-card:hover .card-info::after {
+        font-size: 7px;
+        padding: 0 4px;
+    }
+
+    .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+        font-size: 6px;
+        padding: 0 2px;
+    }
+
+    .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+        font-size: 6px;
+        padding: 0 3px;
+    }
+}
+
+/* ════════════════════════════════════════
+   iPhone SE — Landscape (667 x 375px)
+════════════════════════════════════════ */
+@media (max-height: 375px) and (orientation: landscape) {
+
+    .creator-page {
+        padding-top: 52px;
+        padding-bottom: 10px;
+    }
+
+    .creator-title {
+        font-size: 20px;
+        padding: 2px 0;
+        letter-spacing: 0.5px;
+    }
+
+    .creator-container {
+        padding: 4px 8px;
+        gap: 6px;
+        overflow: hidden;
+    }
+
+    .creator-cards {
+        gap: 6px;
+        padding: 4px 0;
+        overflow: hidden;
+        flex-wrap: nowrap;
+        justify-content: center;
+    }
+
+    .creator-card {
+        flex: 0 0 auto;
+        gap: 5px;
+        align-items: center;
+        transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .creator-card:hover {
+        flex: 1.4 1 0;
+    }
+
+    .card-image {
+        width: clamp(80px, 13vw, 105px);
+        height: clamp(138px, 22.5vw, 182px);
+        border-radius: 8px;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .creator-card:hover .card-image,
+    .creator-card[data-expanded="true"]:hover .card-image {
+        width: clamp(100px, 16vw, 130px);
+        height: clamp(138px, 22.5vw, 182px);
+    }
+
+    .card-icon {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+    }
+
+    .card-icon img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .card-info {
+        width: clamp(80px, 13vw, 105px);
+        height: 22px;
+        min-height: 22px;
+        gap: 2px;
+        overflow: visible;
+        box-sizing: border-box;
+    }
+
+    .creator-card:hover .card-info {
+        width: clamp(100px, 16vw, 130px);
+    }
+
+    .card-name {
+        height: 22px;
+        flex: 1 1 0;
+        min-width: 0;
+        padding: 0 3px;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    .card-name span {
+        font-size: clamp(7px, 1.1vw, 9px);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: clip;
+        letter-spacing: -0.3px;
+        display: block;
+        width: 100%;
+    }
+
+    .creator-card:hover .card-info::before,
+    .creator-card:hover .card-info::after {
+        height: 22px;
+    }
+
+    .creator-card:hover .card-info::before {
+        font-size: clamp(6px, 1vw, 8px);
+        padding: 0 4px;
+    }
+
+    .creator-card:hover .card-info::after {
+        font-size: clamp(7px, 1.1vw, 9px);
+        padding: 0 5px;
+    }
+
+    .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+        font-size: clamp(5px, 0.9vw, 7px);
+        padding: 0 3px;
+    }
+
+    .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+        font-size: clamp(6px, 1vw, 8px);
+        padding: 0 4px;
+    }
+}
+
+/* ════════════════════════════════════════
+   MOBILE landscape (668px+)
+════════════════════════════════════════ */
+@media (max-width: 668px) {
+
+    .creator-title {
+        font-size: clamp(32px, 6vw, 48px);
+        padding: 4px 0;
+        letter-spacing: 1px;
+    }
+
+    .creator-container {
+        padding: 4px 8px;
+        gap: 4px;
+        overflow: hidden;
+    }
+
+    .creator-cards {
+        gap: 10px;
+        padding: 4px 2px;
+        overflow: hidden;
+    }
+
+    .creator-card {
+        flex: 0 0 auto;
+        gap: 4px;
+        align-items: center;
+    }
+
+    .card-image {
+        width: 130px;
+        height: 231px;
+        border-radius: 6px;
+        overflow: hidden;
+        position: relative;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        flex-shrink: 0;
+    }
+
+    .creator-card:hover .card-image,
+    .creator-card[data-expanded="true"]:hover .card-image {
+        width: 170px;
+        height: 231px;
+        border-radius: 10px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-icon {
+        width: clamp(22px, 4vw, 32px);
+        height: clamp(22px, 4vw, 32px);
+        margin-right: 0;
+        flex-shrink: 0;
+    }
+
+    .card-info {
+        width: 130px;
+        height: 24px;
+        min-height: 24px;
+        gap: 2px;
+        box-sizing: border-box;
+        overflow: visible;
+        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .creator-card:hover .card-info {
+        width: 170px;
+        height: auto;
+        min-height: 24px;
+    }
+
+    .card-name {
+        height: 24px;
+        width: 100%;
+        padding: 0 4px;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    .card-name span {
+        font-size: clamp(6px, 1.2vw, 9px);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        display: block;
+    }
+
+    .creator-card:hover .card-info::before,
+    .creator-card:hover .card-info::after {
+        height: auto;
+        min-height: 24px;
+        max-height: 48px;
+        animation: slideUpCenter 0.2s ease forwards;
+    }
+
+    .creator-card:hover .card-info::before {
+        font-size: clamp(6px, 1.1vw, 8px);
+        padding: 2px 4px;
+        line-height: 1.2;
+        white-space: normal;
+        word-break: break-word;
+        display: flex;
+        align-items: center;
+    }
+
+    .creator-card:hover .card-info::after {
+        font-size: clamp(6px, 1.1vw, 8px);
+        padding: 2px 4px;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+    }
+
+    .creator-card[data-badge="ADVISOR"]:hover .card-info {
+        height: auto;
+        align-items: flex-start;
+    }
+
+    .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+        font-size: clamp(5px, 0.9vw, 7px);
+        padding: 2px 3px;
+        line-height: 1.3;
+        white-space: normal;
+        word-break: break-word;
+        flex: 1;
+    }
+
+    .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+        font-size: clamp(5px, 0.9vw, 7px);
+        padding: 2px 3px;
+        white-space: nowrap;
+        align-self: flex-start;
+        flex-shrink: 0;
+    }
+}
+
+/* ════════════════════════════════════════
+   MOBILE landscape 844–896px
+════════════════════════════════════════ */
+@media (min-width: 844px) and (max-width: 896px) {
+
+    .creator-page {
+        padding-top: 120px;
+    }
+
+    .creator-title {
+        font-size: clamp(36px, 6vw, 52px);
+        padding: 4px 0;
+        letter-spacing: 1px;
+    }
+
+    .creator-container {
+        padding: 4px 12px;
+        gap: 4px;
+        overflow: hidden;
+    }
+
+    .creator-cards {
+        gap: 10px;
+        padding: 2px 6px;
+        overflow: hidden;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .creator-card {
+        flex: 0 0 auto;
+        gap: 4px;
+        align-items: center;
+    }
+
+    .card-image {
+        width: 175px;
+        /* ลดลงนิดนึง เพื่อให้ทั้ง 4 card พอดีหน้าจอ */
+        height: 250px;
+        border-radius: 8px;
+        overflow: hidden;
+        position: relative;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        flex-shrink: 0;
+    }
+
+    .creator-card:hover .card-image,
+    .creator-card[data-expanded="true"]:hover .card-image {
+        width: 218px;
+        height: 250px;
+        border-radius: 8px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-icon {
+        width: clamp(22px, 3.5vw, 30px);
+        height: clamp(22px, 3.5vw, 30px);
+        margin-right: 0;
+        flex-shrink: 0;
+    }
+
+    .card-info {
+        width: 175px;
+        height: 36px;
+        min-height: 36px;
+        gap: 4px;
+        box-sizing: border-box;
+        overflow: visible;
+        margin-top: 4px;
+        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .creator-card:hover .card-info {
+        width: 218px;
+        height: auto;
+        min-height: 36px;
+    }
+
+    .card-name {
+        height: 36px;
+        width: 100%;
+        padding: 0 8px;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    /* ✅ แก้หลัก: ลด font-size + ไม่ตัดข้อความ */
+    .card-name span {
+        font-size: 10px;
+        /* ลดจาก 12px → 10px */
+        white-space: nowrap;
+        overflow: visible;
+        /* เปลี่ยนจาก hidden → visible */
+        text-overflow: unset;
+        /* เอา ellipsis ออก */
+        letter-spacing: -0.3px;
+        display: block;
+        width: 100%;
+    }
+
+    .creator-card:hover .card-info::before,
+    .creator-card:hover .card-info::after {
+        height: 36px;
+        animation: slideUpCenter 0.3s ease 0.2s forwards;
+    }
+
+    .creator-card:hover .card-info::before {
+        font-size: 10px;
+        padding: 0 8px;
+        line-height: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: flex;
+        align-items: center;
+    }
+
+    .creator-card:hover .card-info::after {
+        font-size: 10px;
+        padding: 0 10px;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+    }
+
+    .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+        font-size: 9px;
+        padding: 0 8px;
+        white-space: normal;
+        word-break: break-word;
+        line-height: 1.3;
+        flex: 1;
+    }
+
+    .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+        font-size: 9px;
+        padding: 0 8px;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+}
+
+/* ════════════════════════════════════════
+   GLOVE SHAKE + GLOW — loop ตลอดเวลา
+════════════════════════════════════════ */
+@keyframes gloveShakeGlow {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+        filter: drop-shadow(0 0 4px rgba(253, 240, 213, 0.3));
+    }
+
+    10% {
+        transform: translate(-2px, -1px) rotate(-3deg);
+        filter: drop-shadow(0 0 7px rgba(253, 240, 213, 0.6)) drop-shadow(0 0 12px rgba(253, 240, 213, 0.3));
+    }
+
+    20% {
+        transform: translate(2px, 1px) rotate(3deg);
+        filter: drop-shadow(0 0 9px rgba(253, 240, 213, 0.75)) drop-shadow(0 0 16px rgba(253, 240, 213, 0.4));
+    }
+
+    30% {
+        transform: translate(-2px, 1px) rotate(-2deg);
+        filter: drop-shadow(0 0 9px rgba(253, 240, 213, 0.75)) drop-shadow(0 0 16px rgba(253, 240, 213, 0.4));
+    }
+
+    40% {
+        transform: translate(2px, -1px) rotate(2deg);
+        filter: drop-shadow(0 0 7px rgba(253, 240, 213, 0.6)) drop-shadow(0 0 12px rgba(253, 240, 213, 0.3));
+    }
+
+    50% {
+        transform: translate(-1px, 2px) rotate(-3deg);
+        filter: drop-shadow(0 0 6px rgba(253, 240, 213, 0.5)) drop-shadow(0 0 10px rgba(253, 240, 213, 0.25));
+    }
+
+    60% {
+        transform: translate(1px, -2px) rotate(3deg);
+        filter: drop-shadow(0 0 7px rgba(253, 240, 213, 0.6)) drop-shadow(0 0 12px rgba(253, 240, 213, 0.3));
+    }
+
+    70% {
+        transform: translate(-1px, -1px) rotate(-1deg);
+        filter: drop-shadow(0 0 9px rgba(253, 240, 213, 0.75)) drop-shadow(0 0 16px rgba(253, 240, 213, 0.4));
+    }
+
+    80% {
+        transform: translate(1px, 1px) rotate(1deg);
+        filter: drop-shadow(0 0 7px rgba(253, 240, 213, 0.6)) drop-shadow(0 0 12px rgba(253, 240, 213, 0.3));
+    }
+
+    90% {
+        transform: translate(0, -1px) rotate(0deg);
+        filter: drop-shadow(0 0 5px rgba(253, 240, 213, 0.45)) drop-shadow(0 0 10px rgba(253, 240, 213, 0.2));
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+        filter: drop-shadow(0 0 4px rgba(253, 240, 213, 0.3));
+    }
+}
+
+.card-icon img {
+    animation: gloveShakeGlow 1.4s ease-in-out infinite;
+    animation-delay: 0s;
+    transform-origin: center center;
+}
+
+.creator-card:hover .card-icon img {
+    animation: none;
+    filter: none;
+    transform: none;
 }
