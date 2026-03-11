@@ -12,15 +12,28 @@
     <link rel="manifest" href="favicon/site.webmanifest" />
     <title>Sak Yant - MuayVerse</title>
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
-    <!-- Google Fonts - Poppins & Bebas Neue -->
+    <!-- Performance: DNS Prefetch & Preconnect -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://res.cloudinary.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://res.cloudinary.com">
+
+    <!-- Google Fonts - Poppins & Bebas Neue with font-display swap -->
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Bebas+Neue&display=swap"
         rel="stylesheet">
+    
+    <!-- Font Awesome - Deferred -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"></noscript>
+
+    <!-- Preload Critical Images -->
+    <link rel="preload" as="image" href="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_1920/v1772864941/sakyant-bg_yohihx.png">
+    <link rel="preload" as="image" href="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_400/v1772864941/sakyant-yantra-left_i778fh.png">
+    <link rel="preload" as="image" href="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_400/v1772864941/sakyant-yantra-right_cmji53.png">
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
@@ -28,11 +41,12 @@
 </head>
 
 <body>
+    
     <!-- Navbar -->
     <div id="navbar"></div>
 
-    <!-- Page Background Music -->
-    <audio class="page-audio" loop>
+    <!-- Page Background Music with preload -->
+    <audio class="page-audio" loop preload="none">
         <source src="SFX/Sakyant SFX/song sakyant page.MP3" type="audio/mpeg">
     </audio>
 
@@ -41,7 +55,7 @@
         <!-- Single Background for all sections -->
         <div class="sakyant-bg">
             <div class="bg-dark"></div>
-            <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772864941/sakyant-bg_yohihx.png" alt="" class="bg-image">
+            <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_1920/v1772864941/sakyant-bg_yohihx.png" alt="" class="bg-image">
         </div>
 
         <!-- Section 1: Sak Yant Intro (scroll-locked for karaoke) -->
@@ -52,7 +66,7 @@
                 <div class="sakyant-content">
                     <!-- Left Yantra - Rotating -->
                     <div class="yantra-left">
-                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772864941/sakyant-yantra-left_i778fh.png" alt="Sak Yant Yantra" class="yantra-img">
+                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_400/v1772864941/sakyant-yantra-left_i778fh.png" alt="Sak Yant Yantra" class="yantra-img">
                     </div>
 
                     <!-- Center Content -->
@@ -83,7 +97,7 @@
 
                     <!-- Right Yantra - Rotating -->
                     <div class="yantra-right">
-                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772864941/sakyant-yantra-right_cmji53.png" alt="Sak Yant Yantra" class="yantra-img">
+                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_400/v1772864941/sakyant-yantra-right_cmji53.png" alt="Sak Yant Yantra" class="yantra-img">
                     </div>
                 </div>
             </main>
@@ -94,12 +108,12 @@
 
             <!-- Decorative Yantra - Left (Tiger) -->
             <div class="gaoyord-deco gaoyord-deco-left">
-                <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772864941/sueku-light_dt8znk.png" alt="" class="deco-img">
+                <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_600/v1772864941/sueku-light_dt8znk.png" alt="" class="deco-img" loading="lazy">
             </div>
 
             <!-- Decorative Yantra - Right (Elephant) -->
             <div class="gaoyord-deco gaoyord-deco-right">
-                <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772864940/hanuman-light_mdd9zv.png" alt="" class="deco-img">
+                <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_600/v1772864940/hanuman-light_mdd9zv.png" alt="" class="deco-img" loading="lazy">
             </div>
 
             <!-- Content -->
@@ -108,19 +122,19 @@
                 <div class="gaoyord-papers" data-slide="0">
                     <!-- 5 paper layers — JS controls which is front/back/hidden -->
                     <div class="paper paper-slide" data-yant="kaoyod">
-                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772864940/kaoyod_kedspv.png" alt="Gao Yord Yant" class="paper-img" draggable="false">
+                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_800/v1772864940/kaoyod_kedspv.png" alt="Gao Yord Yant" class="paper-img" draggable="false" loading="lazy">
                     </div>
                     <div class="paper paper-slide" data-yant="hateaw">
-                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772864940/hateaw_exkaj1.png" alt="Ha Taew Yant" class="paper-img" draggable="false">
+                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_800/v1772864940/hateaw_exkaj1.png" alt="Ha Taew Yant" class="paper-img" draggable="false" loading="lazy">
                     </div>
                     <div class="paper paper-slide" data-yant="hanuman">
-                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772864940/hanuman_mutd17.png" alt="Hanuman Yant" class="paper-img" draggable="false">
+                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_800/v1772864940/hanuman_mutd17.png" alt="Hanuman Yant" class="paper-img" draggable="false" loading="lazy">
                     </div>
                     <div class="paper paper-slide" data-yant="sueku">
-                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772864941/sueku_ocsvco.png" alt="Suea Ku Yant" class="paper-img" draggable="false">
+                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_800/v1772864941/sueku_ocsvco.png" alt="Suea Ku Yant" class="paper-img" draggable="false" loading="lazy">
                     </div>
                     <div class="paper paper-slide" data-yant="padtid">
-                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772864940/padtid_ihpoyg.png" alt="Paed Tidt Yant" class="paper-img" draggable="false">
+                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_800/v1772864940/padtid_ihpoyg.png" alt="Paed Tidt Yant" class="paper-img" draggable="false" loading="lazy">
                     </div>
                 </div>
 
@@ -211,18 +225,24 @@
     <!-- Footer -->
     <div id="footer"></div>
 
-    <!-- Scripts -->
-    <script src="js/navbar.js"></script>
-    <script src="js/footer.js"></script>
-    <script src="js/sakyant-anim.js"></script>
+    <!-- Scripts with defer for better performance -->
+    <script src="js/navbar.js" defer></script>
+    <script src="js/footer.js" defer></script>
+    <script src="js/sakyant-anim.js" defer></script>
 
     <script>
         // Initialize Navbar and Footer
-        document.addEventListener('DOMContentLoaded', function () {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initPage);
+        } else {
+            initPage();
+        }
+        
+        function initPage() {
             new Navbar();
             new Footer();
             new SakYantAnim();
-        });
+        }
     </script>
 </body>
 
