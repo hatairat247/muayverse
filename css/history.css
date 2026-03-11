@@ -54,7 +54,7 @@ body::before {
 
 #timeline-track {
     position: relative;
-    width: 2200vw;
+    width: 2500vw;
     height: 100%;
     will-change: transform;
 }
@@ -658,6 +658,15 @@ body::before {
     }
 }
 
+.thonburi-swap {
+    cursor: pointer;
+    transition: filter 0.3s ease;
+}
+
+.thonburi-swap:hover {
+    filter: drop-shadow(0 0 15px rgba(253, 240, 213, 0.5)) drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+}
+
 .thonburi-background {
     position: absolute;
     left: 640vw;
@@ -690,6 +699,13 @@ body::before {
     z-index: 3;
 }
 
+.thonburi-under,
+.thonburi-center,
+.thonburi-above {
+    opacity: 0;
+    transform: translateY(100px) scale(0.85);
+}
+
 .early-ratana-background {
     position: absolute;
     left: 716vw;
@@ -708,6 +724,23 @@ body::before {
     object-fit: contain;
     object-position: center center;
     opacity: 1;
+}
+
+.early-ratana-swap {
+    cursor: pointer;
+    animation: early-ratana-aura 2s ease-in-out infinite;
+}
+
+@keyframes early-ratana-aura {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.1));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 18px rgba(253, 240, 213, 0.7)) drop-shadow(0 0 40px rgba(253, 240, 213, 0.35)) drop-shadow(0 0 60px rgba(253, 240, 213, 0.15));
+    }
 }
 
 .early-ratana-left {
@@ -1242,6 +1275,7 @@ body::before {
 }
 
 .chaiya-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -2114,7 +2148,7 @@ body::before {
     transform: none;
 }
 
-/* Chaiya fighters idle - ขยับแรงขึ้น */
+/* Chaiya fighters idle */
 @keyframes chaiya-fighter-idle {
 
     0%,
@@ -2148,7 +2182,6 @@ body::before {
         aura-glow 2s ease-in-out infinite;
 }
 
-/* Aura glow วับๆ สี fdf0d5 */
 @keyframes aura-glow {
 
     0%,
@@ -2161,7 +2194,6 @@ body::before {
     }
 }
 
-
 .chaiya-fighter-4.idle {
     animation: chaiya-fighter-idle 3.4s ease-in-out infinite;
 }
@@ -2170,9 +2202,82 @@ body::before {
     animation: chaiya-fighter-idle 2.8s ease-in-out infinite;
 }
 
+/* =========================================
+   WAI KRU SWAP — aura ขึ้นพร้อมรูป (FIX)
+   ========================================= */
+
+/* ปิด pulse animation จนกว่า aura-visible จะถูก add */
 .wai-kru-swap {
     cursor: pointer;
     transition: opacity 0.2s ease;
+    animation: none;
+    position: relative;
+    z-index: 12;
+}
+
+/* เปิด pulse เฉพาะเมื่อ scroll ถึงแล้ว */
+.chaiya-container.aura-visible .wai-kru-swap {
+    animation: waiKruAuraPulse 2.5s ease-in-out infinite;
+}
+
+.chaiya-container:has(.wai-kru-swap) {
+    position: relative;
+}
+
+.chaiya-container:has(.wai-kru-swap)::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 65%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+            rgba(253, 240, 213, 0.55) 0%,
+            rgba(253, 240, 213, 0.3) 25%,
+            rgba(253, 240, 213, 0.12) 55%,
+            transparent 75%);
+    pointer-events: none;
+    z-index: 11;
+    opacity: 0;
+    animation: none;
+    transition: opacity 0.5s ease;
+}
+
+.chaiya-container.aura-visible::before {
+    opacity: 1;
+    animation: waiKruBreath 2.5s ease-in-out infinite !important;
+}
+
+.chaiya-container:has(.wai-kru-swap)::after {
+    content: none;
+}
+
+@keyframes waiKruBreath {
+
+    0%,
+    100% {
+        opacity: 0.05;
+        transform: translate(-50%, -50%) scale(0.85);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+}
+
+@keyframes waiKruAuraPulse {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.15));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 25px rgba(253, 240, 213, 1)) drop-shadow(0 0 50px rgba(253, 240, 213, 0.7));
+    }
 }
 
 .chaiya-fighter-6.idle {
@@ -2199,7 +2304,6 @@ body::before {
     animation: chaiya-guard-idle 2.8s ease-in-out infinite;
 }
 
-/* Fighter-6, 7 idle - ชาร์จพลังเตรียมชก */
 @keyframes chaiya-attack-idle {
 
     0%,
@@ -2216,7 +2320,6 @@ body::before {
     }
 }
 
-/* Fighter 8-11 idle - ท่าตั้งรับโยกเบาๆ */
 @keyframes chaiya-guard-idle {
 
     0%,
@@ -2233,8 +2336,6 @@ body::before {
     }
 }
 
-
-/* Tha Sao fighters idle - โยกตัวเตรียมต่อสู้ */
 @keyframes tha-sao-sway {
 
     0%,
@@ -2273,4 +2374,190 @@ body::before {
 
 .tha-sao-attacks.idle {
     animation: tha-sao-sway 2.1s ease-in-out infinite;
+}
+
+/* =========================================
+   THA SAO CONTAINER-2 AURA
+   ========================================= */
+.tha-sao-container-2 {
+    position: relative;
+}
+
+.tha-sao-container-2:has(.tha-sao-swap)::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+            rgba(253, 240, 213, 0.55) 0%,
+            rgba(253, 240, 213, 0.3) 25%,
+            rgba(253, 240, 213, 0.12) 55%,
+            transparent 75%);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    animation: none;
+    transition: opacity 0.5s ease;
+}
+
+.tha-sao-container-2.aura-visible::before {
+    opacity: 1;
+    animation: waiKruBreath 2.5s ease-in-out infinite !important;
+}
+
+.tha-sao-swap {
+    position: relative;
+    z-index: 1;
+}
+
+/* =========================================
+   THONBURI FIGHTER AURA
+   ========================================= */
+.thonburi-container {
+    position: relative;
+}
+
+.thonburi-container::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+            rgba(253, 240, 213, 0.55) 0%,
+            rgba(253, 240, 213, 0.3) 25%,
+            rgba(253, 240, 213, 0.12) 55%,
+            transparent 75%);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    animation: none;
+    transition: opacity 0.5s ease;
+}
+
+.thonburi-container.aura-visible::before {
+    opacity: 1;
+    animation: waiKruBreath 2.5s ease-in-out infinite !important;
+}
+
+.thonburi-fighter {
+    position: relative;
+    z-index: 1;
+}
+
+/* =========================================
+   RAMA V WRAPPER (positioning only, no aura)
+   ========================================= */
+.rama5-wrapper {
+    position: absolute;
+    left: 830vw;
+    z-index: 12;
+    top: 13.32vw;
+}
+
+.rama5-wrapper .early-ratana-pic-rama5 {
+    position: relative;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+
+/* =========================================
+   EARLY RATTANAKOSIN FIGHTER AURA
+   ========================================= */
+.early-ratana-container {
+    position: relative;
+}
+
+.early-ratana-container::before {
+    content: '';
+    position: absolute;
+    left: 48%;
+    top: 65%;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+            rgba(253, 240, 213, 0.55) 0%,
+            rgba(253, 240, 213, 0.3) 25%,
+            rgba(253, 240, 213, 0.12) 55%,
+            transparent 75%);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    animation: none;
+    transition: opacity 0.5s ease;
+}
+
+.early-ratana-container.aura-visible::before {
+    opacity: 1;
+    animation: waiKruBreath 2.5s ease-in-out infinite !important;
+}
+
+.early-ratana-fighter {
+    position: relative;
+    z-index: 1;
+}
+
+/* =========================================
+   EARLY RATTANAKOSIN CLICK HINT
+   ========================================= */
+.early-ratana-click-hint {
+    position: absolute;
+    right: 2vw;
+    top: 62%;
+    transform: translateY(-50%);
+    width: 3vw;
+    height: auto;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 20;
+    filter: invert(1) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+}
+
+.early-ratana-container.aura-visible .early-ratana-click-hint {
+    opacity: 1;
+    animation: earlyRatanaEmojiHintBounce 0.8s ease-out forwards,
+        earlyRatanaEmojiBounceLoop 1.2s ease-in-out 0.8s infinite;
+}
+
+@keyframes earlyRatanaEmojiHintBounce {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translateY(-12px);
+    }
+
+    80% {
+        transform: translateY(4px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+@keyframes earlyRatanaEmojiBounceLoop {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
 }

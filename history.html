@@ -21,9 +21,32 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/history.css">
+
+    <!-- FIX FOUC: เซ็ต html.paper-entering แบบ synchronous ก่อน render frame แรก -->
+    <script>if (sessionStorage.getItem('paperTransition') === 'true') { document.documentElement.classList.add('paper-entering'); }</script>
+</head>
 </head>
 
 <body>
+    <!-- Paper Tear Transition (Hardcoded: ต้องอยู่ใน HTML เพื่อให้ CSS html.paper-entering ทำงานได้ทันที) -->
+    <div id="paper-transition-wrapper" class="paper-transition-wrapper">
+        <div class="paper-half paper-left"></div>
+        <div class="paper-half paper-right"></div>
+    </div>
+    <!-- Force Landscape Overlay -->
+    <div id="landscape-overlay">
+        <div class="landscape-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#FDF0D5" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                <circle cx="12" cy="17" r="1" fill="#FDF0D5" stroke="none" />
+                <line x1="9" y1="5" x2="15" y2="5" />
+            </svg>
+        </div>
+        <p class="landscape-message">Please rotate your device to<br>landscape mode for the best experience.
+        </p>
+    </div>
+
     <!-- Navbar Component -->
     <nav id="navbar" class="navbar">
         <div class="navbar-logo">
@@ -619,7 +642,9 @@
                     <!-- Thonburi Fighters (5 poses without labels) -->
                     <div class="thonburi-fighters">
                         <div class="thonburi-container">
-                            <img class="thonburi-fighter thonburi-fighter-1" src="img/thonburi/thonburi-fighter1.jpg"
+                            <img class="thonburi-fighter thonburi-fighter-1 thonburi-swap"
+                                src="img/thonburi/thonburi-fighter1.jpg"
+                                data-frames="img/thonburi/thonburi-fighter1.jpg,img/thonburi/thonburi-fighter2.jpg,img/thonburi/thonburi-fighter3.jpg,img/thonburi/thonburi-fighter4.jpg,img/thonburi/thonburi-fighter5.jpg"
                                 alt="Thonburi Fighter 1">
                         </div>
                     </div>
@@ -686,12 +711,14 @@
                             regulations, such as
                             hand-wrapping (Kad Chueak).</p>
                     </div>
-
                     <!-- Early Rattanakosin Fighters (4 poses without labels) -->
                     <div class="early-ratana-fighters">
                         <div class="early-ratana-container">
-                            <img class="early-ratana-fighter early-ratana-fighter-1"
-                                src="img/early-ratana/early-ratana-fighter1.jpg" alt="Early Rattanakosin Fighter 1">
+                            <img class="early-ratana-fighter early-ratana-fighter-1 early-ratana-swap"
+                                src="img/early-ratana/early-ratana-fighter1.jpg"
+                                data-frames="img/early-ratana/early-ratana-fighter1.jpg,img/early-ratana/early-ratana-fighter2.jpg,img/early-ratana/early-ratana-fighter3.jpg,img/early-ratana/early-ratana-fighter4.jpg"
+                                alt="Early Rattanakosin Fighter 1">
+                            <img class="early-ratana-click-hint" src="icon/click.png" alt="click hint">
                         </div>
                     </div>
 
@@ -843,7 +870,6 @@
                         <h2 class="era-title">Present Day</h2>
                     </div>
                 </section>
-
 
             </div>
         </div><!-- .history-viewport -->
