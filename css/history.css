@@ -11,6 +11,7 @@
 }
 
 body {
+    display: block !important; /* Override sticky-footer flex from style.css ที่ทำให้ GSAP ScrollTrigger pin ไม่ทำงาน */
     overflow-x: hidden;
     background-color: var(--history-bg) !important;
     background-image: none !important;
