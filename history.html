@@ -141,14 +141,14 @@
                     </div>
 
                     <!-- Kick Poses (Between Text Boxes) -->
-                    <div class="kick-poses">
-                        <img class="kick-pose" src="img/sukhothai/sukhothai-kick-1.png" alt="Kick 1">
+                    <div class="kick-poses sukhothai-kick-container">
+                        <img class="kick-pose" 
+                             src="img/sukhothai/sukhothai-kick-1.png" 
+                             data-kick-frames="img/sukhothai/sukhothai-kick-1.png,img/sukhothai/sukhothai-kick-2.png,img/sukhothai/sukhothai-kick-3.png,img/sukhothai/sukhothai-kick-4.png"
+                             alt="Kick Pose">
                     </div>
 
-                    <!-- Fighters (7 fighters) - Bottom Row -->
-                    <div class="fighters">
-                        <img class="fighter" src="img/sukhothai/sukhothai-fighter-1.png" alt="Fighter 1">
-                    </div>
+                   
 
                     <!-- Text Box 1 (Muay Boran Context) -->
                     <div class="text-box text-box-1">
@@ -160,7 +160,7 @@
 
                     <!-- Text Box 2 (Royal Curriculum) -->
                     <div class="text-box text-box-2">
-                        <p>Muay Thai was integrated into the <span class="highlight">royal curriculum</span> to instill
+                        <p class="karaoke-text">Muay Thai was integrated into the <span class="highlight">royal curriculum</span> to instill
                             bravery and physical fitness. Notable examples include Prince Ruang's training at the Samor
                             Khon
                             School and King Ramkhamhaeng's treatise on warfare, which referenced Muay Thai and weaponry.
@@ -272,7 +272,7 @@
 
                     <!-- Content Area -->
                     <div class="text-box text-box-6">
-                        <p>Ancient Muay Thai varies by region, each with unique characteristics, summarized by the
+                        <p class="karaoke-text">Ancient Muay Thai varies by region, each with unique characteristics, summarized by the
                             saying:
                             <span class="highlight">"Heavy Punch Korat,Smart Lopburi, Good Posture Chaiya, Faster
                                 ThaSao."</span>
@@ -306,7 +306,7 @@
 
                     <!-- Content Area -->
                     <div class="text-box text-box-7">
-                        <p>Distinguished by wrapping ropes from the elbows down to the fists.This technique supports its
+                        <p class="karaoke-text">Distinguished by wrapping ropes from the elbows down to the fists.This technique supports its
                             signature style, which features <span class="highlight">wide, powerful</span> kicks and the
                             <span class="highlight">"Buffalo Swing"</span> punch, providing effective
                             defense against heavy strikes.
@@ -315,10 +315,14 @@
 
                     <!-- Buffalo Swing Pose -->
                     <div class="korat-poses">
-                        <div class="pose-container">
+                        <div class="pose-container buffalo-swing-container">
                             <h3 class="pose-label">"Buffalo Swing"</h3>
-                            <img class="korat-pose" src="img/muay-boran/northeast/muay-korat-buffalo-swing.png"
-                                alt="Buffalo Swing">
+                            <div class="buffalo-swing-wrapper">
+                                <img class="korat-pose buffalo-swing-image" src="img/muay-boran/northeast/muay-korat-buffalo-swing.png"
+                                    alt="Buffalo Swing"
+                                    data-current-frame="0">
+                                <img class="buffalo-swing-click-hint" src="icon/click.png" alt="click hint">
+                            </div>
                         </div>
                     </div>
 

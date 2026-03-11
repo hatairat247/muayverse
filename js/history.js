@@ -11,14 +11,23 @@ window.addEventListener('load', () => {
 
     setupKaraokeText();
     initHorizontalScroll();
+    initSukhothaiTextAnimation();
+    initSukhothaiKickAnimation();
     initTextReveal();
     initFighterStagger();
     initThaSaoParallax();
     initRemainingKaraokeBoxes();
     initRuinsParallax();
+    initKoratSlideUp();
+    initBuffaloSwingClick();
+    initLopburiSlideUp();
+    initLopburiFightersBillboard();
+    initLopburiFighters2();
+    initLopburiTextSlideUp();
     initAyutthayaParallax();
     initAyutthayaTextAnimation();
     initRegionalFightersAnimation();
+    initAyutthayaImagesAnimation();
     initKaraokeAnimation();
     initKickAnimation();
     initMouseParallax();
@@ -202,6 +211,299 @@ function initRuinsParallax() {
     gsap.to(ruinsFront, { x: -160, ease: 'none', scrollTrigger: { trigger: '.bg-ruins', start: 'left right', end: 'right left', scrub: 1, containerAnimation: horizontalScrollTween } });
 }
 
+function initKoratSlideUp() {
+    if (!horizontalScrollTween) return;
+    const koratBg = document.querySelector('.korat-bg-layer');
+    if (!koratBg) return;
+
+    gsap.fromTo(koratBg, 
+        { y: 100, opacity: 0 }, 
+        { 
+            y: 0, 
+            opacity: 1, 
+            duration: 1.5, 
+            ease: 'power2.out', 
+            scrollTrigger: { 
+                trigger: '.korat-background', 
+                start: 'left 80%', 
+                end: 'right 20%', 
+                containerAnimation: horizontalScrollTween, 
+                toggleActions: 'play reverse play reverse' 
+            } 
+        }
+    );
+}
+
+function initBuffaloSwingClick() {
+    const buffaloImage = document.querySelector('.buffalo-swing-image');
+    const buffaloWrapper = document.querySelector('.buffalo-swing-wrapper');
+    if (!buffaloImage || !buffaloWrapper) return;
+
+    // Image sequence for animation (0-4 only)
+    const imageSequence = [
+        'img/muay-boran/northeast/muay-korat-buffalo-swing.png',
+        'img/muay-boran/northeast/muay-korat-buffalo-swing 1 .png',
+        'img/muay-boran/northeast/muay-korat-buffalo-swing 2.png',
+        'img/muay-boran/northeast/muay-korat-buffalo-swing 3 .png',
+        'img/muay-boran/northeast/muay-korat-buffalo-swing 4 .png'
+    ];
+
+    let isAnimating = false;
+
+    // Show aura and click hint when in view
+    if (horizontalScrollTween) {
+        ScrollTrigger.create({
+            trigger: '.buffalo-swing-wrapper',
+            start: 'left 70%',
+            end: 'right 30%',
+            containerAnimation: horizontalScrollTween,
+            onEnter: () => {
+                buffaloWrapper.classList.add('aura-visible');
+            },
+            onLeaveBack: () => {
+                buffaloWrapper.classList.remove('aura-visible');
+            },
+            onLeave: () => {
+                buffaloWrapper.classList.remove('aura-visible');
+            }
+        });
+    }
+
+    buffaloImage.addEventListener('click', async () => {
+        if (isAnimating) return;
+        
+        isAnimating = true;
+        
+        // Play sequence 0 -> 1 -> 2 -> 3 -> 4
+        for (let i = 1; i < imageSequence.length; i++) {
+            buffaloImage.src = imageSequence[i];
+            await new Promise(resolve => setTimeout(resolve, 200)); // Wait 1 second
+        }
+        
+        // Stay at frame 4 for 1 second
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        // Return to frame 0
+        buffaloImage.src = imageSequence[0];
+        
+        isAnimating = false;
+    });
+}
+
+
+function initLopburiSlideUp() {
+    if (!horizontalScrollTween) return;
+    const lopburiRight = document.querySelector('.lopburi-right');
+    const lopburiLeft = document.querySelector('.lopburi-left');
+    const lopburiCenter = document.querySelector('.lopburi-center');
+    if (!lopburiRight || !lopburiLeft || !lopburiCenter) return;
+
+    gsap.fromTo(lopburiRight, 
+        { y: 120, opacity: 0 }, 
+        { 
+            y: 0, 
+            opacity: 1, 
+            duration: 1.5, 
+            ease: 'power2.out', 
+            scrollTrigger: { 
+                trigger: '.lopburi-background', 
+                start: 'left 80%', 
+                end: 'right 20%', 
+                containerAnimation: horizontalScrollTween, 
+                toggleActions: 'play reverse play reverse' 
+            } 
+        }
+    );
+    
+    gsap.fromTo(lopburiLeft, 
+        { y: 80, opacity: 0 }, 
+        { 
+            y: 0, 
+            opacity: 1, 
+            duration: 1.2, 
+            ease: 'power2.out', 
+            delay: 0.1, 
+            scrollTrigger: { 
+                trigger: '.lopburi-background', 
+                start: 'left 80%', 
+                end: 'right 20%', 
+                containerAnimation: horizontalScrollTween, 
+                toggleActions: 'play reverse play reverse' 
+            } 
+        }
+    );
+    
+    gsap.fromTo(lopburiCenter, 
+        { y: 40, opacity: 0 }, 
+        { 
+            y: 0, 
+            opacity: 1, 
+            duration: 1.0, 
+            ease: 'power2.out', 
+            delay: 0.2, 
+            scrollTrigger: { 
+                trigger: '.lopburi-background', 
+                start: 'left 80%', 
+                end: 'right 20%', 
+                containerAnimation: horizontalScrollTween, 
+                toggleActions: 'play reverse play reverse' 
+            } 
+        }
+    );
+}
+
+function initLopburiFightersBillboard() {
+    if (!horizontalScrollTween) return;
+    const fighters = [
+        { selector: '.lopburi-fighter-1', delay: 0, floatAmount: -8 },
+        { selector: '.lopburi-fighter-2', delay: 0.1, floatAmount: -10 },
+        { selector: '.lopburi-fighter-3', delay: 0.2, floatAmount: -7 },
+        { selector: '.lopburi-fighter-4', delay: 0.3, floatAmount: -9 }
+    ];
+
+    fighters.forEach(({ selector, delay, floatAmount }) => {
+        const fighter = document.querySelector(selector);
+        if (!fighter) return;
+
+        let floatTween = null;
+
+        // Billboard animation
+        gsap.fromTo(fighter,
+            { 
+                rotateX: 90,
+                y: 20,
+                opacity: 0
+            },
+            {
+                rotateX: 0,
+                y: 0,
+                opacity: 1,
+                duration: 1.2,
+                ease: 'power2.out',
+                delay: delay,
+                scrollTrigger: {
+                    trigger: '.lopburi-fighters',
+                    start: 'left 70%',
+                    end: 'right 30%',
+                    containerAnimation: horizontalScrollTween,
+                    toggleActions: 'play reverse play reverse',
+                    onEnter: () => {
+                        // Kill any existing float animation
+                        if (floatTween) floatTween.kill();
+                        // Start floating animation after billboard completes
+                        floatTween = gsap.to(fighter, {
+                            y: floatAmount,
+                            duration: 1.5 + (delay * 0.5),
+                            ease: 'sine.inOut',
+                            repeat: -1,
+                            yoyo: true,
+                            delay: 1.2 + delay
+                        });
+                    },
+                    onLeaveBack: () => {
+                        // Kill floating animation when scrolling back
+                        if (floatTween) {
+                            floatTween.kill();
+                            floatTween = null;
+                        }
+                    },
+                    onEnterBack: () => {
+                        // Restart floating animation when scrolling forward again
+                        if (floatTween) floatTween.kill();
+                        floatTween = gsap.to(fighter, {
+                            y: floatAmount,
+                            duration: 1.5 + (delay * 0.5),
+                            ease: 'sine.inOut',
+                            repeat: -1,
+                            yoyo: true,
+                            delay: 1.2 + delay
+                        });
+                    },
+                    onLeave: () => {
+                        // Kill floating animation when scrolling past
+                        if (floatTween) {
+                            floatTween.kill();
+                            floatTween = null;
+                        }
+                    }
+                }
+            }
+        );
+    });
+}
+function initLopburiFighters2() {
+    if (!horizontalScrollTween) return;
+    
+    const fighter5 = document.querySelector('.lopburi-fighter-5');
+    if (!fighter5) return;
+
+    let floatTween = null;
+
+    gsap.fromTo(fighter5,
+        { 
+            rotateX: 90,
+            y: 20,
+            opacity: 0
+        },
+        {
+            rotateX: 0,
+            y: 0,
+            opacity: 1,
+            duration: 1.2,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: '.lopburi-fighters-2',
+                start: 'left 70%',
+                end: 'right 30%',
+                containerAnimation: horizontalScrollTween,
+                toggleActions: 'play reverse play reverse',
+                onEnter: () => {
+                    if (floatTween) floatTween.kill();
+                    floatTween = gsap.to(fighter5, {
+                        y: -10,
+                        duration: 1.8,
+                        ease: 'sine.inOut',
+                        repeat: -1,
+                        yoyo: true,
+                        delay: 1.2
+                    });
+                },
+                onLeaveBack: () => {
+                    if (floatTween) { floatTween.kill(); floatTween = null; }
+                },
+                onLeave: () => {
+                    if (floatTween) { floatTween.kill(); floatTween = null; }
+                }
+            }
+        }
+    );
+}
+function initLopburiTextSlideUp() {
+    if (!horizontalScrollTween) return;
+    const textBox = document.querySelector('.text-box-8');
+    if (!textBox) return;
+
+    gsap.fromTo(textBox,
+        { 
+            y: 60,
+            opacity: 0
+        },
+        {
+            y: 0,
+            opacity: 1,
+            duration: 1.0,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: '.text-box-8',
+                start: 'left 70%',
+                end: 'right 30%',
+                containerAnimation: horizontalScrollTween,
+                toggleActions: 'play reverse play reverse'
+            }
+        }
+    );
+}
+
 function initAyutthayaParallax() {
     if (!horizontalScrollTween) return;
     const templeRight = document.querySelector('.temple-right');
@@ -250,36 +552,223 @@ function initRegionalFightersAnimation() {
     const fighterLabels = document.querySelectorAll('.fighter-label');
     if (regionalFighters.length === 0) return;
 
+    // ฟังก์ชันสำหรับเล่นแอนิเมชัน 3D Parallax
+    const playAnimation = () => {
+        // Kill animation เก่าก่อนเพื่อป้องกันการทับซ้อน
+        gsap.killTweensOf(regionalFighters);
+        gsap.killTweensOf(fighterLabels);
+
+        regionalFighters.forEach((fighter, i) => {
+            // Billboarding: rotateX จาก 90deg (แบนราบ) → 0deg (ตั้งฉาก)
+            gsap.to(fighter, {
+                rotateX: 0,
+                opacity: 1,
+                duration: 0.8,
+                delay: i * 0.15,
+                ease: 'back.out(1.2)',
+                onComplete: () => {
+                    // เมื่อขึ้นมาหมดแล้ว เพิ่ม idle animation
+                    fighter.classList.add('idle');
+                }
+            });
+        });
+
+        fighterLabels.forEach((label, i) => {
+            // Fade-in + Move up สำหรับข้อความ
+            gsap.to(label, {
+                y: 0,
+                opacity: 1,
+                duration: 0.6,
+                delay: i * 0.15 + 0.3,
+                ease: 'power2.out',
+                onComplete: () => {
+                    // เมื่อขึ้นมาหมดแล้ว เพิ่ม idle animation
+                    label.classList.add('idle');
+                }
+            });
+        });
+    };
+
+    // ฟังก์ชันสำหรับ fade out นุ่มนวล
+    const resetAnimation = () => {
+        // Kill animation เก่าก่อนเพื่อป้องกันการทับซ้อน
+        gsap.killTweensOf(regionalFighters);
+        gsap.killTweensOf(fighterLabels);
+
+        regionalFighters.forEach((f, i) => {
+            f.classList.remove('idle');
+            // ใช้ gsap.to() แทน gsap.set() เพื่อให้มี fade out ที่นุ่มนวล
+            gsap.to(f, {
+                rotateX: 90,
+                opacity: 0,
+                duration: 0.4,
+                delay: i * 0.05,
+                ease: 'power2.in'
+            });
+        });
+
+        fighterLabels.forEach((l, i) => {
+            l.classList.remove('idle');
+            // Fade out + Move down สำหรับข้อความ
+            gsap.to(l, {
+                y: 20,
+                opacity: 0,
+                duration: 0.3,
+                delay: i * 0.05,
+                ease: 'power2.in'
+            });
+        });
+    };
+
     ScrollTrigger.create({
         trigger: '.regional-fighters',
         start: 'left 70%',
         end: 'right 30%',
         containerAnimation: horizontalScrollTween,
-        onEnter: () => {
-            regionalFighters.forEach((fighter, i) => { setTimeout(() => { fighter.classList.add('revealed'); }, i * 100); });
-            fighterLabels.forEach((label, i) => { setTimeout(() => { label.classList.add('revealed'); }, i * 100 + 200); });
-        },
-        onLeaveBack: () => {
-            regionalFighters.forEach(f => f.classList.remove('revealed'));
-            fighterLabels.forEach(l => l.classList.remove('revealed'));
-        },
-        onLeave: () => {
-            regionalFighters.forEach(f => f.classList.remove('revealed'));
-            fighterLabels.forEach(l => l.classList.remove('revealed'));
-        },
-        onEnterBack: () => {
-            regionalFighters.forEach((fighter, i) => { setTimeout(() => { fighter.classList.add('revealed'); }, i * 100); });
-            fighterLabels.forEach((label, i) => { setTimeout(() => { label.classList.add('revealed'); }, i * 100 + 200); });
+        onEnter: playAnimation,
+        onLeaveBack: resetAnimation,
+        onLeave: resetAnimation,
+        onEnterBack: playAnimation  // เด้งขึ้นมาใหม่ตอน scroll ย้อนกลับ
+    });
+}
+
+function initAyutthayaImagesAnimation() {
+    if (!horizontalScrollTween) return;
+    const khanomTom = document.querySelector('.khanom-tom-fighter');
+    const thailandMap = document.querySelector('.boran-thailand-image');
+    if (!khanomTom || !thailandMap) return;
+
+    // Set ค่าเริ่มต้นให้ GSAP รับรู้ก่อน
+    gsap.set(thailandMap, { y: 300, opacity: 0 });
+    gsap.set(khanomTom, { y: -100, opacity: 0 });
+
+    const playAnimation = () => {
+        gsap.killTweensOf([khanomTom, thailandMap]);
+
+        gsap.to(khanomTom, {
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            ease: 'power3.out'
+        });
+
+        gsap.to(thailandMap, {
+            y: -300,
+            opacity: 1,
+            duration: 1.5,
+            delay: 0.2,
+            ease: 'power3.out'
+        });
+    };
+
+    const resetAnimation = () => {
+        gsap.killTweensOf([khanomTom, thailandMap]);
+
+        gsap.to(khanomTom, {
+            y: -100,
+            opacity: 0,
+            duration: 0.5,
+            ease: 'power2.in'
+        });
+
+        gsap.to(thailandMap, {
+            y: 300,
+            opacity: 0,
+            duration: 0.5,
+            ease: 'power2.in'
+        });
+    };
+
+    ScrollTrigger.create({
+        trigger: '.khanom-tom-fighter',
+        start: 'left 85%',
+        end: 'right -10%',
+        containerAnimation: horizontalScrollTween,
+        onEnter: playAnimation,
+        onLeaveBack: resetAnimation,
+        onLeave: resetAnimation,
+        onEnterBack: playAnimation
+    });
+}
+
+function initSukhothaiTextAnimation() {
+    if (!horizontalScrollTween) return;
+    const textBox = document.querySelector('.text-box-1');
+    if (!textBox) return;
+    gsap.fromTo(textBox, 
+        { y: 80, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 1.2, ease: 'power2.out',
+          scrollTrigger: { 
+              trigger: '.text-box-1', 
+              start: 'left 75%', 
+              end: 'right 25%', 
+              containerAnimation: horizontalScrollTween, 
+              toggleActions: 'play reverse play reverse' 
+          } 
         }
+    );
+}
+
+function initSukhothaiKickAnimation() {
+    const container = document.querySelector('.sukhothai-kick-container');
+    const kickPose = document.querySelector('.kick-pose');
+    
+    if (!container || !kickPose) {
+        console.log('Sukhothai kick pose not found');
+        return;
+    }
+    
+    const framesData = kickPose.getAttribute('data-kick-frames');
+    if (!framesData) {
+        console.log('No frames data');
+        return;
+    }
+    
+    const frames = framesData.split(',');
+    const originalSrc = kickPose.src;
+    let isHovering = false;
+
+    console.log('Sukhothai kick animation initialized', frames);
+
+    const playOnce = () => {
+        let currentFrame = 0;
+
+        const frameInterval = setInterval(() => {
+            currentFrame++;
+            kickPose.src = frames[currentFrame];
+
+            if (currentFrame >= frames.length - 1) {
+                clearInterval(frameInterval);
+                setTimeout(() => {
+                    if (isHovering) playOnce();
+                }, 1500);
+            }
+        }, 180);
+    };
+    
+    container.addEventListener('mouseenter', () => {
+        console.log('Mouse entered!');
+        isHovering = true;
+        container.classList.add('hovering');
+        kickPose.src = frames[0];
+        playOnce();
+    });
+    
+    container.addEventListener('mouseleave', () => {
+        console.log('Mouse left!');
+        isHovering = false;
+        container.classList.remove('hovering');
+        kickPose.src = originalSrc;
     });
 }
 
 function initKaraokeAnimation() {
     if (!horizontalScrollTween) return;
     const karaokeTextBoxes = [
-        { selector: '.text-box-1', multiplier: 1.5 },
         { selector: '.text-box-2', multiplier: 1.5 },
-        { selector: '.text-box-4', multiplier: 1.5 }
+        { selector: '.text-box-4', multiplier: 1.5 },
+        { selector: '.text-box-6', multiplier: 1.5 },
+        { selector: '.text-box-7', multiplier: 1.5 }
     ];
 
     karaokeTextBoxes.forEach(({ selector, multiplier }) => {
@@ -649,6 +1138,7 @@ function initRemainingKaraokeBoxes() {
     if (!horizontalScrollTween) return;
 
     const boxes = [
+        '.text-box-9', 
         '.text-box-13', '.text-box-14', '.text-box-15',
         '.text-box-16', '.text-box-17', '.text-box-18',
         '.text-box-19', '.text-box-20', '.text-box-21', '.text-box-22'
