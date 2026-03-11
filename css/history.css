@@ -2809,7 +2809,21 @@ body::before {
     animation: earlyRatanaEmojiHintBounce 0.8s ease-out forwards,
         earlyRatanaEmojiBounceLoop 1.2s ease-in-out 0.8s infinite;
 }
+#walking-fighter {
+    position: fixed;
+    bottom: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 7; /* บนพื้น แต่ใต้ dark overlay (z-index: 6) */
+    pointer-events: none;
+}
 
+#walking-fighter-img {
+    height: 20vw;
+    width: auto;
+    max-width: 15vw;  /* เพิ่มบรรทัดนี้ */
+    object-fit: contain;
+}
 @keyframes earlyRatanaEmojiHintBounce {
     0% {
         opacity: 0;

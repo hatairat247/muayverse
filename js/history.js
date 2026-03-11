@@ -48,7 +48,7 @@ window.addEventListener('load', () => {
     initMidRatanaFighters();
     initPresentParallax();
     initPresentFighters();
-
+    initWalkingFighter();
     isInitialized = true;
 });
 
@@ -708,7 +708,92 @@ function initSukhothaiTextAnimation() {
         }
     );
 }
+function initWalkingFighter() {
+    const img = document.getElementById('walking-fighter-img');
+    if (!img) return;
 
+    const framesOld = [
+        'img/walk/fighter-walk-old-1.png',
+        'img/walk/fighter-walk-old-2.png',
+        'img/walk/fighter-walk-old-3.png',
+        'img/walk/fighter-walk-old-4.png',
+        'img/walk/fighter-walk-old-5.png',
+        'img/walk/fighter-walk-old-6.png',
+        'img/walk/fighter-walk-old-7.png',
+    ];
+
+    const framesNew = [
+        'img/walk/fighter-walk-new-1.png',
+        'img/walk/fighter-walk-new-2.png',
+        'img/walk/fighter-walk-new-3.png',
+        'img/walk/fighter-walk-new-4.png',
+        'img/walk/fighter-walk-new-5.png',
+        'img/walk/fighter-walk-new-6.png',
+        'img/walk/fighter-walk-new-7.png',
+    ];
+
+    let currentFrames = framesOld;
+    let currentFrame = 0;
+    let isWalking = false;
+    let walkInterval = null;
+    let scrollStopTimer = null;
+    const FRAME_SPEED = 100;
+
+    // ตรวจว่า scroll ถึง Present Day หรือยัง
+    function checkEra() {
+    const trackEl = document.getElementById('timeline-track');
+    if (!trackEl) return;
+    
+    const trackX = gsap.getProperty(trackEl, 'x');
+    
+    // หา floor-artboard-10 อันแรกที่เจอ
+    const floor10 = document.querySelector('img[src="img/floor/floor-artboard-10.png"]');
+    if (!floor10) return;
+    
+    const floorScreenX = floor10.offsetLeft + trackX;
+    
+    if (floorScreenX <= window.innerWidth * 0.5) {
+        if (currentFrames !== framesNew) {
+            currentFrames = framesNew;
+            currentFrame = 0;
+            img.src = currentFrames[0];
+        }
+    } else {
+        if (currentFrames !== framesOld) {
+            currentFrames = framesOld;
+            currentFrame = 0;
+            img.src = currentFrames[0];
+        }
+    }
+}
+
+    function startWalking() {
+        if (isWalking) return;
+        isWalking = true;
+        walkInterval = setInterval(() => {
+            currentFrame = (currentFrame + 1) % currentFrames.length;
+            img.src = currentFrames[currentFrame];
+        }, FRAME_SPEED);
+    }
+
+    function stopWalking() {
+        isWalking = false;
+        clearInterval(walkInterval);
+        walkInterval = null;
+        currentFrame = 0;
+        img.src = currentFrames[0];
+    }
+
+    window.addEventListener('scroll', () => {
+        checkEra();
+        startWalking();
+
+        clearTimeout(scrollStopTimer);
+        scrollStopTimer = setTimeout(() => {
+            stopWalking();
+        }, 800);
+    });
+}
 function initSukhothaiKickAnimation() {
     const container = document.querySelector('.sukhothai-kick-container');
     const kickPose = document.querySelector('.kick-pose');
