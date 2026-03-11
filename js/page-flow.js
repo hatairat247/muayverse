@@ -9,7 +9,6 @@ class PageFlow {
         this.progressFill = document.getElementById('progressFill');
 
         this.hasAccepted = false;
-        this.loadingTime = 3000; // 3 วินาที
 
         this.init();
     }
@@ -141,29 +140,76 @@ class PageFlow {
         }, 500);
     }
 
-    // เริ่ม Loading Animation
+    // เริ่ม Loading Animation (ของจริง + บังคับรอขั้นต่ำ 3 วินาที)
     startLoadingAnimation() {
         if (!this.progressFill) return;
 
-        // Animation progress bar
+        this.hasCompleted = false; // ตัวแปรเช็คว่าสถานะโหลดเสร็จหรือยัง
+        const minLoadingTime = 3000; // 🟢 ตั้งเวลาขั้นต่ำที่ต้องโชว์หน้าโหลด (3000ms = 3 วินาที)
+        const startTime = Date.now(); // บันทึกเวลาเริ่มต้น
+
+        // 1. ปล่อยหลอดวิ่งไปรอที่ 90%
         setTimeout(() => {
-            this.progressFill.style.width = '100%';
-            this.progressFill.style.transition = `width ${this.loadingTime}ms ease-in-out`;
+            this.progressFill.style.width = '90%';
+            // ตั้งเวลาให้หลอดวิ่งไป 90% ภายใน 3 วินาทีพอดี
+            this.progressFill.style.transition = 'width 3s cubic-bezier(0.1, 0.7, 0.1, 1)';
         }, 100);
 
-        // เมื่อ loading เสร็จ ให้แสดงหน้าหลัก
-        setTimeout(() => {
-            this.completeLoading();
-        }, this.loadingTime + 500);
+        // 2. ฟังก์ชันที่จะทำเมื่อ "โหลดเสร็จ + ครบเวลาแล้ว"
+        const executeCompletion = () => {
+            if (this.hasCompleted) return;
+            this.hasCompleted = true;
+
+            console.log('Assets loaded & Minimum time met!');
+
+            // ดันหลอดให้เต็ม 100% 
+            this.progressFill.style.width = '100%';
+            this.progressFill.style.transition = 'width 0.4s ease-out';
+
+            // รอหลอดวิ่งเต็ม 0.4 วิ ค่อยปิดหน้า Loading
+            setTimeout(() => {
+                this.completeLoading();
+            }, 400);
+        };
+
+        // 3. ฟังก์ชันตัวกลางสำหรับ "เช็คเวลา"
+        const checkAndComplete = () => {
+            const elapsedTime = Date.now() - startTime;
+            if (elapsedTime >= minLoadingTime) {
+                // ถ้าโหลดเสร็จ และเวลาผ่านไปเกิน 3 วิแล้ว -> เข้าเว็บได้เลย
+                executeCompletion();
+            } else {
+                // 🟢 ถ้าโหลดเสร็จไวจัด (ยังไม่ถึง 3 วิ) -> สั่งให้รอเวลาที่เหลือจนครบ 3 วิก่อน!
+                const remainingTime = minLoadingTime - elapsedTime;
+                console.log(`Internet so fast! Waiting for another ${remainingTime}ms...`);
+                setTimeout(executeCompletion, remainingTime);
+            }
+        };
+
+        // 4. ตรวจสอบสถานะการดาวน์โหลดของเบราว์เซอร์
+        if (document.readyState === 'complete') {
+            checkAndComplete();
+        } else {
+            // รอจนกว่ารูปภาพและวิดีโอจะโหลดเสร็จ แล้วค่อยไปเช็คเวลา
+            window.addEventListener('load', checkAndComplete);
+
+            // เซฟตี้: ถ้าเน็ตพังหรือโหลดค้างเกิน 10 วินาที บังคับเข้าเว็บเลย
+            setTimeout(() => {
+                if (!this.hasCompleted) {
+                    console.log('Loading timeout fallback triggered');
+                    executeCompletion();
+                }
+            }, 10000);
+        }
     }
 
     // เสร็จสิ้นการ Loading
     completeLoading() {
-        console.log('Loading complete!');
+        console.log('Closing loading screen...');
         this.startVideoAndMusic(false);
 
         // Fade out loading
-        this.loadingOverlay.style.transition = 'opacity 0.5s ease';
+        this.loadingOverlay.style.transition = 'opacity 0.6s ease';
         this.loadingOverlay.style.opacity = '0';
 
         // ซ่อน loading overlay และแสดงหน้าหลัก
@@ -173,7 +219,7 @@ class PageFlow {
 
             // แจ้ง navbar ว่าสามารถเล่นเพลงอัตโนมัติได้
             window.dispatchEvent(new Event('pageLoadComplete'));
-        }, 500);
+        }, 600);
     }
 
     // เล่นวิดีโอ + เริ่มเสียง
