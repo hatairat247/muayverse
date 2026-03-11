@@ -1,3 +1,18 @@
+html,
+body {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: clip !important;
+    /* เก็บตัวนี้ไว้คุมขอบจอรวม */
+    position: relative;
+}
+
+.page-content,
+main {
+    width: 100%;
+    max-width: 100vw;
+}
+
 /* =========================================
    FIX: ล็อคโครงสร้าง Navbar ป้องกันการขยับ (Layout Shift)
    ========================================= */

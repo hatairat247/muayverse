@@ -3,7 +3,7 @@
 /* Hero Section Container */
 .hero-section-figma {
     width: 100%;
-    min-height: 30vh;
+    min-height: auto !important;
     background-color: #272727;
     position: relative;
     display: flex;
@@ -228,7 +228,7 @@
 .continue-journey {
     position: absolute;
     right: 60px;
-    bottom: 80px;
+    bottom: -80px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -326,7 +326,7 @@
 
     .continue-journey {
         right: 80px;
-        bottom: 30px;
+        bottom: 10px;
     }
 
     .continue-text {
@@ -337,11 +337,12 @@
 /* IpadAir  (1180px) */
 @media screen and (max-width: 1180px) {
     .hero-container {
-        padding: 40px 30px;
-        gap: 30px;
+        padding: 40px;
+        gap: 20px;
         flex-direction: row;
         align-items: center;
         position: relative;
+        margin-top: 30px;
     }
 
     .hero-content-left {
@@ -369,7 +370,7 @@
         width: 100%;
         max-width: 550px;
         height: auto;
-        right: 110px;
+        right: 50px;
     }
 
     .punching-bag-img {
@@ -387,8 +388,8 @@
     }
 
     .continue-journey {
-        right: 80px;
-        bottom: 30px;
+        right: 30px;
+        bottom: -100px;
     }
 
     .continue-text {
@@ -399,11 +400,12 @@
 /* Tablet (768px - 1024px) */
 @media screen and (max-width: 1024px) and (min-width: 768px) {
     .hero-container {
-        padding: 40px 30px;
+        padding: 30px;
         gap: 30px;
         flex-direction: row;
         align-items: center;
         position: relative;
+        margin-top: 90px;
     }
 
     .hero-content-left {
@@ -454,7 +456,7 @@
 
     .continue-journey {
         right: 80px;
-        bottom: 30px;
+        bottom: 10px;
     }
 
     .continue-text {
@@ -465,7 +467,7 @@
 /* Mobile (น้อยกว่า 768px) */
 @media screen and (max-width: 767px) {
     .hero-container {
-        padding: 30px 40px;
+        padding: 20px;
         flex-direction: row;
         align-items: center;
         position: relative;
@@ -529,7 +531,7 @@
 
     .continue-journey {
         right: 45px;
-        bottom: 5px;
+        bottom: -80px;
     }
 }
 
