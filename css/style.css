@@ -14,6 +14,34 @@
     width: 100%;
 }
 
+/* FOUC Fix: ปรับความสูง Navbar ให้ถูกตั้งแต่แรกสุดบนจอมือถือ
+   (ต้องอยู่ใน FOUC block แรกสุดเพื่อให้ browser รับและใช้ค่านี้ก่อน JS inject styles) */
+@media screen and (max-width: 768px) {
+
+    #navbar,
+    .navbar {
+        min-height: 70px;
+        height: 70px;
+    }
+
+    .logo-nav {
+        max-height: 60px !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+
+    #navbar,
+    .navbar {
+        min-height: 60px;
+        height: 60px;
+    }
+
+    .logo-nav {
+        max-height: 50px !important;
+    }
+}
+
 /* ล็อคกล่องซ้าย (โลโก้) */
 .navbar-logo {
     display: flex;
@@ -156,8 +184,8 @@ a {
     height: 100vh;
     overflow: hidden;
     box-sizing: border-box;
-    z-index: 1000;
-    /* clip-path drives the card animation — GPU only, no layout reflow */
+    z-index: 5;
+    /* ต้องต่ำกว่า navbar (999) และ hamburger (998) — ไม่งั้นจะบังคลิกได้ */
     clip-path: inset(0px 0px 0px 0px round 0px);
     will-change: clip-path, filter;
     transform: translateZ(0);
@@ -292,6 +320,48 @@ a {
 
     .main-logo {
         max-width: 600px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .hamburger-menu {
+        min-width: 200px;
+        padding: 14px 10px;
+        right: 12px;
+    }
+
+    .menu-content {
+        gap: 8px;
+    }
+
+    .menu-item {
+        font-size: 15px;
+        padding: 6px 0;
+    }
+
+    .menu-divider {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .hamburger-menu {
+        min-width: 170px;
+        padding: 10px 8px;
+        right: 10px;
+    }
+
+    .menu-content {
+        gap: 4px;
+    }
+
+    .menu-item {
+        font-size: 13px;
+        padding: 5px 0;
+    }
+
+    .menu-divider {
+        width: 100%;
     }
 }
 
@@ -442,67 +512,24 @@ body {
 }*/
 
 /* =========================================
-   PAPER TEAR TRANSITION (History Page Only)
+   STICKY FOOTER FIX (ดัน Footer ลงล่างสุดเสมอ)
    ========================================= */
-.paper-transition-wrapper {
-    position: fixed;
-    inset: 0;
-    z-index: 9999999;
-    /* ให้ลอยอยู่เหนือสุดๆ ทับ Navbar และ Loading */
-    display: none;
-    /* ซ่อนโดย default — แสดงผ่าน html.paper-entering เท่านั้น */
-    pointer-events: none;
-    overflow: hidden;
-}
-
-/* Inline <script> ใน <head> เซ็ต class นี้แบบ synchronous ก่อน render frame แรก
-   ทำให้กระดาษบังหน้าจอตั้งแต่ 0ms — แก้ปัญหา Navbar FOUC */
-html.paper-entering .paper-transition-wrapper {
+body {
     display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* บังคับให้บอดี้สูงอย่างน้อยเท่ากับ 1 หน้าจอเสมอ */
 }
 
-/* ซ่อนไว้ก่อน (backward-compat safety) */
-.paper-transition-wrapper.hidden {
-    display: none !important;
+/* สั่งให้เนื้อหาหลักยืดตัวเพื่อดัน Footer ลงไป */
+main {
+    flex: 1;
 }
 
-.paper-transition-wrapper.is-transitioning {
-    display: flex;
-    /* ใช้ในขาออก ก่อน paper-entering จะถูกเซ็ต */
-    pointer-events: all;
-    /* ล็อคไม่ให้กดปุ่มอื่นรัวๆ ตอนกำลังฉีกกระดาษ */
-}
-
-.paper-half {
-    width: 50vw;
-    height: 100vh;
-    background-color: #fdf0d5;
-    /* สีเนื้อกระดาษ */
-    background-image: url('../img/paper-texture.png');
-    background-size: 420px 420px;
-    position: relative;
-    transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
-    filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
-}
-
-/* สร้างรอยหยักกระดาษด้วย Clip-path แบบ Responsive (%) */
-.paper-left {
-    transform: translateX(0);
-    clip-path: polygon(0% 0%, 100% 0%, 98% 5%, 100% 10%, 95% 15%, 100% 20%, 97% 25%, 100% 30%, 94% 35%, 100% 40%, 96% 45%, 100% 50%, 98% 55%, 100% 60%, 95% 65%, 100% 70%, 97% 75%, 100% 80%, 94% 85%, 100% 90%, 98% 95%, 100% 100%, 0% 100%);
-}
-
-.paper-right {
-    transform: translateX(0);
-    left: -2px;
-    /* เขยิบมาซ้อนทับกันนิดนึง ป้องกันช่องโหว่ 1px ตรงกลาง */
-    clip-path: polygon(2% 0%, 100% 0%, 100% 100%, 0% 100%, 2% 95%, 0% 90%, 5% 85%, 0% 80%, 3% 75%, 0% 70%, 6% 65%, 0% 60%, 2% 55%, 0% 50%, 4% 45%, 0% 40%, 6% 35%, 0% 30%, 3% 25%, 0% 20%, 5% 15%, 0% 10%, 2% 5%);
-}
-
-/* สถานะตอนฉีกออก */
-.paper-transition-wrapper.torn-apart .paper-left {
-    transform: translateX(-100%);
-}
-
-.paper-transition-wrapper.torn-apart .paper-right {
-    transform: translateX(100%);
+/* พระเอกของงาน: สั่งให้ Footer เด้งไปอยู่ล่างสุดเสมอถ้ามีพื้นที่เหลือ */
+#footer {
+    margin-top: auto;
+    width: 100%;
+    position: relative !important;
+    /* ห้ามเป็น fixed หรือ absolute เด็ดขาด */
 }

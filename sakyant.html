@@ -25,23 +25,49 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Bebas+Neue&display=swap"
         rel="stylesheet">
-    
+
     <!-- Font Awesome - Deferred -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    </noscript>
 
     <!-- Preload Critical Images -->
-    <link rel="preload" as="image" href="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_1920/v1772864941/sakyant-bg_yohihx.png">
-    <link rel="preload" as="image" href="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_400/v1772864941/sakyant-yantra-left_i778fh.png">
-    <link rel="preload" as="image" href="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_400/v1772864941/sakyant-yantra-right_cmji53.png">
+    <link rel="preload" as="image"
+        href="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_1920/v1772864941/sakyant-bg_yohihx.png">
+    <link rel="preload" as="image"
+        href="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_400/v1772864941/sakyant-yantra-left_i778fh.png">
+    <link rel="preload" as="image"
+        href="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_400/v1772864941/sakyant-yantra-right_cmji53.png">
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/sakyant-new.css?v=2.0">
+
+    <!-- FIX FOUC: เซ็ต html.paper-entering แบบ synchronous ก่อน render frame แรก
+         เพื่อให้กระดาษบังหน้าจอทันที ป้องกัน Navbar กระพริบตอน Page Transition -->
+    <script>if (sessionStorage.getItem('paperTransition') === 'true') { document.documentElement.classList.add('paper-entering'); }</script>
+    <link rel="stylesheet" href="css/loading.css">
+    <link rel="stylesheet" href="css/hero-figma.css">
+    <link rel="stylesheet" href="css/cards-section.css">
 </head>
 
 <body>
-    
+
+    <!-- Force Landscape Overlay -->
+    <div id="landscape-overlay">
+        <div class="landscape-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#FDF0D5" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                <circle cx="12" cy="17" r="1" fill="#FDF0D5" stroke="none" />
+                <line x1="9" y1="5" x2="15" y2="5" />
+            </svg>
+        </div>
+        <p class="landscape-message">Please rotate your device to<br>landscape mode for the best experience.</p>
+    </div>
+
     <!-- Navbar -->
     <div id="navbar"></div>
 
@@ -55,7 +81,8 @@
         <!-- Single Background for all sections -->
         <div class="sakyant-bg">
             <div class="bg-dark"></div>
-            <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_1920/v1772864941/sakyant-bg_yohihx.png" alt="" class="bg-image">
+            <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_1920/v1772864941/sakyant-bg_yohihx.png"
+                alt="" class="bg-image">
         </div>
 
         <!-- Section 1: Sak Yant Intro (scroll-locked for karaoke) -->
@@ -66,7 +93,8 @@
                 <div class="sakyant-content">
                     <!-- Left Yantra - Rotating -->
                     <div class="yantra-left">
-                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_400/v1772864941/sakyant-yantra-left_i778fh.png" alt="Sak Yant Yantra" class="yantra-img">
+                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_400/v1772864941/sakyant-yantra-left_i778fh.png"
+                            alt="Sak Yant Yantra" class="yantra-img">
                     </div>
 
                     <!-- Center Content -->
@@ -97,7 +125,8 @@
 
                     <!-- Right Yantra - Rotating -->
                     <div class="yantra-right">
-                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_400/v1772864941/sakyant-yantra-right_cmji53.png" alt="Sak Yant Yantra" class="yantra-img">
+                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_400/v1772864941/sakyant-yantra-right_cmji53.png"
+                            alt="Sak Yant Yantra" class="yantra-img">
                     </div>
                 </div>
             </main>
@@ -108,12 +137,14 @@
 
             <!-- Decorative Yantra - Left (Tiger) -->
             <div class="gaoyord-deco gaoyord-deco-left">
-                <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_600/v1772864941/sueku-light_dt8znk.png" alt="" class="deco-img" loading="lazy">
+                <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_600/v1772864941/sueku-light_dt8znk.png"
+                    alt="" class="deco-img" loading="lazy">
             </div>
 
             <!-- Decorative Yantra - Right (Elephant) -->
             <div class="gaoyord-deco gaoyord-deco-right">
-                <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_600/v1772864940/hanuman-light_mdd9zv.png" alt="" class="deco-img" loading="lazy">
+                <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_600/v1772864940/hanuman-light_mdd9zv.png"
+                    alt="" class="deco-img" loading="lazy">
             </div>
 
             <!-- Content -->
@@ -122,19 +153,24 @@
                 <div class="gaoyord-papers" data-slide="0">
                     <!-- 5 paper layers — JS controls which is front/back/hidden -->
                     <div class="paper paper-slide" data-yant="kaoyod">
-                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_800/v1772864940/kaoyod_kedspv.png" alt="Gao Yord Yant" class="paper-img" draggable="false" loading="lazy">
+                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_800/v1772864940/kaoyod_kedspv.png"
+                            alt="Gao Yord Yant" class="paper-img" draggable="false" loading="lazy">
                     </div>
                     <div class="paper paper-slide" data-yant="hateaw">
-                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_800/v1772864940/hateaw_exkaj1.png" alt="Ha Taew Yant" class="paper-img" draggable="false" loading="lazy">
+                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_800/v1772864940/hateaw_exkaj1.png"
+                            alt="Ha Taew Yant" class="paper-img" draggable="false" loading="lazy">
                     </div>
                     <div class="paper paper-slide" data-yant="hanuman">
-                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_800/v1772864940/hanuman_mutd17.png" alt="Hanuman Yant" class="paper-img" draggable="false" loading="lazy">
+                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_800/v1772864940/hanuman_mutd17.png"
+                            alt="Hanuman Yant" class="paper-img" draggable="false" loading="lazy">
                     </div>
                     <div class="paper paper-slide" data-yant="sueku">
-                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_800/v1772864941/sueku_ocsvco.png" alt="Suea Ku Yant" class="paper-img" draggable="false" loading="lazy">
+                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_800/v1772864941/sueku_ocsvco.png"
+                            alt="Suea Ku Yant" class="paper-img" draggable="false" loading="lazy">
                     </div>
                     <div class="paper paper-slide" data-yant="padtid">
-                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_800/v1772864940/padtid_ihpoyg.png" alt="Paed Tidt Yant" class="paper-img" draggable="false" loading="lazy">
+                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto,w_800/v1772864940/padtid_ihpoyg.png"
+                            alt="Paed Tidt Yant" class="paper-img" draggable="false" loading="lazy">
                     </div>
                 </div>
 
@@ -144,8 +180,10 @@
                     <div class="yant-text-content active" data-text="kaoyod">
                         <h2 class="gaoyord-title">Gao Yord (Nine Peaks)</h2>
                         <p class="gaoyord-desc">
-                            Typically inked at the base of the neck, the Gao Yord is regarded as the <span class="text-highlight">"Yant Kru"</span> (Master
-                            Yant). It offers <span class="text-highlight">supreme protection</span> against weapons and danger while bestowing "Metta
+                            Typically inked at the base of the neck, the Gao Yord is regarded as the <span
+                                class="text-highlight">"Yant Kru"</span> (Master
+                            Yant). It offers <span class="text-highlight">supreme protection</span> against weapons and
+                            danger while bestowing "Metta
                             Mahaniyom" (and Loving Kindness) upon the wearer.
                         </p>
                     </div>
@@ -153,38 +191,52 @@
                     <div class="yant-text-content" data-text="hateaw">
                         <h2 class="gaoyord-title">Hah Taew (Five Lines)</h2>
                         <p class="gaoyord-desc">
-                            A renowned design for <span class="text-highlight">enhancing destiny</span>, career success, and warding off negativity. Each of the five sacred lines carries a specific blessing:<br>
-                            <strong class="row-highlight">Row 1:</strong> <span class="text-highlight">Protects</span> against unjust punishment, cleanses unwanted spirits, and safeguards the home.<br>
-                            <strong class="row-highlight">Row 2:</strong> <span class="text-highlight">Reverses bad horoscopes</span> and protects against bad luck.<br>
-                            <strong class="row-highlight">Row 3:</strong> Shields against black magic, curses, and <span class="text-highlight">malevolent intent</span>.<br>
-                            <strong class="row-highlight">Row 4:</strong> Enhances <span class="text-highlight">good fortune</span>, success, and ambition.<br>
-                            <strong class="row-highlight">Row 5:</strong> <span class="text-highlight">Boosts charm</span> (Metta) and attraction to the opposite sex, while amplifying the fourth row.
+                            A renowned design for <span class="text-highlight">enhancing destiny</span>, career success,
+                            and warding off negativity. Each of the five sacred lines carries a specific blessing:<br>
+                            <strong class="row-highlight">Row 1:</strong> <span class="text-highlight">Protects</span>
+                            against unjust punishment, cleanses unwanted spirits, and safeguards the home.<br>
+                            <strong class="row-highlight">Row 2:</strong> <span class="text-highlight">Reverses bad
+                                horoscopes</span> and protects against bad luck.<br>
+                            <strong class="row-highlight">Row 3:</strong> Shields against black magic, curses, and <span
+                                class="text-highlight">malevolent intent</span>.<br>
+                            <strong class="row-highlight">Row 4:</strong> Enhances <span class="text-highlight">good
+                                fortune</span>, success, and ambition.<br>
+                            <strong class="row-highlight">Row 5:</strong> <span class="text-highlight">Boosts
+                                charm</span> (Metta) and attraction to the opposite sex, while amplifying the fourth
+                            row.
                         </p>
                     </div>
                     <!-- 2: Hanuman -->
                     <div class="yant-text-content" data-text="hanuman">
                         <h2 class="gaoyord-title">Hanuman (The Monkey God)</h2>
                         <p class="gaoyord-desc">
-                            Hanuman symbolizes invincibility, agility, and immense bravery. It is believed that this Yant grants the
-                            wearer the <span class="text-highlight">Monkey God's strength</span> and the ability to evade danger effortlessly. Many boxers believe it
-                            provides the <span class="text-highlight">mental fortitude and courage</span> required to conquer opponents in the ring.
+                            Hanuman symbolizes invincibility, agility, and immense bravery. It is believed that this
+                            Yant grants the
+                            wearer the <span class="text-highlight">Monkey God's strength</span> and the ability to
+                            evade danger effortlessly. Many boxers believe it
+                            provides the <span class="text-highlight">mental fortitude and courage</span> required to
+                            conquer opponents in the ring.
                         </p>
                     </div>
                     <!-- 3: Suea Ku -->
                     <div class="yant-text-content" data-text="sueku">
                         <h2 class="gaoyord-title">Suea Ku (Twin Tigers)</h2>
                         <p class="gaoyord-desc">
-                            One of the most popular designs for <span class="text-highlight">fighters</span>, the Twin Tigers represent absolute strength, power, and
-                            authority (Barami). Usually tattooed on the mid-back, this Yant is believed to offer protection and <span class="text-highlight">instill
-                            fear and hesitation</span> in opponents.
+                            One of the most popular designs for <span class="text-highlight">fighters</span>, the Twin
+                            Tigers represent absolute strength, power, and
+                            authority (Barami). Usually tattooed on the mid-back, this Yant is believed to offer
+                            protection and <span class="text-highlight">instill
+                                fear and hesitation</span> in opponents.
                         </p>
                     </div>
                     <!-- 4: Paed Tidt -->
                     <div class="yant-text-content" data-text="padtid">
                         <h2 class="gaoyord-title">Paed Tidt (Eight Directions)</h2>
                         <p class="gaoyord-desc">
-                            This sacred Yant represents protection from <span class="text-highlight">all eight compass directions</span>. It is believed to
-                            offer <span class="text-highlight">universal safeguarding</span>, ensuring the wearer is shielded from harm no matter where they travel
+                            This sacred Yant represents protection from <span class="text-highlight">all eight compass
+                                directions</span>. It is believed to
+                            offer <span class="text-highlight">universal safeguarding</span>, ensuring the wearer is
+                            shielded from harm no matter where they travel
                             or which direction danger may come from.
                         </p>
                     </div>
@@ -237,7 +289,7 @@
         } else {
             initPage();
         }
-        
+
         function initPage() {
             new Navbar();
             new Footer();

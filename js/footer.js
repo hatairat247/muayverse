@@ -31,12 +31,31 @@ class Footer {
     addStyles() {
         const style = document.createElement('style');
         style.textContent = `
-        #footer {
-            position: relative;
-            z-index: 99; 
-            background-color: #272727; /* หรือสีที่มึงใช้ */
-            width: 100%;
+        /* ===== Flexbox Sticky Footer =====
+           body เป็น flex column min-height: 100vh
+           footer ใช้ margin-top: auto เพื่อดันตัวเองลงล่างเสมอเมื่อ content น้อย
+           เมื่อ content เยอะกว่า 100vh → footer ต่อท้าย content ตามปกติ */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* flex: 1 ให้ main.page-content ยืดเต็มพื้นที่ว่าง
+           ทำได้ทั้ง index (content เยอะ) และหน้าอื่น (content น้อย) */
+        .page-content {
+            flex: 1;
             display: block;
+        }
+
+        #footer {
+            width: 100%;
+            margin-top: auto; /* ดัน footer ลงล่างสุดเมื่อ content น้อย */
+            background-color: var(--color-primary);
+            display: block;
+            position: relative;
+            z-index: 99;
+            
         }
             .footer-container {
                 background-color: var(--color-primary);
@@ -90,24 +109,51 @@ class Footer {
                 font-size: 12px;
             }
 
+            @media screen and (max-width: 1024px) {
+                .footer-container {
+                    padding: 20px 36px;
+                }
+
+                .footer-content {
+                    gap: 80px;
+                }
+
+                .footer-section h3 {
+                    font-size: 88px;
+                }
+            }
+
             @media screen and (max-width: 768px) {
+                .footer-container {
+                    padding: 10px 10px;
+                }
+
                 .footer-content {
                     grid-template-columns: 1fr;
-                    gap: 25px;
+                    gap: 16px;
                     text-align: center;
+                    padding: 10px 0;
                 }
 
                 .footer-left,
                 .footer-right {
                     text-align: center;
+                    justify-content: center;
+                    align-items: center;
                 }
 
                 .footer-section h3 {
-                    font-size: 64px;
+                    font-size: 56px;
                 }
 
                 .footer-section p {
                     max-width: 100%;
+                    font-size: 13px;
+                }
+
+                .footer-section p.copyright {
+                    font-size: 11px;
+                    margin-top: 8px;
                 }
             }
 
@@ -129,11 +175,11 @@ class Footer {
                 }
 
                 .footer-section h3 {
-                    font-size: 48px !important;
+                    font-size: 44px !important;
                 }
 
                 .footer-section p {
-                    font-size: 13px !important;
+                    font-size: 12px !important;
                 }
 
                 .footer-section p.copyright {

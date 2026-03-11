@@ -37,7 +37,7 @@ class PageFlow {
         } else {
             // แสดง warning กรณีเข้าเว็บครั้งแรก
             this.showWarning();
-            this.setupWarningAction();
+            this.setupWarningAccept();
         }
     }
 

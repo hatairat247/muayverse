@@ -25,10 +25,6 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/warning.css">
-
-    <!-- FIX FOUC: เซ็ต html.paper-entering แบบ synchronous ก่อน render frame แรก
-         เพื่อให้กระดาษบังหน้าจอทันที ป้องกัน Navbar กระพริบตอน Page Transition -->
-    <script>if (sessionStorage.getItem('paperTransition') === 'true') { document.documentElement.classList.add('paper-entering'); }</script>
     <link rel="stylesheet" href="css/loading.css">
     <link rel="stylesheet" href="css/hero-figma.css">
     <link rel="stylesheet" href="css/cards-section.css">
@@ -46,12 +42,6 @@
             </svg>
         </div>
         <p class="landscape-message">Please rotate your device to<br>landscape mode for the best experience.</p>
-    </div>
-
-    <!-- Paper Tear Transition (Hardcoded: ต้องอยู่ใน HTML เพื่อให้ CSS html.paper-entering ทำงานได้ทันที) -->
-    <div id="paper-transition-wrapper" class="paper-transition-wrapper">
-        <div class="paper-half paper-left"></div>
-        <div class="paper-half paper-right"></div>
     </div>
 
     <!-- Warning Overlay -->
@@ -115,6 +105,7 @@
                 <img src="img/PunchLoading.png" alt="Boxing Gloves" class="gloves-image">
             </div>
 
+
             <!-- Title -->
             <h1 class="loading-title">MUAYVERSE</h1>
 
@@ -135,146 +126,153 @@
             <p class="loading-subtitle">Interactive Website to Promote Muay Thai Soft Power</p>
         </div>
     </div>
-
-    <!-- Navbar Component -->
-    <nav id="navbar" class="navbar">
-        <div class="navbar-logo">
-            <a href="index.html?return=true">
-                <img src="img/logo_nav.png" alt="MuayVerse Logo" class="logo-nav">
-            </a>
-        </div>
-
-        <div class="navbar-controls">
-            <div class="nav-btn music-btn" id="musicBtn" title="Background Music">
-                <img src="icon/Bell.svg" alt="Music" class="btn-icon">
+    <main>
+        <!-- Navbar Component -->
+        <nav id="navbar" class="navbar">
+            <div class="navbar-logo">
+                <a href="index.html?return=true">
+                    <img src="img/logo_nav.png" alt="MuayVerse Logo" class="logo-nav">
+                </a>
             </div>
 
-            <div class="nav-btn menu-btn" id="menuBtn" title="Menu">
-                <img src="icon/Menu.svg" alt="Menu" class="btn-icon">
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section 1: Video -->
-    <section class="hero-video-section" id="heroVideo">
-        <div id="video-wrapper">
-            <video loop playsinline webkit-playsinline muted preload="auto" class="bg-video" id="bgVideo">
-                <source src="https://res.cloudinary.com/muayverse/video/upload/v1767956196/8sec_9_1_iczxae.mp4"
-                    type="video/mp4"> Your browser does not support HTML5 video.
-            </video>
-        </div>
-    </section>
-
-    <!-- Hero Section 2: We're MUAYVERSE -->
-    <section class="hero-section-figma" id="heroFigma">
-        <div class="hero-container">
-            <div class="hero-content-left">
-                <div class="hero-title-wrapper">
-                    <h1 class="hero-title-figma">we're MUAYVERSE.</h1>
+            <div class="navbar-controls">
+                <div class="nav-btn music-btn" id="musicBtn" title="Background Music">
+                    <img src="icon/Bell.svg" alt="Music" class="btn-icon">
                 </div>
-                <div class="hero-description-wrapper">
-                    <p class="hero-description-figma">
-                        Welcome to MuayVerse, an
-                        interactive VR360 website dedicated to promoting Muay Thai Soft Power. Developed by students
-                        from King Mongkut's University of Technology Thonburi (KMUTT.)</span>
-                    </p>
+
+                <div class="nav-btn menu-btn" id="menuBtn" title="Menu">
+                    <img src="icon/Menu.svg" alt="Menu" class="btn-icon">
                 </div>
             </div>
-            <div class="hero-content-right">
-                <div class="punching-bag-wrapper">
-                    <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772869013/punchingbag-paper_ojogkm.png"
-                        alt="Muay Thai Punching Bag" class="punching-bag-img">
+        </nav>
+
+        <!-- Main Content Wrapper: flex: 1 ดัน footer ลงล่าง
+         Sections อยู่ใน wrapper นี้เพื่อให้ negative margin ไม่กวน flex-body calc -->
+        <main class="page-content">
+
+            <!-- Hero Section 1: Video -->
+            <section class="hero-video-section" id="heroVideo">
+                <div id="video-wrapper">
+                    <video loop playsinline webkit-playsinline muted preload="auto" class="bg-video" id="bgVideo">
+                        <source src="https://res.cloudinary.com/muayverse/video/upload/v1767956196/8sec_9_1_iczxae.mp4"
+                            type="video/mp4"> Your browser does not support HTML5 video.
+                    </video>
                 </div>
+            </section>
+
+            <!-- Hero Section 2: We're MUAYVERSE -->
+            <section class="hero-section-figma" id="heroFigma">
+                <div class="hero-container">
+                    <div class="hero-content-left">
+                        <div class="hero-title-wrapper">
+                            <h1 class="hero-title-figma">we're MUAYVERSE.</h1>
+                        </div>
+                        <div class="hero-description-wrapper">
+                            <p class="hero-description-figma">
+                                Welcome to MuayVerse, an
+                                interactive VR360 website dedicated to promoting Muay Thai Soft Power. Developed by
+                                students
+                                from King Mongkut's University of Technology Thonburi (KMUTT.)</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="hero-content-right">
+                        <div class="punching-bag-wrapper">
+                            <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772869013/punchingbag-paper_ojogkm.png"
+                                alt="Muay Thai Punching Bag" class="punching-bag-img">
+                        </div>
+                    </div>
+                    <div class="continue-journey">
+                        <p class="continue-text">Continue the Journey</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hero Section 3: Muay Thai Cards -->
+            <section class="cards-section" id="cardsSection">
+                <div class="cards-background"></div>
+                <div class="cards-container">
+                    <a href="history.html" class="card">
+                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772868928/ramp_zhwugs.png"
+                            alt="" class="card-lamp">
+                        <div class="card-image-wrapper">
+                            <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772870051/card-history_kpeh5k.png"
+                                alt="History of Muay Thai" class="card-image">
+                            <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772870052/card-history-hover_d4js7e.png"
+                                alt="History of Muay Thai Hover" class="card-image-hover">
+                        </div>
+                        <h3 class="card-title">HISTORY OF MUAY THAI</h3>
+                    </a>
+
+                    <a href="/VR_waikru 3Dvista D2/index.htm" class="card" target="_blank" rel="noopener noreferrer">
+                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772868928/ramp_zhwugs.png"
+                            alt="" class="card-lamp">
+                        <div class="card-image-wrapper">
+                            <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772870050/card-waikru_bm4wfg.png"
+                                alt="Wai Kru Muay Thai" class="card-image">
+                            <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772870050/card-waikru-hover_gdpjiv.png"
+                                alt="Wai Kru Muay Thai Hover" class="card-image-hover">
+                        </div>
+                        <h3 class="card-title">WAI KRU MUAY THAI</h3>
+                    </a>
+
+                    <a href="/3dvistra/index.htm" class="card" target="_blank" rel="noopener noreferrer">
+                        <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772868928/ramp_zhwugs.png"
+                            alt="" class="card-lamp">
+                        <div class="card-image-wrapper">
+                            <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772870049/card-art8limbs_jk6it2.png"
+                                alt="The Art of Eight Limbs" class="card-image">
+                            <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772870062/card-art8limbs-hover_pz28qu.png"
+                                alt="The Art of Eight Limbs Hover" class="card-image-hover">
+                        </div>
+                        <h3 class="card-title">THE ART OF EIGHT LIMBS</h3>
+                    </a>
+                </div>
+            </section>
+
+        </main><!-- /.page-content -->
+
+        <!-- Hamburger Menu (เปิดจากปุ่ม 3 ขีดใน Navbar) -->
+        <div class="hamburger-menu" id="hamburgerMenu">
+            <div class="menu-content">
+                <a href="history.html" class="menu-item">
+                    <span>History Of Muay Thai</span>
+                </a>
+                <div class="menu-divider"></div>
+
+                <a href="/VR_waikru 3Dvista D2/index.htm" class="menu-item" target="_blank" rel="noopener noreferrer">
+                    <span>Wai Kru Muay Thai</span>
+                </a>
+                <div class="menu-divider"></div>
+
+                <a href="/3dvistra/index.htm" class="menu-item" target="_blank" rel="noopener noreferrer">
+                    <span>Art Of Eight Lims</span>
+                </a>
+                <div class="menu-divider"></div>
+
+                <a href="creator.html" class="menu-item">
+                    <span>Creator</span>
+                </a>
+                <div class="menu-divider"></div>
+
+                <a href="https://forms.gle/U1odRp1tjZMavh9R6" class="menu-item" target="_blank"
+                    rel="noopener noreferrer">
+                    <span>Satisfaction Questionnaire</span>
+                </a>
             </div>
-            <div class="continue-journey">
-                <p class="continue-text">Continue the Journey</p>
+        </div>
+        <footer id="footer" class="footer">
+            <div class="footer-container">
+                <p class="footer-text">© 2024 MuayVerse. All rights reserved.</p>
             </div>
-        </div>
-    </section>
-
-    <!-- Hero Section 3: Muay Thai Cards -->
-    <section class="cards-section" id="cardsSection">
-        <div class="cards-background"></div>
-        <div class="cards-container">
-            <a href="history.html" class="card">
-                <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772868928/ramp_zhwugs.png"
-                    alt="" class="card-lamp">
-                <div class="card-image-wrapper">
-                    <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772870051/card-history_kpeh5k.png"
-                        alt="History of Muay Thai" class="card-image">
-                    <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772870052/card-history-hover_d4js7e.png"
-                        alt="History of Muay Thai Hover" class="card-image-hover">
-                </div>
-                <h3 class="card-title">HISTORY OF MUAY THAI</h3>
-            </a>
-
-            <a href="/VR_waikru 3Dvista D2/index.htm" class="card" target="_blank" rel="noopener noreferrer">
-                <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772868928/ramp_zhwugs.png"
-                    alt="" class="card-lamp">
-                <div class="card-image-wrapper">
-                    <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772870050/card-waikru_bm4wfg.png"
-                        alt="Wai Kru Muay Thai" class="card-image">
-                    <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772870050/card-waikru-hover_gdpjiv.png"
-                        alt="Wai Kru Muay Thai Hover" class="card-image-hover">
-                </div>
-                <h3 class="card-title">WAI KRU MUAY THAI</h3>
-            </a>
-
-            <a href="/3dvistra/index.htm" class="card" target="_blank" rel="noopener noreferrer">
-                <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772868928/ramp_zhwugs.png"
-                    alt="" class="card-lamp">
-                <div class="card-image-wrapper">
-                    <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772870049/card-art8limbs_jk6it2.png"
-                        alt="The Art of Eight Limbs" class="card-image">
-                    <img src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1772870062/card-art8limbs-hover_pz28qu.png"
-                        alt="The Art of Eight Limbs Hover" class="card-image-hover">
-                </div>
-                <h3 class="card-title">THE ART OF EIGHT LIMBS</h3>
-            </a>
-        </div>
-    </section> <!-- Scripts -->
-    <!-- Scriptsasd -->
-    <!-- Hamburger Menu (เปิดจากปุ่ม 3 ขีดใน Navbar) -->
-    <div class="hamburger-menu" id="hamburgerMenu">
-        <div class="menu-content">
-            <a href="history.html" class="menu-item">
-                <span>History Of Muay Thai</span>
-            </a>
-            <div class="menu-divider"></div>
-
-            <a href="/VR_waikru 3Dvista D2/index.htm" class="menu-item" target="_blank" rel="noopener noreferrer">
-                <span>Wai Kru Muay Thai</span>
-            </a>
-            <div class="menu-divider"></div>
-
-            <a href="/3dvistra/index.htm" class="menu-item" target="_blank" rel="noopener noreferrer">
-                <span>Art Of Eight Lims</span>
-            </a>
-            <div class="menu-divider"></div>
-
-            <a href="creator.html" class="menu-item">
-                <span>Creator</span>
-            </a>
-            <div class="menu-divider"></div>
-
-            <a href="https://forms.gle/U1odRp1tjZMavh9R6" class="menu-item" target="_blank" rel="noopener noreferrer">
-                <span>Satisfaction Questionnaire</span>
-            </a>
-        </div>
-    </div>
-    <footer id="footer" class="footer">
-        <div class="footer-container">
-            <p class="footer-text">© 2024 MuayVerse. All rights reserved.</p>
-        </div>
-    </footer>
-    <!-- Scripts -->
-    <script src="js/page-flow.js"></script>
-    <script src="js/parallax-scroll.js"></script>
-    <script src="js/navbar.js"></script>
-    <script src="js/cards-section.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/footer.js"></script>
+        </footer>
+        <!-- Scripts -->
+        <script src="js/page-flow.js"></script>
+        <script src="js/parallax-scroll.js"></script>
+        <script src="js/navbar.js"></script>
+        <script src="js/cards-section.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/footer.js"></script>
 </body>
-<br><br />
 
 </html>

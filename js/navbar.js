@@ -211,6 +211,35 @@ class Navbar {
             }
 
             /* Responsive Navbar */
+            @media screen and (max-width: 1024px) {
+                .navbar {
+                    padding: 0 24px;
+                    height: 72px;
+                }
+
+                :root {
+                    --navbar-height: 72px;
+                }
+
+                .logo-nav {
+                    max-height: 64px;
+                }
+
+                .music-btn {
+                    width: 46px;
+                    height: 46px;
+                }
+
+                .nav-btn {
+                    width: 32px;
+                    height: 32px;
+                }
+
+                .navbar-controls {
+                    gap: 20px;
+                }
+            }
+
             @media screen and (max-width: 768px) {
                 .navbar {
                     padding: 0 20px;
