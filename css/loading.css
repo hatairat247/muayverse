@@ -36,6 +36,20 @@ body.loading-active {
     position: relative;
 }
 
+/* เพิ่มลายกระดาษให้พื้นหลังหน้า Loading (และ Warning) */
+.loading-overlay::before,
+.warning-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('../img/paper-texture.png');
+    background-repeat: repeat;
+    background-size: 420px 420px;
+    opacity: 0.15;
+    z-index: -1;
+    pointer-events: none;
+}
+
 /* ===== Boxing Gloves ===== */
 .gloves-container {
     margin-bottom: 40px;
@@ -166,35 +180,94 @@ body.loading-active {
     font-weight: 400;
 }
 
-/* ===== Responsive Design ===== */
+/* ===== Responsive Design (ยึด Desktop เป็นหลัก แล้วย่อส่วนลง) ===== */
 @media screen and (max-width: 1200px) {
     .progress-container {
-        width: 90%;
+        width: 85%;
     }
 
     .loading-subtitle {
-        font-size: 18px;
+        font-size: 16px;
         padding: 0 20px;
-    }
-}
-
-/* --- Tablet --- */
-@media screen and (max-width: 768px) {
-    :root {
-        --font-size-title: 28px;
-        --font-size-base: 16px;
-    }
-
-    .loading-container {
-        padding: 40px 20px 20px;
-        /* ลด padding-top สำหรับ tablet */
-        margin-top: 70px;
-        /* navbar height สำหรับ tablet */
     }
 
     .gloves-image {
-        width: 280px;
-        height: 280px;
+        width: 320px;
+        height: 320px;
+    }
+
+    .gloves-container::after {
+        width: 360px;
+        height: 360px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    :root {
+        --font-size-title: 24px;
+        --font-size-base: 14px;
+    }
+
+    .loading-container {
+        padding: 30px 20px;
+        justify-content: center;
+        margin-top: 0;
+    }
+
+    .gloves-container {
+        margin-bottom: 30px;
+    }
+
+    .gloves-image {
+        width: 220px;
+        height: 220px;
+    }
+
+    /* ย่อนวมลง */
+    .gloves-container::after {
+        width: 260px;
+        height: 260px;
+    }
+
+    /* ย่อรัศมีแสง */
+    .progress-container {
+        width: 90%;
+        margin-bottom: 15px;
+    }
+
+    .loading-title {
+        margin-bottom: 20px;
+        font-size: 26px;
+    }
+
+    .loading-subtitle {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    :root {
+        --font-size-title: 20px;
+        --font-size-base: 12px;
+    }
+
+    .loading-container {
+        padding: 20px 15px;
+    }
+
+    .gloves-container {
+        margin-bottom: 20px;
+    }
+
+    .gloves-image {
+        width: 160px;
+        height: 160px;
+    }
+
+    /* ย่อนวมสำหรับมือถือแนวตั้ง */
+    .gloves-container::after {
+        width: 200px;
+        height: 200px;
     }
 
     .progress-container {
@@ -203,35 +276,51 @@ body.loading-active {
     }
 
     .loading-title {
-        margin-bottom: 20px;
+        margin-bottom: 15px;
+        font-size: 22px;
     }
 
     .loading-subtitle {
-        font-size: 14px;
+        font-size: 11px;
     }
 }
 
-/* --- Small Mobile --- */
-@media screen and (max-width: 480px) {
-    :root {
-        --font-size-title: 24px;
-        --font-size-base: 14px;
+/* 🟢 ดักจับ "จอมือถือแนวนอน (Landscape)" ที่เตี้ยมากๆ (เหมือนที่แก้ให้หน้า Warning) */
+@media screen and (max-height: 500px) {
+    .loading-container {
+        padding: 10px;
+        justify-content: center;
+        min-height: 100%;
+        margin: auto;
     }
 
-    .loading-container {
-        padding: 30px 10px 10px;
-        /* ลด padding สำหรับ mobile */
-        margin-top: 60px;
-        /* navbar height สำหรับ mobile */
+    .gloves-container {
+        margin-bottom: 10px;
     }
 
     .gloves-image {
-        width: 200px;
-        height: 200px;
+        width: 130px;
+        height: 130px;
     }
 
-    .loading-container {
-        padding: 10px;
+    /* หดนวมให้เล็กสุดไม่ให้ล้นจอ */
+    .gloves-container::after {
+        width: 140px;
+        height: 140px;
+    }
+
+    .loading-title {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .progress-container {
+        width: 80%;
+        margin-bottom: 10px;
+    }
+
+    .loading-subtitle {
+        font-size: 10px;
     }
 }
 
