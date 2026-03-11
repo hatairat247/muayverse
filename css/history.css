@@ -1047,9 +1047,114 @@ body::before {
     transform: translateY(0);
 }
 
+/* =========================================
+   SUKHOTHAI KICK POSE HOVER ANIMATION
+   ========================================= */
+.sukhothai-kick-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.kick-pose {
+    position: relative;
+    transition: filter 0.4s ease, opacity 0.15s ease;
+    pointer-events: auto;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4)) 
+            drop-shadow(0 0 16px rgba(253, 240, 213, 0.3))
+            drop-shadow(0 0 24px rgba(253, 240, 213, 0.2));
+    animation: kickPoseGlow 2.5s ease-in-out infinite;
+}
+
+/* Aura effect wrapper */
+.sukhothai-kick-container::before {
+    content: '';
+    position: absolute;
+    left: 50px;
+    top: 80px;        /* เลื่อนลงมาจาก -120px */
+    transform: translate(0, 0);
+    width: 32vw;
+    height: 32vw;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+            rgba(255, 255, 255, 0.85) 0%,
+            rgba(253, 240, 213, 0.65) 15%,
+            rgba(253, 240, 213, 0.35) 35%,
+            rgba(253, 240, 213, 0.15) 55%,
+            transparent 75%);
+    filter: blur(15px);
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.95;
+    animation: sukhothaiAuraBreath 2.5s ease-in-out infinite; 
+}
+
+/* Intensify aura on hover */
+.sukhothai-kick-container.hovering::before {
+    opacity: 0.95;
+    animation: sukhothaiAuraBreathHover 2s ease-in-out infinite;
+}
+
+/* Intensify glow on hover */
+.sukhothai-kick-container.hovering .kick-pose {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4)) 
+            drop-shadow(0 0 16px rgba(253, 240, 213, 0.3))
+            drop-shadow(0 0 24px rgba(253, 240, 213, 0.2));    /* กลับไปใช้ filter เดิมเหมือนตอนไม่ hover */
+    animation: kickPoseGlow 2.5s ease-in-out infinite; 
+}
+
+@keyframes sukhothaiAuraBreath {
+    0%, 100% {
+        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(0.85);
+    }
+    50% {
+        opacity: 0.75;
+        transform: translate(-50%, -50%) scale(1.0);
+    }
+}
+
+@keyframes sukhothaiAuraBreathHover {
+    0%, 100% {
+        opacity: 0.85;
+        transform: translate(-50%, -50%) scale(0.95);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.15);
+    }
+}
+
+/* Glow animation for kick pose */
+@keyframes kickPoseGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.3)) 
+                drop-shadow(0 0 12px rgba(253, 240, 213, 0.25))
+                drop-shadow(0 0 18px rgba(253, 240, 213, 0.15));
+    }
+    50% {
+        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5)) 
+                drop-shadow(0 0 20px rgba(253, 240, 213, 0.35))
+                drop-shadow(0 0 30px rgba(253, 240, 213, 0.25));
+    }
+}
+
+@keyframes kickPoseGlowHover {
+    0%, 100% {
+        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5)) 
+                drop-shadow(0 0 20px rgba(253, 240, 213, 0.4))
+                drop-shadow(0 0 30px rgba(253, 240, 213, 0.25));
+    }
+    50% {
+        filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.7)) 
+                drop-shadow(0 0 28px rgba(253, 240, 213, 0.6))
+                drop-shadow(0 0 42px rgba(253, 240, 213, 0.4));
+    }
+}
+
 .kick-poses {
     position: absolute;
-    left: 90vw;
+    left: 90vw;        /* คืนค่าเดิม */
     z-index: 100;
     width: 30vw;
     top: 16.87vw;
@@ -1078,12 +1183,12 @@ body::before {
     left: 220vw;
     width: auto;
     object-fit: contain;
-    opacity: 1;
+    opacity: 0;
     z-index: 10;
     filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.7));
     height: 36.56vw;
     top: 28.12vw;
-    transform: translateY(-50%);
+    /* GSAP จะจัดการ transform เอง ไม่ต้องใส่ค่า initial */
 }
 
 .khanom-tom-fighter {
@@ -1091,10 +1196,11 @@ body::before {
     left: 254vw;
     width: auto;
     object-fit: contain;
-    opacity: 1;
+    opacity: 0;
     z-index: 12;
     height: 30.93vw;
     top: 11.32vw;
+    /* GSAP จะจัดการ transform เอง ไม่ต้องใส่ค่า initial */
 }
 
 .early-ratana-pic-rama5 {
@@ -1132,9 +1238,27 @@ body::before {
     width: auto;
     max-width: 22vw;
     object-fit: contain;
-    opacity: 1;
+    opacity: 0;
     filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
     height: 30.93vw;
+    transform-style: preserve-3d;
+    transform: rotateX(90deg);
+    transform-origin: center bottom;
+    transition: none;
+}
+
+/* Idle Animation สำหรับนักมวย */
+.regional-fighter.idle {
+    animation: fighter-float 3s ease-in-out infinite;
+}
+
+@keyframes fighter-float {
+    0%, 100% {
+        transform: rotateX(0deg) translateY(0px);
+    }
+    50% {
+        transform: rotateX(0deg) translateY(-8px);
+    }
 }
 
 .korat-poses {
@@ -1163,6 +1287,91 @@ body::before {
     height: 42.18vw;
 }
 
+/* Buffalo Swing Animation Styles */
+.buffalo-swing-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.buffalo-swing-wrapper::before {
+    content: '';
+    position: absolute;
+    left: 58%;
+    top: 35%;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+            rgba(253, 240, 213, 0.55) 0%,
+            rgba(253, 240, 213, 0.3) 25%,
+            rgba(253, 240, 213, 0.12) 55%,
+            transparent 75%);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    animation: none;
+    transition: opacity 0.5s ease;
+}
+
+.buffalo-swing-wrapper.aura-visible::before {
+    opacity: 1;
+    animation: waiKruBreath 2.5s ease-in-out infinite;
+}
+
+.buffalo-swing-image {
+    position: relative;
+    z-index: 1;
+    transition: none;
+}
+
+.buffalo-swing-click-hint {
+    position: absolute;
+    right: 2vw;
+    top: 62%;
+    transform: translateY(-50%);
+    width: 3vw;
+    height: auto;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 20;
+    filter: invert(1) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+}
+
+.buffalo-swing-wrapper.aura-visible .buffalo-swing-click-hint {
+    opacity: 1;
+    animation: buffaloClickHintBounce 0.8s ease-out forwards,
+        buffaloClickBounceLoop 1.2s ease-in-out 0.8s infinite;
+}
+
+@keyframes buffaloClickHintBounce {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(-12px);
+    }
+    80% {
+        transform: translateY(4px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+@keyframes buffaloClickBounceLoop {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+
 .lopburi-fighters {
     position: absolute;
     left: 275vw;
@@ -1176,6 +1385,8 @@ body::before {
     flex-direction: column;
     align-items: center;
     margin-left: -10vw;
+    perspective: 1000px;
+    transform-style: preserve-3d;
 }
 
 .lopburi-container:first-child {
@@ -1189,6 +1400,8 @@ body::before {
     opacity: 1;
     filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
     height: 33.75vw;
+    transform-style: preserve-3d;
+    transform-origin: center bottom;
 }
 
 .lopburi-fighter-1 {
@@ -1634,6 +1847,22 @@ body::before {
     text-align: center;
     white-space: nowrap;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* Idle Animation สำหรับป้ายชื่อ */
+.fighter-label.idle {
+    animation: label-float 2.5s ease-in-out infinite;
+}
+
+@keyframes label-float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
 }
 
 .chaiya-label {
@@ -1763,6 +1992,57 @@ body::before {
 }
 
 .text-box-10 .highlight .karaoke-char {
+    color: var(--history-highlight);
+}
+
+/* Karaoke effect for text-box-2 (Royal Curriculum) */
+.text-box-2 .karaoke-char {
+    display: inline;
+    opacity: 0.15;
+    filter: blur(4px);
+    transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.text-box-2 .karaoke-char.active {
+    opacity: 1;
+    filter: blur(0);
+}
+
+.text-box-2 .highlight .karaoke-char {
+    color: var(--history-highlight);
+}
+
+/* Karaoke effect for text-box-6 (Regional Styles) */
+.text-box-6 .karaoke-char {
+    display: inline;
+    opacity: 0.15;
+    filter: blur(4px);
+    transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.text-box-6 .karaoke-char.active {
+    opacity: 1;
+    filter: blur(0);
+}
+
+.text-box-6 .highlight .karaoke-char {
+    color: var(--history-highlight);
+}
+
+/* Karaoke effect for text-box-7 (Muay Korat) */
+.text-box-7 .karaoke-char {
+    display: inline;
+    opacity: 0.15;
+    filter: blur(4px);
+    transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.text-box-7 .karaoke-char.active {
+    opacity: 1;
+    filter: blur(0);
+}
+
+.text-box-7 .highlight .karaoke-char {
     color: var(--history-highlight);
 }
 
