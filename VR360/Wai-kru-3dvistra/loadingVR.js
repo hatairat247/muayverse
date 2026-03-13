@@ -3,7 +3,7 @@ class LoadingPage {
     constructor() {
         this.progressFill = document.getElementById('progressFill');
         this.viewer = document.getElementById('viewer');
-        this.preloadContainer = document.getElementById('preloadContainer');
+        this.preloadContainer = document.getElementById('customLoadingScreen');
         this.loadingTime = 3000; // 3 seconds
         this.init();
     }
@@ -66,10 +66,9 @@ class LoadingPage {
 
 // Add completion styles
 const completionStyles = `
-    /* แก้ไข CSS Selector ให้เล็งไปที่ ID preloadContainer โดยตรง */
-    .loading-complete #preloadContainer {
+    .loading-complete #customLoadingScreen {
         animation: fade-out 0.5s ease-out forwards;
-        pointer-events: none; /* สำคัญ! เพื่อให้เมาส์คลิกทะลุไปโดน VR ได้ทันทีระหว่างที่กำลังจาง */
+        pointer-events: none; /* สเพื่อให้เมาส์คลิกทะลุไปโดน VR ได้ทันทีระหว่างที่กำลังจาง */
     }
     
     @keyframes fade-out {

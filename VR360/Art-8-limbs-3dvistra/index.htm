@@ -2,16 +2,16 @@
 <html lang="en">
 
 <head>
-    <link rel="icon" type="image/png" href="../favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="../favicon/favicon.svg" />
-    <link rel="shortcut icon" href="../favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="../favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" href="../../favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../../favicon/favicon.svg" />
+    <link rel="shortcut icon" href="../../favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../favicon/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="MuayVerse" />
-    <link rel="manifest" href="../favicon/site.webmanifest" />
+    <link rel="manifest" href="../../favicon/site.webmanifest" />
     <title>MuayVerse - Art Of Eight Lims</title>
 
-    <link rel="stylesheet" href="../css/loading.css">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../../css/loading.css">
+    <link rel="stylesheet" href="../../css/style.css">
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" id="metaViewport"
@@ -19,12 +19,13 @@
         data-tdv-general-scale="0.5" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <script src="lib/tdvplayer.js?v=1769769882248"></script>
-    <link rel="preload" href="locale/en.txt?v=1769769882248" as="fetch" crossorigin="anonymous" />
-    <link rel="preload" href="script.js?v=1769769882248" as="script" />
+    <script src="lib/tdvplayer.js?v=1773369819226"></script>
+    <link rel="preload" href="locale/en.txt?v=1773369819226" as="fetch" crossorigin="anonymous" />
+    <link rel="preload" href="script.js?v=1773369819226" as="script" />
     <meta name="description" content="Virtual Tour" />
     <meta name="theme-color" content="#FFFFFF" />
-    <script src="script.js?v=1769769882248"></script>
+    <script src="script.js?v=1773369819226"></script>
+
     <style type="text/css">
         html,
         body {
@@ -70,25 +71,40 @@
             pointer-events: auto;
         }
 
-        #preloadContainer {
+        /* พื้นหลังหลัก */
+        #customLoadingScreen {
             z-index: 200;
             opacity: 1;
             transition: opacity 0.5s;
             -webkit-transition: opacity 0.5s;
             -moz-transition: opacity 0.5s;
             -o-transition: opacity 0.5s;
+            background-color: #272727;
+        }
+
+        /* เพิ่มเลเยอร์ลายกระดาษ */
+        #customLoadingScreen::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('../../img/paper-texture.png');
+            background-size: 420px 420px;
+            opacity: 0.5;
+            z-index: 0;
+            pointer-events: none;
         }
     </style>
-
 </head>
 
 <body>
-    <div id="preloadContainer" class="fill-viewport">
+    <div id="preloadContainer" style="display: none;"></div>
+
+    <div id="customLoadingScreen" class="fill-viewport">
         <div style="z-index: 4; position: absolute; overflow: hidden; left: 0; top: 0; width: 100%; height: 100%;">
 
             <main class="loading-container">
                 <div class="gloves-container">
-                    <img src="../img/PunchLoading.png" alt="Boxing Gloves" class="gloves-image">
+                    <img src="../../img/PunchLoading.png" alt="Boxing Gloves" class="gloves-image">
                 </div>
 
                 <h1 class="loading-title">MUAYVERSE</h1>
