@@ -6,6 +6,11 @@
 let horizontalScrollTween = null;
 let isInitialized = false;
 
+// Extra vertical scroll space (px) appended after the pin section.
+// Keeps the page bottom far enough from the transition trigger so
+// text-box-22 finishes before the user can reach the edge.
+const SCROLL_END_BUFFER = 1000;
+
 window.addEventListener('load', () => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -49,7 +54,40 @@ window.addEventListener('load', () => {
     initPresentParallax();
     initPresentFighters();
     initWalkingFighter();
+
+    // ── Bug 1: inject blank spacer so the page has SCROLL_END_BUFFER px
+    // of extra height after the pin releases. The karaoke finishes during
+    // the pin, and the user must actively scroll the blank zone to trigger
+    // the transition. Injected here (not DOMContentLoaded) so scrollHeight
+    // is already correct when the ?from=sakyant scroll runs below.
+    (function addScrollEndBuffer() {
+        const prev = document.getElementById('scroll-end-buffer');
+        if (prev) prev.remove();
+        const spacer = document.createElement('div');
+        spacer.id = 'scroll-end-buffer';
+        spacer.style.cssText =
+            'width:100%;height:' + SCROLL_END_BUFFER + 'px;pointer-events:none;flex-shrink:0;';
+        const wrapper = document.querySelector('.history-wrapper');
+        if (wrapper) wrapper.insertAdjacentElement('afterend', spacer);
+        else document.body.appendChild(spacer);
+    })();
+
     isInitialized = true;
+
+    // ── Bug 2 (part 2): scroll to the safe position NOW, inside 'load',
+    // so scrollHeight already includes the spacer above.
+    // DOMContentLoaded locked justReturnedCooldown=true early; here we
+    // move the viewport 40 % into the buffer — well above the 10 px trigger.
+    if (new URLSearchParams(window.location.search).get('from') === 'sakyant') {
+        setTimeout(() => {
+            ScrollTrigger.refresh();
+            const safeTop = document.body.scrollHeight
+                - window.innerHeight
+                - Math.round(SCROLL_END_BUFFER * 0.4); // 400 px above max
+            window.scrollTo({ top: Math.max(0, safeTop), behavior: 'instant' });
+            setTimeout(() => { justReturnedCooldown = false; }, 2000);
+        }, 200);
+    }
 });
 
 // =============================================
@@ -216,20 +254,20 @@ function initKoratSlideUp() {
     const koratBg = document.querySelector('.korat-bg-layer');
     if (!koratBg) return;
 
-    gsap.fromTo(koratBg, 
-        { y: 100, opacity: 0 }, 
-        { 
-            y: 0, 
-            opacity: 1, 
-            duration: 1.5, 
-            ease: 'power2.out', 
-            scrollTrigger: { 
-                trigger: '.korat-background', 
-                start: 'left 80%', 
-                end: 'right 20%', 
-                containerAnimation: horizontalScrollTween, 
-                toggleActions: 'play reverse play reverse' 
-            } 
+    gsap.fromTo(koratBg,
+        { y: 100, opacity: 0 },
+        {
+            y: 0,
+            opacity: 1,
+            duration: 1.5,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: '.korat-background',
+                start: 'left 80%',
+                end: 'right 20%',
+                containerAnimation: horizontalScrollTween,
+                toggleActions: 'play reverse play reverse'
+            }
         }
     );
 }
@@ -271,21 +309,21 @@ function initBuffaloSwingClick() {
 
     buffaloImage.addEventListener('click', async () => {
         if (isAnimating) return;
-        
+
         isAnimating = true;
-        
+
         // Play sequence 0 -> 1 -> 2 -> 3 -> 4
         for (let i = 1; i < imageSequence.length; i++) {
             buffaloImage.src = imageSequence[i];
             await new Promise(resolve => setTimeout(resolve, 200)); // Wait 1 second
         }
-        
+
         // Stay at frame 4 for 1 second
         await new Promise(resolve => setTimeout(resolve, 300));
-        
+
         // Return to frame 0
         buffaloImage.src = imageSequence[0];
-        
+
         isAnimating = false;
     });
 }
@@ -298,56 +336,56 @@ function initLopburiSlideUp() {
     const lopburiCenter = document.querySelector('.lopburi-center');
     if (!lopburiRight || !lopburiLeft || !lopburiCenter) return;
 
-    gsap.fromTo(lopburiRight, 
-        { y: 120, opacity: 0 }, 
-        { 
-            y: 0, 
-            opacity: 1, 
-            duration: 1.5, 
-            ease: 'power2.out', 
-            scrollTrigger: { 
-                trigger: '.lopburi-background', 
-                start: 'left 80%', 
-                end: 'right 20%', 
-                containerAnimation: horizontalScrollTween, 
-                toggleActions: 'play reverse play reverse' 
-            } 
+    gsap.fromTo(lopburiRight,
+        { y: 120, opacity: 0 },
+        {
+            y: 0,
+            opacity: 1,
+            duration: 1.5,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: '.lopburi-background',
+                start: 'left 80%',
+                end: 'right 20%',
+                containerAnimation: horizontalScrollTween,
+                toggleActions: 'play reverse play reverse'
+            }
         }
     );
-    
-    gsap.fromTo(lopburiLeft, 
-        { y: 80, opacity: 0 }, 
-        { 
-            y: 0, 
-            opacity: 1, 
-            duration: 1.2, 
-            ease: 'power2.out', 
-            delay: 0.1, 
-            scrollTrigger: { 
-                trigger: '.lopburi-background', 
-                start: 'left 80%', 
-                end: 'right 20%', 
-                containerAnimation: horizontalScrollTween, 
-                toggleActions: 'play reverse play reverse' 
-            } 
+
+    gsap.fromTo(lopburiLeft,
+        { y: 80, opacity: 0 },
+        {
+            y: 0,
+            opacity: 1,
+            duration: 1.2,
+            ease: 'power2.out',
+            delay: 0.1,
+            scrollTrigger: {
+                trigger: '.lopburi-background',
+                start: 'left 80%',
+                end: 'right 20%',
+                containerAnimation: horizontalScrollTween,
+                toggleActions: 'play reverse play reverse'
+            }
         }
     );
-    
-    gsap.fromTo(lopburiCenter, 
-        { y: 40, opacity: 0 }, 
-        { 
-            y: 0, 
-            opacity: 1, 
-            duration: 1.0, 
-            ease: 'power2.out', 
-            delay: 0.2, 
-            scrollTrigger: { 
-                trigger: '.lopburi-background', 
-                start: 'left 80%', 
-                end: 'right 20%', 
-                containerAnimation: horizontalScrollTween, 
-                toggleActions: 'play reverse play reverse' 
-            } 
+
+    gsap.fromTo(lopburiCenter,
+        { y: 40, opacity: 0 },
+        {
+            y: 0,
+            opacity: 1,
+            duration: 1.0,
+            ease: 'power2.out',
+            delay: 0.2,
+            scrollTrigger: {
+                trigger: '.lopburi-background',
+                start: 'left 80%',
+                end: 'right 20%',
+                containerAnimation: horizontalScrollTween,
+                toggleActions: 'play reverse play reverse'
+            }
         }
     );
 }
@@ -369,7 +407,7 @@ function initLopburiFightersBillboard() {
 
         // Billboard animation
         gsap.fromTo(fighter,
-            { 
+            {
                 rotateX: 90,
                 y: 20,
                 opacity: 0
@@ -433,14 +471,14 @@ function initLopburiFightersBillboard() {
 }
 function initLopburiFighters2() {
     if (!horizontalScrollTween) return;
-    
+
     const fighter5 = document.querySelector('.lopburi-fighter-5');
     if (!fighter5) return;
 
     let floatTween = null;
 
     gsap.fromTo(fighter5,
-        { 
+        {
             rotateX: 90,
             y: 20,
             opacity: 0
@@ -484,7 +522,7 @@ function initLopburiTextSlideUp() {
     if (!textBox) return;
 
     gsap.fromTo(textBox,
-        { 
+        {
             y: 60,
             opacity: 0
         },
@@ -695,16 +733,17 @@ function initSukhothaiTextAnimation() {
     if (!horizontalScrollTween) return;
     const textBox = document.querySelector('.text-box-1');
     if (!textBox) return;
-    gsap.fromTo(textBox, 
-        { y: 80, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 1.2, ease: 'power2.out',
-          scrollTrigger: { 
-              trigger: '.text-box-1', 
-              start: 'left 75%', 
-              end: 'right 25%', 
-              containerAnimation: horizontalScrollTween, 
-              toggleActions: 'play reverse play reverse' 
-          } 
+    gsap.fromTo(textBox,
+        { y: 80, opacity: 0 },
+        {
+            y: 0, opacity: 1, duration: 1.2, ease: 'power2.out',
+            scrollTrigger: {
+                trigger: '.text-box-1',
+                start: 'left 75%',
+                end: 'right 25%',
+                containerAnimation: horizontalScrollTween,
+                toggleActions: 'play reverse play reverse'
+            }
         }
     );
 }
@@ -741,31 +780,31 @@ function initWalkingFighter() {
 
     // ตรวจว่า scroll ถึง Present Day หรือยัง
     function checkEra() {
-    const trackEl = document.getElementById('timeline-track');
-    if (!trackEl) return;
-    
-    const trackX = gsap.getProperty(trackEl, 'x');
-    
-    // หา floor-artboard-10 อันแรกที่เจอ
-    const floor10 = document.querySelector('img[src="img/floor/floor-artboard-10.png"]');
-    if (!floor10) return;
-    
-    const floorScreenX = floor10.offsetLeft + trackX;
-    
-    if (floorScreenX <= window.innerWidth * 0.5) {
-        if (currentFrames !== framesNew) {
-            currentFrames = framesNew;
-            currentFrame = 0;
-            img.src = currentFrames[0];
-        }
-    } else {
-        if (currentFrames !== framesOld) {
-            currentFrames = framesOld;
-            currentFrame = 0;
-            img.src = currentFrames[0];
+        const trackEl = document.getElementById('timeline-track');
+        if (!trackEl) return;
+
+        const trackX = gsap.getProperty(trackEl, 'x');
+
+        // หา floor-artboard-10 อันแรกที่เจอ
+        const floor10 = document.querySelector('img[src="img/floor/floor-artboard-10.png"]');
+        if (!floor10) return;
+
+        const floorScreenX = floor10.offsetLeft + trackX;
+
+        if (floorScreenX <= window.innerWidth * 0.5) {
+            if (currentFrames !== framesNew) {
+                currentFrames = framesNew;
+                currentFrame = 0;
+                img.src = currentFrames[0];
+            }
+        } else {
+            if (currentFrames !== framesOld) {
+                currentFrames = framesOld;
+                currentFrame = 0;
+                img.src = currentFrames[0];
+            }
         }
     }
-}
 
     function startWalking() {
         if (isWalking) return;
@@ -797,18 +836,18 @@ function initWalkingFighter() {
 function initSukhothaiKickAnimation() {
     const container = document.querySelector('.sukhothai-kick-container');
     const kickPose = document.querySelector('.kick-pose');
-    
+
     if (!container || !kickPose) {
         console.log('Sukhothai kick pose not found');
         return;
     }
-    
+
     const framesData = kickPose.getAttribute('data-kick-frames');
     if (!framesData) {
         console.log('No frames data');
         return;
     }
-    
+
     const frames = framesData.split(',');
     const originalSrc = kickPose.src;
     let isHovering = false;
@@ -830,7 +869,7 @@ function initSukhothaiKickAnimation() {
             }
         }, 180);
     };
-    
+
     container.addEventListener('mouseenter', () => {
         console.log('Mouse entered!');
         isHovering = true;
@@ -838,7 +877,7 @@ function initSukhothaiKickAnimation() {
         kickPose.src = frames[0];
         playOnce();
     });
-    
+
     container.addEventListener('mouseleave', () => {
         console.log('Mouse left!');
         isHovering = false;
@@ -1222,11 +1261,15 @@ function initThaSaoParallax() {
 function initRemainingKaraokeBoxes() {
     if (!horizontalScrollTween) return;
 
+    // .text-box-22 is intentionally excluded from this shared loop.
+    // It sits at the absolute end of the track so its LEFT edge never
+    // reaches 'left 20%' before horizontal scrolling maxes out — the
+    // scrub would stall mid-reveal. It gets its own trigger below.
     const boxes = [
-        '.text-box-9', 
+        '.text-box-9',
         '.text-box-13', '.text-box-14', '.text-box-15',
         '.text-box-16', '.text-box-17', '.text-box-18',
-        '.text-box-19', '.text-box-20', '.text-box-21', '.text-box-22'
+        '.text-box-19', '.text-box-20', '.text-box-21'
     ];
 
     boxes.forEach((boxSelector) => {
@@ -1237,9 +1280,6 @@ function initRemainingKaraokeBoxes() {
         const chars = Array.from(box.querySelectorAll('.karaoke-char'));
         if (!chars.length) return;
 
-        // text-box-22 อยู่ท้ายสุด ให้ end ยาวกว่าปกติ เพื่อให้เล่นจบก่อน scroll กลับได้
-        const isLast = boxSelector === '.text-box-22';
-
         gsap.fromTo(chars,
             { opacity: 0.15, filter: 'blur(4px)' },
             {
@@ -1247,13 +1287,40 @@ function initRemainingKaraokeBoxes() {
                 scrollTrigger: {
                     trigger: box,
                     start: 'left 70%',
-                    end: isLast ? 'left -60%' : 'left 30%',
-                    scrub: isLast ? 0.1 : 0.3,
+                    end: 'left 20%',
+                    scrub: 0.3,
                     containerAnimation: horizontalScrollTween
                 }
             }
         );
     });
+
+    // ── text-box-22 dedicated trigger ────────────────────────────────────
+    // Uses the RIGHT edge so the scrub range lands entirely within the
+    // portion of the horizontal scroll that actually plays out.
+    // right 110% → box hasn't entered view yet  (start scrub)
+    // right 60%  → box is ~40 % across the screen (end scrub, fully lit)
+    // Both points are reachable before the pin releases.
+    const box22 = document.querySelector('.text-box-22');
+    if (box22) {
+        box22.querySelectorAll('p').forEach(p => wrapCharsInNode(p));
+        const chars22 = Array.from(box22.querySelectorAll('.karaoke-char'));
+        if (chars22.length) {
+            gsap.fromTo(chars22,
+                { opacity: 0.15, filter: 'blur(4px)' },
+                {
+                    opacity: 1, filter: 'blur(0px)', stagger: 0.02, ease: 'none', duration: 0.6,
+                    scrollTrigger: {
+                        trigger: box22,
+                        start: 'right 110%', // right edge just about to enter viewport
+                        end: 'right 60%',    // right edge at 60 % — well before track stops
+                        scrub: 0.3,
+                        containerAnimation: horizontalScrollTween
+                    }
+                }
+            );
+        }
+    }
 }
 
 function initThaSaoFighters() {
@@ -1752,4 +1819,86 @@ function initPresentFighters() {
             },
         });
     });
+}
+
+// =============================================
+// 🟢 PAGE TRANSITION (ใช้ GSAP คุมเส้นชัย + แก้บั๊ก Loop + แก้อ่านไม่จบ)
+// =============================================
+let isNavigatingToNextPage = false;
+window.justReturnedCooldown = false; // ประกาศตัวแปรคูลดาวน์ให้เป็น Global
+
+// 1. ต่อความยาวถนนให้ text-box-22 เล่นคาราโอเกะจบได้ 100%
+document.addEventListener('DOMContentLoaded', () => {
+    const track = document.getElementById('timeline-track');
+    if (track) {
+        track.style.paddingRight = '50vw'; // ดันพื้นที่ว่างไปทางขวาครึ่งจอ
+    }
+});
+
+// 2. โค้ดรับจดหมายลับตอนกลับมาจากสักยันต์
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('from') === 'sakyant') {
+        window.justReturnedCooldown = true; // เปิดบาเรียกันวาร์ปทันที
+
+        // รอให้เว็บจัดหน้าเสร็จ แล้วดึงจอขึ้นมาจากจุดล่างสุด 400px
+        setTimeout(() => {
+            const safePoint = document.body.scrollHeight - window.innerHeight - 400;
+            window.scrollTo(0, safePoint);
+
+            // ถอดบาเรียออกหลังจาก 2 วินาที (เพื่อให้ไปกลับได้หลายรอบ)
+            setTimeout(() => {
+                window.justReturnedCooldown = false;
+            }, 2000);
+        }, 600);
+    }
+});
+
+// 3. ใช้ GSAP ScrollTrigger จับเส้นชัย (แม่นยำ 100% ไม่เอ๋อเหมือนคำนวณพิกเซลเอง)
+window.addEventListener('load', () => {
+    // หน่วงเวลา 1.5 วินาที รอให้ GSAP จัดขนาดหน้าจอเสร็จก่อนค่อยวางเส้นชัย
+    setTimeout(() => {
+        let gate = document.getElementById('transition-gate');
+        if (!gate) {
+            gate = document.createElement('div');
+            gate.id = 'transition-gate';
+            gate.style.cssText = 'position: absolute; bottom: 0; width: 100%; height: 5px; pointer-events: none;';
+            document.body.appendChild(gate);
+        }
+
+        ScrollTrigger.create({
+            trigger: '#transition-gate',
+            start: 'bottom bottom', // ทริกเกอร์เมื่อเส้นชัยแตะขอบล่างจอจริงๆ
+            onEnter: () => {
+                // ถ้าติดคูลดาวน์อยู่ ให้ข้ามการวาร์ปไปเลย
+                if (window.justReturnedCooldown) return;
+
+                if (!isNavigatingToNextPage) {
+                    isNavigatingToNextPage = true;
+                    setTimeout(() => {
+                        triggerTransitionTo('sakyant.html');
+                    }, 500); // ดีเลย์ 0.5 วิก่อนวาร์ป
+                }
+            }
+        });
+
+        ScrollTrigger.refresh();
+    }, 1500);
+});
+
+function triggerTransitionTo(url) {
+    let transitionOverlay = document.getElementById('pageTransition');
+    if (!transitionOverlay) {
+        transitionOverlay = document.createElement('div');
+        transitionOverlay.id = 'pageTransition';
+        transitionOverlay.className = 'page-transition-overlay';
+        document.body.appendChild(transitionOverlay);
+        void transitionOverlay.offsetWidth;
+    }
+
+    transitionOverlay.classList.add('active');
+
+    setTimeout(() => {
+        window.location.href = url;
+    }, 800);
 }

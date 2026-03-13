@@ -548,3 +548,23 @@ main {
     position: relative !important;
     /* ห้ามเป็น fixed หรือ absolute เด็ดขาด */
 }
+
+/* =========================================
+   PAGE TRANSITION OVERLAY (ม่านสลับหน้า)
+   ========================================= */
+.page-transition-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: #272727;
+    background-image: url('../img/paper-texture.png');
+    background-size: 420px 420px;
+    z-index: 999999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.page-transition-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}

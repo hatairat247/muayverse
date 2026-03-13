@@ -1401,3 +1401,21 @@
         min-height: auto !important;
     }
 }
+
+/* =========================================
+   SAK YANT WORD HOVER EFFECT (บังคับเปิดใช้งาน)
+   ========================================= */
+.gaoyord-text {
+    pointer-events: auto !important;
+    /* บังคับให้กล่องรับเมาส์ */
+    position: relative;
+    z-index: 10;
+}
+
+.yant-word {
+    display: inline-block;
+    /* ทำให้คำคำนวณระยะเมาส์ได้เป๊ะๆ */
+    transition: color 0.15s ease-out, text-shadow 0.15s ease-out;
+    position: relative;
+    z-index: 11;
+}
