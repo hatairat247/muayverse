@@ -149,6 +149,7 @@ main {
 .logo-nav {
     height: 80px !important;
     width: auto !important;
+    cursor: pointer;
 }
 
 /* ===== Reset & Base Styles ===== */
