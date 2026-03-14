@@ -65,6 +65,17 @@ window.addEventListener('load', () => {
 
     isInitialized = true;
 
+    // Lazy load รูปใน sections ที่ไม่ใช่ 2 section แรก
+    document.querySelectorAll(
+        '.era-section:not([data-era="sukhothai"]):not([data-era="ayutthaya"]) img'
+    ).forEach(img => {
+        if (!img.loading) img.loading = 'lazy';
+    });
+
+    // ลด forced reflow — บอก GSAP ใช้ requestAnimationFrame batch
+    gsap.config({ force3D: true });
+    ScrollTrigger.config({ limitCallbacks: true });
+    
     if (new URLSearchParams(window.location.search).get('from') === 'sakyant') {
         setTimeout(() => {
             ScrollTrigger.refresh();
@@ -373,29 +384,24 @@ function initKaraokeAnimation() {
         const hideText2 = () => {
             textBox2._parallaxReady = false;
             gsap.killTweensOf(textBox2);
-            // ปรับให้หายวับ (0.1s) และดีดลงเร็วๆ
             gsap.to(textBox2, { opacity: 0, y: 60, duration: 0.1, ease: 'power2.in' });
         };
 
         ScrollTrigger.create({
             trigger: textBox2,
             containerAnimation: horizontalScrollTween,
-            // *** แก้จุดนี้ครับ *** // ใช้ "left 40%" หมายความว่า:
-            // 1. ตอนไปข้างหน้า: ข้อความจะเด้งขึ้นมาเมื่อเลื่อนมาถึง 40% ของจอ (เกือบๆ กลางจอ)
-            // 2. ตอนถอยหลัง: ทันทีที่ข้อความถอยกลับไปแตะเส้น 40% (ยังอยู่กลางจออยู่เลย) ให้ 'หายทันที'
-            start: "left 60%", 
+            start: "left 60%",
             onEnter: () => showText2(),
             onEnterBack: () => showText2(),
-            onLeaveBack: () => hideText2()}); // หายทันทีที่ถอยมาแตะระยะ 40% ไม่ต้องรอหลุดขอบจอ
-             // Mouse Parallax (คงเดิม)
+            onLeaveBack: () => hideText2()
+        });
+
         document.addEventListener('mousemove', (e) => {
             if (!textBox2._parallaxReady) return;
             const mouseX = (e.clientX / window.innerWidth - 0.5) * 25;
             const mouseY = (e.clientY / window.innerHeight - 0.5) * 25;
             gsap.to(textBox2, { x: mouseX, y: mouseY, duration: 0.6, ease: 'power2.out', overwrite: 'auto' });
         });
-
-       
     }
 
     const karaokeTextBoxes = [
@@ -601,7 +607,6 @@ function initLopburiFightersBillboard() {
 
         gsap.set(el, { opacity: 0, y: 150, scale: 0.6, rotation: item.rotDir });
 
-        // scrub opacity ตาม scroll + onEnter animate y/scale/rotation
         gsap.to(el, {
             opacity: 1, ease: 'power2.out',
             scrollTrigger: {
@@ -668,9 +673,9 @@ function initLopburiTextSlideUp() {
             gsap.to(textBox, { y: 0, opacity: 1, duration: 1.0, ease: 'power2.out' });
         },
         onLeaveBack: () => {
-    gsap.killTweensOf(textBox);
-    gsap.to(textBox, { y: 60, opacity: 0, duration: 0.4, ease: 'power2.in' });
-}
+            gsap.killTweensOf(textBox);
+            gsap.to(textBox, { y: 60, opacity: 0, duration: 0.4, ease: 'power2.in' });
+        }
     });
 }
 
@@ -711,28 +716,26 @@ function initAyutthayaParallax() {
 function initAyutthayaTextAnimation() {
     if (!horizontalScrollTween) return;
 
-    // text-box-3 แยกออกมา — เด้งช้ากว่า
     const textBox3 = document.querySelector('.text-box-3');
-if (textBox3) {
-    gsap.set(textBox3, { y: 100, opacity: 0 });
+    if (textBox3) {
+        gsap.set(textBox3, { y: 100, opacity: 0 });
 
-    ScrollTrigger.create({
-        trigger: '.text-box-3', start: 'left 55%',
-        containerAnimation: horizontalScrollTween,
-        onEnter: () => {
-            gsap.to(textBox3, { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out' });
-        },
-        onEnterBack: () => {
-            gsap.to(textBox3, { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out' });
-        },
-        onLeaveBack: () => {
-            gsap.killTweensOf(textBox3);
-            gsap.set(textBox3, { y: 100, opacity: 0 });
-        }
-    });
-}
+        ScrollTrigger.create({
+            trigger: '.text-box-3', start: 'left 55%',
+            containerAnimation: horizontalScrollTween,
+            onEnter: () => {
+                gsap.to(textBox3, { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out' });
+            },
+            onEnterBack: () => {
+                gsap.to(textBox3, { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out' });
+            },
+            onLeaveBack: () => {
+                gsap.killTweensOf(textBox3);
+                gsap.set(textBox3, { y: 100, opacity: 0 });
+            }
+        });
+    }
 
-    // text-box-4 — ช้ากว่า
     const textBox4 = document.querySelector('.text-box-4');
     if (textBox4) {
         gsap.set(textBox4, { y: 100, opacity: 0 });
@@ -751,12 +754,10 @@ if (textBox3) {
         });
     }
 
-    // text-box-5 — ขึ้นหลังรูปนายขนมต้ม
     const textBox5 = document.querySelector('.text-box-5');
     if (textBox5) {
         gsap.set(textBox5, { y: 100, opacity: 0 });
 
-        // show — fire เร็ว
         ScrollTrigger.create({
             trigger: '.text-box-4',
             start: 'right 10%',
@@ -769,7 +770,6 @@ if (textBox3) {
             },
         });
 
-        // hide — fire ช้ากว่า ตอน scroll กลับ
         ScrollTrigger.create({
             trigger: '.text-box-4',
             start: 'right -30%',
@@ -785,8 +785,8 @@ if (textBox3) {
 function initMouseParallax() {
     const textBox1 = document.querySelector('.text-box-1');
     const textBox2 = document.querySelector('.text-box-2');
-    if (textBox2) 
-    gsap.set(textBox2, { opacity: 0, y: 40 });
+    if (textBox2)
+        gsap.set(textBox2, { opacity: 0, y: 40 });
     const textBoxes = [
         document.querySelector('.text-box-3'),
         document.querySelector('.text-box-4'),
@@ -830,7 +830,6 @@ function initRegionalFightersAnimation() {
 
         gsap.set(fighter, { opacity: 0, y: 150, scale: 0.6, rotation: rotDir });
 
-        // fighter — scrub opacity ตาม scroll + onEnter animate y/scale
         gsap.to(fighter, {
             opacity: 1, ease: 'power2.out',
             scrollTrigger: {
@@ -853,7 +852,6 @@ function initRegionalFightersAnimation() {
         if (!label) return;
         gsap.set(label, { opacity: 0, y: 80, scale: 0.5, rotation: rotDir * 0.5 });
 
-        // label — ScrollTrigger แยก trigger ที่ fighter เหมือนกัน
         gsap.to(label, {
             opacity: 1, ease: 'power2.out',
             scrollTrigger: {
@@ -875,34 +873,19 @@ function initAyutthayaImagesAnimation() {
     gsap.set(thailandMap, { y: 300, opacity: 0 });
     gsap.set(khanomTom, { y: -100, opacity: 0 });
 
-    const playAnimation = () => {
-        gsap.killTweensOf([khanomTom, thailandMap]);
-        gsap.to(khanomTom, { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' });
-        gsap.to(thailandMap, { y: -300, opacity: 1, duration: 1.5, delay: 0.2, ease: 'power3.out' });
-    };
-
-    const resetAnimation = () => {
-        gsap.killTweensOf([khanomTom, thailandMap]);
-        gsap.to(khanomTom, { y: -100, opacity: 0, duration: 0.5, ease: 'power2.in' });
-        gsap.to(thailandMap, { y: 300, opacity: 0, duration: 0.5, ease: 'power2.in' });
-    };
-
-   // 1. Trigger สำหรับ นายขนมต้ม (ให้ขึ้นตามปกติ)
     ScrollTrigger.create({
         trigger: khanomTom,
         containerAnimation: horizontalScrollTween,
-        start: 'left 40%', // นายขนมต้มเด้งขึ้นเมื่อใกล้ถึง
+        start: 'left 40%',
         onEnter: () => gsap.to(khanomTom, { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out' }),
         onLeaveBack: () => gsap.to(khanomTom, { y: -100, opacity: 0, duration: 0.5, ease: 'power2.in' }),
         onEnterBack: () => gsap.to(khanomTom, { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out' })
     });
 
-    // 2. Trigger สำหรับ แผนที่ไทย (ให้เด้งมาช้าลงตามที่ต้องการ)
     ScrollTrigger.create({
-        trigger: thailandMap, 
+        trigger: thailandMap,
         containerAnimation: horizontalScrollTween,
-        // ปรับตรงนี้ให้เด้งช้าลง (ต้องไถมาจนรูปแผนที่อยู่ 30% จากขอบซ้ายถึงจะเด้ง)
-        start: 'left 55%', 
+        start: 'left 55%',
         onEnter: () => gsap.to(thailandMap, { y: -300, opacity: 1, duration: 1.2, ease: 'power3.out' }),
         onLeaveBack: () => gsap.to(thailandMap, { y: 300, opacity: 0, duration: 0.5, ease: 'power2.in' }),
         onEnterBack: () => gsap.to(thailandMap, { y: -300, opacity: 1, duration: 1.2, ease: 'power3.out' })
@@ -926,9 +909,12 @@ function initWalkingFighter() {
         'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253442/fighter-walk-old-7_jampno.png',
     ];
     const framesNew = [
-        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773255798/fighter-walk-new-1_yulxh4.png', 'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253583/fighter-walk-new-2_fpyypu.png',
-        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253597/fighter-walk-new-3_qbahsm.png', 'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253600/fighter-walk-new-4_dohjms.png',
-        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253620/fighter-walk-new-5_g7ki2g.png', 'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773255801/fighter-walk-new-6_pxvbzq.png',
+        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773255798/fighter-walk-new-1_yulxh4.png',
+        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253583/fighter-walk-new-2_fpyypu.png',
+        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253597/fighter-walk-new-3_qbahsm.png',
+        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253600/fighter-walk-new-4_dohjms.png',
+        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253620/fighter-walk-new-5_g7ki2g.png',
+        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773255801/fighter-walk-new-6_pxvbzq.png',
         'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773255799/fighter-walk-new-7_qbpdsx.png',
     ];
 
@@ -939,19 +925,20 @@ function initWalkingFighter() {
     let scrollStopTimer = null;
     const FRAME_SPEED = 100;
 
-  function checkEra() {
-    const trackEl = document.getElementById('timeline-track');
-    if (!trackEl) return;
-    const floor10 = document.querySelector('img[src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253003/floor-artboard-10_qaq3ft.png"]');
-    if (!floor10) return;
-    const floorScreenX = floor10.getBoundingClientRect().left;
+    function checkEra() {
+        const trackEl = document.getElementById('timeline-track');
+        if (!trackEl) return;
+        const floor10 = document.querySelector('img[src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253003/floor-artboard-10_qaq3ft.png"]');
+        if (!floor10) return;
+        const floorScreenX = floor10.getBoundingClientRect().left;
 
-    if (floorScreenX <= window.innerWidth * 0.5) {
-        if (currentFrames !== framesNew) { currentFrames = framesNew; currentFrame = 0; img.src = currentFrames[0]; }
-    } else {
-        if (currentFrames !== framesOld) { currentFrames = framesOld; currentFrame = 0; img.src = currentFrames[0]; }
+        if (floorScreenX <= window.innerWidth * 0.5) {
+            if (currentFrames !== framesNew) { currentFrames = framesNew; currentFrame = 0; img.src = currentFrames[0]; }
+        } else {
+            if (currentFrames !== framesOld) { currentFrames = framesOld; currentFrame = 0; img.src = currentFrames[0]; }
+        }
     }
-}
+
     function startWalking() {
         if (isWalking) return;
         isWalking = true;
@@ -1042,8 +1029,6 @@ function initChaiyaKaraokeBoxes() {
         );
     });
 }
-
-
 
 function initChaiyaFighterScrubReveal() {
     if (!horizontalScrollTween) return;
@@ -1564,27 +1549,23 @@ function initMidRatanaFighters() {
         const el = document.querySelector(item.selector);
         if (!el) return;
 
-        // 1. ตั้งค่าเริ่มต้น: มุดดินอยู่และโปร่งใส
         gsap.set(el, { opacity: 0, y: 150, scale: 0.6 });
 
-        // 2. สร้าง ScrollTrigger แยกให้แต่ละรูป
         ScrollTrigger.create({
-            trigger: el, // ใช้ตัวเองเป็นตัวจุดชนวน
+            trigger: el,
             containerAnimation: horizontalScrollTween,
-            // 'left 80%' หมายความว่า: พอรูปนั้นๆ โผล่พ้นขอบขวามานิดเดียว (20%) ให้เริ่มเด้งทันที
-            start: 'left 55%', 
+            start: 'left 55%',
             onEnter: () => {
-                gsap.to(el, { 
-                    opacity: 1, 
-                    y: 0, 
-                    scale: 1, 
-                    duration: 0.8, 
+                gsap.to(el, {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    duration: 0.8,
                     ease: 'back.out(1.7)',
-                    onComplete: () => startIdleAnimation(el, item.rotDir) // พอเด้งเสร็จให้ขยับดุ๊กดิ๊กต่อ
+                    onComplete: () => startIdleAnimation(el, item.rotDir)
                 });
             },
             onLeaveBack: () => {
-                // ตอนรูดเมาส์กลับ ให้มุดดินหายไปเหมือนเดิม
                 gsap.killTweensOf(el);
                 gsap.to(el, { opacity: 0, y: 150, scale: 0.6, duration: 0.4, ease: 'power2.in' });
             }
