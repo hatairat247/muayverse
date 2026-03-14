@@ -25,6 +25,9 @@ class SakYantAnim {
         this.karaokeComplete = false;
         this.isSnapScrolling = false;
 
+        this.isNavigatingBack = false;
+        this.topWaitTimer = null;
+
         // Mouse parallax state
         this.mouse = { x: 0, y: 0 };
         this.parallaxTicking = false;
@@ -37,7 +40,7 @@ class SakYantAnim {
         this.slidePaperSound = null;
         this.typingSound = null;
         this.soundsLoaded = false;
-        
+
         this.isTypingSoundPlaying = false;
         this.typingStopTimeout = null;
 
@@ -112,26 +115,26 @@ class SakYantAnim {
 
         // ชั่วคราว force Hah Taew เป็น relative เพื่อวัด
         const saved = {
-            position:      hateaw.style.position,
-            opacity:       hateaw.style.opacity,
-            visibility:    hateaw.style.visibility,
+            position: hateaw.style.position,
+            opacity: hateaw.style.opacity,
+            visibility: hateaw.style.visibility,
             pointerEvents: hateaw.style.pointerEvents,
-            filter:        hateaw.style.filter,
+            filter: hateaw.style.filter,
         };
-        hateaw.style.setProperty('position',       'relative', 'important');
-        hateaw.style.setProperty('opacity',        '0',        'important');
-        hateaw.style.setProperty('visibility',     'hidden',   'important');
-        hateaw.style.setProperty('pointer-events', 'none',     'important');
-        hateaw.style.setProperty('filter',         'none',     'important');
+        hateaw.style.setProperty('position', 'relative', 'important');
+        hateaw.style.setProperty('opacity', '0', 'important');
+        hateaw.style.setProperty('visibility', 'hidden', 'important');
+        hateaw.style.setProperty('pointer-events', 'none', 'important');
+        hateaw.style.setProperty('filter', 'none', 'important');
 
         const hateawH = hateaw.offsetHeight;
 
         // restore
-        hateaw.style.position      = saved.position;
-        hateaw.style.opacity       = saved.opacity;
-        hateaw.style.visibility    = saved.visibility;
+        hateaw.style.position = saved.position;
+        hateaw.style.opacity = saved.opacity;
+        hateaw.style.visibility = saved.visibility;
         hateaw.style.pointerEvents = saved.pointerEvents;
-        hateaw.style.filter        = saved.filter;
+        hateaw.style.filter = saved.filter;
 
         if (hateawH <= 0) return;
 
@@ -231,28 +234,28 @@ class SakYantAnim {
         // เช็คจาก localStorage ก่อน
         const isMusicPlaying = localStorage.getItem('muayverse_music_playing') === 'true';
         if (isMusicPlaying) return true;
-        
+
         // เช็คจาก pageAudio.muted
         if (this.pageAudio && !this.pageAudio.muted) return true;
-        
+
         return false;
     }
 
     /* ─── Lazy load sound effects (performance optimization) ─── */
     _loadSounds() {
         if (this.soundsLoaded) return;
-        
+
         this.pickupSound = new Audio('SFX/Sakyant SFX/Pickuppaper.MP3');
         this.swipeSound = new Audio('SFX/Sakyant SFX/Swipe Paper.MP3');
         this.slidePaperSound = new Audio('SFX/Sakyant SFX/Slide Paper.MP3');
         this.typingSound = new Audio('SFX/Sakyant SFX/typing.MP3');
-        
+
         this.pickupSound.volume = 0.5;
         this.swipeSound.volume = 0.5;
         this.slidePaperSound.volume = 0.6;
         this.typingSound.volume = 0.6;
         this.typingSound.loop = true;
-        
+
         this.soundsLoaded = true;
         console.log('[Performance] Sound effects loaded');
     }
@@ -264,7 +267,7 @@ class SakYantAnim {
             this.scrollDirection = currentScrollY > this.lastScrollY ? 1 : -1;
             this.lastScrollY = currentScrollY;
             this.scrollY = currentScrollY;
-            
+
             if (!this.ticking) {
                 requestAnimationFrame(() => {
                     this._onScroll();
@@ -277,7 +280,7 @@ class SakYantAnim {
         window.addEventListener('mousemove', (e) => {
             this.mouse.x = e.clientX / window.innerWidth;
             this.mouse.y = e.clientY / window.innerHeight;
-            
+
             if (!this.parallaxTicking) {
                 requestAnimationFrame(() => {
                     this._updateParallax();
@@ -318,6 +321,22 @@ class SakYantAnim {
 
     /* ─── Scroll handler ─── */
     _onScroll() {
+        // ดักจับ: ถ้าไถขอบบนสุดเพื่อกลับหน้า History
+        if (this.scrollY <= 5 && this.scrollDirection < 0 && !this.isNavigatingBack) {
+            if (!this.topWaitTimer) {
+                this.topWaitTimer = setTimeout(() => {
+                    this.isNavigatingBack = true;
+                    this._triggerTransitionBack('history.html?from=sakyant'); // ส่งจดหมายลับกลับไปด้วย
+                }, 500); // หน่วง 0.5 วิกันเผลอไถโดน
+            }
+        } else {
+            // ถ้ายกเลิกการไถขึ้น ก็เคลียร์เวลาทิ้ง
+            if (this.topWaitTimer) {
+                clearTimeout(this.topWaitTimer);
+                this.topWaitTimer = null;
+            }
+        }
+
         if (!this.scrollLock || !this.section) return;
 
         const lockRect = this.scrollLock.getBoundingClientRect();
@@ -667,7 +686,7 @@ class SakYantAnim {
                             this.slidePaperSound.play().catch(e => console.log('Slide paper sound failed:', e));
                         }
                     }
-                    
+
                     if (this.gaoyordPapers) this.gaoyordPapers.classList.add('visible');
                     if (this.gaoyordText) this.gaoyordText.classList.add('visible');
                     this.gaoyordDecos.forEach(deco => deco.classList.add('visible'));
@@ -706,7 +725,7 @@ class SakYantAnim {
     /* ─── Custom Smooth scroll to Section 2 (magnetic snap) ─── */
     _smoothScrollToSection2() {
         if (!this.gaoyordSection || this.isSnapScrolling) return;
-        
+
         this.isSnapScrolling = true;
         const navbarH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--navbar-height')) || 96;
         const targetY = this.gaoyordSection.offsetTop - navbarH;
@@ -724,7 +743,7 @@ class SakYantAnim {
             const timeElapsed = currentTime - startTime;
             const progress = Math.min(timeElapsed / duration, 1);
             const ease = easeInOutCubic(progress);
-            
+
             window.scrollTo(0, startY + (distance * ease));
 
             if (progress < 1) {
@@ -740,7 +759,7 @@ class SakYantAnim {
     /* ─── Custom Smooth scroll to Section 1 (magnetic snap back) ─── */
     _smoothScrollToSection1() {
         if (!this.scrollLock || this.isSnapScrolling) return;
-        
+
         this.isSnapScrolling = true;
         const targetY = 0; // scroll กลับไปด้านบนสุด
         const startY = window.scrollY;
@@ -757,7 +776,7 @@ class SakYantAnim {
             const timeElapsed = currentTime - startTime;
             const progress = Math.min(timeElapsed / duration, 1);
             const ease = easeInOutCubic(progress);
-            
+
             window.scrollTo(0, startY + (distance * ease));
 
             if (progress < 1) {
@@ -781,7 +800,7 @@ class SakYantAnim {
 
             const parser = new DOMParser();
             const doc = parser.parseFromString(originalHTML, 'text/html');
-            
+
             const processNode = (node) => {
                 if (node.nodeType === Node.TEXT_NODE) {
                     const words = node.textContent.split(/(\s+)/);
@@ -810,34 +829,37 @@ class SakYantAnim {
         });
     }
 
-    /* ─── Setup gradient hover effect on words ─── */
+    /* ─── Setup gradient hover effect on words (อัปเกรดดักจับทั้งกล่อง) ─── */
     _setupYantWordHover() {
-        const descs = document.querySelectorAll('.gaoyord-desc');
+        const textContainer = document.querySelector('.gaoyord-text');
         let hoverTicking = false;
-        let throttleDelay = 0;
-        
-        descs.forEach(desc => {
-            desc.addEventListener('mousemove', (e) => {
-                if (!this.wordHoverEnabled) return;
-                const now = Date.now();
-                if (now - throttleDelay < 32) return;
-                throttleDelay = now;
-                
-                if (!hoverTicking) {
-                    requestAnimationFrame(() => {
-                        this._updateWordGlow(desc, e.clientX, e.clientY);
-                        hoverTicking = false;
-                    });
-                    hoverTicking = true;
-                }
-            }, { passive: true });
 
-            desc.addEventListener('mouseleave', () => {
-                desc.querySelectorAll('.yant-word').forEach(word => {
-                    word.classList.remove('glow');
-                    word.style.removeProperty('color');
-                    word.style.removeProperty('text-shadow');
+        if (!textContainer) return;
+
+        // ดักจับเมาส์จากกล่องใหญ่เลย จะได้ไม่หลุดขอบ
+        textContainer.addEventListener('mousemove', (e) => {
+            if (!this.wordHoverEnabled) return;
+
+            if (!hoverTicking) {
+                requestAnimationFrame(() => {
+                    // หาเฉพาะกล่องข้อความยันต์ที่กำลังเปิดอยู่ (active)
+                    const activeContent = textContainer.querySelector('.yant-text-content.active');
+                    if (activeContent) {
+                        const desc = activeContent.querySelector('.gaoyord-desc');
+                        if (desc) this._updateWordGlow(desc, e.clientX, e.clientY);
+                    }
+                    hoverTicking = false;
                 });
+                hoverTicking = true;
+            }
+        }, { passive: true });
+
+        // เมื่อเอาเมาส์ออกจากกล่อง ให้ดับไฟทั้งหมด
+        textContainer.addEventListener('mouseleave', () => {
+            document.querySelectorAll('.yant-word').forEach(word => {
+                word.classList.remove('glow');
+                word.style.removeProperty('color');
+                word.style.removeProperty('text-shadow');
             });
         });
     }
@@ -859,7 +881,7 @@ class SakYantAnim {
             if (distance < threshold) {
                 const intensity = 1 - (distance / threshold);
                 word.classList.add('glow');
-                
+
                 if (intensity > 0.7) {
                     word.style.color = '#ECE342';
                     word.style.textShadow = `0 0 ${20 * intensity}px rgba(236, 227, 66, ${0.8 * intensity}),
@@ -892,5 +914,22 @@ class SakYantAnim {
             Math.round(color1[1] + (color2[1] - color1[1]) * factor),
             Math.round(color1[2] + (color2[2] - color1[2]) * factor)
         ];
+    }
+    /* ───  วาร์ปกลับหน้า History พร้อมม่าน ─── */
+    _triggerTransitionBack(url) {
+        let transitionOverlay = document.getElementById('pageTransition');
+        if (!transitionOverlay) {
+            transitionOverlay = document.createElement('div');
+            transitionOverlay.id = 'pageTransition';
+            transitionOverlay.className = 'page-transition-overlay';
+            document.body.appendChild(transitionOverlay);
+            void transitionOverlay.offsetWidth;
+        }
+
+        transitionOverlay.classList.add('active');
+
+        setTimeout(() => {
+            window.location.href = url;
+        }, 800);
     }
 }

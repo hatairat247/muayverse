@@ -11,14 +11,12 @@
 }
 
 body {
-    display: block !important; /* Override sticky-footer flex from style.css ที่ทำให้ GSAP ScrollTrigger pin ไม่ทำงาน */
+    display: block !important;
     overflow-x: hidden;
     background-color: var(--history-bg) !important;
     background-image: none !important;
-    /* ป้องกันพื้นหลังซ้ำซ้อนจาก style.css */
 }
 
-/* สร้าง Layer Texture กระดาษแบบคงที่ ไม่ขยับตาม Scroll */
 body::before {
     content: '';
     position: fixed;
@@ -27,7 +25,6 @@ body::before {
     background-repeat: repeat;
     background-size: 420px 420px;
     opacity: 0.2;
-    /* ความชัดของกระดาษ */
     z-index: 0;
     pointer-events: none;
 }
@@ -43,7 +40,6 @@ body::before {
     display: flex;
     align-items: center;
     background: transparent;
-    /*  เปลี่ยนเป็นใส เพื่อให้มองทะลุเห็นลายกระดาษที่ body */
 }
 
 .history-viewport {
@@ -55,7 +51,7 @@ body::before {
 
 #timeline-track {
     position: relative;
-    width: 2500vw;
+    width: 2300vw;
     height: 100%;
     will-change: transform;
 }
@@ -228,7 +224,7 @@ body::before {
 }
 
 [data-era="korat"] .bg-mountain {
-    top: 20.32vw;
+    top: 21vw;
 }
 
 .bg-mountain-korat-1 {
@@ -449,7 +445,7 @@ body::before {
     position: absolute;
     left: 0;
     z-index: 5;
-    top: 4.5vw;
+    top: 4vw;
     height: 44.42vw;
     width: 66.67vw;
 }
@@ -480,10 +476,10 @@ body::before {
 
 .ayutthaya-temples {
     position: absolute;
-    left: 33vw;
+    left: 40vw;
     z-index: 10;
     width: 66.67vw;
-    top: 5.46vw;
+    top: 6vw;
     height: 44.43vw;
 }
 
@@ -515,7 +511,7 @@ body::before {
     width: 70vw;
     z-index: 10;
     pointer-events: none;
-    top: 7.31vw;
+    top: 6vw;
     height: 44.43vw;
 }
 
@@ -536,7 +532,7 @@ body::before {
     width: 70vw;
     z-index: 10;
     height: 42.18vw;
-    top: 6.75vw;
+    top: 7vw;
 }
 
 .lopburi-layer {
@@ -568,7 +564,7 @@ body::before {
     width: 70vw;
     z-index: 10;
     height: 42.18vw;
-    top: 7.87vw;
+    top: 6vw;
 }
 
 .chaiya-layer {
@@ -601,11 +597,11 @@ body::before {
 
 .tha-sao-background {
     position: absolute;
-    left: 530vw;
+    left: 524vw;
     width: 100vw;
     z-index: 10;
     height: 42.18vw;
-    top: 6.75vw;
+    top: 7vw;
 }
 
 .tha-sao-layer {
@@ -664,6 +660,29 @@ body::before {
     transition: filter 0.3s ease;
 }
 
+.thonburi-swap-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.thonburi-click-hint {
+    position: absolute;
+    right: 1vw;
+    top: 60%;
+    transform: translateY(-50%);
+    width: 3vw;
+    height: auto;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 20;
+    filter: invert(1) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+}
+
+.thonburi-container.aura-visible .thonburi-click-hint {
+    opacity: 1;
+    animation: waiKruClickBounce 1.2s ease-in-out infinite;
+}
+
 .thonburi-swap:hover {
     filter: drop-shadow(0 0 15px rgba(253, 240, 213, 0.5)) drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
 }
@@ -674,7 +693,7 @@ body::before {
     width: 100vw;
     z-index: 10;
     height: 42.18vw;
-    top: 9vw;
+    top: 8vw;
 }
 
 .thonburi-layer {
@@ -713,7 +732,7 @@ body::before {
     width: 100vw;
     z-index: 10;
     height: 42.18vw;
-    top: 3.37vw;
+    top: 4.7vw;
 }
 
 .early-ratana-layer {
@@ -762,7 +781,7 @@ body::before {
     width: 100vw;
     z-index: 10;
     height: 42.18vw;
-    top: 7vw;
+    top: 6vw;
 }
 
 .mid-ratana-layer {
@@ -786,11 +805,11 @@ body::before {
 
 .present-background {
     position: absolute;
-    left: 915vw;
+    left: 925vw;
     width: 100vw;
     z-index: 10;
     height: 42.18vw;
-    top: 5.62vw;
+    top: 4vw;
 }
 
 .present-layer {
@@ -810,7 +829,7 @@ body::before {
 
 .present-above {
     z-index: 2;
-    top: 40px;
+    top: 80px;
 }
 
 /* =========================================
@@ -916,9 +935,9 @@ body::before {
 }
 
 .thonburi-tree-4 {
-    left: 800vw;
-    top: 39%;
-    height: 30%;
+    left: 808vw;
+    top: 43%;
+    height: 25%;
     width: auto;
     transform: scaleX(-1);
 }
@@ -931,7 +950,7 @@ body::before {
 }
 
 .early-ratana-tree-2 {
-    left: 785vw;
+    left: 783vw;
     top: 43%;
     height: 25%;
     width: auto;
@@ -940,7 +959,7 @@ body::before {
 
 .early-ratana-tree-3 {
     left: 877vw;
-    top: 42%;
+    top: 43%;
     height: 25%;
     width: auto;
 }
@@ -967,14 +986,14 @@ body::before {
 }
 
 .present-building-1 {
-    left: 1005vw;
+    left: 1013vw;
     top: 40%;
     height: 29%;
     width: auto;
 }
 
 .present-building-2 {
-    left: 1026vw;
+    left: 1030vw;
     top: 44%;
     height: 25%;
     width: auto;
@@ -989,7 +1008,7 @@ body::before {
 }
 
 .present-building-4 {
-    left: 1127vw;
+    left: 1123vw;
     top: 27%;
     height: 42%;
     width: auto;
@@ -1048,7 +1067,7 @@ body::before {
 }
 
 /* =========================================
-   SUKHOTHAI KICK POSE HOVER ANIMATION
+   SUKHOTHAI KICK POSE
    ========================================= */
 .sukhothai-kick-container {
     position: relative;
@@ -1060,18 +1079,43 @@ body::before {
     position: relative;
     transition: filter 0.4s ease, opacity 0.15s ease;
     pointer-events: auto;
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4)) 
-            drop-shadow(0 0 16px rgba(253, 240, 213, 0.3))
-            drop-shadow(0 0 24px rgba(253, 240, 213, 0.2));
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4)) drop-shadow(0 0 16px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 24px rgba(253, 240, 213, 0.2));
     animation: kickPoseGlow 2.5s ease-in-out infinite;
 }
 
-/* Aura effect wrapper */
+/* =========================================
+   SUKHOTHAI KICK CLICK HINT
+   ========================================= */
+.kick-click-hint {
+    position: absolute;
+    right: 200px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3vw;
+    height: auto;
+    pointer-events: none;
+    z-index: 20;
+    filter: invert(1) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+    animation: kickClickBounce 1.2s ease-in-out infinite;
+}
+
+@keyframes kickClickBounce {
+
+    0%,
+    100% {
+        transform: translateY(-50%) translateX(0px);
+    }
+
+    50% {
+        transform: translateY(-50%) translateX(-6px);
+    }
+}
+
 .sukhothai-kick-container::before {
     content: '';
     position: absolute;
     left: 50px;
-    top: 80px;        /* เลื่อนลงมาจาก -120px */
+    top: 80px;
     transform: translate(0, 0);
     width: 32vw;
     height: 32vw;
@@ -1086,28 +1130,27 @@ body::before {
     pointer-events: none;
     z-index: -1;
     opacity: 0.95;
-    animation: sukhothaiAuraBreath 2.5s ease-in-out infinite; 
+    animation: sukhothaiAuraBreath 2.5s ease-in-out infinite;
 }
 
-/* Intensify aura on hover */
 .sukhothai-kick-container.hovering::before {
     opacity: 0.95;
     animation: sukhothaiAuraBreathHover 2s ease-in-out infinite;
 }
 
-/* Intensify glow on hover */
 .sukhothai-kick-container.hovering .kick-pose {
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4)) 
-            drop-shadow(0 0 16px rgba(253, 240, 213, 0.3))
-            drop-shadow(0 0 24px rgba(253, 240, 213, 0.2));    /* กลับไปใช้ filter เดิมเหมือนตอนไม่ hover */
-    animation: kickPoseGlow 2.5s ease-in-out infinite; 
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4)) drop-shadow(0 0 16px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 24px rgba(253, 240, 213, 0.2));
+    animation: kickPoseGlow 2.5s ease-in-out infinite;
 }
 
 @keyframes sukhothaiAuraBreath {
-    0%, 100% {
+
+    0%,
+    100% {
         opacity: 0.5;
         transform: translate(-50%, -50%) scale(0.85);
     }
+
     50% {
         opacity: 0.75;
         transform: translate(-50%, -50%) scale(1.0);
@@ -1115,50 +1158,52 @@ body::before {
 }
 
 @keyframes sukhothaiAuraBreathHover {
-    0%, 100% {
+
+    0%,
+    100% {
         opacity: 0.85;
         transform: translate(-50%, -50%) scale(0.95);
     }
+
     50% {
         opacity: 1;
         transform: translate(-50%, -50%) scale(1.15);
     }
 }
 
-/* Glow animation for kick pose */
 @keyframes kickPoseGlow {
-    0%, 100% {
-        filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.3)) 
-                drop-shadow(0 0 12px rgba(253, 240, 213, 0.25))
-                drop-shadow(0 0 18px rgba(253, 240, 213, 0.15));
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.3)) drop-shadow(0 0 12px rgba(253, 240, 213, 0.25)) drop-shadow(0 0 18px rgba(253, 240, 213, 0.15));
     }
+
     50% {
-        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5)) 
-                drop-shadow(0 0 20px rgba(253, 240, 213, 0.35))
-                drop-shadow(0 0 30px rgba(253, 240, 213, 0.25));
+        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.35)) drop-shadow(0 0 30px rgba(253, 240, 213, 0.25));
     }
 }
 
 @keyframes kickPoseGlowHover {
-    0%, 100% {
-        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5)) 
-                drop-shadow(0 0 20px rgba(253, 240, 213, 0.4))
-                drop-shadow(0 0 30px rgba(253, 240, 213, 0.25));
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.4)) drop-shadow(0 0 30px rgba(253, 240, 213, 0.25));
     }
+
     50% {
-        filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.7)) 
-                drop-shadow(0 0 28px rgba(253, 240, 213, 0.6))
-                drop-shadow(0 0 42px rgba(253, 240, 213, 0.4));
+        filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.7)) drop-shadow(0 0 28px rgba(253, 240, 213, 0.6)) drop-shadow(0 0 42px rgba(253, 240, 213, 0.4));
     }
 }
 
+/* ซ่อน kick-poses ตั้งแต่แรก — GSAP จะ animate ขึ้นมาทีหลัง */
 .kick-poses {
     position: absolute;
-    left: 90vw;        /* คืนค่าเดิม */
+    left: 90vw;
     z-index: 100;
     width: 30vw;
     top: 16.87vw;
     height: 28.12vw;
+    opacity: 0;
 }
 
 .kick-pose {
@@ -1187,31 +1232,29 @@ body::before {
     z-index: 10;
     filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.7));
     height: 36.56vw;
-    top: 28.12vw;
-    /* GSAP จะจัดการ transform เอง ไม่ต้องใส่ค่า initial */
+    top: 24vw;
 }
 
 .khanom-tom-fighter {
     position: absolute;
-    left: 254vw;
+    left: 250vw;
     width: auto;
     object-fit: contain;
     opacity: 0;
     z-index: 12;
     height: 30.93vw;
     top: 11.32vw;
-    /* GSAP จะจัดการ transform เอง ไม่ต้องใส่ค่า initial */
 }
 
 .early-ratana-pic-rama5 {
     position: absolute;
-    left: 830vw;
+    left: 835vw;
     width: auto;
     object-fit: contain;
     z-index: 12;
     opacity: 1;
     height: 30.93vw;
-    top: 13.32vw;
+    top: 12vw;
 }
 
 .regional-fighters {
@@ -1247,15 +1290,17 @@ body::before {
     transition: none;
 }
 
-/* Idle Animation สำหรับนักมวย */
 .regional-fighter.idle {
     animation: fighter-float 3s ease-in-out infinite;
 }
 
 @keyframes fighter-float {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: rotateX(0deg) translateY(0px);
     }
+
     50% {
         transform: rotateX(0deg) translateY(-8px);
     }
@@ -1263,7 +1308,7 @@ body::before {
 
 .korat-poses {
     position: absolute;
-    left: 270vw;
+    left: 280vw;
     z-index: 100;
     width: 30vw;
     top: 5.62vw;
@@ -1287,7 +1332,7 @@ body::before {
     height: 42.18vw;
 }
 
-/* Buffalo Swing Animation Styles */
+/* Buffalo Swing */
 .buffalo-swing-wrapper {
     position: relative;
     display: inline-block;
@@ -1349,13 +1394,16 @@ body::before {
         opacity: 0;
         transform: translateY(40px);
     }
+
     60% {
         opacity: 1;
         transform: translateY(-12px);
     }
+
     80% {
         transform: translateY(4px);
     }
+
     100% {
         opacity: 1;
         transform: translateY(0px);
@@ -1363,18 +1411,20 @@ body::before {
 }
 
 @keyframes buffaloClickBounceLoop {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(0px);
     }
+
     50% {
         transform: translateY(-8px);
     }
 }
 
-
 .lopburi-fighters {
     position: absolute;
-    left: 275vw;
+    left: 277vw;
     display: flex;
     z-index: 12;
     top: 4.68vw;
@@ -1428,7 +1478,7 @@ body::before {
 
 .lopburi-fighters-2 {
     position: absolute;
-    left: 360vw;
+    left: 368vw;
     display: flex;
     z-index: 12;
     top: 5.2vw;
@@ -1495,6 +1545,7 @@ body::before {
     align-items: center;
     gap: 5px;
     margin-left: -3vw;
+    margin-top: 2vw;
 }
 
 .chaiya-container:first-child {
@@ -1583,7 +1634,7 @@ body::before {
 
 .tha-sao-fighters {
     position: absolute;
-    left: 630vw;
+    left: 635vw;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1593,7 +1644,7 @@ body::before {
 
 .tha-sao-fighters-2 {
     position: absolute;
-    left: 675vw;
+    left: 677vw;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1648,7 +1699,6 @@ body::before {
     width: fit-content;
     display: flex;
     pointer-events: none;
-
 }
 
 .tha-sao-container-3 {
@@ -1674,10 +1724,10 @@ body::before {
 
 .thonburi-fighters {
     position: absolute;
-    left: 749vw;
+    left: 755vw;
     display: flex;
     z-index: 12;
-    top: 7.29vw;
+    top: 5vw;
 }
 
 .thonburi-container {
@@ -1710,10 +1760,10 @@ body::before {
 
 .early-ratana-fighters {
     position: absolute;
-    left: 863vw;
+    left: 866vw;
     display: flex;
     z-index: 12;
-    top: 9.89vw;
+    top: 9vw;
 }
 
 .early-ratana-container {
@@ -1745,10 +1795,10 @@ body::before {
 
 .mid-ratana-fighters {
     position: absolute;
-    left: 910vw;
+    left: 913vw;
     display: flex;
     z-index: 12;
-    top: 9.37vw;
+    top: 8vw;
 }
 
 .mid-ratana-container {
@@ -1792,10 +1842,10 @@ body::before {
 
 .present-fighters {
     position: absolute;
-    left: 1040vw;
+    left: 1050vw;
     display: flex;
     z-index: 12;
-    top: 11.45vw;
+    top: 12vw;
 }
 
 .present-container {
@@ -1847,19 +1897,21 @@ body::before {
     text-align: center;
     white-space: nowrap;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-    opacity: 0;
+    opacity: 1;
     transform: translateY(20px);
 }
 
-/* Idle Animation สำหรับป้ายชื่อ */
 .fighter-label.idle {
     animation: label-float 2.5s ease-in-out infinite;
 }
 
 @keyframes label-float {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(0px);
     }
+
     50% {
         transform: translateY(-5px);
     }
@@ -1873,7 +1925,7 @@ body::before {
 .pose-label {
     position: relative;
     left: 2.6vw;
-    top: 4.68vw;
+    top: 6vw;
 }
 
 .label-north {
@@ -1985,17 +2037,19 @@ body::before {
     color: var(--history-highlight);
 }
 
-.text-box-10 .karaoke-char {
+/* Karaoke chars — text-box-1 */
+.text-box-1 .karaoke-char {
     display: inline;
-    opacity: 0.15;
+    opacity: 0;
     filter: blur(4px);
+    transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
-.text-box-10 .highlight .karaoke-char {
+.text-box-1 .highlight .karaoke-char {
     color: var(--history-highlight);
 }
 
-/* Karaoke effect for text-box-2 (Royal Curriculum) */
+/* Karaoke chars — text-box-2 */
 .text-box-2 .karaoke-char {
     display: inline;
     opacity: 0.15;
@@ -2012,7 +2066,7 @@ body::before {
     color: var(--history-highlight);
 }
 
-/* Karaoke effect for text-box-6 (Regional Styles) */
+/* Karaoke chars — text-box-6 */
 .text-box-6 .karaoke-char {
     display: inline;
     opacity: 0.15;
@@ -2029,7 +2083,7 @@ body::before {
     color: var(--history-highlight);
 }
 
-/* Karaoke effect for text-box-7 (Muay Korat) */
+/* Karaoke chars — text-box-7 */
 .text-box-7 .karaoke-char {
     display: inline;
     opacity: 0.15;
@@ -2046,136 +2100,152 @@ body::before {
     color: var(--history-highlight);
 }
 
+.text-box-10 .karaoke-char {
+    display: inline;
+    opacity: 0.15;
+    filter: blur(4px);
+}
+
+.text-box-10 .highlight .karaoke-char {
+    color: var(--history-highlight);
+}
+
+/* =========================================
+   TEXT BOX POSITIONS
+   ========================================= */
+
+/* ซ่อน text-box-1 ตั้งแต่แรก — GSAP จะ animate ขึ้นมาทีหลัง */
 .text-box-1 {
-    left: 58vw;
+    left: 55vw;
     width: 30vw;
-    top: 12vw;
+    top: 16vw;
+    opacity: 0;
 }
 
 .text-box-2 {
-    left: 110vw;
+    left: 113vw;
     width: 24vw;
-    top: 10vw;
+    top: 15vw;
 }
 
 .text-box-3 {
-    left: 100vw;
+    left: 104vw;
     width: 28vw;
-    top: 13vw;
+    top: 18vw;
 }
 
 .text-box-4 {
-    left: 215vw;
+    left: 212vw;
     width: 32vw;
-    top: 12vw;
+    top: 15vw;
 }
 
 .text-box-5 {
-    left: 288vw;
+    left: 285vw;
     width: 28vw;
-    top: 13vw;
+    top: 16vw;
 }
 
 .text-box-6 {
-    left: 246vw;
+    left: 244vw;
     width: 25vw;
-    top: 18.56vw;
+    top: 17vw;
 }
 
 .text-box-7 {
-    left: 243vw;
-    width: 32vw;
-    top: 16.31vw;
+    left: 247vw;
+    width: 30vw;
+    top: 17vw;
 }
 
 .text-box-8 {
-    left: 335vw;
-    width: 32vw;
-    top: 18.56vw;
+    left: 340vw;
+    width: 30vw;
+    top: 17vw;
 }
 
 .text-box-9 {
-    left: 385vw;
-    width: 32vw;
-    top: 19.68vw;
+    left: 393vw;
+    width: 30vw;
+    top: 18vw;
 }
 
 .text-box-10 {
     left: 380vw;
     width: 25vw;
-    top: 15.75vw;
+    top: 18vw;
 }
 
 .text-box-11 {
-    left: 490vw;
+    left: 493vw;
     width: 20vw;
-    top: 15.75vw;
+    top: 16vw;
 }
 
 .text-box-12 {
-    left: 546vw;
+    left: 547vw;
     width: 15vw;
-    top: 20.81vw;
+    top: 17vw;
 }
 
 .text-box-13 {
-    left: 605vw;
-    width: 32vw;
-    top: 19.68vw;
+    left: 608vw;
+    width: 25vw;
+    top: 19vw;
 }
 
 .text-box-14 {
-    left: 727vw;
-    width: 32vw;
-    top: 19.68vw;
+    left: 725vw;
+    width: 34vw;
+    top: 18vw;
 }
 
 .text-box-15 {
-    left: 777vw;
-    width: 32vw;
-    top: 19.12vw;
+    left: 778vw;
+    width: 34vw;
+    top: 17vw;
 }
 
 .text-box-16 {
-    left: 803vw;
-    width: 32vw;
-    top: 19.12vw;
+    left: 800vw;
+    width: 30vw;
+    top: 19vw;
 }
 
 .text-box-17 {
-    left: 895vw;
-    width: 32vw;
-    top: 18.56vw;
+    left: 894vw;
+    width: 30vw;
+    top: 17vw;
 }
 
 .text-box-18 {
     left: 885vw;
-    width: 32vw;
-    top: 20.81vw;
+    width: 30vw;
+    top: 17vw;
 }
 
 .text-box-19 {
-    left: 975vw;
+    left: 974vw;
     width: 32vw;
-    top: 18vw;
+    top: 16vw;
 }
 
 .text-box-20 {
-    left: 1015vw;
-    width: 32vw;
-    top: 18vw;
+    left: 1013vw;
+    width: 30vw;
+    top: 16vw;
 }
 
 .text-box-21 {
-    left: 1013vw;
-    width: 32vw;
-    top: 13.5vw;
+    left: 1009vw;
+    width: 34vw;
+    top: 13vw;
 }
 
 .text-box-22 {
-    left: 1148vw;
+    left: 1140vw;
     width: 32vw;
-    top: 16.87vw;
+    top: 17vw;
 }
 
 /* =========================================
@@ -2249,7 +2319,7 @@ body::before {
 }
 
 .era-indicator-sukhothai .era-timeline-container {
-    width: 297%;
+    width: 200%;
 }
 
 .era-indicator-sukhothai .era-timeline-line {
@@ -2315,7 +2385,7 @@ body::before {
 }
 
 .era-indicator-tha-sao {
-    left: 570vw;
+    left: 565vw;
     top: 87%;
     width: auto;
     display: flex;
@@ -2359,7 +2429,7 @@ body::before {
 }
 
 .era-indicator-present {
-    left: 962vw;
+    left: 970vw;
     top: 87%;
     width: auto;
     display: flex;
@@ -2429,7 +2499,9 @@ body::before {
     transform: none;
 }
 
-/* Chaiya fighters idle */
+/* =========================================
+   CHAIYA IDLE ANIMATIONS
+   ========================================= */
 @keyframes chaiya-fighter-idle {
 
     0%,
@@ -2459,8 +2531,7 @@ body::before {
 }
 
 .chaiya-fighter-3.idle {
-    animation: chaiya-fighter-idle 2.6s ease-in-out infinite,
-        aura-glow 2s ease-in-out infinite;
+    animation: chaiya-fighter-idle 2.6s ease-in-out infinite, aura-glow 2s ease-in-out infinite;
 }
 
 @keyframes aura-glow {
@@ -2484,10 +2555,44 @@ body::before {
 }
 
 /* =========================================
-   WAI KRU SWAP — aura ขึ้นพร้อมรูป (FIX)
+   WAI KRU SWAP
    ========================================= */
 
-/* ปิด pulse animation จนกว่า aura-visible จะถูก add */
+.wai-kru-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.wai-kru-click-hint {
+    position: absolute;
+    right: 1vw;
+    top: 60%;
+    transform: translateY(-50%);
+    width: 3vw;
+    height: auto;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 20;
+    filter: invert(1) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+}
+
+.chaiya-container.aura-visible .wai-kru-click-hint {
+    opacity: 1;
+    animation: waiKruClickBounce 1.2s ease-in-out infinite;
+}
+
+@keyframes waiKruClickBounce {
+
+    0%,
+    100% {
+        transform: translateY(-50%) translateX(0px);
+    }
+
+    50% {
+        transform: translateY(-50%) translateX(-6px);
+    }
+}
+
 .wai-kru-swap {
     cursor: pointer;
     transition: opacity 0.2s ease;
@@ -2496,7 +2601,6 @@ body::before {
     z-index: 12;
 }
 
-/* เปิด pulse เฉพาะเมื่อ scroll ถึงแล้ว */
 .chaiya-container.aura-visible .wai-kru-swap {
     animation: waiKruAuraPulse 2.5s ease-in-out infinite;
 }
@@ -2695,6 +2799,29 @@ body::before {
     z-index: 1;
 }
 
+.tha-sao-swap-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.tha-sao-click-hint {
+    position: absolute;
+    right: 1vw;
+    top: 60%;
+    transform: translateY(-50%);
+    width: 3vw;
+    height: auto;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 20;
+    filter: invert(1) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+}
+
+.tha-sao-container-2.aura-visible .tha-sao-click-hint {
+    opacity: 1;
+    animation: waiKruClickBounce 1.2s ease-in-out infinite;
+}
+
 /* =========================================
    THONBURI FIGHTER AURA
    ========================================= */
@@ -2734,7 +2861,7 @@ body::before {
 }
 
 /* =========================================
-   RAMA V WRAPPER (positioning only, no aura)
+   RAMA V WRAPPER
    ========================================= */
 .rama5-wrapper {
     position: absolute;
@@ -2809,21 +2936,23 @@ body::before {
     animation: earlyRatanaEmojiHintBounce 0.8s ease-out forwards,
         earlyRatanaEmojiBounceLoop 1.2s ease-in-out 0.8s infinite;
 }
+
 #walking-fighter {
     position: fixed;
     bottom: 8%;
-    left: 50%;
+    left: 20%;
     transform: translateX(-50%);
-    z-index: 7; /* บนพื้น แต่ใต้ dark overlay (z-index: 6) */
+    z-index: 7;
     pointer-events: none;
 }
 
 #walking-fighter-img {
     height: 20vw;
     width: auto;
-    max-width: 15vw;  /* เพิ่มบรรทัดนี้ */
+    max-width: 15vw;
     object-fit: contain;
 }
+
 @keyframes earlyRatanaEmojiHintBounce {
     0% {
         opacity: 0;
@@ -2855,4 +2984,15 @@ body::before {
     50% {
         transform: translateY(-10px);
     }
+}
+
+/* =========================================
+   SCROLL END BUFFER
+   ========================================= */
+#scroll-end-buffer {
+    width: 100%;
+    height: 1000px;
+    pointer-events: none;
+    flex-shrink: 0;
+    background: transparent;
 }
