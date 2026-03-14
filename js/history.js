@@ -926,10 +926,10 @@ function initWalkingFighter() {
         'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253442/fighter-walk-old-7_jampno.png',
     ];
     const framesNew = [
-        'img/walk/fighter-walk-new-1.png', 'img/walk/fighter-walk-new-2.png',
-        'img/walk/fighter-walk-new-3.png', 'img/walk/fighter-walk-new-4.png',
-        'img/walk/fighter-walk-new-5.png', 'img/walk/fighter-walk-new-6.png',
-        'img/walk/fighter-walk-new-7.png',
+        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773255798/fighter-walk-new-1_yulxh4.png', 'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253583/fighter-walk-new-2_fpyypu.png',
+        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253597/fighter-walk-new-3_qbahsm.png', 'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253600/fighter-walk-new-4_dohjms.png',
+        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253620/fighter-walk-new-5_g7ki2g.png', 'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773255801/fighter-walk-new-6_pxvbzq.png',
+        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773255799/fighter-walk-new-7_qbpdsx.png',
     ];
 
     let currentFrames = framesOld;
@@ -939,21 +939,19 @@ function initWalkingFighter() {
     let scrollStopTimer = null;
     const FRAME_SPEED = 100;
 
-    function checkEra() {
-        const trackEl = document.getElementById('timeline-track');
-        if (!trackEl) return;
-        const trackX = gsap.getProperty(trackEl, 'x');
-        const floor10 = document.querySelector('img[src="img/floor/floor-artboard-10.png"]');
-        if (!floor10) return;
-        const floorScreenX = floor10.offsetLeft + trackX;
+  function checkEra() {
+    const trackEl = document.getElementById('timeline-track');
+    if (!trackEl) return;
+    const floor10 = document.querySelector('img[src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253003/floor-artboard-10_qaq3ft.png"]');
+    if (!floor10) return;
+    const floorScreenX = floor10.getBoundingClientRect().left;
 
-        if (floorScreenX <= window.innerWidth * 0.5) {
-            if (currentFrames !== framesNew) { currentFrames = framesNew; currentFrame = 0; img.src = currentFrames[0]; }
-        } else {
-            if (currentFrames !== framesOld) { currentFrames = framesOld; currentFrame = 0; img.src = currentFrames[0]; }
-        }
+    if (floorScreenX <= window.innerWidth * 0.5) {
+        if (currentFrames !== framesNew) { currentFrames = framesNew; currentFrame = 0; img.src = currentFrames[0]; }
+    } else {
+        if (currentFrames !== framesOld) { currentFrames = framesOld; currentFrame = 0; img.src = currentFrames[0]; }
     }
-
+}
     function startWalking() {
         if (isWalking) return;
         isWalking = true;
