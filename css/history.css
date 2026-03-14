@@ -66,7 +66,7 @@ body::before {
     top: 0;
     width: 100%;
     height: 100%;
-    background-image: url('../img/history-dark-overlay.png');
+    background-image: url('https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773475998/history-dark-overlay_z0x8o5.png');
     background-size: 100vw 100%;
     background-repeat: repeat-x;
     opacity: 0.5;
@@ -134,49 +134,17 @@ body::before {
     top: 0;
 }
 
-[data-era="sukhothai"] {
-    left: 0;
-}
-
-[data-era="ayutthaya"] {
-    left: 100vw;
-}
-
-[data-era="regional-styles"] {
-    left: 200vw;
-}
-
-[data-era="korat"] {
-    left: 300vw;
-}
-
-[data-era="lopburi"] {
-    left: 400vw;
-}
-
-[data-era="chaiya"] {
-    left: 500vw;
-}
-
-[data-era="tha-sao"] {
-    left: 600vw;
-}
-
-[data-era="thonburi"] {
-    left: 700vw;
-}
-
-[data-era="early-rattanakosin"] {
-    left: 800vw;
-}
-
-[data-era="mid-rattanakosin"] {
-    left: 900vw;
-}
-
-[data-era="present-day"] {
-    left: 1000vw;
-}
+[data-era="sukhothai"] { left: 0; }
+[data-era="ayutthaya"] { left: 100vw; }
+[data-era="regional-styles"] { left: 200vw; }
+[data-era="korat"] { left: 300vw; }
+[data-era="lopburi"] { left: 400vw; }
+[data-era="chaiya"] { left: 500vw; }
+[data-era="tha-sao"] { left: 600vw; }
+[data-era="thonburi"] { left: 700vw; }
+[data-era="early-rattanakosin"] { left: 800vw; }
+[data-era="mid-rattanakosin"] { left: 900vw; }
+[data-era="present-day"] { left: 1000vw; }
 
 .era-content {
     position: absolute;
@@ -214,86 +182,27 @@ body::before {
     height: 28.12vw;
 }
 
-[data-era="sukhothai"] .bg-mountain {
-    left: -20vw;
-    top: 20.32vw;
-}
+[data-era="sukhothai"] .bg-mountain { left: -20vw; top: 20.32vw; }
+[data-era="ayutthaya"] .bg-mountain { left: 19vw; }
+[data-era="korat"] .bg-mountain { top: 21vw; }
 
-[data-era="ayutthaya"] .bg-mountain {
-    left: 19vw;
-}
-
-[data-era="korat"] .bg-mountain {
-    top: 21vw;
-}
-
-.bg-mountain-korat-1 {
-    left: 145vw;
-}
-
-.bg-mountain-korat-2 {
-    left: 247vw;
-}
-
-.bg-mountain-lopburi-1 {
-    left: 145vw;
-}
-
-.bg-mountain-lopburi-2 {
-    left: 247vw;
-}
-
-.bg-mountain-chaiya-1 {
-    left: 335vw;
-}
-
-.bg-mountain-chaiya-2 {
-    left: 420vw;
-}
-
-.bg-mountain-chaiya-3 {
-    left: 520vw;
-}
-
-.bg-mountain-tha-sao-1 {
-    left: 145vw;
-}
-
-.bg-mountain-tha-sao-2 {
-    left: 247vw;
-}
-
-.bg-mountain-thonburi-1 {
-    left: 145vw;
-}
-
-.bg-mountain-thonburi-2 {
-    left: 247vw;
-}
-
-.bg-mountain-early-ratana-1 {
-    left: 145vw;
-}
-
-.bg-mountain-early-ratana-2 {
-    left: 247vw;
-}
-
-.bg-mountain-mid-ratana-1 {
-    left: 145vw;
-}
-
-.bg-mountain-mid-ratana-2 {
-    left: 247vw;
-}
-
-.bg-mountain-present-1 {
-    left: 145vw;
-}
-
-.bg-mountain-present-2 {
-    left: 247vw;
-}
+.bg-mountain-korat-1 { left: 145vw; }
+.bg-mountain-korat-2 { left: 247vw; }
+.bg-mountain-lopburi-1 { left: 145vw; }
+.bg-mountain-lopburi-2 { left: 247vw; }
+.bg-mountain-chaiya-1 { left: 335vw; }
+.bg-mountain-chaiya-2 { left: 420vw; }
+.bg-mountain-chaiya-3 { left: 520vw; }
+.bg-mountain-tha-sao-1 { left: 145vw; }
+.bg-mountain-tha-sao-2 { left: 247vw; }
+.bg-mountain-thonburi-1 { left: 145vw; }
+.bg-mountain-thonburi-2 { left: 247vw; }
+.bg-mountain-early-ratana-1 { left: 145vw; }
+.bg-mountain-early-ratana-2 { left: 247vw; }
+.bg-mountain-mid-ratana-1 { left: 145vw; }
+.bg-mountain-mid-ratana-2 { left: 247vw; }
+.bg-mountain-present-1 { left: 145vw; }
+.bg-mountain-present-2 { left: 247vw; }
 
 /* =========================================
    FLOORS
@@ -309,137 +218,36 @@ body::before {
     bottom: 0;
 }
 
-.bg-floor-1 {
-    left: -13.02vw;
-    bottom: -1.2vw;
-}
-
-.bg-floor-2 {
-    left: 5.21vw;
-    bottom: -1.2vw;
-}
-
-.bg-floor-3 {
-    left: 104.17vw;
-    bottom: -1.3vw;
-}
-
-.bg-floor-4 {
-    left: 192.71vw;
-    bottom: -1.3vw;
-}
-
-.bg-floor-5 {
-    left: 208.33vw;
-    bottom: -1.3vw;
-}
-
-.bg-floor-6 {
-    left: 260.42vw;
-    bottom: -1.3vw;
-}
-
-.bg-floor-7 {
-    left: 286.46vw;
-    bottom: -2.4vw;
-}
-
-.bg-floor-8 {
-    left: 338.54vw;
-    bottom: -2.4vw;
-}
-
-.bg-floor-9 {
-    left: 390.63vw;
-    bottom: -2.4vw;
-}
-
-.bg-floor-10 {
-    left: 468.75vw;
-    bottom: -2.29vw;
-}
-
-.bg-floor-11 {
-    left: 567.71vw;
-    bottom: -2.29vw;
-}
-
-.bg-floor-12 {
-    left: 625.00vw;
-    bottom: -2.29vw;
-}
-
-.bg-floor-13 {
-    left: 723.44vw;
-    bottom: -2.29vw;
-}
-
-.bg-floor-14 {
-    left: 822.92vw;
-    bottom: -2.76vw;
-}
-
-.bg-floor-15 {
-    left: 927.08vw;
-    bottom: -1.72vw;
-}
-
-.bg-floor-16 {
-    left: 1031.25vw;
-    bottom: -1.04vw;
-}
-
-.bg-floor-17 {
-    left: 1135.42vw;
-}
-
-.bg-floor-18 {
-    left: 1239.58vw;
-}
-
-.bg-floor-19 {
-    left: 1348.96vw;
-}
-
-.bg-floor-20 {
-    left: 1427.08vw;
-}
-
-.bg-floor-21 {
-    left: 1531.25vw;
-    bottom: -1.56vw;
-}
-
-.bg-floor-22 {
-    left: 1635.42vw;
-    bottom: -1.56vw;
-}
-
-.bg-floor-23 {
-    left: 1713.54vw;
-}
-
-.bg-floor-24 {
-    left: 1820.31vw;
-}
-
-.bg-floor-25 {
-    left: 1927.08vw;
-    bottom: -0.52vw;
-}
-
-.bg-floor-26 {
-    left: 2028.65vw;
-    bottom: -0.52vw;
-}
-
-.bg-floor-27 {
-    left: 2080.73vw;
-    bottom: -0.52vw;
-}
+.bg-floor-1 { left: -13.02vw; bottom: -1.2vw; }
+.bg-floor-2 { left: 5.21vw; bottom: -1.2vw; }
+.bg-floor-3 { left: 104.17vw; bottom: -1.3vw; }
+.bg-floor-4 { left: 192.71vw; bottom: -1.3vw; }
+.bg-floor-5 { left: 208.33vw; bottom: -1.3vw; }
+.bg-floor-6 { left: 260.42vw; bottom: -1.3vw; }
+.bg-floor-7 { left: 286.46vw; bottom: -2.4vw; }
+.bg-floor-8 { left: 338.54vw; bottom: -2.4vw; }
+.bg-floor-9 { left: 390.63vw; bottom: -2.4vw; }
+.bg-floor-10 { left: 468.75vw; bottom: -2.29vw; }
+.bg-floor-11 { left: 567.71vw; bottom: -2.29vw; }
+.bg-floor-12 { left: 625.00vw; bottom: -2.29vw; }
+.bg-floor-13 { left: 723.44vw; bottom: -2.29vw; }
+.bg-floor-14 { left: 822.92vw; bottom: -2.76vw; }
+.bg-floor-15 { left: 927.08vw; bottom: -1.72vw; }
+.bg-floor-16 { left: 1031.25vw; bottom: -1.04vw; }
+.bg-floor-17 { left: 1135.42vw; }
+.bg-floor-18 { left: 1239.58vw; }
+.bg-floor-19 { left: 1348.96vw; }
+.bg-floor-20 { left: 1427.08vw; }
+.bg-floor-21 { left: 1531.25vw; bottom: -1.56vw; }
+.bg-floor-22 { left: 1635.42vw; bottom: -1.56vw; }
+.bg-floor-23 { left: 1713.54vw; }
+.bg-floor-24 { left: 1820.31vw; }
+.bg-floor-25 { left: 1927.08vw; bottom: -0.52vw; }
+.bg-floor-26 { left: 2028.65vw; bottom: -0.52vw; }
+.bg-floor-27 { left: 2080.73vw; bottom: -0.52vw; }
 
 /* =========================================
-   BACKGROUND STRUCTURES (RUINS, TEMPLES, ETC)
+   BACKGROUND STRUCTURES
    ========================================= */
 .bg-ruins {
     position: absolute;
@@ -459,20 +267,9 @@ body::before {
     object-fit: cover;
 }
 
-.ruins-back {
-    z-index: 1;
-    opacity: 1.0;
-}
-
-.ruins-middle {
-    z-index: 2;
-    opacity: 1.0;
-}
-
-.ruins-front {
-    z-index: 3;
-    opacity: 1.0;
-}
+.ruins-back { z-index: 1; opacity: 1.0; }
+.ruins-middle { z-index: 2; opacity: 1.0; }
+.ruins-front { z-index: 3; opacity: 1.0; }
 
 .ayutthaya-temples {
     position: absolute;
@@ -493,17 +290,9 @@ body::before {
     opacity: 1;
 }
 
-.temple-right {
-    z-index: 1;
-}
-
-.temple-left {
-    z-index: 2;
-}
-
-.temple-center {
-    z-index: 3;
-}
+.temple-right { z-index: 1; }
+.temple-left { z-index: 2; }
+.temple-center { z-index: 3; }
 
 .korat-background {
     position: absolute;
@@ -546,17 +335,9 @@ body::before {
     opacity: 1;
 }
 
-.lopburi-right {
-    z-index: 1;
-}
-
-.lopburi-left {
-    z-index: 2;
-}
-
-.lopburi-center {
-    z-index: 3;
-}
+.lopburi-right { z-index: 1; }
+.lopburi-left { z-index: 2; }
+.lopburi-center { z-index: 3; }
 
 .chaiya-background {
     position: absolute;
@@ -579,21 +360,10 @@ body::before {
     transform: translateY(80px) scale(0.85);
 }
 
-.chaiya-back {
-    z-index: 1;
-}
-
-.chaiya-right {
-    z-index: 2;
-}
-
-.chaiya-left {
-    z-index: 3;
-}
-
-.chaiya-center {
-    z-index: 4;
-}
+.chaiya-back { z-index: 1; }
+.chaiya-right { z-index: 2; }
+.chaiya-left { z-index: 3; }
+.chaiya-center { z-index: 4; }
 
 .tha-sao-background {
     position: absolute;
@@ -615,23 +385,14 @@ body::before {
     opacity: 1;
 }
 
-.tha-sao-under {
-    z-index: 1;
-    opacity: 0;
-    transform: translateY(100px) scale(0.8);
-}
-
-.tha-sao-above {
-    z-index: 2;
-    opacity: 0;
-    transform: translateY(-120px) scale(0.8);
-}
-
 .tha-sao-under,
 .tha-sao-above {
     opacity: 0;
     transform: translateY(100px) scale(0.85);
 }
+
+.tha-sao-under { z-index: 1; }
+.tha-sao-above { z-index: 2; }
 
 .tha-sao-swap {
     cursor: pointer;
@@ -644,25 +405,13 @@ body::before {
 }
 
 @keyframes tha-sao-aura {
-
-    0%,
-    100% {
-        filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.1));
-    }
-
-    50% {
-        filter: drop-shadow(0 0 18px rgba(253, 240, 213, 0.7)) drop-shadow(0 0 40px rgba(253, 240, 213, 0.35)) drop-shadow(0 0 60px rgba(253, 240, 213, 0.15));
-    }
+    0%, 100% { filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.1)); }
+    50% { filter: drop-shadow(0 0 18px rgba(253, 240, 213, 0.7)) drop-shadow(0 0 40px rgba(253, 240, 213, 0.35)) drop-shadow(0 0 60px rgba(253, 240, 213, 0.15)); }
 }
 
 .thonburi-swap {
     cursor: pointer;
     transition: filter 0.3s ease;
-}
-
-.thonburi-swap-wrapper {
-    position: relative;
-    display: inline-block;
 }
 
 .thonburi-click-hint {
@@ -704,20 +453,11 @@ body::before {
     height: 100%;
     object-fit: contain;
     object-position: center center;
-    opacity: 1;
 }
 
-.thonburi-under {
-    z-index: 2;
-}
-
-.thonburi-center {
-    z-index: 1;
-}
-
-.thonburi-above {
-    z-index: 3;
-}
+.thonburi-under { z-index: 2; }
+.thonburi-center { z-index: 1; }
+.thonburi-above { z-index: 3; }
 
 .thonburi-under,
 .thonburi-center,
@@ -752,28 +492,13 @@ body::before {
 }
 
 @keyframes early-ratana-aura {
-
-    0%,
-    100% {
-        filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.1));
-    }
-
-    50% {
-        filter: drop-shadow(0 0 18px rgba(253, 240, 213, 0.7)) drop-shadow(0 0 40px rgba(253, 240, 213, 0.35)) drop-shadow(0 0 60px rgba(253, 240, 213, 0.15));
-    }
+    0%, 100% { filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.1)); }
+    50% { filter: drop-shadow(0 0 18px rgba(253, 240, 213, 0.7)) drop-shadow(0 0 40px rgba(253, 240, 213, 0.35)) drop-shadow(0 0 60px rgba(253, 240, 213, 0.15)); }
 }
 
-.early-ratana-left {
-    z-index: 1;
-}
-
-.early-ratana-right {
-    z-index: 1;
-}
-
-.early-ratana-under {
-    z-index: 3;
-}
+.early-ratana-left { z-index: 1; }
+.early-ratana-right { z-index: 1; }
+.early-ratana-under { z-index: 3; }
 
 .mid-ratana-background {
     position: absolute;
@@ -795,13 +520,8 @@ body::before {
     opacity: 1;
 }
 
-.mid-ratana-under {
-    z-index: 1;
-}
-
-.mid-ratana-above {
-    z-index: 2;
-}
+.mid-ratana-under { z-index: 1; }
+.mid-ratana-above { z-index: 2; }
 
 .present-background {
     position: absolute;
@@ -823,14 +543,8 @@ body::before {
     opacity: 1;
 }
 
-.present-under {
-    z-index: 1;
-}
-
-.present-above {
-    z-index: 2;
-    top: 80px;
-}
+.present-under { z-index: 1; }
+.present-above { z-index: 2; top: 80px; }
 
 /* =========================================
    DECORATIONS (TREES & BUILDINGS)
@@ -848,171 +562,29 @@ body::before {
     object-fit: contain;
 }
 
-.tree-1 {
-    left: 195vw;
-    top: 47%;
-    height: 27%;
-    width: auto;
-}
-
-.tree-2 {
-    left: 134vw;
-    top: 46%;
-    height: 27%;
-    width: auto;
-}
-
-.lopburi-tree-1 {
-    left: 328vw;
-    top: 48%;
-    height: 25%;
-    width: auto;
-}
-
-.lopburi-tree-2 {
-    left: 404vw;
-    top: 45%;
-    height: 30%;
-    width: auto;
-    transform: scaleX(-1);
-}
-
-.lopburi-tree-3 {
-    left: 390vw;
-    top: 50%;
-    height: 25%;
-    width: auto;
-}
-
-.tha-sao-tree-1 {
-    left: 538vw;
-    top: 39%;
-    height: 30%;
-    width: auto;
-}
-
-.tha-sao-tree-2 {
-    left: 580vw;
-    top: 29%;
-    height: 40%;
-    width: auto;
-}
-
-.tha-sao-tree-3 {
-    left: 645vw;
-    top: 39%;
-    height: 30%;
-    width: auto;
-}
-
-.tha-sao-tree-4 {
-    left: 690vw;
-    top: 36%;
-    height: 35%;
-    width: auto;
-}
-
-.thonburi-tree-1 {
-    left: 657vw;
-    top: 29%;
-    height: 40%;
-    width: auto;
-}
-
-.thonburi-tree-2 {
-    left: 700vw;
-    top: 34%;
-    height: 35%;
-    width: auto;
-}
-
-.thonburi-tree-3 {
-    left: 755vw;
-    top: 43%;
-    height: 25%;
-    width: auto;
-    transform: scaleX(-1);
-}
-
-.thonburi-tree-4 {
-    left: 808vw;
-    top: 43%;
-    height: 25%;
-    width: auto;
-    transform: scaleX(-1);
-}
-
-.early-ratana-tree-1 {
-    left: 728vw;
-    top: 38%;
-    height: 30%;
-    width: auto;
-}
-
-.early-ratana-tree-2 {
-    left: 783vw;
-    top: 43%;
-    height: 25%;
-    width: auto;
-    transform: scaleX(-1);
-}
-
-.early-ratana-tree-3 {
-    left: 877vw;
-    top: 43%;
-    height: 25%;
-    width: auto;
-}
-
-.mid-ratana-building-1 {
-    left: 905vw;
-    top: 43%;
-    height: 25%;
-    width: auto;
-}
-
-.mid-ratana-building-2 {
-    left: 963vw;
-    top: 40%;
-    height: 28%;
-    width: auto;
-}
-
-.mid-ratana-building-3 {
-    left: 997vw;
-    top: 41%;
-    height: 28%;
-    width: auto;
-}
-
-.present-building-1 {
-    left: 1013vw;
-    top: 40%;
-    height: 29%;
-    width: auto;
-}
-
-.present-building-2 {
-    left: 1030vw;
-    top: 44%;
-    height: 25%;
-    width: auto;
-}
-
-.present-building-3 {
-    left: 1110vw;
-    top: 28%;
-    height: 40%;
-    width: auto;
-    transform: scaleX(-1);
-}
-
-.present-building-4 {
-    left: 1123vw;
-    top: 27%;
-    height: 42%;
-    width: auto;
-}
+.tree-1 { left: 195vw; top: 47%; height: 27%; width: auto; }
+.tree-2 { left: 134vw; top: 46%; height: 27%; width: auto; }
+.lopburi-tree-1 { left: 328vw; top: 48%; height: 25%; width: auto; }
+.lopburi-tree-2 { left: 404vw; top: 45%; height: 30%; width: auto; transform: scaleX(-1); }
+.lopburi-tree-3 { left: 390vw; top: 50%; height: 25%; width: auto; }
+.tha-sao-tree-1 { left: 538vw; top: 39%; height: 30%; width: auto; }
+.tha-sao-tree-2 { left: 580vw; top: 29%; height: 40%; width: auto; }
+.tha-sao-tree-3 { left: 645vw; top: 39%; height: 30%; width: auto; }
+.tha-sao-tree-4 { left: 690vw; top: 36%; height: 35%; width: auto; }
+.thonburi-tree-1 { left: 657vw; top: 29%; height: 40%; width: auto; }
+.thonburi-tree-2 { left: 700vw; top: 34%; height: 35%; width: auto; }
+.thonburi-tree-3 { left: 755vw; top: 43%; height: 25%; width: auto; transform: scaleX(-1); }
+.thonburi-tree-4 { left: 808vw; top: 43%; height: 25%; width: auto; transform: scaleX(-1); }
+.early-ratana-tree-1 { left: 728vw; top: 38%; height: 30%; width: auto; }
+.early-ratana-tree-2 { left: 783vw; top: 43%; height: 25%; width: auto; transform: scaleX(-1); }
+.early-ratana-tree-3 { left: 877vw; top: 43%; height: 25%; width: auto; }
+.mid-ratana-building-1 { left: 905vw; top: 43%; height: 25%; width: auto; }
+.mid-ratana-building-2 { left: 963vw; top: 40%; height: 28%; width: auto; }
+.mid-ratana-building-3 { left: 997vw; top: 41%; height: 28%; width: auto; }
+.present-building-1 { left: 1013vw; top: 40%; height: 29%; width: auto; }
+.present-building-2 { left: 1030vw; top: 44%; height: 25%; width: auto; }
+.present-building-3 { left: 1110vw; top: 28%; height: 40%; width: auto; transform: scaleX(-1); }
+.present-building-4 { left: 1123vw; top: 27%; height: 42%; width: auto; }
 
 /* =========================================
    FIGHTERS & POSES
@@ -1033,33 +605,13 @@ body::before {
     height: 19.47vw;
 }
 
-.fighter:nth-child(1) {
-    left: 0;
-}
-
-.fighter:nth-child(2) {
-    left: 1.17vw;
-}
-
-.fighter:nth-child(3) {
-    left: 6.5vw;
-}
-
-.fighter:nth-child(4) {
-    left: 15.53vw;
-}
-
-.fighter:nth-child(5) {
-    left: 20.86vw;
-}
-
-.fighter:nth-child(6) {
-    left: 29.88vw;
-}
-
-.fighter:nth-child(7) {
-    left: 34.04vw;
-}
+.fighter:nth-child(1) { left: 0; }
+.fighter:nth-child(2) { left: 1.17vw; }
+.fighter:nth-child(3) { left: 6.5vw; }
+.fighter:nth-child(4) { left: 15.53vw; }
+.fighter:nth-child(5) { left: 20.86vw; }
+.fighter:nth-child(6) { left: 29.88vw; }
+.fighter:nth-child(7) { left: 34.04vw; }
 
 .fighter.revealed {
     opacity: 1;
@@ -1075,17 +627,6 @@ body::before {
     cursor: pointer;
 }
 
-.kick-pose {
-    position: relative;
-    transition: filter 0.4s ease, opacity 0.15s ease;
-    pointer-events: auto;
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4)) drop-shadow(0 0 16px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 24px rgba(253, 240, 213, 0.2));
-    animation: kickPoseGlow 2.5s ease-in-out infinite;
-}
-
-/* =========================================
-   SUKHOTHAI KICK CLICK HINT
-   ========================================= */
 .kick-click-hint {
     position: absolute;
     right: 200px;
@@ -1100,15 +641,8 @@ body::before {
 }
 
 @keyframes kickClickBounce {
-
-    0%,
-    100% {
-        transform: translateY(-50%) translateX(0px);
-    }
-
-    50% {
-        transform: translateY(-50%) translateX(-6px);
-    }
+    0%, 100% { transform: translateY(-50%) translateX(0px); }
+    50% { transform: translateY(-50%) translateX(-6px); }
 }
 
 .sukhothai-kick-container::before {
@@ -1121,11 +655,11 @@ body::before {
     height: 32vw;
     border-radius: 50%;
     background: radial-gradient(circle,
-            rgba(255, 255, 255, 0.85) 0%,
-            rgba(253, 240, 213, 0.65) 15%,
-            rgba(253, 240, 213, 0.35) 35%,
-            rgba(253, 240, 213, 0.15) 55%,
-            transparent 75%);
+        rgba(255, 255, 255, 0.85) 0%,
+        rgba(253, 240, 213, 0.65) 15%,
+        rgba(253, 240, 213, 0.35) 35%,
+        rgba(253, 240, 213, 0.15) 55%,
+        transparent 75%);
     filter: blur(15px);
     pointer-events: none;
     z-index: -1;
@@ -1133,69 +667,17 @@ body::before {
     animation: sukhothaiAuraBreath 2.5s ease-in-out infinite;
 }
 
-.sukhothai-kick-container.hovering::before {
-    opacity: 0.95;
-    animation: sukhothaiAuraBreathHover 2s ease-in-out infinite;
-}
-
-.sukhothai-kick-container.hovering .kick-pose {
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4)) drop-shadow(0 0 16px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 24px rgba(253, 240, 213, 0.2));
-    animation: kickPoseGlow 2.5s ease-in-out infinite;
-}
-
 @keyframes sukhothaiAuraBreath {
-
-    0%,
-    100% {
-        opacity: 0.5;
-        transform: translate(-50%, -50%) scale(0.85);
-    }
-
-    50% {
-        opacity: 0.75;
-        transform: translate(-50%, -50%) scale(1.0);
-    }
-}
-
-@keyframes sukhothaiAuraBreathHover {
-
-    0%,
-    100% {
-        opacity: 0.85;
-        transform: translate(-50%, -50%) scale(0.95);
-    }
-
-    50% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1.15);
-    }
+    0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.85); }
+    50% { opacity: 0.75; transform: translate(-50%, -50%) scale(1.0); }
 }
 
 @keyframes kickPoseGlow {
-
-    0%,
-    100% {
-        filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.3)) drop-shadow(0 0 12px rgba(253, 240, 213, 0.25)) drop-shadow(0 0 18px rgba(253, 240, 213, 0.15));
-    }
-
-    50% {
-        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.35)) drop-shadow(0 0 30px rgba(253, 240, 213, 0.25));
-    }
+    0%, 100% { filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.3)) drop-shadow(0 0 12px rgba(253, 240, 213, 0.25)) drop-shadow(0 0 18px rgba(253, 240, 213, 0.15)); }
+    50% { filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.35)) drop-shadow(0 0 30px rgba(253, 240, 213, 0.25)); }
 }
 
-@keyframes kickPoseGlowHover {
-
-    0%,
-    100% {
-        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.4)) drop-shadow(0 0 30px rgba(253, 240, 213, 0.25));
-    }
-
-    50% {
-        filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.7)) drop-shadow(0 0 28px rgba(253, 240, 213, 0.6)) drop-shadow(0 0 42px rgba(253, 240, 213, 0.4));
-    }
-}
-
-/* ซ่อน kick-poses ตั้งแต่แรก — GSAP จะ animate ขึ้นมาทีหลัง */
+/* ซ่อน kick-poses ตั้งแต่แรก */
 .kick-poses {
     position: absolute;
     left: 90vw;
@@ -1216,6 +698,7 @@ body::before {
     cursor: pointer;
     filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
     height: 35vw;
+    animation: kickPoseGlow 2.5s ease-in-out infinite;
 }
 
 .kick-pose:nth-child(1) {
@@ -1273,9 +756,7 @@ body::before {
     margin-left: -7vw;
 }
 
-.fighter-container:first-child {
-    margin-left: 0;
-}
+.fighter-container:first-child { margin-left: 0; }
 
 .regional-fighter {
     width: auto;
@@ -1295,15 +776,8 @@ body::before {
 }
 
 @keyframes fighter-float {
-
-    0%,
-    100% {
-        transform: rotateX(0deg) translateY(0px);
-    }
-
-    50% {
-        transform: rotateX(0deg) translateY(-8px);
-    }
+    0%, 100% { transform: rotateX(0deg) translateY(0px); }
+    50% { transform: rotateX(0deg) translateY(-8px); }
 }
 
 .korat-poses {
@@ -1348,10 +822,10 @@ body::before {
     height: 450px;
     border-radius: 50%;
     background: radial-gradient(circle,
-            rgba(253, 240, 213, 0.55) 0%,
-            rgba(253, 240, 213, 0.3) 25%,
-            rgba(253, 240, 213, 0.12) 55%,
-            transparent 75%);
+        rgba(253, 240, 213, 0.55) 0%,
+        rgba(253, 240, 213, 0.3) 25%,
+        rgba(253, 240, 213, 0.12) 55%,
+        transparent 75%);
     pointer-events: none;
     z-index: 0;
     opacity: 0;
@@ -1390,36 +864,15 @@ body::before {
 }
 
 @keyframes buffaloClickHintBounce {
-    0% {
-        opacity: 0;
-        transform: translateY(40px);
-    }
-
-    60% {
-        opacity: 1;
-        transform: translateY(-12px);
-    }
-
-    80% {
-        transform: translateY(4px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0px);
-    }
+    0% { opacity: 0; transform: translateY(40px); }
+    60% { opacity: 1; transform: translateY(-12px); }
+    80% { transform: translateY(4px); }
+    100% { opacity: 1; transform: translateY(0px); }
 }
 
 @keyframes buffaloClickBounceLoop {
-
-    0%,
-    100% {
-        transform: translateY(0px);
-    }
-
-    50% {
-        transform: translateY(-8px);
-    }
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
 }
 
 .lopburi-fighters {
@@ -1439,9 +892,7 @@ body::before {
     transform-style: preserve-3d;
 }
 
-.lopburi-container:first-child {
-    margin-left: 0;
-}
+.lopburi-container:first-child { margin-left: 0; }
 
 .lopburi-fighter {
     max-width: 22vw;
@@ -1454,27 +905,10 @@ body::before {
     transform-origin: center bottom;
 }
 
-.lopburi-fighter-1 {
-    position: relative;
-    top: 0.52vw;
-}
-
-.lopburi-fighter-2 {
-    position: relative;
-    top: 2.08vw;
-    left: -1.04vw;
-}
-
-.lopburi-fighter-3 {
-    position: relative;
-    top: 1.04vw;
-    left: 0.52vw;
-}
-
-.lopburi-fighter-4 {
-    position: relative;
-    top: 1.56vw;
-}
+.lopburi-fighter-1 { position: relative; top: 0.52vw; }
+.lopburi-fighter-2 { position: relative; top: 2.08vw; left: -1.04vw; }
+.lopburi-fighter-3 { position: relative; top: 1.04vw; left: 0.52vw; }
+.lopburi-fighter-4 { position: relative; top: 1.56vw; }
 
 .lopburi-fighters-2 {
     position: absolute;
@@ -1491,9 +925,7 @@ body::before {
     margin-left: -7vw;
 }
 
-.lopburi-fighters-2 .lopburi-container:first-child {
-    margin-left: 0;
-}
+.lopburi-fighters-2 .lopburi-container:first-child { margin-left: 0; }
 
 .lopburi-fighters-2 .lopburi-fighter-2 {
     max-width: 60vw;
@@ -1504,15 +936,8 @@ body::before {
     height: 39.37vw;
 }
 
-.lopburi-fighter-5 {
-    position: relative;
-    top: -1.56vw;
-}
-
-.lopburi-fighter-6 {
-    position: relative;
-    top: 0.26vw;
-}
+.lopburi-fighter-5 { position: relative; top: -1.56vw; }
+.lopburi-fighter-6 { position: relative; top: 0.26vw; }
 
 .chaiya-fighters {
     position: absolute;
@@ -1548,9 +973,7 @@ body::before {
     margin-top: 2vw;
 }
 
-.chaiya-container:first-child {
-    margin-left: 0;
-}
+.chaiya-container:first-child { margin-left: 0; }
 
 .chaiya-fighter {
     max-width: 22vw;
@@ -1561,68 +984,17 @@ body::before {
     height: 30.93vw;
 }
 
-.chaiya-fighter-1 {
-    position: relative;
-    opacity: 0;
-    transform: translateY(120px) scale(0.8);
-    top: 3.64vw;
-}
-
-.chaiya-fighter-2 {
-    position: relative;
-    opacity: 0;
-    transform: translateY(120px) scale(0.8);
-    top: 0.78vw;
-}
-
-.chaiya-fighter-3 {
-    position: relative;
-    top: -1.56vw;
-}
-
-.chaiya-fighter-4 {
-    position: relative;
-    transform: translateY(120px) scale(0.8);
-    top: 0.52vw;
-}
-
-.chaiya-fighter-5 {
-    position: relative;
-    transform: translateY(120px) scale(0.8);
-    top: 1.56vw;
-}
-
-.chaiya-fighter-6 {
-    position: relative;
-    top: -1.04vw;
-}
-
-.chaiya-fighter-7 {
-    position: relative;
-    top: 2.6vw;
-    opacity: 0;
-    transform: translateY(120px) scale(0.8);
-}
-
-.chaiya-fighter-8 {
-    position: relative;
-    top: -2.08vw;
-}
-
-.chaiya-fighter-9 {
-    position: relative;
-    top: 1.3vw;
-}
-
-.chaiya-fighter-10 {
-    position: relative;
-    top: -0.52vw;
-}
-
-.chaiya-fighter-11 {
-    position: relative;
-    top: 2.08vw;
-}
+.chaiya-fighter-1 { position: relative; opacity: 0; transform: translateY(120px) scale(0.8); top: 3.64vw; }
+.chaiya-fighter-2 { position: relative; opacity: 0; transform: translateY(120px) scale(0.8); top: 0.78vw; }
+.chaiya-fighter-3 { position: relative; top: -1.56vw; }
+.chaiya-fighter-4 { position: relative; transform: translateY(120px) scale(0.8); top: 0.52vw; }
+.chaiya-fighter-5 { position: relative; transform: translateY(120px) scale(0.8); top: 1.56vw; }
+.chaiya-fighter-6 { position: relative; top: -1.04vw; }
+.chaiya-fighter-7 { position: relative; top: 2.6vw; opacity: 0; transform: translateY(120px) scale(0.8); }
+.chaiya-fighter-8 { position: relative; top: -2.08vw; }
+.chaiya-fighter-9 { position: relative; top: 1.3vw; }
+.chaiya-fighter-10 { position: relative; top: -0.52vw; }
+.chaiya-fighter-11 { position: relative; top: 2.08vw; }
 
 .chaiya-fighter-8,
 .chaiya-fighter-9,
@@ -1694,22 +1066,12 @@ body::before {
     margin-left: -7vw;
 }
 
-.tha-sao-container-2 {
-    margin-left: -12vw;
-    width: fit-content;
-    display: flex;
-    pointer-events: none;
-}
-
-.tha-sao-container-3 {
-    margin-left: -12vw;
-}
+.tha-sao-container-2 { margin-left: -12vw; width: fit-content; display: flex; pointer-events: none; }
+.tha-sao-container-3 { margin-left: -12vw; }
 
 .tha-sao-container:first-child,
 .tha-sao-container-2:first-child,
-.tha-sao-container-3:first-child {
-    margin-left: 0;
-}
+.tha-sao-container-3:first-child { margin-left: 0; }
 
 .tha-sao-fighter,
 .tha-sao-fighter-2,
@@ -1737,9 +1099,7 @@ body::before {
     margin-left: -9vw;
 }
 
-.thonburi-container:first-child {
-    margin-left: 0;
-}
+.thonburi-container:first-child { margin-left: 0; }
 
 .thonburi-fighter {
     max-width: 30vw;
@@ -1754,9 +1114,7 @@ body::before {
 .thonburi-fighter-2,
 .thonburi-fighter-3,
 .thonburi-fighter-4,
-.thonburi-fighter-5 {
-    position: relative;
-}
+.thonburi-fighter-5 { position: relative; }
 
 .early-ratana-fighters {
     position: absolute;
@@ -1773,9 +1131,7 @@ body::before {
     margin-left: -12vw;
 }
 
-.early-ratana-container:first-child {
-    margin-left: 0;
-}
+.early-ratana-container:first-child { margin-left: 0; }
 
 .early-ratana-fighter {
     max-width: 30vw;
@@ -1789,9 +1145,7 @@ body::before {
 .early-ratana-fighter-1,
 .early-ratana-fighter-2,
 .early-ratana-fighter-3,
-.early-ratana-fighter-4 {
-    position: relative;
-}
+.early-ratana-fighter-4 { position: relative; }
 
 .mid-ratana-fighters {
     position: absolute;
@@ -1808,9 +1162,7 @@ body::before {
     margin-left: -12vw;
 }
 
-.mid-ratana-container:first-child {
-    margin-left: 0;
-}
+.mid-ratana-container:first-child { margin-left: 0; }
 
 .mid-ratana-fighter {
     max-width: 30vw;
@@ -1821,24 +1173,10 @@ body::before {
     height: 36.56vw;
 }
 
-.mid-ratana-fighter-1 {
-    position: relative;
-    top: -2.08vw;
-}
-
-.mid-ratana-fighter-2 {
-    position: relative;
-}
-
-.mid-ratana-fighter-3 {
-    position: relative;
-    top: 2.6vw;
-}
-
-.mid-ratana-fighter-4 {
-    position: relative;
-    top: 2.6vw;
-}
+.mid-ratana-fighter-1 { position: relative; top: -2.08vw; }
+.mid-ratana-fighter-2 { position: relative; }
+.mid-ratana-fighter-3 { position: relative; top: 2.6vw; }
+.mid-ratana-fighter-4 { position: relative; top: 2.6vw; }
 
 .present-fighters {
     position: absolute;
@@ -1855,9 +1193,7 @@ body::before {
     margin-left: -2vw;
 }
 
-.present-container:first-child {
-    margin-left: 0;
-}
+.present-container:first-child { margin-left: 0; }
 
 .present-fighter {
     max-width: 30vw;
@@ -1868,20 +1204,9 @@ body::before {
     height: 16.87vw;
 }
 
-.present-fighter-1 {
-    position: relative;
-    transform: rotate(-18deg);
-}
-
-.present-fighter-2 {
-    position: relative;
-    transform: rotate(4deg);
-}
-
-.present-fighter-3 {
-    position: relative;
-    transform: rotate(12deg);
-}
+.present-fighter-1 { position: relative; transform: rotate(-18deg); }
+.present-fighter-2 { position: relative; transform: rotate(4deg); }
+.present-fighter-3 { position: relative; transform: rotate(12deg); }
 
 /* =========================================
    LABELS
@@ -1901,126 +1226,38 @@ body::before {
     transform: translateY(20px);
 }
 
-.fighter-label.idle {
-    animation: label-float 2.5s ease-in-out infinite;
-}
+.fighter-label.idle { animation: label-float 2.5s ease-in-out infinite; }
 
 @keyframes label-float {
-
-    0%,
-    100% {
-        transform: translateY(0px);
-    }
-
-    50% {
-        transform: translateY(-5px);
-    }
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
 }
 
-.chaiya-label {
-    font-weight: 400;
-    color: var(--history-text);
-}
-
-.pose-label {
-    position: relative;
-    left: 2.6vw;
-    top: 6vw;
-}
-
-.label-north {
-    position: relative;
-    top: 3.12vw;
-}
-
-.label-northeast {
-    position: relative;
-    top: 1.04vw;
-}
-
-.label-south {
-    position: relative;
-    top: 0.52vw;
-}
-
-.label-central {
-    position: relative;
-    top: 2.08vw;
-}
-
-.label-chaiya-1 {
-    position: relative;
-    top: 6.77vw;
-}
-
-.label-chaiya-2 {
-    position: relative;
-    top: 3.12vw;
-}
-
-.label-chaiya-3 {
-    position: relative;
-    top: 7.81vw;
-}
-
-.label-chaiya-4 {
-    position: relative;
-    top: 2.6vw;
-}
-
-.label-chaiya-5 {
-    position: relative;
-    top: 3.64vw;
-}
-
-.label-chaiya-6 {
-    position: relative;
-    top: 1.04vw;
-}
-
-.label-chaiya-7 {
-    position: relative;
-    top: 4.68vw;
-}
-
-.label-chaiya-8 {
-    position: relative;
-    top: 1.04vw;
-    left: 2.6vw;
-}
-
-.label-chaiya-9 {
-    position: relative;
-    top: 3.64vw;
-    left: 3.12vw;
-}
-
-.label-chaiya-10 {
-    position: relative;
-    top: 2.08vw;
-    left: 4.16vw;
-}
-
-.label-chaiya-11 {
-    position: relative;
-    top: 4.16vw;
-    left: 2.6vw;
-}
+.chaiya-label { font-weight: 400; color: var(--history-text); }
+.pose-label { position: relative; left: 2.6vw; top: 6vw; }
+.label-north { position: relative; top: 3.12vw; }
+.label-northeast { position: relative; top: 1.04vw; }
+.label-south { position: relative; top: 0.52vw; }
+.label-central { position: relative; top: 2.08vw; }
+.label-chaiya-1 { position: relative; top: 6.77vw; }
+.label-chaiya-2 { position: relative; top: 3.12vw; }
+.label-chaiya-3 { position: relative; top: 7.81vw; }
+.label-chaiya-4 { position: relative; top: 2.6vw; }
+.label-chaiya-5 { position: relative; top: 3.64vw; }
+.label-chaiya-6 { position: relative; top: 1.04vw; }
+.label-chaiya-7 { position: relative; top: 4.68vw; }
+.label-chaiya-8 { position: relative; top: 1.04vw; left: 2.6vw; }
+.label-chaiya-9 { position: relative; top: 3.64vw; left: 3.12vw; }
+.label-chaiya-10 { position: relative; top: 2.08vw; left: 4.16vw; }
+.label-chaiya-11 { position: relative; top: 4.16vw; left: 2.6vw; }
 
 /* =========================================
-   TEXT BOXES
+   TEXT BOXES — BASE
    ========================================= */
 .text-box {
     position: absolute;
     padding: 20px 20px;
     z-index: 15;
-    opacity: 1;
-    transition: opacity 0.8s ease, filter 0.8s ease;
-}
-
-.text-box.revealed {
-    opacity: 1;
-    filter: blur(0);
 }
 
 .text-box p {
@@ -2037,84 +1274,9 @@ body::before {
     color: var(--history-highlight);
 }
 
-/* Karaoke chars — text-box-1 */
-.text-box-1 .karaoke-char {
-    display: inline;
-    opacity: 0;
-    filter: blur(4px);
-    transition: opacity 0.3s ease, filter 0.3s ease;
-}
-
-.text-box-1 .highlight .karaoke-char {
-    color: var(--history-highlight);
-}
-
-/* Karaoke chars — text-box-2 */
-.text-box-2 .karaoke-char {
-    display: inline;
-    opacity: 0.15;
-    filter: blur(4px);
-    transition: opacity 0.3s ease, filter 0.3s ease;
-}
-
-.text-box-2 .karaoke-char.active {
-    opacity: 1;
-    filter: blur(0);
-}
-
-.text-box-2 .highlight .karaoke-char {
-    color: var(--history-highlight);
-}
-
-/* Karaoke chars — text-box-6 */
-.text-box-6 .karaoke-char {
-    display: inline;
-    opacity: 0.15;
-    filter: blur(4px);
-    transition: opacity 0.3s ease, filter 0.3s ease;
-}
-
-.text-box-6 .karaoke-char.active {
-    opacity: 1;
-    filter: blur(0);
-}
-
-.text-box-6 .highlight .karaoke-char {
-    color: var(--history-highlight);
-}
-
-/* Karaoke chars — text-box-7 */
-.text-box-7 .karaoke-char {
-    display: inline;
-    opacity: 0.15;
-    filter: blur(4px);
-    transition: opacity 0.3s ease, filter 0.3s ease;
-}
-
-.text-box-7 .karaoke-char.active {
-    opacity: 1;
-    filter: blur(0);
-}
-
-.text-box-7 .highlight .karaoke-char {
-    color: var(--history-highlight);
-}
-
-.text-box-10 .karaoke-char {
-    display: inline;
-    opacity: 0.15;
-    filter: blur(4px);
-}
-
-.text-box-10 .highlight .karaoke-char {
-    color: var(--history-highlight);
-}
-
 /* =========================================
-   TEXT BOX POSITIONS
+   TEXT BOX 1 — ซ่อนตั้งแต่แรก GSAP จัดการ
    ========================================= */
-
-/* ซ่อน text-box-1 ตั้งแต่แรก — GSAP จะ animate ขึ้นมาทีหลัง */
 .text-box-1 {
     left: 55vw;
     width: 30vw;
@@ -2122,131 +1284,89 @@ body::before {
     opacity: 0;
 }
 
+/* =========================================
+   TEXT BOX 2 — ซ่อนตั้งแต่แรก GSAP จัดการ
+   ========================================= */
 .text-box-2 {
     left: 113vw;
     width: 24vw;
     top: 15vw;
+    opacity: 0;
 }
 
-.text-box-3 {
-    left: 104vw;
-    width: 28vw;
-    top: 18vw;
+/* =========================================
+   TEXT BOX KARAOKE CHARS
+   ========================================= */
+
+/* text-box-1: ไม่ใช้ karaoke แล้ว ลบ opacity ออก */
+.text-box-1 .karaoke-char {
+    display: inline;
 }
 
-.text-box-4 {
-    left: 212vw;
-    width: 32vw;
-    top: 15vw;
+.text-box-1 .highlight {
+    color: var(--history-highlight);
 }
 
-.text-box-5 {
-    left: 285vw;
-    width: 28vw;
-    top: 16vw;
+
+
+.text-box-2 .highlight {
+    color: var(--history-highlight);
 }
 
-.text-box-6 {
-    left: 244vw;
-    width: 25vw;
-    top: 17vw;
+/* text-box-6 */
+.text-box-6 .karaoke-char {
+    display: inline;
+    opacity: 0.15;
+    filter: blur(4px);
+    transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
-.text-box-7 {
-    left: 247vw;
-    width: 30vw;
-    top: 17vw;
+.text-box-6 .karaoke-char.active { opacity: 1; filter: blur(0); }
+.text-box-6 .highlight .karaoke-char { color: var(--history-highlight); }
+
+/* text-box-7 */
+.text-box-7 .karaoke-char {
+    display: inline;
+    opacity: 0.15;
+    filter: blur(4px);
+    transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
-.text-box-8 {
-    left: 340vw;
-    width: 30vw;
-    top: 17vw;
+.text-box-7 .karaoke-char.active { opacity: 1; filter: blur(0); }
+.text-box-7 .highlight .karaoke-char { color: var(--history-highlight); }
+
+/* text-box-10 */
+.text-box-10 .karaoke-char {
+    display: inline;
+    opacity: 0.15;
+    filter: blur(4px);
 }
 
-.text-box-9 {
-    left: 393vw;
-    width: 30vw;
-    top: 18vw;
-}
+.text-box-10 .highlight .karaoke-char { color: var(--history-highlight); }
 
-.text-box-10 {
-    left: 380vw;
-    width: 25vw;
-    top: 18vw;
-}
-
-.text-box-11 {
-    left: 493vw;
-    width: 20vw;
-    top: 16vw;
-}
-
-.text-box-12 {
-    left: 547vw;
-    width: 15vw;
-    top: 17vw;
-}
-
-.text-box-13 {
-    left: 608vw;
-    width: 25vw;
-    top: 19vw;
-}
-
-.text-box-14 {
-    left: 725vw;
-    width: 34vw;
-    top: 18vw;
-}
-
-.text-box-15 {
-    left: 778vw;
-    width: 34vw;
-    top: 17vw;
-}
-
-.text-box-16 {
-    left: 800vw;
-    width: 30vw;
-    top: 19vw;
-}
-
-.text-box-17 {
-    left: 894vw;
-    width: 30vw;
-    top: 17vw;
-}
-
-.text-box-18 {
-    left: 885vw;
-    width: 30vw;
-    top: 17vw;
-}
-
-.text-box-19 {
-    left: 974vw;
-    width: 32vw;
-    top: 16vw;
-}
-
-.text-box-20 {
-    left: 1013vw;
-    width: 30vw;
-    top: 16vw;
-}
-
-.text-box-21 {
-    left: 1009vw;
-    width: 34vw;
-    top: 13vw;
-}
-
-.text-box-22 {
-    left: 1140vw;
-    width: 32vw;
-    top: 17vw;
-}
+/* =========================================
+   TEXT BOX POSITIONS (3-22)
+   ========================================= */
+.text-box-3 { left: 104vw; width: 28vw; top: 18vw; }
+.text-box-4 { left: 212vw; width: 32vw; top: 15vw; }
+.text-box-5 { left: 285vw; width: 28vw; top: 16vw; }
+.text-box-6 { left: 244vw; width: 25vw; top: 17vw; }
+.text-box-7 { left: 247vw; width: 30vw; top: 17vw; }
+.text-box-8 { left: 340vw; width: 30vw; top: 17vw; }
+.text-box-9 { left: 393vw; width: 30vw; top: 18vw; }
+.text-box-10 { left: 380vw; width: 25vw; top: 18vw; }
+.text-box-11 { left: 493vw; width: 20vw; top: 16vw; }
+.text-box-12 { left: 547vw; width: 15vw; top: 17vw; }
+.text-box-13 { left: 608vw; width: 25vw; top: 19vw; }
+.text-box-14 { left: 725vw; width: 34vw; top: 18vw; }
+.text-box-15 { left: 778vw; width: 34vw; top: 17vw; }
+.text-box-16 { left: 800vw; width: 30vw; top: 19vw; }
+.text-box-17 { left: 894vw; width: 30vw; top: 17vw; }
+.text-box-18 { left: 885vw; width: 30vw; top: 17vw; }
+.text-box-19 { left: 974vw; width: 32vw; top: 16vw; }
+.text-box-20 { left: 1013vw; width: 30vw; top: 16vw; }
+.text-box-21 { left: 1009vw; width: 34vw; top: 13vw; }
+.text-box-22 { left: 1140vw; width: 32vw; top: 17vw; }
 
 /* =========================================
    ERA INDICATORS (TIMELINE BOTTOM)
@@ -2312,132 +1432,21 @@ body::before {
     transform: translateX(-50%);
 }
 
-.era-indicator-sukhothai {
-    left: -5vw;
-    top: 87%;
-    width: 1100vw;
-}
+.era-indicator-sukhothai { left: -5vw; top: 87%; width: 1100vw; }
+.era-indicator-sukhothai .era-timeline-container { width: 200%; }
+.era-indicator-sukhothai .era-timeline-line { width: 100%; left: 15vw; }
+.era-indicator-sukhothai .era-circle { z-index: 21; }
 
-.era-indicator-sukhothai .era-timeline-container {
-    width: 200%;
-}
-
-.era-indicator-sukhothai .era-timeline-line {
-    width: 100%;
-    left: 15vw;
-}
-
-.era-indicator-sukhothai .era-circle {
-    z-index: 21;
-}
-
-.era-indicator-ayutthaya {
-    left: 60vw;
-    top: 86.85%;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-}
-
-.era-indicator-regional {
-    left: 180vw;
-    top: 87%;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-}
-
-.era-indicator-korat {
-    left: 180vw;
-    top: 87%;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    z-index: 20;
-}
-
-.era-indicator-lopburi {
-    left: 235vw;
-    top: 87%;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    z-index: 20;
-}
-
-.era-indicator-chaiya {
-    left: 352vw;
-    top: 87%;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    z-index: 20;
-}
-
-.era-indicator-tha-sao {
-    left: 565vw;
-    top: 87%;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    z-index: 20;
-}
-
-.era-indicator-thonburi {
-    left: 675vw;
-    top: 87%;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    z-index: 20;
-}
-
-.era-indicator-early-ratana {
-    left: 750vw;
-    top: 87%;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    z-index: 20;
-}
-
-.era-indicator-mid-ratana {
-    left: 845vw;
-    top: 87%;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    z-index: 20;
-}
-
-.era-indicator-present {
-    left: 970vw;
-    top: 87%;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    z-index: 20;
-}
+.era-indicator-ayutthaya { left: 60vw; top: 86.85%; width: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+.era-indicator-regional { left: 180vw; top: 87%; width: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+.era-indicator-korat { left: 180vw; top: 87%; width: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 20; }
+.era-indicator-lopburi { left: 235vw; top: 87%; width: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 20; }
+.era-indicator-chaiya { left: 352vw; top: 87%; width: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 20; }
+.era-indicator-tha-sao { left: 565vw; top: 87%; width: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 20; }
+.era-indicator-thonburi { left: 675vw; top: 87%; width: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 20; }
+.era-indicator-early-ratana { left: 750vw; top: 87%; width: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 20; }
+.era-indicator-mid-ratana { left: 845vw; top: 87%; width: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 20; }
+.era-indicator-present { left: 970vw; top: 87%; width: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 20; }
 
 .era-indicator-ayutthaya .era-timeline-container,
 .era-indicator-regional .era-timeline-container,
@@ -2463,9 +1472,7 @@ body::before {
 .era-indicator-thonburi .era-timeline-line,
 .era-indicator-early-ratana .era-timeline-line,
 .era-indicator-mid-ratana .era-timeline-line,
-.era-indicator-present .era-timeline-line {
-    display: none;
-}
+.era-indicator-present .era-timeline-line { display: none; }
 
 .era-indicator-ayutthaya .era-circle,
 .era-indicator-regional .era-circle,
@@ -2503,65 +1510,28 @@ body::before {
    CHAIYA IDLE ANIMATIONS
    ========================================= */
 @keyframes chaiya-fighter-idle {
-
-    0%,
-    100% {
-        transform: translateY(0px) rotate(0deg);
-    }
-
-    25% {
-        transform: translateY(-12px) rotate(0.6deg);
-    }
-
-    50% {
-        transform: translateY(-18px) rotate(-0.6deg);
-    }
-
-    75% {
-        transform: translateY(-8px) rotate(0.3deg);
-    }
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    25% { transform: translateY(-12px) rotate(0.6deg); }
+    50% { transform: translateY(-18px) rotate(-0.6deg); }
+    75% { transform: translateY(-8px) rotate(0.3deg); }
 }
 
-.chaiya-fighter-1.idle {
-    animation: chaiya-fighter-idle 1.9s ease-in-out infinite;
-}
-
-.chaiya-fighter-2.idle {
-    animation: chaiya-fighter-idle 3.2s ease-in-out infinite;
-}
-
-.chaiya-fighter-3.idle {
-    animation: chaiya-fighter-idle 2.6s ease-in-out infinite, aura-glow 2s ease-in-out infinite;
-}
+.chaiya-fighter-1.idle { animation: chaiya-fighter-idle 1.9s ease-in-out infinite; }
+.chaiya-fighter-2.idle { animation: chaiya-fighter-idle 3.2s ease-in-out infinite; }
+.chaiya-fighter-3.idle { animation: chaiya-fighter-idle 2.6s ease-in-out infinite, aura-glow 2s ease-in-out infinite; }
 
 @keyframes aura-glow {
-
-    0%,
-    100% {
-        filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.1));
-    }
-
-    50% {
-        filter: drop-shadow(0 0 18px rgba(253, 240, 213, 0.7)) drop-shadow(0 0 40px rgba(253, 240, 213, 0.35)) drop-shadow(0 0 60px rgba(253, 240, 213, 0.15));
-    }
+    0%, 100% { filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.1)); }
+    50% { filter: drop-shadow(0 0 18px rgba(253, 240, 213, 0.7)) drop-shadow(0 0 40px rgba(253, 240, 213, 0.35)) drop-shadow(0 0 60px rgba(253, 240, 213, 0.15)); }
 }
 
-.chaiya-fighter-4.idle {
-    animation: chaiya-fighter-idle 3.4s ease-in-out infinite;
-}
-
-.chaiya-fighter-5.idle {
-    animation: chaiya-fighter-idle 2.8s ease-in-out infinite;
-}
+.chaiya-fighter-4.idle { animation: chaiya-fighter-idle 3.4s ease-in-out infinite; }
+.chaiya-fighter-5.idle { animation: chaiya-fighter-idle 2.8s ease-in-out infinite; }
 
 /* =========================================
    WAI KRU SWAP
    ========================================= */
-
-.wai-kru-wrapper {
-    position: relative;
-    display: inline-block;
-}
+.wai-kru-wrapper { position: relative; display: inline-block; }
 
 .wai-kru-click-hint {
     position: absolute;
@@ -2582,15 +1552,8 @@ body::before {
 }
 
 @keyframes waiKruClickBounce {
-
-    0%,
-    100% {
-        transform: translateY(-50%) translateX(0px);
-    }
-
-    50% {
-        transform: translateY(-50%) translateX(-6px);
-    }
+    0%, 100% { transform: translateY(-50%) translateX(0px); }
+    50% { transform: translateY(-50%) translateX(-6px); }
 }
 
 .wai-kru-swap {
@@ -2605,9 +1568,7 @@ body::before {
     animation: waiKruAuraPulse 2.5s ease-in-out infinite;
 }
 
-.chaiya-container:has(.wai-kru-swap) {
-    position: relative;
-}
+.chaiya-container:has(.wai-kru-swap) { position: relative; }
 
 .chaiya-container:has(.wai-kru-swap)::before {
     content: '';
@@ -2619,10 +1580,10 @@ body::before {
     height: 350px;
     border-radius: 50%;
     background: radial-gradient(circle,
-            rgba(253, 240, 213, 0.55) 0%,
-            rgba(253, 240, 213, 0.3) 25%,
-            rgba(253, 240, 213, 0.12) 55%,
-            transparent 75%);
+        rgba(253, 240, 213, 0.55) 0%,
+        rgba(253, 240, 213, 0.3) 25%,
+        rgba(253, 240, 213, 0.12) 55%,
+        transparent 75%);
     pointer-events: none;
     z-index: 11;
     opacity: 0;
@@ -2635,138 +1596,54 @@ body::before {
     animation: waiKruBreath 2.5s ease-in-out infinite !important;
 }
 
-.chaiya-container:has(.wai-kru-swap)::after {
-    content: none;
-}
+.chaiya-container:has(.wai-kru-swap)::after { content: none; }
 
 @keyframes waiKruBreath {
-
-    0%,
-    100% {
-        opacity: 0.05;
-        transform: translate(-50%, -50%) scale(0.85);
-    }
-
-    50% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1.1);
-    }
+    0%, 100% { opacity: 0.05; transform: translate(-50%, -50%) scale(0.85); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
 }
 
 @keyframes waiKruAuraPulse {
-
-    0%,
-    100% {
-        filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.15));
-    }
-
-    50% {
-        filter: drop-shadow(0 0 25px rgba(253, 240, 213, 1)) drop-shadow(0 0 50px rgba(253, 240, 213, 0.7));
-    }
+    0%, 100% { filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.15)); }
+    50% { filter: drop-shadow(0 0 25px rgba(253, 240, 213, 1)) drop-shadow(0 0 50px rgba(253, 240, 213, 0.7)); }
 }
 
-.chaiya-fighter-6.idle {
-    animation: chaiya-attack-idle 1.6s ease-in-out infinite;
-}
-
-.chaiya-fighter-7.idle {
-    animation: chaiya-attack-idle 2s ease-in-out infinite;
-}
-
-.chaiya-fighter-8.idle {
-    animation: chaiya-guard-idle 2.2s ease-in-out infinite;
-}
-
-.chaiya-fighter-9.idle {
-    animation: chaiya-guard-idle 2.6s ease-in-out infinite;
-}
-
-.chaiya-fighter-10.idle {
-    animation: chaiya-guard-idle 2s ease-in-out infinite;
-}
-
-.chaiya-fighter-11.idle {
-    animation: chaiya-guard-idle 2.8s ease-in-out infinite;
-}
+.chaiya-fighter-6.idle { animation: chaiya-attack-idle 1.6s ease-in-out infinite; }
+.chaiya-fighter-7.idle { animation: chaiya-attack-idle 2s ease-in-out infinite; }
+.chaiya-fighter-8.idle { animation: chaiya-guard-idle 2.2s ease-in-out infinite; }
+.chaiya-fighter-9.idle { animation: chaiya-guard-idle 2.6s ease-in-out infinite; }
+.chaiya-fighter-10.idle { animation: chaiya-guard-idle 2s ease-in-out infinite; }
+.chaiya-fighter-11.idle { animation: chaiya-guard-idle 2.8s ease-in-out infinite; }
 
 @keyframes chaiya-attack-idle {
-
-    0%,
-    100% {
-        transform: translateX(0) rotate(0deg);
-    }
-
-    25% {
-        transform: translateX(-6px) rotate(-1.5deg);
-    }
-
-    75% {
-        transform: translateX(6px) rotate(1.5deg);
-    }
+    0%, 100% { transform: translateX(0) rotate(0deg); }
+    25% { transform: translateX(-6px) rotate(-1.5deg); }
+    75% { transform: translateX(6px) rotate(1.5deg); }
 }
 
 @keyframes chaiya-guard-idle {
-
-    0%,
-    100% {
-        transform: translateY(0px) translateX(0) rotate(0deg);
-    }
-
-    30% {
-        transform: translateY(-4px) translateX(-3px) rotate(-0.8deg);
-    }
-
-    70% {
-        transform: translateY(-6px) translateX(3px) rotate(0.8deg);
-    }
+    0%, 100% { transform: translateY(0px) translateX(0) rotate(0deg); }
+    30% { transform: translateY(-4px) translateX(-3px) rotate(-0.8deg); }
+    70% { transform: translateY(-6px) translateX(3px) rotate(0.8deg); }
 }
 
 @keyframes tha-sao-sway {
-
-    0%,
-    100% {
-        transform: translateX(0) rotate(0deg);
-    }
-
-    25% {
-        transform: translateX(-5px) rotate(-1deg);
-    }
-
-    75% {
-        transform: translateX(5px) rotate(1deg);
-    }
+    0%, 100% { transform: translateX(0) rotate(0deg); }
+    25% { transform: translateX(-5px) rotate(-1deg); }
+    75% { transform: translateX(5px) rotate(1deg); }
 }
 
-.tha-sao-kick.idle {
-    animation: tha-sao-sway 1.8s ease-in-out infinite;
-}
-
-.tha-sao-elbow.idle {
-    animation: tha-sao-sway 2.2s ease-in-out infinite;
-}
-
-.tha-sao-fighter2-1.idle {
-    animation: tha-sao-sway 2s ease-in-out infinite;
-}
-
-.tha-sao-defend.idle {
-    animation: tha-sao-sway 2.4s ease-in-out infinite;
-}
-
-.tha-sao-parry.idle {
-    animation: tha-sao-sway 1.9s ease-in-out infinite;
-}
-
-.tha-sao-attacks.idle {
-    animation: tha-sao-sway 2.1s ease-in-out infinite;
-}
+.tha-sao-kick.idle { animation: tha-sao-sway 1.8s ease-in-out infinite; }
+.tha-sao-elbow.idle { animation: tha-sao-sway 2.2s ease-in-out infinite; }
+.tha-sao-fighter2-1.idle { animation: tha-sao-sway 2s ease-in-out infinite; }
+.tha-sao-defend.idle { animation: tha-sao-sway 2.4s ease-in-out infinite; }
+.tha-sao-parry.idle { animation: tha-sao-sway 1.9s ease-in-out infinite; }
+.tha-sao-attacks.idle { animation: tha-sao-sway 2.1s ease-in-out infinite; }
 
 /* =========================================
    THA SAO CONTAINER-2 AURA
    ========================================= */
-.tha-sao-container-2 {
-    position: relative;
-}
+.tha-sao-container-2 { position: relative; }
 
 .tha-sao-container-2:has(.tha-sao-swap)::before {
     content: '';
@@ -2778,10 +1655,10 @@ body::before {
     height: 500px;
     border-radius: 50%;
     background: radial-gradient(circle,
-            rgba(253, 240, 213, 0.55) 0%,
-            rgba(253, 240, 213, 0.3) 25%,
-            rgba(253, 240, 213, 0.12) 55%,
-            transparent 75%);
+        rgba(253, 240, 213, 0.55) 0%,
+        rgba(253, 240, 213, 0.3) 25%,
+        rgba(253, 240, 213, 0.12) 55%,
+        transparent 75%);
     pointer-events: none;
     z-index: 0;
     opacity: 0;
@@ -2794,15 +1671,8 @@ body::before {
     animation: waiKruBreath 2.5s ease-in-out infinite !important;
 }
 
-.tha-sao-swap {
-    position: relative;
-    z-index: 1;
-}
-
-.tha-sao-swap-wrapper {
-    position: relative;
-    display: inline-block;
-}
+.tha-sao-swap { position: relative; z-index: 1; }
+.tha-sao-swap-wrapper { position: relative; display: inline-block; }
 
 .tha-sao-click-hint {
     position: absolute;
@@ -2825,9 +1695,7 @@ body::before {
 /* =========================================
    THONBURI FIGHTER AURA
    ========================================= */
-.thonburi-container {
-    position: relative;
-}
+.thonburi-container { position: relative; }
 
 .thonburi-container::before {
     content: '';
@@ -2839,10 +1707,10 @@ body::before {
     height: 500px;
     border-radius: 50%;
     background: radial-gradient(circle,
-            rgba(253, 240, 213, 0.55) 0%,
-            rgba(253, 240, 213, 0.3) 25%,
-            rgba(253, 240, 213, 0.12) 55%,
-            transparent 75%);
+        rgba(253, 240, 213, 0.55) 0%,
+        rgba(253, 240, 213, 0.3) 25%,
+        rgba(253, 240, 213, 0.12) 55%,
+        transparent 75%);
     pointer-events: none;
     z-index: 0;
     opacity: 0;
@@ -2855,34 +1723,12 @@ body::before {
     animation: waiKruBreath 2.5s ease-in-out infinite !important;
 }
 
-.thonburi-fighter {
-    position: relative;
-    z-index: 1;
-}
-
-/* =========================================
-   RAMA V WRAPPER
-   ========================================= */
-.rama5-wrapper {
-    position: absolute;
-    left: 830vw;
-    z-index: 12;
-    top: 13.32vw;
-}
-
-.rama5-wrapper .early-ratana-pic-rama5 {
-    position: relative;
-    left: 0;
-    top: 0;
-    z-index: 1;
-}
+.thonburi-fighter { position: relative; z-index: 1; }
 
 /* =========================================
    EARLY RATTANAKOSIN FIGHTER AURA
    ========================================= */
-.early-ratana-container {
-    position: relative;
-}
+.early-ratana-container { position: relative; }
 
 .early-ratana-container::before {
     content: '';
@@ -2894,10 +1740,10 @@ body::before {
     height: 450px;
     border-radius: 50%;
     background: radial-gradient(circle,
-            rgba(253, 240, 213, 0.55) 0%,
-            rgba(253, 240, 213, 0.3) 25%,
-            rgba(253, 240, 213, 0.12) 55%,
-            transparent 75%);
+        rgba(253, 240, 213, 0.55) 0%,
+        rgba(253, 240, 213, 0.3) 25%,
+        rgba(253, 240, 213, 0.12) 55%,
+        transparent 75%);
     pointer-events: none;
     z-index: 0;
     opacity: 0;
@@ -2910,10 +1756,7 @@ body::before {
     animation: waiKruBreath 2.5s ease-in-out infinite !important;
 }
 
-.early-ratana-fighter {
-    position: relative;
-    z-index: 1;
-}
+.early-ratana-fighter { position: relative; z-index: 1; }
 
 /* =========================================
    EARLY RATTANAKOSIN CLICK HINT
@@ -2954,36 +1797,15 @@ body::before {
 }
 
 @keyframes earlyRatanaEmojiHintBounce {
-    0% {
-        opacity: 0;
-        transform: translateY(40px);
-    }
-
-    60% {
-        opacity: 1;
-        transform: translateY(-12px);
-    }
-
-    80% {
-        transform: translateY(4px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0px);
-    }
+    0% { opacity: 0; transform: translateY(40px); }
+    60% { opacity: 1; transform: translateY(-12px); }
+    80% { transform: translateY(4px); }
+    100% { opacity: 1; transform: translateY(0px); }
 }
 
 @keyframes earlyRatanaEmojiBounceLoop {
-
-    0%,
-    100% {
-        transform: translateY(0px);
-    }
-
-    50% {
-        transform: translateY(-10px);
-    }
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
 }
 
 /* =========================================
