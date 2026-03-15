@@ -2976,15 +2976,14 @@ body::before {
     contain: layout style;
 }
 
-/* =========================================
-     FIX: ล็อกฉากหลังให้อยู่หมัด (ห้ามทะลุจอจำลอง)
-   ========================================= */
+/* =========================================================================
+   🎯 THE BEST VERSION: แก้ตัวหนังสือไม่เล็ก + แก้ของลอย (สำหรับ iPad/iPhone)
+   ========================================================================= */
 
+/* 1. ล็อกเฟรมภาพรวมให้เป๊ะกับจอจำลอง (บรรทัดเดิมที่นายเคยมี) */
 #desktop-canvas .history-wrapper {
     position: absolute !important;
-    /* ปลดจาก fixed หน้าจอจริง มาล็อกกับจอจำลองแทน */
-    top: 0 !important;
-    left: 0 !important;
+    inset: 0 !important;
     width: 100% !important;
     height: 100% !important;
 }
@@ -2992,18 +2991,39 @@ body::before {
 #desktop-canvas .history-viewport {
     width: 100% !important;
     height: 100% !important;
-    /* ยกเลิกสูตรคำนวณ min(100vh) เดิมที่ทำให้จอยืด */
     top: 0 !important;
     transform: none !important;
 }
 
-/* =========================================================================
-🎯 EMERGENCY FRAME FIX: บีบทุกอย่างให้อยู่ในจอ (ห้ามล้น ห้ามหาย)=========================================================================*/
+/* 2. บังคับกฎให้ทำงานบน iPhone Pro Max (เพิ่มจาก 800px เป็น 1100px) */
+@container (max-width: 1100px) {
 
-/* ทำงานเฉพาะจอเล็ก (< 1400px) เพื่อรักษาจอ Mac/1920 ให้เหมือนเดิม */
-@container (max-width: 1400px) {
+    /* ✅ แก้จุดที่ 1: บังคับ Text ให้เล็กจริง (Select เฉพาะตัวที่ดื้อ) */
+    .tha-sao-group-label,
+    .tha-sao-group-label-2,
+    .tha-sao-group-label-3 {
+        font-size: 10px !important;
+        /* 👈 บีบให้จิ๋วลงตามสั่ง */
+        top: 25cqh !important;
+        transform: none !important;
+    }
 
-    /* 1. คุมกำเนิดรูปภาพ: ห้ามสูงเกินหน้าจอเด็ดขาด */
+    .fighter-label,
+    .pose-label,
+    .chaiya-label {
+        font-size: 8px !important;
+        /* 👈 ป้ายชื่อคนจิ๋วลงมินิมอล */
+    }
+
+    .text-box p {
+        font-size: 9px !important;
+        /* 👈 ข้อความบรรยายเล็กลง */
+        line-height: 1.2 !important;
+    }
+
+    /* ✅ แก้จุดที่ 2: แก้ของลอย (ล็อกพื้นแยกเลเยอร์ให้ไม่ทับกัน) */
+
+    /* [ชั้นหลัง] สถานที่และภูเขา: ดึงมาเกาะพื้น */
     .bg-ruins,
     .ayutthaya-temples,
     .korat-background,
@@ -3011,20 +3031,32 @@ body::before {
     .chaiya-background,
     .tha-sao-background,
     .thonburi-background,
-    .early-ratana-background,
-    .mid-ratana-background,
-    .present-background,
     .bg-mountain {
         top: auto !important;
-        bottom: 12cqh !important;
-        max-height: 45cqh !important;
-        /* 👈 บังคับห้ามสูงเกินเกือบครึ่งจอ */
+        bottom: 12.5cqh !important;
+        /* 👈 เกาะเส้นพื้นหญ้าพอดี */
+        height: 28cqh !important;
+        /* ย่อให้เตี้ยลงไม่ให้บังท้องฟ้า */
         width: auto !important;
         object-fit: contain !important;
-        /* 👈 บีบรูปให้พอดีเฟรม ไม่ให้ล้นจนหาย */
     }
 
-    /* 2. คุมขนาดนักมวย: ให้เล็กลงเพื่อเพิ่มพื้นที่ให้ข้อความ */
+    /* [ชั้นหน้า] นักมวย (คน): ล็อกเท้าติดดิน */
+    .fighters,
+    .regional-fighters,
+    .lopburi-fighters,
+    .chaiya-fighters,
+    .tha-sao-fighters,
+    .thonburi-fighters,
+    .early-ratana-fighters,
+    .mid-ratana-fighters,
+    .present-fighters,
+    #walking-fighter {
+        top: auto !important;
+        bottom: 11cqh !important;
+        /* 👈 อยู่ระนาบพื้นพอดี ไม่ลอย */
+    }
+
     .fighters .fighter,
     .regional-fighter,
     .lopburi-fighter,
@@ -3035,126 +3067,27 @@ body::before {
     .mid-ratana-fighter,
     .present-fighter,
     #walking-fighter-img {
-        max-height: 25cqh !important;
-        /* 👈 นักมวยต้องตัวเล็กกว่าสถานที่เสมอ */
-        bottom: 11cqh !important;
-        top: auto !important;
-    }
-
-    /* 3. แก้เรื่อง "Text ยาว": บีบตัวหนังสือให้เล็กลง และจำกัดความกว้าง */
-    .text-box {
-        width: 70cqw !important;
-        /* 👈 บีบกล่องให้แคบลงเพื่อให้มองเห็นฉาก */
-        max-height: 25cqh !important;
-        /* 👈 ห้ามกล่องยาวจนทับคน */
-        overflow-y: auto;
-        /* ถ้าข้อความยาวเกิน ให้ไถอ่านข้างในได้ */
-        padding: 10px !important;
-        top: 5cqh !important;
-        /* 👈 ล็อกไว้โซนบนสุดเสมอ */
-    }
-
-    .text-box p {
-        font-size: clamp(9px, 1.1cqw, 13px) !important;
-        /* 👈 ลดขนาดฟอนต์ลงเยอะๆ */
-        line-height: 1.2 !important;
-    }
-
-    /* 4. Navbar: ทำให้บางที่สุด */
-    #navbar {
-        height: 40px !important;
-    }
-
-    .logo-nav {
-        max-height: 25px !important;
-    }
-}
-
-/* =========================================================================
-   🎯 ULTRA-SLIM MOBILE CONTROL (มินิมอลขั้นสุดสำหรับจอจิ๋ว)
-   ========================================================================= */
-
-@container (max-width: 600px) {
-
-    /* 1. นักมวยประจำยุค: บีบให้จิ๋วลงอีกนิดเพื่อให้ฉากดูโปร่ง */
-    .fighters .fighter,
-    .regional-fighter,
-    .lopburi-fighter,
-    .chaiya-fighter,
-    .tha-sao-fighter,
-    .thonburi-fighter,
-    .early-ratana-fighter,
-    .mid-ratana-fighter,
-    .present-fighter {
-        height: 14cqh !important;
-        /* 👈 ลดเหลือ 14% เพื่อไม่ให้ดูตัวใหญ่คับจอ */
-        width: auto !important;
-        bottom: 11.5cqh !important;
-        /* ล็อกเท้าให้ตรงกับระนาบดิน */
-    }
-
-    /* 2. สถานที่แลนด์มาร์ค: เล็กลงเพื่อเพิ่มพื้นที่ท้องฟ้า */
-    .bg-ruins,
-    .ayutthaya-temples,
-    .korat-background,
-    .lopburi-background,
-    .chaiya-background,
-    .tha-sao-background,
-    .thonburi-background,
-    .early-ratana-background,
-    .mid-ratana-background,
-    .present-background {
-        height: 22cqh !important;
-        /* 👈 ลดเหลือ 22% ให้ดูเป็นฉากหลังจริงๆ */
-        bottom: 11.5cqh !important;
+        height: 18cqh !important;
+        /* 👈 คนตัวเล็กลง ไม่บังวัด */
         width: auto !important;
     }
 
-    /* 3. หัวข้อใหญ่ (เช่น North-Lopburi): หดลงให้มินิมอล ไม่ตะโกน */
-    .tha-sao-group-label,
-    .tha-sao-group-label-2,
-    .tha-sao-group-label-3 {
-        font-size: 11px !important;
-        /* 👈 ลดจาก 20px เหลือ 11px */
-        transform: translateY(0) !important;
-    }
-
-    /* 4. กล่องข้อความ: บีบให้แคบลงเพื่อไม่ให้บังคน และลดขนาดฟอนต์ */
-    .text-box {
-        width: 60cqw !important;
-        /* 👈 บีบความกว้างเหลือ 60% เพื่อให้เห็นนักมวยด้านข้าง */
-        top: 5cqh !important;
-        padding: 6px 10px !important;
-    }
-
-    .text-box p {
-        font-size: 9px !important;
-        /* 👈 ฟอนต์จิ๋วแต่อ่านออก */
-        line-height: 1.1 !important;
-    }
-
-    /* 5. ไทม์ไลน์ด้านล่าง: เล็กลงอีกระดับ */
+    /* อื่นๆ ย่อขนาดมินิมอล */
     .era-circle {
-        width: 20px !important;
-        /* 👈 เล็กเท่าปลายนิ้ว */
-        height: 20px !important;
-    }
-
-    .era-number {
-        font-size: 10px !important;
+        width: 18px !important;
+        height: 18px !important;
     }
 
     .era-title {
         font-size: 8px !important;
-        top: 25px !important;
+        top: 22px !important;
     }
 
-    /* 6. ป้ายชื่อนักมวยรายตัว (เช่น North, Korat): มินิมอลที่สุด */
-    .fighter-label,
-    .pose-label,
-    .chaiya-label {
-        font-size: 7px !important;
-        /* 👈 ปรับให้เป็นแค่คำกำกับเล็กๆ */
-        transform: translateY(2px) !important;
+    #navbar {
+        height: 35px !important;
+    }
+
+    .logo-nav {
+        max-height: 22px !important;
     }
 }
