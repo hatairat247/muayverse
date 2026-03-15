@@ -1683,7 +1683,7 @@ function initRemainingKaraokeBoxes() {
                 { opacity: 0.15, filter: 'blur(4px)' },
                 {
                     opacity: 1, filter: 'blur(0px)', stagger: 0.02, ease: 'none', duration: 0.6,
-                    scrollTrigger: { trigger: box22, start: 'right 110%', end: 'right 60%', scrub: 0.3, containerAnimation: horizontalScrollTween }
+                    scrollTrigger: { trigger: box22, start: 'left 95%', end: 'left 60%', scrub: 0.3, containerAnimation: horizontalScrollTween }
                 }
             );
         }
