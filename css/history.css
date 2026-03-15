@@ -25,85 +25,89 @@ body {
 }
 
 /* =========================================================================
-   🎯 MASTER RESPONSIVE CONTROL (v2: รวมทุก Fix + ทุกอุปกรณ์ ในที่เดียว)
+   🎯 MASTER CONTAINER CONTROL (สำหรับจอ 16:9 ทุกขนาด)
+   กฎด้านล่างนี้จะทำงาน "เฉพาะ" ตอนที่จอเล็กกว่า 1920px เท่านั้น ไม่กระทบจอหลัก
    ========================================================================= */
 
-/* --- [ BASE: สำหรับจอใหญ่ 1920x1080 และค่าตั้งต้นทุกจอ ] --- */
+/* --- [ LEVEL 1: จอ Laptop ขนาดกลาง (Canvas กว้าง < 1600px) ] --- */
+@container (max-width: 1600px) {
 
-/* 1. คุมขนาดวงกลมและชื่อยุค (มินิมอล ไม่ทับเส้น) */
-#desktop-canvas .era-circle {
-    width: clamp(24px, 1.8cqw, 45px) !important;
-    height: clamp(24px, 1.8cqw, 45px) !important;
-    position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    margin: 0 !important;
+    /* ย่อขนาดคนลงนิดนึงเพื่อความสมจริง */
+    #desktop-canvas img[src*="fighter"],
+    #desktop-canvas [class*="fighter"],
+    #desktop-canvas .regional-fighter,
+    #desktop-canvas .tha-sao-fighter,
+    #walking-fighter-img {
+        max-height: 40cqh !important;
+        bottom: 8.5cqh !important;
+        /* ดันลงให้เหยียบพื้นพอดี */
+    }
+
+    /* Navbar เริ่มหดเล็ก */
+    #navbar {
+        height: 80px !important;
+    }
 }
 
-#desktop-canvas .era-indicator-sukhothai .era-circle,
-#desktop-canvas .era-indicator-sukhothai .era-title {
-    left: 30cqw !important;
-}
-
-#desktop-canvas .era-title {
-    font-size: clamp(12px, 0.9cqw, 18px) !important;
-    position: absolute !important;
-    top: clamp(28px, 2.8cqw, 45px) !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-}
-
-/* 2. คุมกำเนิด "คน" - ไม่ให้ตัวใหญ่เกินและเท้าติดพื้น (Base 1920x1080) */
-#desktop-canvas img[src*="fighter"],
-#desktop-canvas [class*="fighter"],
-#desktop-canvas .regional-fighter,
-#desktop-canvas .tha-sao-fighter,
-#walking-fighter-img {
-    max-height: 42cqh !important;
-    /* ย่อจาก 55 เหลือ 42 ตามที่นายสั่ง */
-    width: auto !important;
-    bottom: 8cqh !important;
-    /* แก้เท้าลอย */
-}
-
-#desktop-canvas .fighters {
-    top: auto !important;
-    bottom: 12cqh !important;
-}
-
-/* 3. Navbar - ปรับระดับความสูงให้นิ่ง (Base) */
-#navbar,
-.navbar {
-    min-height: clamp(60px, 8cqh, 96px) !important;
-    height: clamp(60px, 8cqh, 96px) !important;
-}
-
-/* --- [ LEVEL 1: จอขนาดกลาง / Laptop (กว้าง < 1200px) ] --- */
+/* --- [ LEVEL 2: จอ Tablet / Laptop เล็ก (Canvas กว้าง < 1200px) ] --- */
 @container (max-width: 1200px) {
 
+    /* ขยับเสาหน้าสุด (Floor 1) ออกจากซ้ายนิดนึงตามที่นายสั่ง */
+    #desktop-canvas .bg-floor-1 {
+        left: -5cqw !important;
+    }
+
+    /* คนย่อลงอีก ไม่ให้บังเนื้อหา */
     #desktop-canvas img[src*="fighter"],
     #walking-fighter-img {
-        max-height: 38cqh !important;
+        max-height: 35cqh !important;
         bottom: 10cqh !important;
     }
 
+    /* ย่อสถานที่ (Ruins/Temples) */
+    #desktop-canvas .bg-ruins,
+    #desktop-canvas .ayutthaya-temples,
+    #desktop-canvas .korat-background {
+        height: 35cqh !important;
+    }
+
     #navbar {
-        height: 70px !important;
+        height: 65px !important;
+    }
+
+    .logo-nav {
+        max-height: 50px !important;
     }
 }
 
-/* --- [ LEVEL 2: จอขนาดเล็ก / Tablet (กว้าง < 800px) ] --- */
-@container (max-width: 800px) {
-    #desktop-canvas .bg-floor-1 {
-        left: -2cqw !important;
+/* --- [ LEVEL 3: จอขนาดเล็ก (Canvas กว้าง < 900px) ] --- */
+@container (max-width: 900px) {
+
+    /* บีบกล่องข้อความให้แคบลง แต่ตัวหนังสืออ่านง่ายขึ้น */
+    #desktop-canvas .text-box {
+        width: 40cqw !important;
+        padding: 15px !important;
     }
 
-    /* ขยับเสาหน้าสุดออก */
+    #desktop-canvas .text-box p {
+        font-size: clamp(10px, 1cqw, 14px) !important;
+    }
+
+    /* คนเล็กลงอีกระดับ */
     #desktop-canvas img[src*="fighter"],
     #walking-fighter-img {
-        max-height: 32cqh !important;
-        bottom: 11cqh !important;
+        max-height: 30cqh !important;
+        bottom: 12cqh !important;
+    }
+
+    /* วงกลมไทม์ไลน์มินิมอล */
+    #desktop-canvas .era-circle {
+        width: 30px !important;
+        height: 30px !important;
+    }
+
+    #desktop-canvas .era-title {
+        font-size: 11px !important;
     }
 
     #navbar {
@@ -111,24 +115,135 @@ body {
     }
 }
 
-/* --- [ LEVEL 3: จอมือถือ (กว้าง < 500px) ] --- */
-@container (max-width: 500px) {
+/* --- [ LEVEL 4: สำหรับจอมือถือ (Canvas กว้าง < 600px) ] --- */
+@container (max-width: 600px) {
+
+    /* เสาหน้าสุดขยับเข้าที่ */
+    #desktop-canvas .bg-floor-1 {
+        left: 0cqw !important;
+    }
+
+    /* คนจิ๋วแต่แจ๋ว (ไม่ลอย ไม่ทับ) */
+    #desktop-canvas img[src*="fighter"],
+    #walking-fighter-img {
+        max-height: 25cqh !important;
+        bottom: 14cqh !important;
+    }
+
+    /* สถานที่ย่อสุดๆ */
+    #desktop-canvas .bg-ruins,
+    #desktop-canvas .ayutthaya-temples,
+    #desktop-canvas .korat-background {
+        height: 25cqh !important;
+    }
+
+    /* กล่องข้อความขยายเต็มความกว้าง */
+    #desktop-canvas .text-box {
+        width: 80cqw !important;
+    }
+
+    /* Navbar มินิมอลที่สุด */
     #navbar {
         height: 45px !important;
     }
 
     .logo-nav {
-        max-height: 32px !important;
+        max-height: 30px !important;
+    }
+}
+
+/* =========================================================================
+   🎯 IPAD & TABLET SPECIFIC FIX (แก้ตัวลอย + ย่อขนาด)
+   กฎนี้จะทำงานเฉพาะจอที่เล็กกว่า 1600px เพื่อไม่ให้กระทบจอ 1920x1080 หลัก
+   ========================================================================= */
+
+@container (max-width: 1600px) {
+
+    /* 1. แก้ตัวลอย: เลิกใช้ top แล้วเปลี่ยนมาใช้ bottom เพื่อให้เท้าติดพื้นเสมอ */
+    #desktop-canvas .fighters {
+        top: auto !important;
+        /* ปลดค่า top เดิมทิ้ง */
+        bottom: 5.5cqh !important;
+        /* 👈 ดันลงมาให้เหยียบพื้นพอดี */
     }
 
-    #desktop-canvas .bg-floor-1 {
-        left: 0cqw !important;
+    #walking-fighter {
+        position: absolute !important;
+        /* เปลี่ยนจาก fixed มาเป็น absolute ในจอจำลอง */
+        top: auto !important;
+        bottom: 5.5cqh !important;
+        /* 👈 ล็อกขาคนเดินให้ติดพื้นระดับเดียวกับเพื่อน */
     }
 
+    /* 2. ย่อขนาดคน: ให้ดูตัวเล็กลง ไม่ใหญ่จนล้นหน้าสถานที่ */
     #desktop-canvas img[src*="fighter"],
+    #desktop-canvas .regional-fighter,
+    #desktop-canvas .tha-sao-fighter,
     #walking-fighter-img {
-        max-height: 25cqh !important;
-        bottom: 13cqh !important;
+        max-height: 35cqh !important;
+        /* ลดขนาดคนลงเหลือ 35% ของความสูงจอ */
+        width: auto !important;
+    }
+
+    /* 3. ย่อขนาดสถานที่: ลดความสูงลงเพื่อเพิ่มพื้นที่ท้องฟ้า */
+    #desktop-canvas .bg-ruins {
+        position: absolute;
+        left: 5cqw;
+        top: 4cqw !important;
+    }
+
+    #desktop-canvas .ayutthaya-temples {
+        position: absolute;
+        top: 12cqw !important;
+        height: 94cqh !important;
+    }
+
+    #desktop-canvas .korat-background {
+        position: absolute;
+        top: 10cqw !important;
+        height: 94cqh !important;
+    }
+
+    #desktop-canvas .lopburi-background {
+        position: absolute;
+        top: 10cqw !important;
+        height: 94cqh !important;
+    }
+
+    #desktop-canvas .chaiya-background {
+        position: absolute;
+        top: 10cqw !important;
+        height: 100cqh !important;
+    }
+
+    #desktop-canvas .tha-sao-background {
+        position: absolute;
+        top: 10cqw !important;
+        height: 100cqh !important;
+    }
+
+    #desktop-canvas .thonburi-background {
+        position: absolute;
+        top: 10cqw !important;
+        height: 100cqh !important;
+    }
+
+
+    /* 4. Navbar มินิมอล: หดขนาดลงเพื่อไม่ให้บังเนื้อหา */
+    #navbar,
+    .navbar {
+        height: clamp(50px, 7cqh, 75px) !important;
+        min-height: auto !important;
+    }
+
+    .logo-nav {
+        max-height: 45px !important;
+    }
+
+    /* 5. แก้ระยะเสาด้านหน้า (Floor 1): ขยับออกจากซ้ายตามที่สั่ง */
+    #desktop-canvas .bg-floor-1 {
+        left: -10cqw !important;
+        bottom: -0.5cqw !important;
     }
 }
 
