@@ -498,6 +498,7 @@ body::before {
 .ruins-front {
     z-index: 3;
     opacity: 1.0;
+    left: 2cqw;
 }
 
 .ayutthaya-temples {
@@ -529,6 +530,7 @@ body::before {
 
 .temple-center {
     z-index: 3;
+    left: 1cqw;
 }
 
 .korat-background {
@@ -2977,10 +2979,10 @@ body::before {
 }
 
 /* =========================================================================
-   🎯 THE BEST VERSION: แก้ตัวหนังสือไม่เล็ก + แก้ของลอย (สำหรับ iPad/iPhone)
+   🎯 THE FINAL LAYER FIX: แก้ภูเขาทับพื้น + คนยักษ์ + สถานที่อลังการ
    ========================================================================= */
 
-/* 1. ล็อกเฟรมภาพรวมให้เป๊ะกับจอจำลอง (บรรทัดเดิมที่นายเคยมี) */
+/* ล็อกเฟรมหลักให้เป๊ะเหมือนเดิม */
 #desktop-canvas .history-wrapper {
     position: absolute !important;
     inset: 0 !important;
@@ -2988,42 +2990,148 @@ body::before {
     height: 100% !important;
 }
 
-#desktop-canvas .history-viewport {
-    width: 100% !important;
-    height: 100% !important;
-    top: 0 !important;
-    transform: none !important;
-}
-
-/* 2. บังคับกฎให้ทำงานบน iPhone Pro Max (เพิ่มจาก 800px เป็น 1100px) */
 @container (max-width: 1100px) {
 
-    /* ✅ แก้จุดที่ 1: บังคับ Text ให้เล็กจริง (Select เฉพาะตัวที่ดื้อ) */
-    .tha-sao-group-label,
-    .tha-sao-group-label-2,
-    .tha-sao-group-label-3 {
-        font-size: 10px !important;
-        /* 👈 บีบให้จิ๋วลงตามสั่ง */
-        top: 25cqh !important;
-        transform: none !important;
+    /* รูปภูเขา (Mountains): กลับไปอยู่หลังสุด (z-index: 0) และชัด 100% */
+    .bg-mountain {
+        height: 40cqh !important;
+        bottom: 12.5cqh !important;
+        top: auto !important;
+        width: auto !important;
+        opacity: 1 !important;
+        z-index: 0 !important;
     }
 
-    .fighter-label,
-    .pose-label,
-    .chaiya-label {
-        font-size: 8px !important;
-        /* 👈 ป้ายชื่อคนจิ๋วลงมินิมอล */
+    .present-building {
+        position: absolute !important;
+        bottom: 27cqh !important;
+        top: auto !important;
+        width: auto !important;
+        opacity: 1 !important;
+        z-index: 0 !important;
     }
 
-    .text-box p {
-        font-size: 9px !important;
-        /* 👈 ข้อความบรรยายเล็กลง */
-        line-height: 1.2 !important;
+    .mid-ratana-building-1 {
+        position: absolute !important;
+        bottom: 32cqh !important;
+        top: auto !important;
+        width: auto !important;
+        opacity: 1 !important;
+        z-index: 0 !important;
+        left: 914cqw !important;
     }
 
-    /* ✅ แก้จุดที่ 2: แก้ของลอย (ล็อกพื้นแยกเลเยอร์ให้ไม่ทับกัน) */
+    .mid-ratana-building-3 {
+        position: absolute !important;
+        bottom: 27cqh !important;
+        top: auto !important;
+        width: auto !important;
+        opacity: 1 !important;
+        z-index: 0 !important;
+        left: 1010cqw !important;
+    }
 
-    /* [ชั้นหลัง] สถานที่และภูเขา: ดึงมาเกาะพื้น */
+    .fighters .fighter,
+    #walking-fighter-img {
+        position: absolute !important;
+        bottom: -50cqh !important;
+        height: 50cqh !important;
+        width: auto !important;
+        top: auto !important;
+        z-index: 15 !important;
+    }
+
+    .kick-poses {
+        position: absolute !important;
+        bottom: -6cqh !important;
+        width: 30cqw !important;
+        top: auto !important;
+    }
+
+    .regional-fighters {
+        position: absolute !important;
+        bottom: 13cqh !important;
+        top: auto !important;
+    }
+
+    .khanom-tom-fighter,
+    .early-ratana-pic-rama5 {
+        height: 45cqh !important;
+        bottom: 25cqh !important;
+        top: auto !important;
+    }
+
+    .boran-thailand-image {
+        position: absolute !important;
+        height: 50cqh !important;
+        bottom: -55cqh !important;
+        top: auto !important;
+    }
+
+    .korat-poses {
+        position: absolute !important;
+        bottom: 4cqh !important;
+        width: 30cqw !important;
+        top: auto !important;
+        left: 290cqw !important;
+    }
+
+    .lopburi-fighters {
+        position: absolute !important;
+        bottom: 22cqh !important;
+        top: auto !important;
+    }
+
+    .lopburi-fighters-2 {
+        position: absolute !important;
+        bottom: 10cqh !important;
+        top: auto !important;
+    }
+
+    .chaiya-fighters,
+    .chaiya-fighters-2,
+    .chaiya-fighters-3 {
+        position: absolute !important;
+        bottom: 13cqh !important;
+        top: auto !important;
+    }
+
+    .tha-sao-fighters,
+    .tha-sao-fighters-2,
+    .tha-sao-fighters-3 {
+        bottom: 6cqh !important;
+        position: absolute !important;
+        top: auto !important;
+    }
+
+    .thonburi-fighters,
+    .early-ratana-fighters {
+        position: absolute !important;
+        bottom: 10cqh !important;
+        top: auto !important;
+    }
+
+    .mid-ratana-fighters {
+        position: absolute !important;
+        bottom: 17cqh !important;
+        top: auto !important;
+    }
+
+    /* นักมวยเดิน (Walking Fighter) */
+    #walking-fighter-img {
+        position: absolute !important;
+        bottom: 8cqh !important;
+        /* อันนี้ควรอยู่บนพื้น ไม่ควรติดลบเยอะ */
+        height: 35cqh !important;
+        top: auto !important;
+    }
+
+    .present-fighters {
+        bottom: 40cqh !important;
+        top: auto !important;
+    }
+
+    /* รูปสถานที่ (Landmarks): อลังการขึ้น (55% ของจอ) ไม่จิ๋วแล้ว */
     .bg-ruins,
     .ayutthaya-temples,
     .korat-background,
@@ -3031,63 +3139,244 @@ body::before {
     .chaiya-background,
     .tha-sao-background,
     .thonburi-background,
-    .bg-mountain {
+    .early-ratana-background,
+    .mid-ratana-background,
+    .present-background {
         top: auto !important;
-        bottom: 12.5cqh !important;
-        /* 👈 เกาะเส้นพื้นหญ้าพอดี */
-        height: 28cqh !important;
-        /* ย่อให้เตี้ยลงไม่ให้บังท้องฟ้า */
-        width: auto !important;
+        bottom: 12cqh !important;
+        height: 60cqh !important;
+        width: 100cqw !important;
+        z-index: 5 !important;
+        /* หลังคนแต่หน้าภูเขา */
+        opacity: 1 !important;
+    }
+
+    /* บังคับรูปข้างในสถานที่ให้ถมเต็ม */
+    .ruins-layer,
+    .temple-layer,
+    .korat-bg-layer,
+    .lopburi-layer,
+    .chaiya-layer,
+    .tha-sao-layer,
+    .thonburi-layer,
+    .early-ratana-layer,
+    .present-layer {
+        width: 100% !important;
+        height: 100% !important;
         object-fit: contain !important;
-    }
-
-    /* [ชั้นหน้า] นักมวย (คน): ล็อกเท้าติดดิน */
-    .fighters,
-    .regional-fighters,
-    .lopburi-fighters,
-    .chaiya-fighters,
-    .tha-sao-fighters,
-    .thonburi-fighters,
-    .early-ratana-fighters,
-    .mid-ratana-fighters,
-    .present-fighters,
-    #walking-fighter {
+        object-position: center bottom !important;
+        position: absolute !important;
         top: auto !important;
-        bottom: 11cqh !important;
-        /* 👈 อยู่ระนาบพื้นพอดี ไม่ลอย */
     }
 
-    .fighters .fighter,
-    .regional-fighter,
-    .lopburi-fighter,
-    .chaiya-fighter,
-    .tha-sao-fighter,
-    .thonburi-fighter,
-    .early-ratana-fighter,
-    .mid-ratana-fighter,
-    .present-fighter,
-    #walking-fighter-img {
-        height: 18cqh !important;
-        /* 👈 คนตัวเล็กลง ไม่บังวัด */
-        width: auto !important;
+    .ruins-back {
+        left: -4cqw !important;
     }
 
-    /* อื่นๆ ย่อขนาดมินิมอล */
-    .era-circle {
-        width: 18px !important;
-        height: 18px !important;
+    .ruins-middle {
+        left: -1cqw !important;
     }
 
-    .era-title {
-        font-size: 8px !important;
-        top: 22px !important;
+    .temple-layer {
+        left: -8cqw !important;
+    }
+
+    .temple-center {
+        left: -4cqw !important;
+    }
+
+    .korat-background {
+        left: 165cqw !important;
+    }
+
+    .lopburi-background {
+        left: 200cqw !important;
+    }
+
+    .chaiya-background {
+        left: 310cqw !important;
+    }
+
+    /* ฟอนต์ (Text) และ Navbar */
+    .text-box {
+        padding: 6px 12px !important;
+    }
+
+    .text-box p {
+        font-size: 9px !important;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8) !important;
+    }
+
+    /* ── กว้างพิเศษมาก 40 ── */
+    .text-box-22 {
+        width: 40cqw !important;
+    }
+
+    /* ── กว้างพิเศษ 34 ── */
+    .text-box-14,
+    .text-box-15,
+    .text-box-21 {
+        width: 34cqw !important;
+    }
+
+    .text-box-19 {
+        width: 34cqw !important;
+        left: 977cqw !important;
+    }
+
+
+    /* ── กว้างมาก 32 ── */
+    .text-box-4 {
+        width: 32cqw !important;
+    }
+
+    /* ── กว้างมาตรฐาน 30 ── */
+    .text-box-1,
+    .text-box-7,
+    .text-box-8,
+    .text-box-9,
+    .text-box-16,
+    .text-box-17,
+    .text-box-18 {
+        width: 30cqw !important;
+    }
+
+    .text-box-20 {
+        width: 30cqw !important;
+        left: 1030cqw !important;
+    }
+
+    /* ── กว้างปานกลาง 28 ── */
+    .text-box-2,
+    .text-box-3,
+    .text-box-5 {
+        width: 28cqw !important;
+    }
+
+    /* ── ขนาดกะทัดรัด 24-25 ── */
+    .text-box-6,
+    .text-box-10,
+    .text-box-13 {
+        width: 25cqw !important;
+    }
+
+    /* ── ขนาดเล็ก 15-20 ── */
+    .text-box-11,
+    .text-box-12 {
+        width: 15cqw !important;
+    }
+
+    .fighter-label,
+    .pose-label,
+    .chaiya-label,
+    .tha-sao-group-label,
+    .tha-sao-group-label-2,
+    .tha-sao-group-label-3 {
+        font-size: 10px !important;
     }
 
     #navbar {
         height: 35px !important;
     }
 
-    .logo-nav {
-        max-height: 22px !important;
+    /* =========================================================================
+       🎯 TIMELINE ALIGNMENT: จัดชื่อยุคให้กลางวงกลม + ย่อขนาดเท่าสุโขทัย (สำหรับ < 1100px)
+       ========================================================================= */
+
+    .era-timeline-line {
+        display: block !important;
+        top: 30% !important;
+        height: 3px !important;
+        background: var(--history-text) !important;
+        opacity: 1 !important;
+    }
+
+    .era-circle {
+        width: 25px !important;
+        height: 25px !important;
+    }
+
+    .era-title {
+        font-size: 10px !important;
+        white-space: nowrap !important;
+    }
+
+    .era-indicator-sukhothai .era-circle {
+        left: 30cqw !important;
+        top: 30% !important;
+        transform: translate(-50%, -50%) !important;
+    }
+
+    .era-indicator-sukhothai .era-title {
+        left: 30cqw !important;
+        top: 32px !important;
+        transform: translateX(-50%) !important;
+    }
+
+    .era-indicator-ayutthaya,
+    .era-indicator-regional,
+    .era-indicator-korat,
+    .era-indicator-lopburi,
+    .era-indicator-chaiya,
+    .era-indicator-tha-sao,
+    .era-indicator-thonburi,
+    .era-indicator-early-ratana,
+    .era-indicator-mid-ratana,
+    .era-indicator-present {
+        display: block !important;
+        position: absolute !important;
+        width: 1px !important;
+        top: 87% !important;
+        overflow: visible !important;
+    }
+
+    .era-indicator-ayutthaya .era-circle,
+    .era-indicator-regional .era-circle,
+    .era-indicator-korat .era-circle,
+    .era-indicator-lopburi .era-circle,
+    .era-indicator-chaiya .era-circle,
+    .era-indicator-tha-sao .era-circle,
+    .era-indicator-thonburi .era-circle,
+    .era-indicator-early-ratana .era-circle,
+    .era-indicator-mid-ratana .era-circle,
+    .era-indicator-present .era-circle {
+        width: 25px !important;
+        height: 25px !important;
+        left: 0 !important;
+        top: 30% !important;
+        transform: translate(-50%, -50%) !important;
+        position: absolute !important;
+    }
+
+    .era-indicator-ayutthaya .era-title,
+    .era-indicator-regional .era-title,
+    .era-indicator-korat .era-title,
+    .era-indicator-lopburi .era-title,
+    .era-indicator-chaiya .era-title,
+    .era-indicator-tha-sao .era-title,
+    .era-indicator-thonburi .era-title,
+    .era-indicator-early-ratana .era-title,
+    .era-indicator-mid-ratana .era-title,
+    .era-indicator-present .era-title {
+        font-size: 10px !important;
+        left: 0 !important;
+        top: 32px !important;
+        transform: translateX(-50%) !important;
+        position: absolute !important;
+        white-space: nowrap !important;
+        display: block !important;
+        opacity: 1 !important;
+    }
+
+    .era-number {
+        font-size: 12px !important;
+    }
+
+    /* CUT SCENE FIX:  */
+
+    /* ตัดความยาวแทร็กที่เกินมาทิ้ง ให้จบพอดีกับเนื้อหาสุดท้าย (ไม่เหลือที่ว่างขวามือ) */
+    #timeline-track {
+        /* หั่นความยาวจาก 2300cqw เหลือ 1250cqw ให้จบพอดีกับพื้นและแบคกราวด์ปัจจุบัน */
+        width: 1550cqw !important;
     }
 }
