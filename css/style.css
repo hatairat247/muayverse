@@ -243,7 +243,7 @@ a {
     position: fixed;
     top: var(--navbar-height);
     right: 15px;
-    z-index: 998;
+    z-index: 1000;
     background-color: var(--color-secondary);
     border-radius: var(--border-radius);
     padding: var(--spacing-xl) var(--spacing-sm);
@@ -328,61 +328,89 @@ a {
     }
 }
 
-/* ===== Responsive Design ===== */
-@media screen and (max-width: 1024px) {
+/* =========================================
+   Hamburger Menu - Responsive
+   Breakpoints ตาม device จริง:
+   - Large Tablets  : max-width 1366px  (iPad Pro / Air / Mini)
+   - Large Mobiles  : max-width  932px  (iPhone 14 Pro Max / XR / 12 Pro)
+   - Small Mobiles  : max-width  667px  (iPhone SE)
+   ========================================= */
+
+/* iPad Pro: 1025px - 1366px */
+@media screen and (min-width: 1025px) and (max-width: 1366px) {
     .hamburger-menu {
+        min-width: 280px;
+        padding: 20px 16px;
         right: 20px;
     }
 
-    .main-logo {
-        max-width: 600px;
+    .menu-content { gap: 14px; }
+
+    .menu-item {
+        font-size: 20px;
+        padding: 10px 0;
     }
+
+    .menu-divider { width: 100%; }
 }
 
-@media screen and (max-width: 768px) {
+/* iPad Mini: 768px - 1024px */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
     .hamburger-menu {
-        min-width: 200px;
+        min-width: 190px;
         padding: 14px 10px;
-        right: 12px;
+        right: 20px;
     }
 
-    .menu-content {
-        gap: 8px;
-    }
+    .menu-content { gap: 8px; }
 
     .menu-item {
-        font-size: 15px;
-        padding: 6px 0;
-    }
-
-    .menu-divider {
-        width: 100%;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .hamburger-menu {
-        min-width: 170px;
-        padding: 10px 8px;
-        right: 10px;
-    }
-
-    .menu-content {
-        gap: 4px;
-    }
-
-    .menu-item {
-        font-size: 13px;
+        font-size: 14px;
         padding: 5px 0;
     }
 
-    .menu-divider {
-        width: 100%;
-    }
+    .menu-divider { width: 100%; }
 }
 
+/* Large Mobiles: ≤ 932px */
+@media screen and (max-width: 932px) {
+    .hamburger-menu {
+        min-width: 160px;
+        padding: 10px 8px;
+        right: 12px;
+    }
 
+    .menu-content { gap: 5px; }
 
+    .menu-item {
+        font-size: 12px;
+        padding: 4px 0;
+    }
+
+    .menu-divider { width: 100%; }
+}
+
+/* Small Mobiles: ≤ 667px */
+@media screen and (max-width: 667px) {
+    .hamburger-menu {
+        min-width: 140px;
+        padding: 8px 6px;
+        right: 10px;
+    }
+
+    .menu-content { gap: 3px; }
+
+    .menu-item {
+        font-size: 11px;
+        padding: 3px 0;
+    }
+
+    .menu-divider { width: 100%; }
+}
+
+/* =========================================
+   Video / Hero responsive (ไม่แตะ hamburger)
+   ========================================= */
 @media screen and (max-width: 767px) {
 
     html,
@@ -436,7 +464,6 @@ a {
         object-position: center center;
     }
 }
-
 
 /* กันเว็บพังในจอที่เล็กกว่ามาตรฐาน */
 body {
