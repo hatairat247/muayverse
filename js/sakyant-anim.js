@@ -326,7 +326,7 @@ class SakYantAnim {
             if (!this.topWaitTimer) {
                 this.topWaitTimer = setTimeout(() => {
                     this.isNavigatingBack = true;
-                    this._triggerTransitionBack('history.html?from=sakyant'); // ส่งจดหมายลับกลับไปด้วย
+                    this._triggerTransitionBack('history.html');
                 }, 500); // หน่วง 0.5 วิกันเผลอไถโดน
             }
         } else {
@@ -915,21 +915,53 @@ class SakYantAnim {
             Math.round(color1[2] + (color2[2] - color1[2]) * factor)
         ];
     }
+
     /* ───  วาร์ปกลับหน้า History พร้อมม่าน ─── */
     _triggerTransitionBack(url) {
-        let transitionOverlay = document.getElementById('pageTransition');
-        if (!transitionOverlay) {
-            transitionOverlay = document.createElement('div');
-            transitionOverlay.id = 'pageTransition';
-            transitionOverlay.className = 'page-transition-overlay';
-            document.body.appendChild(transitionOverlay);
-            void transitionOverlay.offsetWidth;
+        // ติดป้ายบอกว่ากำลังย้อนกลับ — history.js จะอ่านค่านี้เมื่อ load
+        sessionStorage.setItem('returnToHistory', 'true');
+
+        // ใช้ preload animation ที่เตรียมไว้ใน initPage()
+        const preload = window._sakyantPreloadAnim;
+        if (preload && preload.isLoaded) {
+            // แสดง overlay ขึ้นมาหน้าสุด
+            if (preload.wrapper && preload.wrapper.parentNode) {
+                preload.wrapper.parentNode.style.cssText = `
+                    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+                    z-index: 99999; pointer-events: none; visibility: visible;
+                `;
+            }
+            preload.goToAndStop(0, true);
+            preload.setDirection(1);
+            preload.play();
+            preload.addEventListener('complete', () => {
+                window.location.href = url;
+            }, { once: true });
+            setTimeout(() => { window.location.href = url; }, 1200);
+        } else {
+            // fallback: load ใหม่กรณี preload ยังไม่พร้อม
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+                z-index: 99999; pointer-events: none; display: block; background: transparent;
+            `;
+            document.body.appendChild(overlay);
+            const anim = lottie.loadAnimation({
+                container: overlay,
+                renderer: 'svg',
+                loop: false,
+                autoplay: false,
+                path: 'lottie/transition.json',
+                rendererSettings: { preserveAspectRatio: 'xMidYMid slice' }
+            });
+            const play = () => {
+                anim.goToAndStop(0, true);
+                anim.setDirection(1);
+                anim.play();
+                anim.addEventListener('complete', () => { window.location.href = url; }, { once: true });
+                setTimeout(() => { window.location.href = url; }, 1200);
+            };
+            anim.isLoaded ? play() : anim.addEventListener('DOMLoaded', play, { once: true });
         }
-
-        transitionOverlay.classList.add('active');
-
-        setTimeout(() => {
-            window.location.href = url;
-        }, 800);
     }
 }
