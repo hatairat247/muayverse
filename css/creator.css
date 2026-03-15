@@ -70,6 +70,12 @@ body {
     gap: 20px;
     transition: all 0.3s ease;
     cursor: pointer;
+    position: relative;
+}
+
+/* ─── กัน card-info ไม่ให้ล้นออกนอก card ─── */
+.creator-card .card-info {
+    overflow: hidden;
 }
 
 /* ─── Card Image ─── */
@@ -91,12 +97,6 @@ body {
     display: block;
 }
 
-.creator-card:hover .card-image,
-.creator-card[data-expanded="true"]:hover .card-image {
-    width: 368px;
-    height: 486px;
-}
-
 /* ─── Card Info ─── */
 .card-info {
     display: flex;
@@ -111,10 +111,6 @@ body {
     position: relative;
     overflow: visible;
     box-sizing: border-box;
-}
-
-.creator-card:hover .card-info {
-    width: 368px;
 }
 
 /* ─── Icon ─── */
@@ -138,14 +134,7 @@ body {
     object-fit: contain;
 }
 
-.creator-card:hover .card-icon {
-    transform: translateX(180px) scale(1.15);
-    opacity: 0;
-    position: absolute;
-    pointer-events: none;
-}
-
-/* ─── Card Name (ก่อน hover) ─── */
+/* ─── Card Name ─── */
 .card-name {
     background-color: var(--card-bg);
     padding: 0 15px;
@@ -161,13 +150,6 @@ body {
     box-sizing: border-box;
 }
 
-.creator-card:hover .card-name {
-    opacity: 0;
-    pointer-events: none;
-    position: absolute;
-    visibility: hidden;
-}
-
 .card-name span {
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
@@ -177,7 +159,7 @@ body {
     white-space: nowrap;
 }
 
-/* ─── Before/After ซ่อนก่อน hover ─── */
+/* ─── Before/After ซ่อนก่อน ─── */
 .creator-card .card-info::before,
 .creator-card .card-info::after {
     display: none;
@@ -189,28 +171,156 @@ body {
         opacity: 0;
         transform: translateY(10px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-/* แสดงเมื่อ hover */
-.creator-card:hover .card-info::before,
-.creator-card:hover .card-info::after {
+
+/* ════════════════════════════════════════
+   HOVER — เฉพาะ mouse/trackpad device
+════════════════════════════════════════ */
+@media (hover: hover) {
+
+    .creator-card:hover .card-image {
+        width: 368px;
+        height: 486px;
+    }
+
+    .creator-card:hover .card-info {
+        width: 368px;
+    }
+
+    .creator-card:hover .card-icon {
+        transform: translateX(180px) scale(1.15);
+        opacity: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+
+    .creator-card:hover .card-name {
+        opacity: 0;
+        pointer-events: none;
+        position: absolute;
+        visibility: hidden;
+    }
+
+    .creator-card:hover .card-info::before,
+    .creator-card:hover .card-info::after {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 100px;
+        font-family: 'Poppins', sans-serif;
+        height: 40px;
+        animation: slideUpCenter 0.5s ease 0.3s forwards;
+        opacity: 0;
+    }
+
+    .creator-card:hover .card-info::before {
+        background-color: var(--card-bg);
+        color: var(--card-text);
+        padding: 0 14px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        flex: 1;
+        min-width: 0;
+        text-align: center;
+        white-space: normal;
+        font-size: 16px;
+    }
+
+    .creator-card:hover .card-info::after {
+        background-color: var(--card-icon-bg);
+        color: var(--card-icon-color);
+        font-size: 16px;
+        font-weight: 600;
+        padding: 0 16px;
+        flex-shrink: 0;
+    }
+
+    .creator-card[data-badge="MO"]:hover .card-info::before {
+        content: "namo.sangd@gmail.com";
+    }
+
+    .creator-card[data-badge="MO"]:hover .card-info::after {
+        content: "MO";
+    }
+
+    .creator-card[data-badge="TAR"]:hover .card-info::before {
+        content: "hatairat.chuen@gmail.com";
+    }
+
+    .creator-card[data-badge="TAR"]:hover .card-info::after {
+        content: "TAR";
+    }
+
+    .creator-card[data-badge="ZEE"]:hover .card-info::before {
+        content: "pirapatchoochaiya@gmail.com";
+    }
+
+    .creator-card[data-badge="ZEE"]:hover .card-info::after {
+        content: "ZEE";
+    }
+
+    .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+        content: "Lecturer, Department of Computer and Information Technology, KMUTT";
+        font-size: 13px;
+        white-space: normal;
+        line-height: 1.3;
+        padding: 0 10px;
+    }
+
+    .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+        content: "ADVISOR";
+        font-size: 13px;
+        padding: 0 12px;
+    }
+
+    .creator-card:hover .card-icon img {
+        animation: none;
+        filter: none;
+        transform: none;
+    }
+}
+
+
+/* ════════════════════════════════════════
+   ACTIVE — touch toggle
+════════════════════════════════════════ */
+.creator-card.active .card-image {
+    width: 368px;
+    height: 486px;
+}
+
+.creator-card.active .card-info {
+    width: 368px;
+}
+
+.creator-card.active .card-icon {
+    display: none;
+}
+
+.creator-card.active .card-name {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    visibility: hidden;
+}
+
+.creator-card.active .card-info::before,
+.creator-card.active .card-info::after {
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 100px;
     font-family: 'Poppins', sans-serif;
     height: 40px;
-    animation: slideUpCenter 0.5s ease 0.3s forwards;
-    opacity: 0;
+    opacity: 1;
+    animation: none;
 }
 
-/* กล่องขาว */
-.creator-card:hover .card-info::before {
+.creator-card.active .card-info::before {
     background-color: var(--card-bg);
     color: var(--card-text);
     padding: 0 14px;
@@ -222,8 +332,7 @@ body {
     font-size: 16px;
 }
 
-/* กล่องแดง */
-.creator-card:hover .card-info::after {
+.creator-card.active .card-info::after {
     background-color: var(--card-icon-bg);
     color: var(--card-icon-color);
     font-size: 16px;
@@ -232,32 +341,31 @@ body {
     flex-shrink: 0;
 }
 
-/* ─── Content per badge ─── */
-.creator-card[data-badge="MO"]:hover .card-info::before {
+.creator-card[data-badge="MO"].active .card-info::before {
     content: "namo.sangd@gmail.com";
 }
 
-.creator-card[data-badge="MO"]:hover .card-info::after {
+.creator-card[data-badge="MO"].active .card-info::after {
     content: "MO";
 }
 
-.creator-card[data-badge="TAR"]:hover .card-info::before {
+.creator-card[data-badge="TAR"].active .card-info::before {
     content: "hatairat.chuen@gmail.com";
 }
 
-.creator-card[data-badge="TAR"]:hover .card-info::after {
+.creator-card[data-badge="TAR"].active .card-info::after {
     content: "TAR";
 }
 
-.creator-card[data-badge="ZEE"]:hover .card-info::before {
+.creator-card[data-badge="ZEE"].active .card-info::before {
     content: "pirapatchoochaiya@gmail.com";
 }
 
-.creator-card[data-badge="ZEE"]:hover .card-info::after {
+.creator-card[data-badge="ZEE"].active .card-info::after {
     content: "ZEE";
 }
 
-.creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+.creator-card[data-badge="ADVISOR"].active .card-info::before {
     content: "Lecturer, Department of Computer and Information Technology, KMUTT";
     font-size: 13px;
     white-space: normal;
@@ -265,11 +373,12 @@ body {
     padding: 0 10px;
 }
 
-.creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+.creator-card[data-badge="ADVISOR"].active .card-info::after {
     content: "ADVISOR";
     font-size: 13px;
     padding: 0 12px;
 }
+
 
 /* ════════════════════════════════════════
    iPad Pro (1200–1366px)
@@ -303,20 +412,10 @@ body {
         border-radius: 18px;
     }
 
-    .creator-card:hover .card-image,
-    .creator-card[data-expanded="true"]:hover .card-image {
-        width: clamp(272px, 27vw, 358px);
-        height: clamp(381px, 38vw, 502px);
-    }
-
     .card-info {
         width: clamp(220px, 22vw, 290px);
         height: 48px;
         min-height: 48px;
-    }
-
-    .creator-card:hover .card-info {
-        width: clamp(272px, 27vw, 358px);
     }
 
     .card-icon {
@@ -347,34 +446,81 @@ body {
         max-width: 100%;
     }
 
-    .creator-card:hover .card-info::before,
-    .creator-card:hover .card-info::after {
+    @media (hover: hover) {
+
+        .creator-card:hover .card-image {
+            width: clamp(272px, 27vw, 358px);
+            height: clamp(381px, 38vw, 502px);
+        }
+
+        .creator-card:hover .card-info {
+            width: clamp(272px, 27vw, 358px);
+        }
+
+        .creator-card:hover .card-info::before,
+        .creator-card:hover .card-info::after {
+            height: 44px;
+        }
+
+        .creator-card:hover .card-info::before {
+            font-size: 14px;
+            padding: 0 12px;
+        }
+
+        .creator-card:hover .card-info::after {
+            font-size: 15px;
+            padding: 0 14px;
+        }
+
+        .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+            font-size: 11px;
+            padding: 0 10px;
+        }
+
+        .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+            font-size: 12px;
+            padding: 0 12px;
+        }
+    }
+
+    .creator-card.active .card-image {
+        width: clamp(272px, 27vw, 358px);
+        height: clamp(381px, 38vw, 502px);
+    }
+
+    .creator-card.active .card-info {
+        width: clamp(272px, 27vw, 358px);
+    }
+
+    .creator-card.active .card-info::before,
+    .creator-card.active .card-info::after {
         height: 44px;
     }
 
-    .creator-card:hover .card-info::before {
+    .creator-card.active .card-info::before {
         font-size: 14px;
         padding: 0 12px;
     }
 
-    .creator-card:hover .card-info::after {
+    .creator-card.active .card-info::after {
         font-size: 15px;
         padding: 0 14px;
     }
 
-    .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+    .creator-card[data-badge="ADVISOR"].active .card-info::before {
         font-size: 11px;
         padding: 0 10px;
     }
 
-    .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+    .creator-card[data-badge="ADVISOR"].active .card-info::after {
         font-size: 12px;
         padding: 0 12px;
     }
 }
 
+
 /* ════════════════════════════════════════
-   iPad Air (1180–1199px)
+   iPad Air (1025–1199px)
 ════════════════════════════════════════ */
 @media (max-width: 1199px) and (min-width: 1025px) {
 
@@ -405,20 +551,10 @@ body {
         border-radius: 16px;
     }
 
-    .creator-card:hover .card-image,
-    .creator-card[data-expanded="true"]:hover .card-image {
-        width: clamp(210px, 25vw, 292px);
-        height: clamp(294px, 34.6vw, 407px);
-    }
-
     .card-info {
         width: clamp(170px, 20vw, 235px);
         height: 44px;
         min-height: 44px;
-    }
-
-    .creator-card:hover .card-info {
-        width: clamp(210px, 25vw, 292px);
     }
 
     .card-icon {
@@ -444,31 +580,78 @@ body {
         letter-spacing: -0.3px;
     }
 
-    .creator-card:hover .card-info::before,
-    .creator-card:hover .card-info::after {
+    @media (hover: hover) {
+
+        .creator-card:hover .card-image {
+            width: clamp(210px, 25vw, 292px);
+            height: clamp(294px, 34.6vw, 407px);
+        }
+
+        .creator-card:hover .card-info {
+            width: clamp(210px, 25vw, 292px);
+        }
+
+        .creator-card:hover .card-info::before,
+        .creator-card:hover .card-info::after {
+            height: 40px;
+        }
+
+        .creator-card:hover .card-info::before {
+            font-size: 12px;
+            padding: 0 10px;
+        }
+
+        .creator-card:hover .card-info::after {
+            font-size: 13px;
+            padding: 0 12px;
+        }
+
+        .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+            font-size: 10px;
+            padding: 0 8px;
+        }
+
+        .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+            font-size: 11px;
+            padding: 0 10px;
+        }
+    }
+
+    .creator-card.active .card-image {
+        width: clamp(210px, 25vw, 292px);
+        height: clamp(294px, 34.6vw, 407px);
+    }
+
+    .creator-card.active .card-info {
+        width: clamp(210px, 25vw, 292px);
+    }
+
+    .creator-card.active .card-info::before,
+    .creator-card.active .card-info::after {
         height: 40px;
     }
 
-    .creator-card:hover .card-info::before {
+    .creator-card.active .card-info::before {
         font-size: 12px;
         padding: 0 10px;
     }
 
-    .creator-card:hover .card-info::after {
+    .creator-card.active .card-info::after {
         font-size: 13px;
         padding: 0 12px;
     }
 
-    .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+    .creator-card[data-badge="ADVISOR"].active .card-info::before {
         font-size: 10px;
         padding: 0 8px;
     }
 
-    .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+    .creator-card[data-badge="ADVISOR"].active .card-info::after {
         font-size: 11px;
         padding: 0 10px;
     }
 }
+
 
 /* ════════════════════════════════════════
    iPad Mini (768–1024px)
@@ -502,12 +685,6 @@ body {
         border-radius: 14px;
     }
 
-    .creator-card:hover .card-image,
-    .creator-card[data-expanded="true"]:hover .card-image {
-        width: clamp(206px, 26vw, 267px);
-        height: clamp(286px, 36vw, 372px);
-    }
-
     .card-info {
         width: clamp(165px, 21vw, 215px);
         height: 40px;
@@ -515,10 +692,6 @@ body {
         gap: 4px;
         overflow: visible;
         box-sizing: border-box;
-    }
-
-    .creator-card:hover .card-info {
-        width: clamp(206px, 26vw, 267px);
     }
 
     .card-icon {
@@ -555,34 +728,81 @@ body {
         letter-spacing: -0.3px;
     }
 
-    .creator-card:hover .card-info::before,
-    .creator-card:hover .card-info::after {
+    @media (hover: hover) {
+
+        .creator-card:hover .card-image {
+            width: clamp(206px, 26vw, 267px);
+            height: clamp(286px, 36vw, 372px);
+        }
+
+        .creator-card:hover .card-info {
+            width: clamp(206px, 26vw, 267px);
+        }
+
+        .creator-card:hover .card-info::before,
+        .creator-card:hover .card-info::after {
+            height: 36px;
+        }
+
+        .creator-card:hover .card-info::before {
+            font-size: 11px;
+            padding: 0 8px;
+        }
+
+        .creator-card:hover .card-info::after {
+            font-size: 12px;
+            padding: 0 10px;
+        }
+
+        .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+            font-size: 9px;
+            padding: 0 6px;
+        }
+
+        .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+            font-size: 10px;
+            padding: 0 8px;
+        }
+    }
+
+    .creator-card.active .card-image {
+        width: clamp(206px, 26vw, 267px);
+        height: clamp(286px, 36vw, 372px);
+    }
+
+    .creator-card.active .card-info {
+        width: clamp(206px, 26vw, 267px);
+    }
+
+    .creator-card.active .card-info::before,
+    .creator-card.active .card-info::after {
         height: 36px;
     }
 
-    .creator-card:hover .card-info::before {
+    .creator-card.active .card-info::before {
         font-size: 11px;
         padding: 0 8px;
     }
 
-    .creator-card:hover .card-info::after {
+    .creator-card.active .card-info::after {
         font-size: 12px;
         padding: 0 10px;
     }
 
-    .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+    .creator-card[data-badge="ADVISOR"].active .card-info::before {
         font-size: 9px;
         padding: 0 6px;
     }
 
-    .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+    .creator-card[data-badge="ADVISOR"].active .card-info::after {
         font-size: 10px;
         padding: 0 8px;
     }
 }
 
+
 /* ════════════════════════════════════════
-   TABLET — smaller tablets (600–767px)
+   Tablet (600–767px)
 ════════════════════════════════════════ */
 @media (max-width: 767px) and (min-width: 600px) {
 
@@ -612,21 +832,11 @@ body {
         border-radius: 14px;
     }
 
-    .creator-card:hover .card-image,
-    .creator-card[data-expanded="true"]:hover .card-image {
-        width: clamp(200px, 28vw, 310px);
-        height: clamp(225px, 38vw, 400px);
-    }
-
     .card-info {
         width: clamp(160px, 23vw, 250px);
         height: 44px;
         min-height: 44px;
         gap: 5px;
-    }
-
-    .creator-card:hover .card-info {
-        width: clamp(200px, 28vw, 310px);
     }
 
     .card-icon {
@@ -652,34 +862,81 @@ body {
         max-width: 100%;
     }
 
-    .creator-card:hover .card-info::before,
-    .creator-card:hover .card-info::after {
+    @media (hover: hover) {
+
+        .creator-card:hover .card-image {
+            width: clamp(200px, 28vw, 310px);
+            height: clamp(225px, 38vw, 400px);
+        }
+
+        .creator-card:hover .card-info {
+            width: clamp(200px, 28vw, 310px);
+        }
+
+        .creator-card:hover .card-info::before,
+        .creator-card:hover .card-info::after {
+            height: 36px;
+        }
+
+        .creator-card:hover .card-info::before {
+            font-size: clamp(11px, 1.3vw, 14px);
+            padding: 0 8px;
+        }
+
+        .creator-card:hover .card-info::after {
+            font-size: clamp(12px, 1.4vw, 15px);
+            padding: 0 10px;
+        }
+
+        .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+            font-size: clamp(9px, 1vw, 12px);
+            padding: 0 6px;
+        }
+
+        .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+            font-size: clamp(10px, 1.1vw, 13px);
+            padding: 0 8px;
+        }
+    }
+
+    .creator-card.active .card-image {
+        width: clamp(200px, 28vw, 310px);
+        height: clamp(225px, 38vw, 400px);
+    }
+
+    .creator-card.active .card-info {
+        width: clamp(200px, 28vw, 310px);
+    }
+
+    .creator-card.active .card-info::before,
+    .creator-card.active .card-info::after {
         height: 36px;
     }
 
-    .creator-card:hover .card-info::before {
+    .creator-card.active .card-info::before {
         font-size: clamp(11px, 1.3vw, 14px);
         padding: 0 8px;
     }
 
-    .creator-card:hover .card-info::after {
+    .creator-card.active .card-info::after {
         font-size: clamp(12px, 1.4vw, 15px);
         padding: 0 10px;
     }
 
-    .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+    .creator-card[data-badge="ADVISOR"].active .card-info::before {
         font-size: clamp(9px, 1vw, 12px);
         padding: 0 6px;
     }
 
-    .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+    .creator-card[data-badge="ADVISOR"].active .card-info::after {
         font-size: clamp(10px, 1.1vw, 13px);
         padding: 0 8px;
     }
 }
 
+
 /* ════════════════════════════════════════
-   MOBILE — iPhone SE และเล็กกว่า (< 600px)
+   Mobile (< 600px)
 ════════════════════════════════════════ */
 @media (max-width: 599px) {
 
@@ -709,8 +966,7 @@ body {
         transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1), gap 0.3s ease;
     }
 
-    /* ── hover ด้วย flex-grow แทน width ── */
-    .creator-card:hover {
+    .creator-card.active {
         flex: 1.5 1 0;
     }
 
@@ -722,9 +978,7 @@ body {
         transition: border-radius 0.4s ease, box-shadow 0.4s ease;
     }
 
-    /* รูปไม่ต้องเปลี่ยน width เพราะ 100% ขยายตาม card */
-    .creator-card:hover .card-image,
-    .creator-card[data-expanded="true"]:hover .card-image {
+    .creator-card.active .card-image {
         width: 100%;
         height: auto;
         border-radius: 12px;
@@ -745,7 +999,7 @@ body {
         gap: 2px;
     }
 
-    .creator-card:hover .card-info {
+    .creator-card.active .card-info {
         width: 100%;
     }
 
@@ -765,34 +1019,35 @@ body {
         display: block;
     }
 
-    .creator-card:hover .card-info::before,
-    .creator-card:hover .card-info::after {
+    .creator-card.active .card-info::before,
+    .creator-card.active .card-info::after {
         height: 28px;
     }
 
-    .creator-card:hover .card-info::before {
+    .creator-card.active .card-info::before {
         font-size: clamp(8px, 2.3vw, 12px);
         padding: 0 4px;
     }
 
-    .creator-card:hover .card-info::after {
+    .creator-card.active .card-info::after {
         font-size: clamp(9px, 2.5vw, 13px);
         padding: 0 5px;
     }
 
-    .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+    .creator-card[data-badge="ADVISOR"].active .card-info::before {
         font-size: clamp(7px, 2vw, 10px);
         padding: 0 3px;
     }
 
-    .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+    .creator-card[data-badge="ADVISOR"].active .card-info::after {
         font-size: clamp(8px, 2.2vw, 11px);
         padding: 0 4px;
     }
 }
 
+
 /* ════════════════════════════════════════
-   iPhone SE — Portrait (max-width: 375px)
+   iPhone SE (≤ 375px)
 ════════════════════════════════════════ */
 @media (max-width: 375px) {
 
@@ -823,7 +1078,7 @@ body {
         transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1), gap 0.3s ease;
     }
 
-    .creator-card:hover {
+    .creator-card.active {
         flex: 1.5 1 0;
     }
 
@@ -835,8 +1090,7 @@ body {
         transition: border-radius 0.4s ease, box-shadow 0.4s ease;
     }
 
-    .creator-card:hover .card-image,
-    .creator-card[data-expanded="true"]:hover .card-image {
+    .creator-card.active .card-image {
         width: 100%;
         height: auto;
         border-radius: 10px;
@@ -862,7 +1116,7 @@ body {
         gap: 2px;
     }
 
-    .creator-card:hover .card-info {
+    .creator-card.active .card-info {
         width: 100%;
     }
 
@@ -885,159 +1139,37 @@ body {
         width: 100%;
     }
 
-    .creator-card:hover .card-info::before,
-    .creator-card:hover .card-info::after {
+    .creator-card.active .card-info::before,
+    .creator-card.active .card-info::after {
         height: 24px;
     }
 
-    .creator-card:hover .card-info::before {
+    .creator-card.active .card-info::before {
         font-size: 7px;
         padding: 0 3px;
     }
 
-    .creator-card:hover .card-info::after {
+    .creator-card.active .card-info::after {
         font-size: 7px;
         padding: 0 4px;
     }
 
-    .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+    .creator-card[data-badge="ADVISOR"].active .card-info::before {
         font-size: 6px;
         padding: 0 2px;
     }
 
-    .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+    .creator-card[data-badge="ADVISOR"].active .card-info::after {
         font-size: 6px;
         padding: 0 3px;
     }
 }
 
-/* ════════════════════════════════════════
-   iPhone SE — Landscape (667 x 375px)
-════════════════════════════════════════ */
-@media (max-height: 375px) and (orientation: landscape) {
-
-    .creator-page {
-        padding-top: 52px;
-        padding-bottom: 10px;
-    }
-
-    .creator-title {
-        font-size: 20px;
-        padding: 2px 0;
-        letter-spacing: 0.5px;
-    }
-
-    .creator-container {
-        padding: 4px 8px;
-        gap: 6px;
-        overflow: hidden;
-    }
-
-    .creator-cards {
-        gap: 6px;
-        padding: 4px 0;
-        overflow: hidden;
-        flex-wrap: nowrap;
-        justify-content: center;
-    }
-
-    .creator-card {
-        flex: 0 0 auto;
-        gap: 5px;
-        align-items: center;
-        transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .creator-card:hover {
-        flex: 1.4 1 0;
-    }
-
-    .card-image {
-        width: clamp(80px, 13vw, 105px);
-        height: clamp(138px, 22.5vw, 182px);
-        border-radius: 8px;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .creator-card:hover .card-image,
-    .creator-card[data-expanded="true"]:hover .card-image {
-        width: clamp(100px, 16vw, 130px);
-        height: clamp(138px, 22.5vw, 182px);
-    }
-
-    .card-icon {
-        width: 20px;
-        height: 20px;
-        flex-shrink: 0;
-    }
-
-    .card-icon img {
-        width: 20px;
-        height: 20px;
-    }
-
-    .card-info {
-        width: clamp(80px, 13vw, 105px);
-        height: 22px;
-        min-height: 22px;
-        gap: 2px;
-        overflow: visible;
-        box-sizing: border-box;
-    }
-
-    .creator-card:hover .card-info {
-        width: clamp(100px, 16vw, 130px);
-    }
-
-    .card-name {
-        height: 22px;
-        flex: 1 1 0;
-        min-width: 0;
-        padding: 0 3px;
-        overflow: hidden;
-        box-sizing: border-box;
-    }
-
-    .card-name span {
-        font-size: clamp(7px, 1.1vw, 9px);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: clip;
-        letter-spacing: -0.3px;
-        display: block;
-        width: 100%;
-    }
-
-    .creator-card:hover .card-info::before,
-    .creator-card:hover .card-info::after {
-        height: 22px;
-    }
-
-    .creator-card:hover .card-info::before {
-        font-size: clamp(6px, 1vw, 8px);
-        padding: 0 4px;
-    }
-
-    .creator-card:hover .card-info::after {
-        font-size: clamp(7px, 1.1vw, 9px);
-        padding: 0 5px;
-    }
-
-    .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
-        font-size: clamp(5px, 0.9vw, 7px);
-        padding: 0 3px;
-    }
-
-    .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
-        font-size: clamp(6px, 1vw, 8px);
-        padding: 0 4px;
-    }
-}
 
 /* ════════════════════════════════════════
-   MOBILE landscape (668px+)
+   Mobile landscape (≤ 667px)
 ════════════════════════════════════════ */
-@media (max-width: 668px) {
+@media (max-width: 667px) {
 
     .creator-title {
         font-size: clamp(32px, 6vw, 48px);
@@ -1052,14 +1184,15 @@ body {
     }
 
     .creator-cards {
-        gap: 10px;
+        gap: 12px;
         padding: 4px 2px;
         overflow: hidden;
+        justify-content: center;
     }
 
     .creator-card {
-        flex: 0 0 auto;
-        gap: 4px;
+        flex: 0 0 130px;
+        gap: 3px;
         align-items: center;
     }
 
@@ -1074,9 +1207,8 @@ body {
         flex-shrink: 0;
     }
 
-    .creator-card:hover .card-image,
-    .creator-card[data-expanded="true"]:hover .card-image {
-        width: 170px;
+    .creator-card.active .card-image {
+        width: 160px;
         height: 231px;
         border-radius: 10px;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
@@ -1099,7 +1231,7 @@ body {
         transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .creator-card:hover .card-info {
+    .creator-card.active .card-info {
         width: 170px;
         height: auto;
         min-height: 24px;
@@ -1122,15 +1254,16 @@ body {
         display: block;
     }
 
-    .creator-card:hover .card-info::before,
-    .creator-card:hover .card-info::after {
+    .creator-card.active .card-info::before,
+    .creator-card.active .card-info::after {
         height: auto;
         min-height: 24px;
         max-height: 48px;
-        animation: slideUpCenter 0.2s ease forwards;
+        opacity: 1;
+        animation: none;
     }
 
-    .creator-card:hover .card-info::before {
+    .creator-card.active .card-info::before {
         font-size: clamp(6px, 1.1vw, 8px);
         padding: 2px 4px;
         line-height: 1.2;
@@ -1140,7 +1273,7 @@ body {
         align-items: center;
     }
 
-    .creator-card:hover .card-info::after {
+    .creator-card.active .card-info::after {
         font-size: clamp(6px, 1.1vw, 8px);
         padding: 2px 4px;
         white-space: nowrap;
@@ -1148,12 +1281,12 @@ body {
         align-items: center;
     }
 
-    .creator-card[data-badge="ADVISOR"]:hover .card-info {
+    .creator-card[data-badge="ADVISOR"].active .card-info {
         height: auto;
         align-items: flex-start;
     }
 
-    .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+    .creator-card[data-badge="ADVISOR"].active .card-info::before {
         font-size: clamp(5px, 0.9vw, 7px);
         padding: 2px 3px;
         line-height: 1.3;
@@ -1162,7 +1295,7 @@ body {
         flex: 1;
     }
 
-    .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+    .creator-card[data-badge="ADVISOR"].active .card-info::after {
         font-size: clamp(5px, 0.9vw, 7px);
         padding: 2px 3px;
         white-space: nowrap;
@@ -1171,8 +1304,9 @@ body {
     }
 }
 
+
 /* ════════════════════════════════════════
-   MOBILE landscape 844–896px
+   Mobile landscape (844–896px)
 ════════════════════════════════════════ */
 @media (min-width: 844px) and (max-width: 896px) {
 
@@ -1208,7 +1342,6 @@ body {
 
     .card-image {
         width: 175px;
-        /* ลดลงนิดนึง เพื่อให้ทั้ง 4 card พอดีหน้าจอ */
         height: 250px;
         border-radius: 8px;
         overflow: hidden;
@@ -1218,8 +1351,7 @@ body {
         flex-shrink: 0;
     }
 
-    .creator-card:hover .card-image,
-    .creator-card[data-expanded="true"]:hover .card-image {
+    .creator-card.active .card-image {
         width: 218px;
         height: 250px;
         border-radius: 8px;
@@ -1244,7 +1376,7 @@ body {
         transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .creator-card:hover .card-info {
+    .creator-card.active .card-info {
         width: 218px;
         height: auto;
         min-height: 36px;
@@ -1258,27 +1390,24 @@ body {
         box-sizing: border-box;
     }
 
-    /* ✅ แก้หลัก: ลด font-size + ไม่ตัดข้อความ */
     .card-name span {
         font-size: 10px;
-        /* ลดจาก 12px → 10px */
         white-space: nowrap;
         overflow: visible;
-        /* เปลี่ยนจาก hidden → visible */
         text-overflow: unset;
-        /* เอา ellipsis ออก */
         letter-spacing: -0.3px;
         display: block;
         width: 100%;
     }
 
-    .creator-card:hover .card-info::before,
-    .creator-card:hover .card-info::after {
+    .creator-card.active .card-info::before,
+    .creator-card.active .card-info::after {
         height: 36px;
-        animation: slideUpCenter 0.3s ease 0.2s forwards;
+        opacity: 1;
+        animation: none;
     }
 
-    .creator-card:hover .card-info::before {
+    .creator-card.active .card-info::before {
         font-size: 10px;
         padding: 0 8px;
         line-height: 1;
@@ -1289,7 +1418,7 @@ body {
         align-items: center;
     }
 
-    .creator-card:hover .card-info::after {
+    .creator-card.active .card-info::after {
         font-size: 10px;
         padding: 0 10px;
         white-space: nowrap;
@@ -1298,7 +1427,7 @@ body {
         flex-shrink: 0;
     }
 
-    .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+    .creator-card[data-badge="ADVISOR"].active .card-info::before {
         font-size: 9px;
         padding: 0 8px;
         white-space: normal;
@@ -1307,13 +1436,195 @@ body {
         flex: 1;
     }
 
-    .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+    .creator-card[data-badge="ADVISOR"].active .card-info::after {
         font-size: 9px;
         padding: 0 8px;
         white-space: nowrap;
         flex-shrink: 0;
     }
 }
+
+
+/* ════════════════════════════════════════
+   iPhone 14 Pro Max landscape (897–932px)
+════════════════════════════════════════ */
+@media (min-width: 897px) and (max-width: 932px) {
+
+    .creator-page {
+        padding-top: 120px;
+    }
+
+    .creator-title {
+        font-size: clamp(38px, 5.5vw, 54px);
+        padding: 4px 0;
+        letter-spacing: 1px;
+    }
+
+    .creator-container {
+        padding: 4px 16px;
+        gap: 4px;
+        overflow: hidden;
+    }
+
+    .creator-cards {
+        gap: 14px;
+        padding: 2px 8px;
+        overflow: hidden;
+        width: 100%;
+        box-sizing: border-box;
+        justify-content: center;
+    }
+
+    .creator-card {
+        flex: 0 0 auto;
+        gap: 6px;
+        align-items: center;
+    }
+
+    .card-image {
+        width: 185px;
+        height: 265px;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        flex-shrink: 0;
+    }
+
+    .creator-card.active .card-image {
+        width: 230px;
+        height: 265px;
+        border-radius: 10px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-icon {
+        width: clamp(24px, 3.5vw, 32px);
+        height: clamp(24px, 3.5vw, 32px);
+        margin-right: 0;
+        flex-shrink: 0;
+    }
+
+    .card-info {
+        width: 185px;
+        height: 38px;
+        min-height: 38px;
+        gap: 4px;
+        box-sizing: border-box;
+        overflow: visible;
+        margin-top: 4px;
+        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .creator-card.active .card-info {
+        width: 230px;
+        height: auto;
+        min-height: 38px;
+    }
+
+    .card-name {
+        height: 38px;
+        width: 100%;
+        padding: 0 10px;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    .card-name span {
+        font-size: 11px;
+        white-space: nowrap;
+        overflow: visible;
+        text-overflow: unset;
+        letter-spacing: -0.3px;
+        display: block;
+        width: 100%;
+    }
+
+    @media (hover: hover) {
+
+        .creator-card:hover .card-image {
+            width: 230px;
+            height: 265px;
+        }
+
+        .creator-card:hover .card-info {
+            width: 230px;
+        }
+
+        .creator-card:hover .card-info::before,
+        .creator-card:hover .card-info::after {
+            height: 38px;
+        }
+
+        .creator-card:hover .card-info::before {
+            font-size: 11px;
+            padding: 0 10px;
+        }
+
+        .creator-card:hover .card-info::after {
+            font-size: 11px;
+            padding: 0 12px;
+        }
+
+        .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+            font-size: 9px;
+            padding: 0 8px;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.3;
+        }
+
+        .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+            font-size: 9px;
+            padding: 0 8px;
+        }
+    }
+
+    .creator-card.active .card-info::before,
+    .creator-card.active .card-info::after {
+        height: 38px;
+        opacity: 1;
+        animation: none;
+    }
+
+    .creator-card.active .card-info::before {
+        font-size: 11px;
+        padding: 0 10px;
+        line-height: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: flex;
+        align-items: center;
+    }
+
+    .creator-card.active .card-info::after {
+        font-size: 11px;
+        padding: 0 12px;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+    }
+
+    .creator-card[data-badge="ADVISOR"].active .card-info::before {
+        font-size: 9px;
+        padding: 0 8px;
+        white-space: normal;
+        word-break: break-word;
+        line-height: 1.3;
+        flex: 1;
+    }
+
+    .creator-card[data-badge="ADVISOR"].active .card-info::after {
+        font-size: 9px;
+        padding: 0 8px;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+}
+
 
 /* ════════════════════════════════════════
    GLOVE SHAKE + GLOW — loop ตลอดเวลา
@@ -1381,8 +1692,18 @@ body {
     transform-origin: center center;
 }
 
-.creator-card:hover .card-icon img {
+.creator-card:hover .card-icon img,
+.creator-card.active .card-icon img {
     animation: none;
     filter: none;
     transform: none;
+}
+
+/* ─── Hamburger Menu — ปิด pointer-events ตอนเมนูยังไม่เปิด ─── */
+.hamburger-menu {
+    pointer-events: none;
+}
+
+.hamburger-menu.show {
+    pointer-events: auto;
 }
