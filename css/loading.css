@@ -285,7 +285,7 @@ body.loading-active {
     }
 }
 
-/* 🟢 ดักจับ "จอมือถือแนวนอน (Landscape)" ที่เตี้ยมากๆ (เหมือนที่แก้ให้หน้า Warning) */
+/* ดักจับ "จอมือถือแนวนอน (Landscape)" ที่เตี้ยมากๆ (เหมือนที่แก้ให้หน้า Warning) */
 @media screen and (max-height: 500px) {
     .loading-container {
         padding: 10px;

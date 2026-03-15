@@ -1,5 +1,139 @@
+/* ========================================= */
+/* 🎯 ล็อกสัดส่วน 16:9 (แบบใส ไร้ขอบดำ ปล่อยกระดาษทะลุจอ) */
+/* ========================================= */
+body {
+    margin: 0;
+    background-color: var(--history-bg) !important;
+}
+
+#canvas-center-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent !important;
+}
+
+#desktop-canvas {
+    width: 100vw;
+    height: 56.25vw;
+    max-height: 100vh;
+    max-width: 177.78vh;
+    background-color: transparent !important;
+    container-type: size;
+}
+
 /* =========================================================================
-   HISTORY PAGE - MASTER SCALED & CLEANED (100% VW)
+   🎯 MASTER RESPONSIVE CONTROL (v2: รวมทุก Fix + ทุกอุปกรณ์ ในที่เดียว)
+   ========================================================================= */
+
+/* --- [ BASE: สำหรับจอใหญ่ 1920x1080 และค่าตั้งต้นทุกจอ ] --- */
+
+/* 1. คุมขนาดวงกลมและชื่อยุค (มินิมอล ไม่ทับเส้น) */
+#desktop-canvas .era-circle {
+    width: clamp(24px, 1.8cqw, 45px) !important;
+    height: clamp(24px, 1.8cqw, 45px) !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    margin: 0 !important;
+}
+
+#desktop-canvas .era-indicator-sukhothai .era-circle,
+#desktop-canvas .era-indicator-sukhothai .era-title {
+    left: 30cqw !important;
+}
+
+#desktop-canvas .era-title {
+    font-size: clamp(12px, 0.9cqw, 18px) !important;
+    position: absolute !important;
+    top: clamp(28px, 2.8cqw, 45px) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+}
+
+/* 2. คุมกำเนิด "คน" - ไม่ให้ตัวใหญ่เกินและเท้าติดพื้น (Base 1920x1080) */
+#desktop-canvas img[src*="fighter"],
+#desktop-canvas [class*="fighter"],
+#desktop-canvas .regional-fighter,
+#desktop-canvas .tha-sao-fighter,
+#walking-fighter-img {
+    max-height: 42cqh !important;
+    /* ย่อจาก 55 เหลือ 42 ตามที่นายสั่ง */
+    width: auto !important;
+    bottom: 8cqh !important;
+    /* แก้เท้าลอย */
+}
+
+#desktop-canvas .fighters {
+    top: auto !important;
+    bottom: 12cqh !important;
+}
+
+/* 3. Navbar - ปรับระดับความสูงให้นิ่ง (Base) */
+#navbar,
+.navbar {
+    min-height: clamp(60px, 8cqh, 96px) !important;
+    height: clamp(60px, 8cqh, 96px) !important;
+}
+
+/* --- [ LEVEL 1: จอขนาดกลาง / Laptop (กว้าง < 1200px) ] --- */
+@container (max-width: 1200px) {
+
+    #desktop-canvas img[src*="fighter"],
+    #walking-fighter-img {
+        max-height: 38cqh !important;
+        bottom: 10cqh !important;
+    }
+
+    #navbar {
+        height: 70px !important;
+    }
+}
+
+/* --- [ LEVEL 2: จอขนาดเล็ก / Tablet (กว้าง < 800px) ] --- */
+@container (max-width: 800px) {
+    #desktop-canvas .bg-floor-1 {
+        left: -2cqw !important;
+    }
+
+    /* ขยับเสาหน้าสุดออก */
+    #desktop-canvas img[src*="fighter"],
+    #walking-fighter-img {
+        max-height: 32cqh !important;
+        bottom: 11cqh !important;
+    }
+
+    #navbar {
+        height: 55px !important;
+    }
+}
+
+/* --- [ LEVEL 3: จอมือถือ (กว้าง < 500px) ] --- */
+@container (max-width: 500px) {
+    #navbar {
+        height: 45px !important;
+    }
+
+    .logo-nav {
+        max-height: 32px !important;
+    }
+
+    #desktop-canvas .bg-floor-1 {
+        left: 0cqw !important;
+    }
+
+    #desktop-canvas img[src*="fighter"],
+    #walking-fighter-img {
+        max-height: 25cqh !important;
+        bottom: 13cqh !important;
+    }
+}
+
+/* =========================================================================
+   HISTORY PAGE - MASTER SCALED & CLEANED (100% cqw)
    ========================================================================= */
 
 :root {
@@ -33,8 +167,8 @@ body::before {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100cqw;
+    height: 100cqh;
     overflow: hidden;
     z-index: 1;
     display: flex;
@@ -45,13 +179,13 @@ body::before {
 .history-viewport {
     position: relative;
     width: 100%;
-    height: min(100vh, calc(100vw * 9 / 16));
+    height: min(100cqh, calc(100cqw * 9 / 16));
     overflow: hidden;
 }
 
 #timeline-track {
     position: relative;
-    width: 2300vw;
+    width: 2300cqw;
     height: 100%;
     will-change: transform;
 }
@@ -67,7 +201,7 @@ body::before {
     width: 100%;
     height: 100%;
     background-image: url('https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773475998/history-dark-overlay_z0x8o5.png');
-    background-size: 100vw 100%;
+    background-size: 100cqw 100%;
     background-repeat: repeat-x;
     opacity: 0.5;
     z-index: 6;
@@ -104,7 +238,7 @@ body::before {
 .mountain-panorama {
     position: absolute;
     bottom: 0;
-    width: 100vw;
+    width: 100cqw;
     height: 40%;
     object-fit: contain;
     transform: scaleY(-1) rotate(180deg);
@@ -129,28 +263,60 @@ body::before {
    ========================================= */
 .era-section {
     position: absolute;
-    width: 100vw;
+    width: 100cqw;
     height: 100%;
     top: 0;
 }
 
-[data-era="sukhothai"] { left: 0; }
-[data-era="ayutthaya"] { left: 100vw; }
-[data-era="regional-styles"] { left: 200vw; }
-[data-era="korat"] { left: 300vw; }
-[data-era="lopburi"] { left: 400vw; }
-[data-era="chaiya"] { left: 500vw; }
-[data-era="tha-sao"] { left: 600vw; }
-[data-era="thonburi"] { left: 700vw; }
-[data-era="early-rattanakosin"] { left: 800vw; }
-[data-era="mid-rattanakosin"] { left: 900vw; }
-[data-era="present-day"] { left: 1000vw; }
+[data-era="sukhothai"] {
+    left: 0;
+}
+
+[data-era="ayutthaya"] {
+    left: 100cqw;
+}
+
+[data-era="regional-styles"] {
+    left: 200cqw;
+}
+
+[data-era="korat"] {
+    left: 300cqw;
+}
+
+[data-era="lopburi"] {
+    left: 400cqw;
+}
+
+[data-era="chaiya"] {
+    left: 500cqw;
+}
+
+[data-era="tha-sao"] {
+    left: 600cqw;
+}
+
+[data-era="thonburi"] {
+    left: 700cqw;
+}
+
+[data-era="early-rattanakosin"] {
+    left: 800cqw;
+}
+
+[data-era="mid-rattanakosin"] {
+    left: 900cqw;
+}
+
+[data-era="present-day"] {
+    left: 1000cqw;
+}
 
 .era-content {
     position: absolute;
     top: 0;
     height: 100%;
-    width: 100vw;
+    width: 100cqw;
     pointer-events: none;
 }
 
@@ -178,31 +344,90 @@ body::before {
     z-index: 0;
     opacity: 1;
     overflow: visible;
-    top: 23.97vw;
-    height: 28.12vw;
+    top: 23.97cqw;
+    height: 28.12cqw;
 }
 
-[data-era="sukhothai"] .bg-mountain { left: -20vw; top: 20.32vw; }
-[data-era="ayutthaya"] .bg-mountain { left: 19vw; }
-[data-era="korat"] .bg-mountain { top: 21vw; }
+[data-era="sukhothai"] .bg-mountain {
+    left: -20cqw;
+    top: 20.32cqw;
+}
 
-.bg-mountain-korat-1 { left: 145vw; }
-.bg-mountain-korat-2 { left: 247vw; }
-.bg-mountain-lopburi-1 { left: 145vw; }
-.bg-mountain-lopburi-2 { left: 247vw; }
-.bg-mountain-chaiya-1 { left: 335vw; }
-.bg-mountain-chaiya-2 { left: 420vw; }
-.bg-mountain-chaiya-3 { left: 520vw; }
-.bg-mountain-tha-sao-1 { left: 145vw; }
-.bg-mountain-tha-sao-2 { left: 247vw; }
-.bg-mountain-thonburi-1 { left: 145vw; }
-.bg-mountain-thonburi-2 { left: 247vw; }
-.bg-mountain-early-ratana-1 { left: 145vw; }
-.bg-mountain-early-ratana-2 { left: 247vw; }
-.bg-mountain-mid-ratana-1 { left: 145vw; }
-.bg-mountain-mid-ratana-2 { left: 247vw; }
-.bg-mountain-present-1 { left: 145vw; }
-.bg-mountain-present-2 { left: 247vw; }
+[data-era="ayutthaya"] .bg-mountain {
+    left: 19cqw;
+}
+
+[data-era="korat"] .bg-mountain {
+    top: 21cqw;
+}
+
+.bg-mountain-korat-1 {
+    left: 145cqw;
+}
+
+.bg-mountain-korat-2 {
+    left: 247cqw;
+}
+
+.bg-mountain-lopburi-1 {
+    left: 145cqw;
+}
+
+.bg-mountain-lopburi-2 {
+    left: 247cqw;
+}
+
+.bg-mountain-chaiya-1 {
+    left: 335cqw;
+}
+
+.bg-mountain-chaiya-2 {
+    left: 420cqw;
+}
+
+.bg-mountain-chaiya-3 {
+    left: 520cqw;
+}
+
+.bg-mountain-tha-sao-1 {
+    left: 145cqw;
+}
+
+.bg-mountain-tha-sao-2 {
+    left: 247cqw;
+}
+
+.bg-mountain-thonburi-1 {
+    left: 145cqw;
+}
+
+.bg-mountain-thonburi-2 {
+    left: 247cqw;
+}
+
+.bg-mountain-early-ratana-1 {
+    left: 145cqw;
+}
+
+.bg-mountain-early-ratana-2 {
+    left: 247cqw;
+}
+
+.bg-mountain-mid-ratana-1 {
+    left: 145cqw;
+}
+
+.bg-mountain-mid-ratana-2 {
+    left: 247cqw;
+}
+
+.bg-mountain-present-1 {
+    left: 145cqw;
+}
+
+.bg-mountain-present-2 {
+    left: 247cqw;
+}
 
 /* =========================================
    FLOORS
@@ -213,38 +438,139 @@ body::before {
     object-position: center bottom;
     z-index: 4;
     pointer-events: none;
-    width: 123.38vw;
+    width: 123.38cqw;
     height: 100%;
     bottom: 0;
 }
 
-.bg-floor-1 { left: -13.02vw; bottom: -1.2vw; }
-.bg-floor-2 { left: 5.21vw; bottom: -1.2vw; }
-.bg-floor-3 { left: 104.17vw; bottom: -1.3vw; }
-.bg-floor-4 { left: 192.71vw; bottom: -1.3vw; }
-.bg-floor-5 { left: 208.33vw; bottom: -1.3vw; }
-.bg-floor-6 { left: 260.42vw; bottom: -1.3vw; }
-.bg-floor-7 { left: 286.46vw; bottom: -2.4vw; }
-.bg-floor-8 { left: 338.54vw; bottom: -2.4vw; }
-.bg-floor-9 { left: 390.63vw; bottom: -2.4vw; }
-.bg-floor-10 { left: 468.75vw; bottom: -2.29vw; }
-.bg-floor-11 { left: 567.71vw; bottom: -2.29vw; }
-.bg-floor-12 { left: 625.00vw; bottom: -2.29vw; }
-.bg-floor-13 { left: 723.44vw; bottom: -2.29vw; }
-.bg-floor-14 { left: 822.92vw; bottom: -2.76vw; }
-.bg-floor-15 { left: 927.08vw; bottom: -1.72vw; }
-.bg-floor-16 { left: 1031.25vw; bottom: -1.04vw; }
-.bg-floor-17 { left: 1135.42vw; }
-.bg-floor-18 { left: 1239.58vw; }
-.bg-floor-19 { left: 1348.96vw; }
-.bg-floor-20 { left: 1427.08vw; }
-.bg-floor-21 { left: 1531.25vw; bottom: -1.56vw; }
-.bg-floor-22 { left: 1635.42vw; bottom: -1.56vw; }
-.bg-floor-23 { left: 1713.54vw; }
-.bg-floor-24 { left: 1820.31vw; }
-.bg-floor-25 { left: 1927.08vw; bottom: -0.52vw; }
-.bg-floor-26 { left: 2028.65vw; bottom: -0.52vw; }
-.bg-floor-27 { left: 2080.73vw; bottom: -0.52vw; }
+.bg-floor-1 {
+    left: -13.02cqw;
+    bottom: -1.2cqw;
+}
+
+.bg-floor-2 {
+    left: 5.21cqw;
+    bottom: -1.2cqw;
+}
+
+.bg-floor-3 {
+    left: 104.17cqw;
+    bottom: -1.3cqw;
+}
+
+.bg-floor-4 {
+    left: 192.71cqw;
+    bottom: -1.3cqw;
+}
+
+.bg-floor-5 {
+    left: 208.33cqw;
+    bottom: -1.3cqw;
+}
+
+.bg-floor-6 {
+    left: 260.42cqw;
+    bottom: -1.3cqw;
+}
+
+.bg-floor-7 {
+    left: 286.46cqw;
+    bottom: -2.4cqw;
+}
+
+.bg-floor-8 {
+    left: 338.54cqw;
+    bottom: -2.4cqw;
+}
+
+.bg-floor-9 {
+    left: 390.63cqw;
+    bottom: -2.4cqw;
+}
+
+.bg-floor-10 {
+    left: 468.75cqw;
+    bottom: -2.29cqw;
+}
+
+.bg-floor-11 {
+    left: 567.71cqw;
+    bottom: -2.29cqw;
+}
+
+.bg-floor-12 {
+    left: 625.00cqw;
+    bottom: -2.29cqw;
+}
+
+.bg-floor-13 {
+    left: 723.44cqw;
+    bottom: -2.29cqw;
+}
+
+.bg-floor-14 {
+    left: 822.92cqw;
+    bottom: -2.76cqw;
+}
+
+.bg-floor-15 {
+    left: 927.08cqw;
+    bottom: -1.72cqw;
+}
+
+.bg-floor-16 {
+    left: 1031.25cqw;
+    bottom: -1.04cqw;
+}
+
+.bg-floor-17 {
+    left: 1135.42cqw;
+}
+
+.bg-floor-18 {
+    left: 1239.58cqw;
+}
+
+.bg-floor-19 {
+    left: 1348.96cqw;
+}
+
+.bg-floor-20 {
+    left: 1427.08cqw;
+}
+
+.bg-floor-21 {
+    left: 1531.25cqw;
+    bottom: -1.56cqw;
+}
+
+.bg-floor-22 {
+    left: 1635.42cqw;
+    bottom: -1.56cqw;
+}
+
+.bg-floor-23 {
+    left: 1713.54cqw;
+}
+
+.bg-floor-24 {
+    left: 1820.31cqw;
+}
+
+.bg-floor-25 {
+    left: 1927.08cqw;
+    bottom: -0.52cqw;
+}
+
+.bg-floor-26 {
+    left: 2028.65cqw;
+    bottom: -0.52cqw;
+}
+
+.bg-floor-27 {
+    left: 2080.73cqw;
+    bottom: -0.52cqw;
+}
 
 /* =========================================
    BACKGROUND STRUCTURES
@@ -253,9 +579,9 @@ body::before {
     position: absolute;
     left: 0;
     z-index: 5;
-    top: 4vw;
-    height: 44.42vw;
-    width: 66.67vw;
+    top: 4cqw;
+    height: 44.42cqw;
+    width: 66.67cqw;
 }
 
 .ruins-layer {
@@ -267,17 +593,28 @@ body::before {
     object-fit: cover;
 }
 
-.ruins-back { z-index: 1; opacity: 1.0; }
-.ruins-middle { z-index: 2; opacity: 1.0; }
-.ruins-front { z-index: 3; opacity: 1.0; }
+.ruins-back {
+    z-index: 1;
+    opacity: 1.0;
+}
+
+.ruins-middle {
+    z-index: 2;
+    opacity: 1.0;
+}
+
+.ruins-front {
+    z-index: 3;
+    opacity: 1.0;
+}
 
 .ayutthaya-temples {
     position: absolute;
-    left: 40vw;
+    left: 40cqw;
     z-index: 10;
-    width: 66.67vw;
-    top: 6vw;
-    height: 44.43vw;
+    width: 66.67cqw;
+    top: 6cqw;
+    height: 44.43cqw;
 }
 
 .temple-layer {
@@ -290,18 +627,26 @@ body::before {
     opacity: 1;
 }
 
-.temple-right { z-index: 1; }
-.temple-left { z-index: 2; }
-.temple-center { z-index: 3; }
+.temple-right {
+    z-index: 1;
+}
+
+.temple-left {
+    z-index: 2;
+}
+
+.temple-center {
+    z-index: 3;
+}
 
 .korat-background {
     position: absolute;
-    left: 172vw;
-    width: 70vw;
+    left: 172cqw;
+    width: 70cqw;
     z-index: 10;
     pointer-events: none;
-    top: 6vw;
-    height: 44.43vw;
+    top: 6cqw;
+    height: 44.43cqw;
 }
 
 .korat-background .korat-bg-layer {
@@ -317,11 +662,11 @@ body::before {
 
 .lopburi-background {
     position: absolute;
-    left: 212vw;
-    width: 70vw;
+    left: 212cqw;
+    width: 70cqw;
     z-index: 10;
-    height: 42.18vw;
-    top: 7vw;
+    height: 42.18cqw;
+    top: 7cqw;
 }
 
 .lopburi-layer {
@@ -335,17 +680,25 @@ body::before {
     opacity: 1;
 }
 
-.lopburi-right { z-index: 1; }
-.lopburi-left { z-index: 2; }
-.lopburi-center { z-index: 3; }
+.lopburi-right {
+    z-index: 1;
+}
+
+.lopburi-left {
+    z-index: 2;
+}
+
+.lopburi-center {
+    z-index: 3;
+}
 
 .chaiya-background {
     position: absolute;
-    left: 323vw;
-    width: 70vw;
+    left: 323cqw;
+    width: 70cqw;
     z-index: 10;
-    height: 42.18vw;
-    top: 6vw;
+    height: 42.18cqw;
+    top: 6cqw;
 }
 
 .chaiya-layer {
@@ -360,18 +713,29 @@ body::before {
     transform: translateY(80px) scale(0.85);
 }
 
-.chaiya-back { z-index: 1; }
-.chaiya-right { z-index: 2; }
-.chaiya-left { z-index: 3; }
-.chaiya-center { z-index: 4; }
+.chaiya-back {
+    z-index: 1;
+}
+
+.chaiya-right {
+    z-index: 2;
+}
+
+.chaiya-left {
+    z-index: 3;
+}
+
+.chaiya-center {
+    z-index: 4;
+}
 
 .tha-sao-background {
     position: absolute;
-    left: 524vw;
-    width: 100vw;
+    left: 524cqw;
+    width: 100cqw;
     z-index: 10;
-    height: 42.18vw;
-    top: 7vw;
+    height: 42.18cqw;
+    top: 7cqw;
 }
 
 .tha-sao-layer {
@@ -391,22 +755,34 @@ body::before {
     transform: translateY(100px) scale(0.85);
 }
 
-.tha-sao-under { z-index: 1; }
-.tha-sao-above { z-index: 2; }
+.tha-sao-under {
+    z-index: 1;
+}
+
+.tha-sao-above {
+    z-index: 2;
+}
 
 .tha-sao-swap {
     cursor: pointer;
     pointer-events: auto;
     width: auto;
     max-width: none;
-    height: 36.56vw;
+    height: 36.56cqw;
     object-fit: contain;
     animation: tha-sao-aura 2s ease-in-out infinite;
 }
 
 @keyframes tha-sao-aura {
-    0%, 100% { filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.1)); }
-    50% { filter: drop-shadow(0 0 18px rgba(253, 240, 213, 0.7)) drop-shadow(0 0 40px rgba(253, 240, 213, 0.35)) drop-shadow(0 0 60px rgba(253, 240, 213, 0.15)); }
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.1));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 18px rgba(253, 240, 213, 0.7)) drop-shadow(0 0 40px rgba(253, 240, 213, 0.35)) drop-shadow(0 0 60px rgba(253, 240, 213, 0.15));
+    }
 }
 
 .thonburi-swap {
@@ -416,10 +792,10 @@ body::before {
 
 .thonburi-click-hint {
     position: absolute;
-    right: 1vw;
+    right: 1cqw;
     top: 60%;
     transform: translateY(-50%);
-    width: 3vw;
+    width: 3cqw;
     height: auto;
     opacity: 0;
     pointer-events: none;
@@ -438,11 +814,11 @@ body::before {
 
 .thonburi-background {
     position: absolute;
-    left: 640vw;
-    width: 100vw;
+    left: 640cqw;
+    width: 100cqw;
     z-index: 10;
-    height: 42.18vw;
-    top: 8vw;
+    height: 42.18cqw;
+    top: 8cqw;
 }
 
 .thonburi-layer {
@@ -455,9 +831,17 @@ body::before {
     object-position: center center;
 }
 
-.thonburi-under { z-index: 2; }
-.thonburi-center { z-index: 1; }
-.thonburi-above { z-index: 3; }
+.thonburi-under {
+    z-index: 2;
+}
+
+.thonburi-center {
+    z-index: 1;
+}
+
+.thonburi-above {
+    z-index: 3;
+}
 
 .thonburi-under,
 .thonburi-center,
@@ -468,11 +852,11 @@ body::before {
 
 .early-ratana-background {
     position: absolute;
-    left: 716vw;
-    width: 100vw;
+    left: 716cqw;
+    width: 100cqw;
     z-index: 10;
-    height: 42.18vw;
-    top: 4.7vw;
+    height: 42.18cqw;
+    top: 4.7cqw;
 }
 
 .early-ratana-layer {
@@ -492,21 +876,36 @@ body::before {
 }
 
 @keyframes early-ratana-aura {
-    0%, 100% { filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.1)); }
-    50% { filter: drop-shadow(0 0 18px rgba(253, 240, 213, 0.7)) drop-shadow(0 0 40px rgba(253, 240, 213, 0.35)) drop-shadow(0 0 60px rgba(253, 240, 213, 0.15)); }
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.1));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 18px rgba(253, 240, 213, 0.7)) drop-shadow(0 0 40px rgba(253, 240, 213, 0.35)) drop-shadow(0 0 60px rgba(253, 240, 213, 0.15));
+    }
 }
 
-.early-ratana-left { z-index: 1; }
-.early-ratana-right { z-index: 1; }
-.early-ratana-under { z-index: 3; }
+.early-ratana-left {
+    z-index: 1;
+}
+
+.early-ratana-right {
+    z-index: 1;
+}
+
+.early-ratana-under {
+    z-index: 3;
+}
 
 .mid-ratana-background {
     position: absolute;
-    left: 805vw;
-    width: 100vw;
+    left: 805cqw;
+    width: 100cqw;
     z-index: 10;
-    height: 42.18vw;
-    top: 6vw;
+    height: 42.18cqw;
+    top: 6cqw;
 }
 
 .mid-ratana-layer {
@@ -520,16 +919,21 @@ body::before {
     opacity: 1;
 }
 
-.mid-ratana-under { z-index: 1; }
-.mid-ratana-above { z-index: 2; }
+.mid-ratana-under {
+    z-index: 1;
+}
+
+.mid-ratana-above {
+    z-index: 2;
+}
 
 .present-background {
     position: absolute;
-    left: 925vw;
-    width: 100vw;
+    left: 925cqw;
+    width: 100cqw;
     z-index: 10;
-    height: 42.18vw;
-    top: 4vw;
+    height: 42.18cqw;
+    top: 4cqw;
 }
 
 .present-layer {
@@ -543,8 +947,14 @@ body::before {
     opacity: 1;
 }
 
-.present-under { z-index: 1; }
-.present-above { z-index: 2; top: 80px; }
+.present-under {
+    z-index: 1;
+}
+
+.present-above {
+    z-index: 2;
+    top: 80px;
+}
 
 /* =========================================
    DECORATIONS (TREES & BUILDINGS)
@@ -562,38 +972,180 @@ body::before {
     object-fit: contain;
 }
 
-.tree-1 { left: 195vw; top: 47%; height: 27%; width: auto; }
-.tree-2 { left: 134vw; top: 46%; height: 27%; width: auto; }
-.lopburi-tree-1 { left: 328vw; top: 48%; height: 25%; width: auto; }
-.lopburi-tree-2 { left: 404vw; top: 45%; height: 30%; width: auto; transform: scaleX(-1); }
-.lopburi-tree-3 { left: 390vw; top: 50%; height: 25%; width: auto; }
-.tha-sao-tree-1 { left: 538vw; top: 39%; height: 30%; width: auto; }
-.tha-sao-tree-2 { left: 580vw; top: 29%; height: 40%; width: auto; }
-.tha-sao-tree-3 { left: 645vw; top: 39%; height: 30%; width: auto; }
-.tha-sao-tree-4 { left: 690vw; top: 36%; height: 35%; width: auto; }
-.thonburi-tree-1 { left: 657vw; top: 29%; height: 40%; width: auto; }
-.thonburi-tree-2 { left: 700vw; top: 34%; height: 35%; width: auto; }
-.thonburi-tree-3 { left: 755vw; top: 43%; height: 25%; width: auto; transform: scaleX(-1); }
-.thonburi-tree-4 { left: 808vw; top: 43%; height: 25%; width: auto; transform: scaleX(-1); }
-.early-ratana-tree-1 { left: 728vw; top: 38%; height: 30%; width: auto; }
-.early-ratana-tree-2 { left: 783vw; top: 43%; height: 25%; width: auto; transform: scaleX(-1); }
-.early-ratana-tree-3 { left: 877vw; top: 43%; height: 25%; width: auto; }
-.mid-ratana-building-1 { left: 905vw; top: 43%; height: 25%; width: auto; }
-.mid-ratana-building-2 { left: 963vw; top: 40%; height: 28%; width: auto; }
-.mid-ratana-building-3 { left: 997vw; top: 41%; height: 28%; width: auto; }
-.present-building-1 { left: 1013vw; top: 40%; height: 29%; width: auto; }
-.present-building-2 { left: 1030vw; top: 44%; height: 25%; width: auto; }
-.present-building-3 { left: 1110vw; top: 28%; height: 40%; width: auto; transform: scaleX(-1); }
-.present-building-4 { left: 1123vw; top: 27%; height: 42%; width: auto; }
+.tree-1 {
+    left: 195cqw;
+    top: 47%;
+    height: 27%;
+    width: auto;
+}
+
+.tree-2 {
+    left: 134cqw;
+    top: 46%;
+    height: 27%;
+    width: auto;
+}
+
+.lopburi-tree-1 {
+    left: 328cqw;
+    top: 48%;
+    height: 25%;
+    width: auto;
+}
+
+.lopburi-tree-2 {
+    left: 404cqw;
+    top: 45%;
+    height: 30%;
+    width: auto;
+    transform: scaleX(-1);
+}
+
+.lopburi-tree-3 {
+    left: 390cqw;
+    top: 50%;
+    height: 25%;
+    width: auto;
+}
+
+.tha-sao-tree-1 {
+    left: 538cqw;
+    top: 39%;
+    height: 30%;
+    width: auto;
+}
+
+.tha-sao-tree-2 {
+    left: 580cqw;
+    top: 29%;
+    height: 40%;
+    width: auto;
+}
+
+.tha-sao-tree-3 {
+    left: 645cqw;
+    top: 39%;
+    height: 30%;
+    width: auto;
+}
+
+.tha-sao-tree-4 {
+    left: 690cqw;
+    top: 36%;
+    height: 35%;
+    width: auto;
+}
+
+.thonburi-tree-1 {
+    left: 657cqw;
+    top: 29%;
+    height: 40%;
+    width: auto;
+}
+
+.thonburi-tree-2 {
+    left: 700cqw;
+    top: 34%;
+    height: 35%;
+    width: auto;
+}
+
+.thonburi-tree-3 {
+    left: 755cqw;
+    top: 43%;
+    height: 25%;
+    width: auto;
+    transform: scaleX(-1);
+}
+
+.thonburi-tree-4 {
+    left: 808cqw;
+    top: 43%;
+    height: 25%;
+    width: auto;
+    transform: scaleX(-1);
+}
+
+.early-ratana-tree-1 {
+    left: 728cqw;
+    top: 38%;
+    height: 30%;
+    width: auto;
+}
+
+.early-ratana-tree-2 {
+    left: 783cqw;
+    top: 43%;
+    height: 25%;
+    width: auto;
+    transform: scaleX(-1);
+}
+
+.early-ratana-tree-3 {
+    left: 877cqw;
+    top: 43%;
+    height: 25%;
+    width: auto;
+}
+
+.mid-ratana-building-1 {
+    left: 905cqw;
+    top: 43%;
+    height: 25%;
+    width: auto;
+}
+
+.mid-ratana-building-2 {
+    left: 963cqw;
+    top: 40%;
+    height: 28%;
+    width: auto;
+}
+
+.mid-ratana-building-3 {
+    left: 997cqw;
+    top: 41%;
+    height: 28%;
+    width: auto;
+}
+
+.present-building-1 {
+    left: 1013cqw;
+    top: 40%;
+    height: 29%;
+    width: auto;
+}
+
+.present-building-2 {
+    left: 1030cqw;
+    top: 44%;
+    height: 25%;
+    width: auto;
+}
+
+.present-building-3 {
+    left: 1110cqw;
+    top: 28%;
+    height: 40%;
+    width: auto;
+    transform: scaleX(-1);
+}
+
+.present-building-4 {
+    left: 1123cqw;
+    top: 27%;
+    height: 42%;
+    width: auto;
+}
 
 /* =========================================
    FIGHTERS & POSES
    ========================================= */
 .fighters {
     position: absolute;
-    left: 11.35vw;
+    left: 11.35cqw;
     z-index: 8;
-    top: 33.22vw;
+    top: 33.22cqw;
 }
 
 .fighters .fighter {
@@ -602,16 +1154,36 @@ body::before {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.6s ease, transform 0.6s ease;
-    height: 19.47vw;
+    height: 19.47cqw;
 }
 
-.fighter:nth-child(1) { left: 0; }
-.fighter:nth-child(2) { left: 1.17vw; }
-.fighter:nth-child(3) { left: 6.5vw; }
-.fighter:nth-child(4) { left: 15.53vw; }
-.fighter:nth-child(5) { left: 20.86vw; }
-.fighter:nth-child(6) { left: 29.88vw; }
-.fighter:nth-child(7) { left: 34.04vw; }
+.fighter:nth-child(1) {
+    left: 0;
+}
+
+.fighter:nth-child(2) {
+    left: 1.17cqw;
+}
+
+.fighter:nth-child(3) {
+    left: 6.5cqw;
+}
+
+.fighter:nth-child(4) {
+    left: 15.53cqw;
+}
+
+.fighter:nth-child(5) {
+    left: 20.86cqw;
+}
+
+.fighter:nth-child(6) {
+    left: 29.88cqw;
+}
+
+.fighter:nth-child(7) {
+    left: 34.04cqw;
+}
 
 .fighter.revealed {
     opacity: 1;
@@ -632,7 +1204,7 @@ body::before {
     right: 200px;
     top: 50%;
     transform: translateY(-50%);
-    width: 3vw;
+    width: 3cqw;
     height: auto;
     pointer-events: none;
     z-index: 20;
@@ -641,8 +1213,15 @@ body::before {
 }
 
 @keyframes kickClickBounce {
-    0%, 100% { transform: translateY(-50%) translateX(0px); }
-    50% { transform: translateY(-50%) translateX(-6px); }
+
+    0%,
+    100% {
+        transform: translateY(-50%) translateX(0px);
+    }
+
+    50% {
+        transform: translateY(-50%) translateX(-6px);
+    }
 }
 
 .sukhothai-kick-container::before {
@@ -651,15 +1230,15 @@ body::before {
     left: 50px;
     top: 80px;
     transform: translate(0, 0);
-    width: 32vw;
-    height: 32vw;
+    width: 32cqw;
+    height: 32cqw;
     border-radius: 50%;
     background: radial-gradient(circle,
-        rgba(255, 255, 255, 0.85) 0%,
-        rgba(253, 240, 213, 0.65) 15%,
-        rgba(253, 240, 213, 0.35) 35%,
-        rgba(253, 240, 213, 0.15) 55%,
-        transparent 75%);
+            rgba(255, 255, 255, 0.85) 0%,
+            rgba(253, 240, 213, 0.65) 15%,
+            rgba(253, 240, 213, 0.35) 35%,
+            rgba(253, 240, 213, 0.15) 55%,
+            transparent 75%);
     filter: blur(15px);
     pointer-events: none;
     z-index: -1;
@@ -668,23 +1247,39 @@ body::before {
 }
 
 @keyframes sukhothaiAuraBreath {
-    0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.85); }
-    50% { opacity: 0.75; transform: translate(-50%, -50%) scale(1.0); }
+
+    0%,
+    100% {
+        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(0.85);
+    }
+
+    50% {
+        opacity: 0.75;
+        transform: translate(-50%, -50%) scale(1.0);
+    }
 }
 
 @keyframes kickPoseGlow {
-    0%, 100% { filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.3)) drop-shadow(0 0 12px rgba(253, 240, 213, 0.25)) drop-shadow(0 0 18px rgba(253, 240, 213, 0.15)); }
-    50% { filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.35)) drop-shadow(0 0 30px rgba(253, 240, 213, 0.25)); }
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.3)) drop-shadow(0 0 12px rgba(253, 240, 213, 0.25)) drop-shadow(0 0 18px rgba(253, 240, 213, 0.15));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.35)) drop-shadow(0 0 30px rgba(253, 240, 213, 0.25));
+    }
 }
 
 /* ซ่อน kick-poses ตั้งแต่แรก */
 .kick-poses {
     position: absolute;
-    left: 90vw;
+    left: 90cqw;
     z-index: 100;
-    width: 30vw;
-    top: 16.87vw;
-    height: 28.12vw;
+    width: 30cqw;
+    top: 16.87cqw;
+    height: 28.12cqw;
     opacity: 0;
 }
 
@@ -697,7 +1292,7 @@ body::before {
     transition: transform 0.3s ease, filter 0.3s ease;
     cursor: pointer;
     filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
-    height: 35vw;
+    height: 35cqw;
     animation: kickPoseGlow 2.5s ease-in-out infinite;
 }
 
@@ -708,44 +1303,44 @@ body::before {
 
 .boran-thailand-image {
     position: absolute;
-    left: 220vw;
+    left: 220cqw;
     width: auto;
     object-fit: contain;
     opacity: 0;
     z-index: 10;
     filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.7));
-    height: 36.56vw;
-    top: 24vw;
+    height: 36.56cqw;
+    top: 24cqw;
 }
 
 .khanom-tom-fighter {
     position: absolute;
-    left: 250vw;
+    left: 250cqw;
     width: auto;
     object-fit: contain;
     opacity: 0;
     z-index: 12;
-    height: 30.93vw;
-    top: 11.32vw;
+    height: 30.93cqw;
+    top: 11.32cqw;
 }
 
 .early-ratana-pic-rama5 {
     position: absolute;
-    left: 835vw;
+    left: 835cqw;
     width: auto;
     object-fit: contain;
     z-index: 12;
     opacity: 1;
-    height: 30.93vw;
-    top: 12vw;
+    height: 30.93cqw;
+    top: 12cqw;
 }
 
 .regional-fighters {
     position: absolute;
-    left: 135vw;
+    left: 135cqw;
     display: flex;
     z-index: 12;
-    top: 7.81vw;
+    top: 7.81cqw;
 }
 
 .fighter-container {
@@ -753,18 +1348,20 @@ body::before {
     flex-direction: column;
     align-items: center;
     gap: 5px;
-    margin-left: -7vw;
+    margin-left: -7cqw;
 }
 
-.fighter-container:first-child { margin-left: 0; }
+.fighter-container:first-child {
+    margin-left: 0;
+}
 
 .regional-fighter {
     width: auto;
-    max-width: 22vw;
+    max-width: 22cqw;
     object-fit: contain;
     opacity: 0;
     filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
-    height: 30.93vw;
+    height: 30.93cqw;
     transform-style: preserve-3d;
     transform: rotateX(90deg);
     transform-origin: center bottom;
@@ -776,16 +1373,23 @@ body::before {
 }
 
 @keyframes fighter-float {
-    0%, 100% { transform: rotateX(0deg) translateY(0px); }
-    50% { transform: rotateX(0deg) translateY(-8px); }
+
+    0%,
+    100% {
+        transform: rotateX(0deg) translateY(0px);
+    }
+
+    50% {
+        transform: rotateX(0deg) translateY(-8px);
+    }
 }
 
 .korat-poses {
     position: absolute;
-    left: 280vw;
+    left: 280cqw;
     z-index: 100;
-    width: 30vw;
-    top: 5.62vw;
+    width: 30cqw;
+    top: 5.62cqw;
 }
 
 .pose-container {
@@ -803,7 +1407,7 @@ body::before {
     display: block;
     cursor: pointer;
     filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
-    height: 42.18vw;
+    height: 42.18cqw;
 }
 
 /* Buffalo Swing */
@@ -822,10 +1426,10 @@ body::before {
     height: 450px;
     border-radius: 50%;
     background: radial-gradient(circle,
-        rgba(253, 240, 213, 0.55) 0%,
-        rgba(253, 240, 213, 0.3) 25%,
-        rgba(253, 240, 213, 0.12) 55%,
-        transparent 75%);
+            rgba(253, 240, 213, 0.55) 0%,
+            rgba(253, 240, 213, 0.3) 25%,
+            rgba(253, 240, 213, 0.12) 55%,
+            transparent 75%);
     pointer-events: none;
     z-index: 0;
     opacity: 0;
@@ -846,10 +1450,10 @@ body::before {
 
 .buffalo-swing-click-hint {
     position: absolute;
-    right: 2vw;
+    right: 2cqw;
     top: 62%;
     transform: translateY(-50%);
-    width: 3vw;
+    width: 3cqw;
     height: auto;
     opacity: 0;
     pointer-events: none;
@@ -864,103 +1468,152 @@ body::before {
 }
 
 @keyframes buffaloClickHintBounce {
-    0% { opacity: 0; transform: translateY(40px); }
-    60% { opacity: 1; transform: translateY(-12px); }
-    80% { transform: translateY(4px); }
-    100% { opacity: 1; transform: translateY(0px); }
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translateY(-12px);
+    }
+
+    80% {
+        transform: translateY(4px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
 }
 
 @keyframes buffaloClickBounceLoop {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
 }
 
 .lopburi-fighters {
     position: absolute;
-    left: 277vw;
+    left: 277cqw;
     display: flex;
     z-index: 12;
-    top: 4.68vw;
+    top: 4.68cqw;
 }
 
 .lopburi-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left: -10vw;
+    margin-left: -10cqw;
     perspective: 1000px;
     transform-style: preserve-3d;
 }
 
-.lopburi-container:first-child { margin-left: 0; }
+.lopburi-container:first-child {
+    margin-left: 0;
+}
 
 .lopburi-fighter {
-    max-width: 22vw;
+    max-width: 22cqw;
     width: auto;
     object-fit: contain;
     opacity: 1;
     filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
-    height: 33.75vw;
+    height: 33.75cqw;
     transform-style: preserve-3d;
     transform-origin: center bottom;
 }
 
-.lopburi-fighter-1 { position: relative; top: 0.52vw; }
-.lopburi-fighter-2 { position: relative; top: 2.08vw; left: -1.04vw; }
-.lopburi-fighter-3 { position: relative; top: 1.04vw; left: 0.52vw; }
-.lopburi-fighter-4 { position: relative; top: 1.56vw; }
+.lopburi-fighter-1 {
+    position: relative;
+    top: 0.52cqw;
+}
+
+.lopburi-fighter-2 {
+    position: relative;
+    top: 2.08cqw;
+    left: -1.04cqw;
+}
+
+.lopburi-fighter-3 {
+    position: relative;
+    top: 1.04cqw;
+    left: 0.52cqw;
+}
+
+.lopburi-fighter-4 {
+    position: relative;
+    top: 1.56cqw;
+}
 
 .lopburi-fighters-2 {
     position: absolute;
-    left: 368vw;
+    left: 368cqw;
     display: flex;
     z-index: 12;
-    top: 5.2vw;
+    top: 5.2cqw;
 }
 
 .lopburi-fighters-2 .lopburi-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left: -7vw;
+    margin-left: -7cqw;
 }
 
-.lopburi-fighters-2 .lopburi-container:first-child { margin-left: 0; }
+.lopburi-fighters-2 .lopburi-container:first-child {
+    margin-left: 0;
+}
 
 .lopburi-fighters-2 .lopburi-fighter-2 {
-    max-width: 60vw;
+    max-width: 60cqw;
     width: auto;
     object-fit: contain;
     opacity: 1;
     filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
-    height: 39.37vw;
+    height: 39.37cqw;
 }
 
-.lopburi-fighter-5 { position: relative; top: -1.56vw; }
-.lopburi-fighter-6 { position: relative; top: 0.26vw; }
+.lopburi-fighter-5 {
+    position: relative;
+    top: -1.56cqw;
+}
+
+.lopburi-fighter-6 {
+    position: relative;
+    top: 0.26cqw;
+}
 
 .chaiya-fighters {
     position: absolute;
-    left: 405vw;
+    left: 405cqw;
     display: flex;
     z-index: 12;
-    top: 5.72vw;
+    top: 5.72cqw;
 }
 
 .chaiya-fighters-2 {
     position: absolute;
-    left: 510vw;
+    left: 510cqw;
     display: flex;
     z-index: 12;
-    top: 6.77vw;
+    top: 6.77cqw;
 }
 
 .chaiya-fighters-3 {
     position: absolute;
-    left: 560vw;
+    left: 560cqw;
     display: flex;
     z-index: 12;
-    top: 6.77vw;
+    top: 6.77cqw;
 }
 
 .chaiya-container {
@@ -969,32 +1622,85 @@ body::before {
     flex-direction: column;
     align-items: center;
     gap: 5px;
-    margin-left: -3vw;
-    margin-top: 2vw;
+    margin-left: -3cqw;
+    margin-top: 2cqw;
 }
 
-.chaiya-container:first-child { margin-left: 0; }
+.chaiya-container:first-child {
+    margin-left: 0;
+}
 
 .chaiya-fighter {
-    max-width: 22vw;
+    max-width: 22cqw;
     width: auto;
     object-fit: contain;
     opacity: 1;
     filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
-    height: 30.93vw;
+    height: 30.93cqw;
 }
 
-.chaiya-fighter-1 { position: relative; opacity: 0; transform: translateY(120px) scale(0.8); top: 3.64vw; }
-.chaiya-fighter-2 { position: relative; opacity: 0; transform: translateY(120px) scale(0.8); top: 0.78vw; }
-.chaiya-fighter-3 { position: relative; top: -1.56vw; }
-.chaiya-fighter-4 { position: relative; transform: translateY(120px) scale(0.8); top: 0.52vw; }
-.chaiya-fighter-5 { position: relative; transform: translateY(120px) scale(0.8); top: 1.56vw; }
-.chaiya-fighter-6 { position: relative; top: -1.04vw; }
-.chaiya-fighter-7 { position: relative; top: 2.6vw; opacity: 0; transform: translateY(120px) scale(0.8); }
-.chaiya-fighter-8 { position: relative; top: -2.08vw; }
-.chaiya-fighter-9 { position: relative; top: 1.3vw; }
-.chaiya-fighter-10 { position: relative; top: -0.52vw; }
-.chaiya-fighter-11 { position: relative; top: 2.08vw; }
+.chaiya-fighter-1 {
+    position: relative;
+    opacity: 0;
+    transform: translateY(120px) scale(0.8);
+    top: 3.64cqw;
+}
+
+.chaiya-fighter-2 {
+    position: relative;
+    opacity: 0;
+    transform: translateY(120px) scale(0.8);
+    top: 0.78cqw;
+}
+
+.chaiya-fighter-3 {
+    position: relative;
+    top: -1.56cqw;
+}
+
+.chaiya-fighter-4 {
+    position: relative;
+    transform: translateY(120px) scale(0.8);
+    top: 0.52cqw;
+}
+
+.chaiya-fighter-5 {
+    position: relative;
+    transform: translateY(120px) scale(0.8);
+    top: 1.56cqw;
+}
+
+.chaiya-fighter-6 {
+    position: relative;
+    top: -1.04cqw;
+}
+
+.chaiya-fighter-7 {
+    position: relative;
+    top: 2.6cqw;
+    opacity: 0;
+    transform: translateY(120px) scale(0.8);
+}
+
+.chaiya-fighter-8 {
+    position: relative;
+    top: -2.08cqw;
+}
+
+.chaiya-fighter-9 {
+    position: relative;
+    top: 1.3cqw;
+}
+
+.chaiya-fighter-10 {
+    position: relative;
+    top: -0.52cqw;
+}
+
+.chaiya-fighter-11 {
+    position: relative;
+    top: 2.08cqw;
+}
 
 .chaiya-fighter-8,
 .chaiya-fighter-9,
@@ -1006,32 +1712,32 @@ body::before {
 
 .tha-sao-fighters {
     position: absolute;
-    left: 635vw;
+    left: 635cqw;
     display: flex;
     flex-direction: column;
     align-items: center;
     z-index: 12;
-    top: 10.41vw;
+    top: 10.41cqw;
 }
 
 .tha-sao-fighters-2 {
     position: absolute;
-    left: 677vw;
+    left: 677cqw;
     display: flex;
     flex-direction: column;
     align-items: center;
     z-index: 12;
-    top: 10.41vw;
+    top: 10.41cqw;
 }
 
 .tha-sao-fighters-3 {
     position: absolute;
-    left: 705vw;
+    left: 705cqw;
     display: flex;
     flex-direction: column;
     align-items: center;
     z-index: 12;
-    top: 10.41vw;
+    top: 10.41cqw;
 }
 
 .tha-sao-group-label,
@@ -1063,150 +1769,197 @@ body::before {
     flex-direction: column;
     align-items: center;
     gap: 5px;
-    margin-left: -7vw;
+    margin-left: -7cqw;
 }
 
-.tha-sao-container-2 { margin-left: -12vw; width: fit-content; display: flex; pointer-events: none; }
-.tha-sao-container-3 { margin-left: -12vw; }
+.tha-sao-container-2 {
+    margin-left: -12cqw;
+    width: fit-content;
+    display: flex;
+    pointer-events: none;
+}
+
+.tha-sao-container-3 {
+    margin-left: -12cqw;
+}
 
 .tha-sao-container:first-child,
 .tha-sao-container-2:first-child,
-.tha-sao-container-3:first-child { margin-left: 0; }
+.tha-sao-container-3:first-child {
+    margin-left: 0;
+}
 
 .tha-sao-fighter,
 .tha-sao-fighter-2,
 .tha-sao-fighter-3 {
-    max-width: 40vw;
+    max-width: 40cqw;
     width: auto;
     object-fit: contain;
     filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
-    height: 36.56vw;
+    height: 36.56cqw;
     opacity: 0;
 }
 
 .thonburi-fighters {
     position: absolute;
-    left: 755vw;
+    left: 755cqw;
     display: flex;
     z-index: 12;
-    top: 5vw;
+    top: 5cqw;
 }
 
 .thonburi-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left: -9vw;
+    margin-left: -9cqw;
 }
 
-.thonburi-container:first-child { margin-left: 0; }
+.thonburi-container:first-child {
+    margin-left: 0;
+}
 
 .thonburi-fighter {
-    max-width: 30vw;
+    max-width: 30cqw;
     width: auto;
     object-fit: contain;
     opacity: 1;
     filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
-    height: 42.18vw;
+    height: 42.18cqw;
 }
 
 .thonburi-fighter-1,
 .thonburi-fighter-2,
 .thonburi-fighter-3,
 .thonburi-fighter-4,
-.thonburi-fighter-5 { position: relative; }
+.thonburi-fighter-5 {
+    position: relative;
+}
 
 .early-ratana-fighters {
     position: absolute;
-    left: 866vw;
+    left: 866cqw;
     display: flex;
     z-index: 12;
-    top: 9vw;
+    top: 9cqw;
 }
 
 .early-ratana-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left: -12vw;
+    margin-left: -12cqw;
 }
 
-.early-ratana-container:first-child { margin-left: 0; }
+.early-ratana-container:first-child {
+    margin-left: 0;
+}
 
 .early-ratana-fighter {
-    max-width: 30vw;
+    max-width: 30cqw;
     width: auto;
     object-fit: contain;
     opacity: 1;
     filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
-    height: 36.56vw;
+    height: 36.56cqw;
 }
 
 .early-ratana-fighter-1,
 .early-ratana-fighter-2,
 .early-ratana-fighter-3,
-.early-ratana-fighter-4 { position: relative; }
+.early-ratana-fighter-4 {
+    position: relative;
+}
 
 .mid-ratana-fighters {
     position: absolute;
-    left: 913vw;
+    left: 913cqw;
     display: flex;
     z-index: 12;
-    top: 8vw;
+    top: 8cqw;
 }
 
 .mid-ratana-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left: -12vw;
+    margin-left: -12cqw;
 }
 
-.mid-ratana-container:first-child { margin-left: 0; }
+.mid-ratana-container:first-child {
+    margin-left: 0;
+}
 
 .mid-ratana-fighter {
-    max-width: 30vw;
+    max-width: 30cqw;
     width: auto;
     object-fit: contain;
     opacity: 1;
     filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
-    height: 36.56vw;
+    height: 36.56cqw;
 }
 
-.mid-ratana-fighter-1 { position: relative; top: -2.08vw; }
-.mid-ratana-fighter-2 { position: relative; }
-.mid-ratana-fighter-3 { position: relative; top: 2.6vw; }
-.mid-ratana-fighter-4 { position: relative; top: 2.6vw; }
+.mid-ratana-fighter-1 {
+    position: relative;
+    top: -2.08cqw;
+}
+
+.mid-ratana-fighter-2 {
+    position: relative;
+}
+
+.mid-ratana-fighter-3 {
+    position: relative;
+    top: 2.6cqw;
+}
+
+.mid-ratana-fighter-4 {
+    position: relative;
+    top: 2.6cqw;
+}
 
 .present-fighters {
     position: absolute;
-    left: 1050vw;
+    left: 1050cqw;
     display: flex;
     z-index: 12;
-    top: 12vw;
+    top: 12cqw;
 }
 
 .present-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left: -2vw;
+    margin-left: -2cqw;
 }
 
-.present-container:first-child { margin-left: 0; }
+.present-container:first-child {
+    margin-left: 0;
+}
 
 .present-fighter {
-    max-width: 30vw;
+    max-width: 30cqw;
     width: auto;
     object-fit: contain;
     opacity: 1;
     filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
-    height: 16.87vw;
+    height: 16.87cqw;
 }
 
-.present-fighter-1 { position: relative; transform: rotate(-18deg); }
-.present-fighter-2 { position: relative; transform: rotate(4deg); }
-.present-fighter-3 { position: relative; transform: rotate(12deg); }
+.present-fighter-1 {
+    position: relative;
+    transform: rotate(-18deg);
+}
+
+.present-fighter-2 {
+    position: relative;
+    transform: rotate(4deg);
+}
+
+.present-fighter-3 {
+    position: relative;
+    transform: rotate(12deg);
+}
 
 /* =========================================
    LABELS
@@ -1226,30 +1979,111 @@ body::before {
     transform: translateY(20px);
 }
 
-.fighter-label.idle { animation: label-float 2.5s ease-in-out infinite; }
-
-@keyframes label-float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-5px); }
+.fighter-label.idle {
+    animation: label-float 2.5s ease-in-out infinite;
 }
 
-.chaiya-label { font-weight: 400; color: var(--history-text); }
-.pose-label { position: relative; left: 2.6vw; top: 6vw; }
-.label-north { position: relative; top: 3.12vw; }
-.label-northeast { position: relative; top: 1.04vw; }
-.label-south { position: relative; top: 0.52vw; }
-.label-central { position: relative; top: 2.08vw; }
-.label-chaiya-1 { position: relative; top: 6.77vw; }
-.label-chaiya-2 { position: relative; top: 3.12vw; }
-.label-chaiya-3 { position: relative; top: 7.81vw; }
-.label-chaiya-4 { position: relative; top: 2.6vw; }
-.label-chaiya-5 { position: relative; top: 3.64vw; }
-.label-chaiya-6 { position: relative; top: 1.04vw; }
-.label-chaiya-7 { position: relative; top: 4.68vw; }
-.label-chaiya-8 { position: relative; top: 1.04vw; left: 2.6vw; }
-.label-chaiya-9 { position: relative; top: 3.64vw; left: 3.12vw; }
-.label-chaiya-10 { position: relative; top: 2.08vw; left: 4.16vw; }
-.label-chaiya-11 { position: relative; top: 4.16vw; left: 2.6vw; }
+@keyframes label-float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.chaiya-label {
+    font-weight: 400;
+    color: var(--history-text);
+}
+
+.pose-label {
+    position: relative;
+    left: 2.6cqw;
+    top: 6cqw;
+}
+
+.label-north {
+    position: relative;
+    top: 3.12cqw;
+}
+
+.label-northeast {
+    position: relative;
+    top: 1.04cqw;
+}
+
+.label-south {
+    position: relative;
+    top: 0.52cqw;
+}
+
+.label-central {
+    position: relative;
+    top: 2.08cqw;
+}
+
+.label-chaiya-1 {
+    position: relative;
+    top: 6.77cqw;
+}
+
+.label-chaiya-2 {
+    position: relative;
+    top: 3.12cqw;
+}
+
+.label-chaiya-3 {
+    position: relative;
+    top: 7.81cqw;
+}
+
+.label-chaiya-4 {
+    position: relative;
+    top: 2.6cqw;
+}
+
+.label-chaiya-5 {
+    position: relative;
+    top: 3.64cqw;
+}
+
+.label-chaiya-6 {
+    position: relative;
+    top: 1.04cqw;
+}
+
+.label-chaiya-7 {
+    position: relative;
+    top: 4.68cqw;
+}
+
+.label-chaiya-8 {
+    position: relative;
+    top: 1.04cqw;
+    left: 2.6cqw;
+}
+
+.label-chaiya-9 {
+    position: relative;
+    top: 3.64cqw;
+    left: 3.12cqw;
+}
+
+.label-chaiya-10 {
+    position: relative;
+    top: 2.08cqw;
+    left: 4.16cqw;
+}
+
+.label-chaiya-11 {
+    position: relative;
+    top: 4.16cqw;
+    left: 2.6cqw;
+}
 
 /* =========================================
    TEXT BOXES — BASE
@@ -1278,9 +2112,9 @@ body::before {
    TEXT BOX 1 — ซ่อนตั้งแต่แรก GSAP จัดการ
    ========================================= */
 .text-box-1 {
-    left: 55vw;
-    width: 30vw;
-    top: 16vw;
+    left: 55cqw;
+    width: 30cqw;
+    top: 16cqw;
     opacity: 0;
 }
 
@@ -1288,9 +2122,9 @@ body::before {
    TEXT BOX 2 — ซ่อนตั้งแต่แรก GSAP จัดการ
    ========================================= */
 .text-box-2 {
-    left: 113vw;
-    width: 24vw;
-    top: 15vw;
+    left: 113cqw;
+    width: 24cqw;
+    top: 15cqw;
     opacity: 0;
 }
 
@@ -1321,8 +2155,14 @@ body::before {
     transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
-.text-box-6 .karaoke-char.active { opacity: 1; filter: blur(0); }
-.text-box-6 .highlight .karaoke-char { color: var(--history-highlight); }
+.text-box-6 .karaoke-char.active {
+    opacity: 1;
+    filter: blur(0);
+}
+
+.text-box-6 .highlight .karaoke-char {
+    color: var(--history-highlight);
+}
 
 /* text-box-7 */
 .text-box-7 .karaoke-char {
@@ -1332,8 +2172,14 @@ body::before {
     transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
-.text-box-7 .karaoke-char.active { opacity: 1; filter: blur(0); }
-.text-box-7 .highlight .karaoke-char { color: var(--history-highlight); }
+.text-box-7 .karaoke-char.active {
+    opacity: 1;
+    filter: blur(0);
+}
+
+.text-box-7 .highlight .karaoke-char {
+    color: var(--history-highlight);
+}
 
 /* text-box-10 */
 .text-box-10 .karaoke-char {
@@ -1342,40 +2188,141 @@ body::before {
     filter: blur(4px);
 }
 
-.text-box-10 .highlight .karaoke-char { color: var(--history-highlight); }
+.text-box-10 .highlight .karaoke-char {
+    color: var(--history-highlight);
+}
 
 /* =========================================
    TEXT BOX POSITIONS (3-22)
    ========================================= */
-.text-box-3 { left: 104vw; width: 28vw; top: 18vw; }
-.text-box-4 { left: 212vw; width: 32vw; top: 15vw; }
-.text-box-5 { left: 285vw; width: 28vw; top: 16vw; }
-.text-box-6 { left: 244vw; width: 25vw; top: 17vw; }
-.text-box-7 { left: 247vw; width: 30vw; top: 17vw; }
-.text-box-8 { left: 340vw; width: 30vw; top: 17vw; }
-.text-box-9 { left: 393vw; width: 30vw; top: 18vw; }
-.text-box-10 { left: 380vw; width: 25vw; top: 18vw; }
-.text-box-11 { left: 493vw; width: 20vw; top: 16vw; }
-.text-box-12 { left: 547vw; width: 15vw; top: 17vw; }
-.text-box-13 { left: 608vw; width: 25vw; top: 19vw; }
-.text-box-14 { left: 725vw; width: 34vw; top: 18vw; }
-.text-box-15 { left: 778vw; width: 34vw; top: 17vw; }
-.text-box-16 { left: 800vw; width: 30vw; top: 19vw; }
-.text-box-17 { left: 894vw; width: 30vw; top: 17vw; }
-.text-box-18 { left: 885vw; width: 30vw; top: 17vw; }
-.text-box-19 { left: 974vw; width: 32vw; top: 16vw; }
-.text-box-20 { left: 1013vw; width: 30vw; top: 16vw; }
-.text-box-21 { left: 1009vw; width: 34vw; top: 13vw; }
-.text-box-22 { left: 1140vw; width: 32vw; top: 17vw; }
+.text-box-3 {
+    left: 104cqw;
+    width: 28cqw;
+    top: 18cqw;
+}
+
+.text-box-4 {
+    left: 212cqw;
+    width: 32cqw;
+    top: 15cqw;
+}
+
+.text-box-5 {
+    left: 285cqw;
+    width: 28cqw;
+    top: 16cqw;
+}
+
+.text-box-6 {
+    left: 244cqw;
+    width: 25cqw;
+    top: 17cqw;
+}
+
+.text-box-7 {
+    left: 247cqw;
+    width: 30cqw;
+    top: 17cqw;
+}
+
+.text-box-8 {
+    left: 340cqw;
+    width: 30cqw;
+    top: 17cqw;
+}
+
+.text-box-9 {
+    left: 393cqw;
+    width: 30cqw;
+    top: 18cqw;
+}
+
+.text-box-10 {
+    left: 380cqw;
+    width: 25cqw;
+    top: 18cqw;
+}
+
+.text-box-11 {
+    left: 493cqw;
+    width: 20cqw;
+    top: 16cqw;
+}
+
+.text-box-12 {
+    left: 547cqw;
+    width: 15cqw;
+    top: 17cqw;
+}
+
+.text-box-13 {
+    left: 608cqw;
+    width: 25cqw;
+    top: 19cqw;
+}
+
+.text-box-14 {
+    left: 725cqw;
+    width: 34cqw;
+    top: 18cqw;
+}
+
+.text-box-15 {
+    left: 778cqw;
+    width: 34cqw;
+    top: 17cqw;
+}
+
+.text-box-16 {
+    left: 800cqw;
+    width: 30cqw;
+    top: 19cqw;
+}
+
+.text-box-17 {
+    left: 894cqw;
+    width: 30cqw;
+    top: 17cqw;
+}
+
+.text-box-18 {
+    left: 885cqw;
+    width: 30cqw;
+    top: 17cqw;
+}
+
+.text-box-19 {
+    left: 974cqw;
+    width: 32cqw;
+    top: 16cqw;
+}
+
+.text-box-20 {
+    left: 1013cqw;
+    width: 30cqw;
+    top: 16cqw;
+}
+
+.text-box-21 {
+    left: 1009cqw;
+    width: 34cqw;
+    top: 13cqw;
+}
+
+.text-box-22 {
+    left: 1140cqw;
+    width: 32cqw;
+    top: 17cqw;
+}
 
 /* =========================================
    ERA INDICATORS (TIMELINE BOTTOM)
    ========================================= */
 .era-indicator {
     position: absolute;
-    left: 5vw;
+    left: 5cqw;
     top: 86.85%;
-    width: 500vw;
+    width: 500cqw;
     z-index: 20;
 }
 
@@ -1397,7 +2344,7 @@ body::before {
 
 .era-circle {
     position: absolute;
-    left: 30vw;
+    left: 30cqw;
     top: 0;
     width: 53px;
     height: 53px;
@@ -1420,7 +2367,7 @@ body::before {
 
 .era-title {
     position: absolute;
-    left: 30vw;
+    left: 30cqw;
     top: 68px;
     margin: 0;
     font-family: 'Poppins', sans-serif;
@@ -1432,21 +2379,132 @@ body::before {
     transform: translateX(-50%);
 }
 
-.era-indicator-sukhothai { left: -5vw; top: 87%; width: 1100vw; }
-.era-indicator-sukhothai .era-timeline-container { width: 200%; }
-.era-indicator-sukhothai .era-timeline-line { width: 100%; left: 15vw; }
-.era-indicator-sukhothai .era-circle { z-index: 21; }
+.era-indicator-sukhothai {
+    left: -5cqw;
+    top: 87%;
+    width: 1100cqw;
+}
 
-.era-indicator-ayutthaya { left: 60vw; top: 86.85%; width: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; }
-.era-indicator-regional { left: 180vw; top: 87%; width: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; }
-.era-indicator-korat { left: 180vw; top: 87%; width: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 20; }
-.era-indicator-lopburi { left: 235vw; top: 87%; width: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 20; }
-.era-indicator-chaiya { left: 352vw; top: 87%; width: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 20; }
-.era-indicator-tha-sao { left: 565vw; top: 87%; width: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 20; }
-.era-indicator-thonburi { left: 675vw; top: 87%; width: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 20; }
-.era-indicator-early-ratana { left: 750vw; top: 87%; width: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 20; }
-.era-indicator-mid-ratana { left: 845vw; top: 87%; width: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 20; }
-.era-indicator-present { left: 970vw; top: 87%; width: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 20; }
+.era-indicator-sukhothai .era-timeline-container {
+    width: 200%;
+}
+
+.era-indicator-sukhothai .era-timeline-line {
+    width: 100%;
+    left: 15cqw;
+}
+
+.era-indicator-sukhothai .era-circle {
+    z-index: 21;
+}
+
+.era-indicator-ayutthaya {
+    left: 60cqw;
+    top: 86.85%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.era-indicator-regional {
+    left: 180cqw;
+    top: 87%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.era-indicator-korat {
+    left: 180cqw;
+    top: 87%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 20;
+}
+
+.era-indicator-lopburi {
+    left: 235cqw;
+    top: 87%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 20;
+}
+
+.era-indicator-chaiya {
+    left: 352cqw;
+    top: 87%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 20;
+}
+
+.era-indicator-tha-sao {
+    left: 565cqw;
+    top: 87%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 20;
+}
+
+.era-indicator-thonburi {
+    left: 675cqw;
+    top: 87%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 20;
+}
+
+.era-indicator-early-ratana {
+    left: 750cqw;
+    top: 87%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 20;
+}
+
+.era-indicator-mid-ratana {
+    left: 845cqw;
+    top: 87%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 20;
+}
+
+.era-indicator-present {
+    left: 970cqw;
+    top: 87%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 20;
+}
 
 .era-indicator-ayutthaya .era-timeline-container,
 .era-indicator-regional .era-timeline-container,
@@ -1472,7 +2530,9 @@ body::before {
 .era-indicator-thonburi .era-timeline-line,
 .era-indicator-early-ratana .era-timeline-line,
 .era-indicator-mid-ratana .era-timeline-line,
-.era-indicator-present .era-timeline-line { display: none; }
+.era-indicator-present .era-timeline-line {
+    display: none;
+}
 
 .era-indicator-ayutthaya .era-circle,
 .era-indicator-regional .era-circle,
@@ -1510,35 +2570,71 @@ body::before {
    CHAIYA IDLE ANIMATIONS
    ========================================= */
 @keyframes chaiya-fighter-idle {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    25% { transform: translateY(-12px) rotate(0.6deg); }
-    50% { transform: translateY(-18px) rotate(-0.6deg); }
-    75% { transform: translateY(-8px) rotate(0.3deg); }
+
+    0%,
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    25% {
+        transform: translateY(-12px) rotate(0.6deg);
+    }
+
+    50% {
+        transform: translateY(-18px) rotate(-0.6deg);
+    }
+
+    75% {
+        transform: translateY(-8px) rotate(0.3deg);
+    }
 }
 
-.chaiya-fighter-1.idle { animation: chaiya-fighter-idle 1.9s ease-in-out infinite; }
-.chaiya-fighter-2.idle { animation: chaiya-fighter-idle 3.2s ease-in-out infinite; }
-.chaiya-fighter-3.idle { animation: chaiya-fighter-idle 2.6s ease-in-out infinite, aura-glow 2s ease-in-out infinite; }
+.chaiya-fighter-1.idle {
+    animation: chaiya-fighter-idle 1.9s ease-in-out infinite;
+}
+
+.chaiya-fighter-2.idle {
+    animation: chaiya-fighter-idle 3.2s ease-in-out infinite;
+}
+
+.chaiya-fighter-3.idle {
+    animation: chaiya-fighter-idle 2.6s ease-in-out infinite, aura-glow 2s ease-in-out infinite;
+}
 
 @keyframes aura-glow {
-    0%, 100% { filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.1)); }
-    50% { filter: drop-shadow(0 0 18px rgba(253, 240, 213, 0.7)) drop-shadow(0 0 40px rgba(253, 240, 213, 0.35)) drop-shadow(0 0 60px rgba(253, 240, 213, 0.15)); }
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.1));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 18px rgba(253, 240, 213, 0.7)) drop-shadow(0 0 40px rgba(253, 240, 213, 0.35)) drop-shadow(0 0 60px rgba(253, 240, 213, 0.15));
+    }
 }
 
-.chaiya-fighter-4.idle { animation: chaiya-fighter-idle 3.4s ease-in-out infinite; }
-.chaiya-fighter-5.idle { animation: chaiya-fighter-idle 2.8s ease-in-out infinite; }
+.chaiya-fighter-4.idle {
+    animation: chaiya-fighter-idle 3.4s ease-in-out infinite;
+}
+
+.chaiya-fighter-5.idle {
+    animation: chaiya-fighter-idle 2.8s ease-in-out infinite;
+}
 
 /* =========================================
    WAI KRU SWAP
    ========================================= */
-.wai-kru-wrapper { position: relative; display: inline-block; }
+.wai-kru-wrapper {
+    position: relative;
+    display: inline-block;
+}
 
 .wai-kru-click-hint {
     position: absolute;
-    right: 1vw;
+    right: 1cqw;
     top: 60%;
     transform: translateY(-50%);
-    width: 3vw;
+    width: 3cqw;
     height: auto;
     opacity: 0;
     pointer-events: none;
@@ -1552,8 +2648,15 @@ body::before {
 }
 
 @keyframes waiKruClickBounce {
-    0%, 100% { transform: translateY(-50%) translateX(0px); }
-    50% { transform: translateY(-50%) translateX(-6px); }
+
+    0%,
+    100% {
+        transform: translateY(-50%) translateX(0px);
+    }
+
+    50% {
+        transform: translateY(-50%) translateX(-6px);
+    }
 }
 
 .wai-kru-swap {
@@ -1568,7 +2671,9 @@ body::before {
     animation: waiKruAuraPulse 2.5s ease-in-out infinite;
 }
 
-.chaiya-container:has(.wai-kru-swap) { position: relative; }
+.chaiya-container:has(.wai-kru-swap) {
+    position: relative;
+}
 
 .chaiya-container:has(.wai-kru-swap)::before {
     content: '';
@@ -1580,10 +2685,10 @@ body::before {
     height: 350px;
     border-radius: 50%;
     background: radial-gradient(circle,
-        rgba(253, 240, 213, 0.55) 0%,
-        rgba(253, 240, 213, 0.3) 25%,
-        rgba(253, 240, 213, 0.12) 55%,
-        transparent 75%);
+            rgba(253, 240, 213, 0.55) 0%,
+            rgba(253, 240, 213, 0.3) 25%,
+            rgba(253, 240, 213, 0.12) 55%,
+            transparent 75%);
     pointer-events: none;
     z-index: 11;
     opacity: 0;
@@ -1596,54 +2701,138 @@ body::before {
     animation: waiKruBreath 2.5s ease-in-out infinite !important;
 }
 
-.chaiya-container:has(.wai-kru-swap)::after { content: none; }
+.chaiya-container:has(.wai-kru-swap)::after {
+    content: none;
+}
 
 @keyframes waiKruBreath {
-    0%, 100% { opacity: 0.05; transform: translate(-50%, -50%) scale(0.85); }
-    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+
+    0%,
+    100% {
+        opacity: 0.05;
+        transform: translate(-50%, -50%) scale(0.85);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
 }
 
 @keyframes waiKruAuraPulse {
-    0%, 100% { filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.15)); }
-    50% { filter: drop-shadow(0 0 25px rgba(253, 240, 213, 1)) drop-shadow(0 0 50px rgba(253, 240, 213, 0.7)); }
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 8px rgba(253, 240, 213, 0.3)) drop-shadow(0 0 20px rgba(253, 240, 213, 0.15));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 25px rgba(253, 240, 213, 1)) drop-shadow(0 0 50px rgba(253, 240, 213, 0.7));
+    }
 }
 
-.chaiya-fighter-6.idle { animation: chaiya-attack-idle 1.6s ease-in-out infinite; }
-.chaiya-fighter-7.idle { animation: chaiya-attack-idle 2s ease-in-out infinite; }
-.chaiya-fighter-8.idle { animation: chaiya-guard-idle 2.2s ease-in-out infinite; }
-.chaiya-fighter-9.idle { animation: chaiya-guard-idle 2.6s ease-in-out infinite; }
-.chaiya-fighter-10.idle { animation: chaiya-guard-idle 2s ease-in-out infinite; }
-.chaiya-fighter-11.idle { animation: chaiya-guard-idle 2.8s ease-in-out infinite; }
+.chaiya-fighter-6.idle {
+    animation: chaiya-attack-idle 1.6s ease-in-out infinite;
+}
+
+.chaiya-fighter-7.idle {
+    animation: chaiya-attack-idle 2s ease-in-out infinite;
+}
+
+.chaiya-fighter-8.idle {
+    animation: chaiya-guard-idle 2.2s ease-in-out infinite;
+}
+
+.chaiya-fighter-9.idle {
+    animation: chaiya-guard-idle 2.6s ease-in-out infinite;
+}
+
+.chaiya-fighter-10.idle {
+    animation: chaiya-guard-idle 2s ease-in-out infinite;
+}
+
+.chaiya-fighter-11.idle {
+    animation: chaiya-guard-idle 2.8s ease-in-out infinite;
+}
 
 @keyframes chaiya-attack-idle {
-    0%, 100% { transform: translateX(0) rotate(0deg); }
-    25% { transform: translateX(-6px) rotate(-1.5deg); }
-    75% { transform: translateX(6px) rotate(1.5deg); }
+
+    0%,
+    100% {
+        transform: translateX(0) rotate(0deg);
+    }
+
+    25% {
+        transform: translateX(-6px) rotate(-1.5deg);
+    }
+
+    75% {
+        transform: translateX(6px) rotate(1.5deg);
+    }
 }
 
 @keyframes chaiya-guard-idle {
-    0%, 100% { transform: translateY(0px) translateX(0) rotate(0deg); }
-    30% { transform: translateY(-4px) translateX(-3px) rotate(-0.8deg); }
-    70% { transform: translateY(-6px) translateX(3px) rotate(0.8deg); }
+
+    0%,
+    100% {
+        transform: translateY(0px) translateX(0) rotate(0deg);
+    }
+
+    30% {
+        transform: translateY(-4px) translateX(-3px) rotate(-0.8deg);
+    }
+
+    70% {
+        transform: translateY(-6px) translateX(3px) rotate(0.8deg);
+    }
 }
 
 @keyframes tha-sao-sway {
-    0%, 100% { transform: translateX(0) rotate(0deg); }
-    25% { transform: translateX(-5px) rotate(-1deg); }
-    75% { transform: translateX(5px) rotate(1deg); }
+
+    0%,
+    100% {
+        transform: translateX(0) rotate(0deg);
+    }
+
+    25% {
+        transform: translateX(-5px) rotate(-1deg);
+    }
+
+    75% {
+        transform: translateX(5px) rotate(1deg);
+    }
 }
 
-.tha-sao-kick.idle { animation: tha-sao-sway 1.8s ease-in-out infinite; }
-.tha-sao-elbow.idle { animation: tha-sao-sway 2.2s ease-in-out infinite; }
-.tha-sao-fighter2-1.idle { animation: tha-sao-sway 2s ease-in-out infinite; }
-.tha-sao-defend.idle { animation: tha-sao-sway 2.4s ease-in-out infinite; }
-.tha-sao-parry.idle { animation: tha-sao-sway 1.9s ease-in-out infinite; }
-.tha-sao-attacks.idle { animation: tha-sao-sway 2.1s ease-in-out infinite; }
+.tha-sao-kick.idle {
+    animation: tha-sao-sway 1.8s ease-in-out infinite;
+}
+
+.tha-sao-elbow.idle {
+    animation: tha-sao-sway 2.2s ease-in-out infinite;
+}
+
+.tha-sao-fighter2-1.idle {
+    animation: tha-sao-sway 2s ease-in-out infinite;
+}
+
+.tha-sao-defend.idle {
+    animation: tha-sao-sway 2.4s ease-in-out infinite;
+}
+
+.tha-sao-parry.idle {
+    animation: tha-sao-sway 1.9s ease-in-out infinite;
+}
+
+.tha-sao-attacks.idle {
+    animation: tha-sao-sway 2.1s ease-in-out infinite;
+}
 
 /* =========================================
    THA SAO CONTAINER-2 AURA
    ========================================= */
-.tha-sao-container-2 { position: relative; }
+.tha-sao-container-2 {
+    position: relative;
+}
 
 .tha-sao-container-2:has(.tha-sao-swap)::before {
     content: '';
@@ -1655,10 +2844,10 @@ body::before {
     height: 500px;
     border-radius: 50%;
     background: radial-gradient(circle,
-        rgba(253, 240, 213, 0.55) 0%,
-        rgba(253, 240, 213, 0.3) 25%,
-        rgba(253, 240, 213, 0.12) 55%,
-        transparent 75%);
+            rgba(253, 240, 213, 0.55) 0%,
+            rgba(253, 240, 213, 0.3) 25%,
+            rgba(253, 240, 213, 0.12) 55%,
+            transparent 75%);
     pointer-events: none;
     z-index: 0;
     opacity: 0;
@@ -1671,15 +2860,22 @@ body::before {
     animation: waiKruBreath 2.5s ease-in-out infinite !important;
 }
 
-.tha-sao-swap { position: relative; z-index: 1; }
-.tha-sao-swap-wrapper { position: relative; display: inline-block; }
+.tha-sao-swap {
+    position: relative;
+    z-index: 1;
+}
+
+.tha-sao-swap-wrapper {
+    position: relative;
+    display: inline-block;
+}
 
 .tha-sao-click-hint {
     position: absolute;
-    right: 1vw;
+    right: 1cqw;
     top: 60%;
     transform: translateY(-50%);
-    width: 3vw;
+    width: 3cqw;
     height: auto;
     opacity: 0;
     pointer-events: none;
@@ -1695,7 +2891,9 @@ body::before {
 /* =========================================
    THONBURI FIGHTER AURA
    ========================================= */
-.thonburi-container { position: relative; }
+.thonburi-container {
+    position: relative;
+}
 
 .thonburi-container::before {
     content: '';
@@ -1707,10 +2905,10 @@ body::before {
     height: 500px;
     border-radius: 50%;
     background: radial-gradient(circle,
-        rgba(253, 240, 213, 0.55) 0%,
-        rgba(253, 240, 213, 0.3) 25%,
-        rgba(253, 240, 213, 0.12) 55%,
-        transparent 75%);
+            rgba(253, 240, 213, 0.55) 0%,
+            rgba(253, 240, 213, 0.3) 25%,
+            rgba(253, 240, 213, 0.12) 55%,
+            transparent 75%);
     pointer-events: none;
     z-index: 0;
     opacity: 0;
@@ -1723,12 +2921,17 @@ body::before {
     animation: waiKruBreath 2.5s ease-in-out infinite !important;
 }
 
-.thonburi-fighter { position: relative; z-index: 1; }
+.thonburi-fighter {
+    position: relative;
+    z-index: 1;
+}
 
 /* =========================================
    EARLY RATTANAKOSIN FIGHTER AURA
    ========================================= */
-.early-ratana-container { position: relative; }
+.early-ratana-container {
+    position: relative;
+}
 
 .early-ratana-container::before {
     content: '';
@@ -1740,10 +2943,10 @@ body::before {
     height: 450px;
     border-radius: 50%;
     background: radial-gradient(circle,
-        rgba(253, 240, 213, 0.55) 0%,
-        rgba(253, 240, 213, 0.3) 25%,
-        rgba(253, 240, 213, 0.12) 55%,
-        transparent 75%);
+            rgba(253, 240, 213, 0.55) 0%,
+            rgba(253, 240, 213, 0.3) 25%,
+            rgba(253, 240, 213, 0.12) 55%,
+            transparent 75%);
     pointer-events: none;
     z-index: 0;
     opacity: 0;
@@ -1756,17 +2959,20 @@ body::before {
     animation: waiKruBreath 2.5s ease-in-out infinite !important;
 }
 
-.early-ratana-fighter { position: relative; z-index: 1; }
+.early-ratana-fighter {
+    position: relative;
+    z-index: 1;
+}
 
 /* =========================================
    EARLY RATTANAKOSIN CLICK HINT
    ========================================= */
 .early-ratana-click-hint {
     position: absolute;
-    right: 2vw;
+    right: 2cqw;
     top: 62%;
     transform: translateY(-50%);
-    width: 3vw;
+    width: 3cqw;
     height: auto;
     opacity: 0;
     pointer-events: none;
@@ -1790,22 +2996,43 @@ body::before {
 }
 
 #walking-fighter-img {
-    height: 20vw;
+    height: 20cqw;
     width: auto;
-    max-width: 15vw;
+    max-width: 15cqw;
     object-fit: contain;
 }
 
 @keyframes earlyRatanaEmojiHintBounce {
-    0% { opacity: 0; transform: translateY(40px); }
-    60% { opacity: 1; transform: translateY(-12px); }
-    80% { transform: translateY(4px); }
-    100% { opacity: 1; transform: translateY(0px); }
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translateY(-12px);
+    }
+
+    80% {
+        transform: translateY(4px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
 }
 
 @keyframes earlyRatanaEmojiBounceLoop {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 /* =========================================
@@ -1855,4 +3082,25 @@ body::before {
 .karaoke-char {
     display: inline;
     contain: layout style;
+}
+
+/* =========================================
+     FIX: ล็อกฉากหลังให้อยู่หมัด (ห้ามทะลุจอจำลอง)
+   ========================================= */
+
+#desktop-canvas .history-wrapper {
+    position: absolute !important;
+    /* ปลดจาก fixed หน้าจอจริง มาล็อกกับจอจำลองแทน */
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+#desktop-canvas .history-viewport {
+    width: 100% !important;
+    height: 100% !important;
+    /* ยกเลิกสูตรคำนวณ min(100vh) เดิมที่ทำให้จอยืด */
+    top: 0 !important;
+    transform: none !important;
 }

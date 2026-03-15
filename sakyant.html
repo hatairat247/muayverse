@@ -279,8 +279,6 @@
     <!-- Footer -->
     <div id="footer"></div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
-
     <!-- Scripts with defer for better performance -->
     <script src="js/navbar.js" defer></script>
     <script src="js/footer.js" defer></script>
@@ -298,30 +296,6 @@
             new Navbar();
             new Footer();
             new SakYantAnim();
-
-            // Preload transition Lottie ไว้รอเลย — ทำให้ transition กลับ history เร็วขึ้น
-            const _preloadOverlay = document.createElement('div');
-            _preloadOverlay.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-                z-index: -1; pointer-events: none; visibility: hidden;
-            `;
-            document.body.appendChild(_preloadOverlay);
-            window._sakyantPreloadAnim = lottie.loadAnimation({
-                container: _preloadOverlay,
-                renderer: 'svg',
-                loop: false,
-                autoplay: false,
-                path: 'lottie/transition.json',
-                rendererSettings: { preserveAspectRatio: 'xMidYMid slice' }
-            });
-            window._sakyantPreloadAnim.addEventListener('DOMLoaded', () => {
-                window._sakyantPreloadAnim.goToAndStop(0, true);
-                // เลื่อน overlay ไปข้างหน้าเมื่อจะใช้งานจริง
-                _preloadOverlay._showForTransition = () => {
-                    _preloadOverlay.style.zIndex = '99999';
-                    _preloadOverlay.style.visibility = 'visible';
-                };
-            });
         }
     </script>
 </body>

@@ -75,17 +75,7 @@ window.addEventListener('load', () => {
     // ลด forced reflow — บอก GSAP ใช้ requestAnimationFrame batch
     gsap.config({ force3D: true });
     ScrollTrigger.config({ limitCallbacks: true });
-    
-    if (new URLSearchParams(window.location.search).get('from') === 'sakyant') {
-        setTimeout(() => {
-            ScrollTrigger.refresh();
-            const safeTop = document.body.scrollHeight
-                - window.innerHeight
-                - Math.round(SCROLL_END_BUFFER * 0.4);
-            window.scrollTo({ top: Math.max(0, safeTop), behavior: 'instant' });
-            setTimeout(() => { justReturnedCooldown = false; }, 2000);
-        }, 200);
-    }
+
 });
 
 // =============================================
@@ -93,17 +83,33 @@ window.addEventListener('load', () => {
 // =============================================
 function initHorizontalScroll() {
     const timelineTrack = document.querySelector('#timeline-track');
-    if (!timelineTrack) { console.error('Timeline track not found'); return; }
+    const desktopCanvas = document.querySelector('#desktop-canvas'); // ดึงขนาดจอจำลองมาใช้
+    if (!timelineTrack || !desktopCanvas) { console.error('Elements not found'); return; }
 
-    const totalWidth = timelineTrack.offsetWidth;
+    const getScrollDistance = () => {
+        const lastBox = document.querySelector('.text-box-22');
+        const canvasWidth = desktopCanvas.offsetWidth; // เปลี่ยนจากการมองจอจริง มามองจอจำลองแทน
+
+        if (lastBox) {
+            let totalLeft = 0;
+            let currentEl = lastBox;
+            while (currentEl && currentEl.id !== 'timeline-track' && currentEl.tagName !== 'BODY') {
+                totalLeft += currentEl.offsetLeft;
+                currentEl = currentEl.offsetParent;
+            }
+            const paddingRight = canvasWidth * 0.2;
+            return totalLeft + lastBox.offsetWidth - canvasWidth + paddingRight;
+        }
+        return timelineTrack.offsetWidth - canvasWidth;
+    };
 
     horizontalScrollTween = gsap.to(timelineTrack, {
-        x: () => -(totalWidth - window.innerWidth),
+        x: () => -getScrollDistance(),
         ease: 'none',
         scrollTrigger: {
-            trigger: '.history-wrapper',
+            trigger: '#canvas-center-wrapper', // เปลี่ยนให้ GSAP ไปปักหมุดที่ Wrapper ตัวนอกสุดแทน
             start: 'top top',
-            end: () => `+=${totalWidth}`,
+            end: () => `+=${getScrollDistance()}`,
             scrub: 1,
             pin: true,
             anticipatePin: 1,
@@ -369,7 +375,7 @@ function initSukhothaiKickAnimation() {
 // Karaoke Animation
 // =============================================
 function initKaraokeAnimation() {
-   if (!horizontalScrollTween) return;
+    if (!horizontalScrollTween) return;
 
     const textBox2 = document.querySelector('.text-box-2');
     if (textBox2) {
@@ -1682,66 +1688,4 @@ function initRemainingKaraokeBoxes() {
             );
         }
     }
-}
-
-// =============================================
-// PAGE TRANSITION
-// =============================================
-let isNavigatingToNextPage = false;
-window.justReturnedCooldown = false;
-
-document.addEventListener('DOMContentLoaded', () => {
-    const track = document.getElementById('timeline-track');
-    if (track) track.style.paddingRight = '50vw';
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('from') === 'sakyant') {
-        window.justReturnedCooldown = true;
-        setTimeout(() => {
-            const safePoint = document.body.scrollHeight - window.innerHeight - 400;
-            window.scrollTo(0, safePoint);
-            setTimeout(() => { window.justReturnedCooldown = false; }, 2000);
-        }, 600);
-    }
-});
-
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        let gate = document.getElementById('transition-gate');
-        if (!gate) {
-            gate = document.createElement('div');
-            gate.id = 'transition-gate';
-            gate.style.cssText = 'position: absolute; bottom: 0; width: 100%; height: 5px; pointer-events: none;';
-            document.body.appendChild(gate);
-        }
-
-        ScrollTrigger.create({
-            trigger: '#transition-gate',
-            start: 'bottom bottom',
-            onEnter: () => {
-                if (window.justReturnedCooldown) return;
-                if (!isNavigatingToNextPage) {
-                    isNavigatingToNextPage = true;
-                    setTimeout(() => { triggerTransitionTo('sakyant.html'); }, 500);
-                }
-            }
-        });
-
-        ScrollTrigger.refresh();
-    }, 1500);
-});
-
-function triggerTransitionTo(url) {
-    let transitionOverlay = document.getElementById('pageTransition');
-    if (!transitionOverlay) {
-        transitionOverlay = document.createElement('div');
-        transitionOverlay.id = 'pageTransition';
-        transitionOverlay.className = 'page-transition-overlay';
-        document.body.appendChild(transitionOverlay);
-        void transitionOverlay.offsetWidth;
-    }
-    transitionOverlay.classList.add('active');
-    setTimeout(() => { window.location.href = url; }, 800);
 }
