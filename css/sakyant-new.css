@@ -1172,6 +1172,8 @@
     letter-spacing: 0.5px;
 }
 
+/* gaoyord description */
+
 .gaoyord-desc {
     font-family: var(--font-family);
     font-size: clamp(1.25rem, 1.15vw, 22px);
