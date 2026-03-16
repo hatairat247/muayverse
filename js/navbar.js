@@ -68,28 +68,11 @@ class Navbar {
         const style = document.createElement('style');
         style.textContent = `
             .navbar {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 80px;
-                background-color: var(--color-primary);
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 0 var(--spacing-2xl);
-                z-index: 999;
+                padding: 0 32px;
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             }
 
-            .navbar-logo {
-                height: 100%;
-                display: flex;
-                align-items: center;
-            }
-
             .navbar-logo a {
-                height: 100%;
                 display: flex;
                 align-items: center;
                 text-decoration: none;
@@ -97,29 +80,18 @@ class Navbar {
             }
 
             .navbar-logo a:hover {
-                transform: scale(1.05);
+                transform: scale(1.2);
             }
 
             .logo-nav {
-                max-height: var(--navbar-height);
-                width: auto;
-                object-fit: contain;
                 filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
             }
 
-            .navbar-controls {
-                display: flex;
-                gap: var(--spacing-2xl);
-                align-items: center;
-            }
-
             .nav-btn {
-                width: 38px;
-                height: 38px;
+                width: 36px;
+                height: 36px;
                 border: none;
                 background: transparent;
-                color: var(--color-text-light);
-                font-size: 20px;
                 cursor: pointer;
                 display: flex;
                 align-items: center;
@@ -129,19 +101,13 @@ class Navbar {
                 position: relative;
             }
 
-            /* เพิ่มขนาด music button */
             .music-btn {
-                width: 52px;
-                height: 52px;
+                width: 48px;
+                height: 48px;
             }
 
-            /* เพิ่ม CSS ให้รูปภาพข้างในเต็มกล่อง */
             .btn-icon {
-                width: 100%;
-                height: 100%;
-                object-fit: contain;
-                display: block;
-                pointer-events: none; /* ให้คลิกทะลุรูปไปโดนปุ่ม */
+                pointer-events: none;
             }
 
             .nav-btn:hover {
@@ -155,8 +121,6 @@ class Navbar {
 
             .menu-btn.active {
                 background-color: var(--color-secondary);
-                width: 42px;
-                height: 42px;
             }
 
             .music-btn.playing {
@@ -175,144 +139,42 @@ class Navbar {
                 content: '';
                 position: absolute;
                 width: 130%;
-                height: 4px; /* ความหนาเส้น */
+                height: 4px;
                 border-radius: 4px; 
-                /* สีเส้น  */
                 background-color: var(--color-secondary); 
                 top: 50%;
                 left: 50%;
-    
-                /* หมุน 45 องศา (ใช้ -45 ให้เป็นแนวขวางลง) */
                 transform: translate(-50%, -50%) rotate(-45deg);
-    
-                /* ให้เส้นอยู่เหนือไอคอน */
                 z-index: 10; 
-                pointer-events: none;
             }
 
             @keyframes pulse {
-                0%, 100% {
-                    opacity: 1;
-                }
-                50% {
-                    opacity: 0.7;
-                }
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.7; }
             }
 
-            @keyframes ripple {
-                0% {
-                    transform: scale(1);
-                    opacity: 1;
-                }
-                100% {
-                    transform: scale(1.5);
-                    opacity: 0;
-                }
-            }
-
-            /* Responsive Navbar */
+            /* =========================================
+               🎯 Responsive Navbar (ปรับปุ่มให้เล็กตามจอ)
+               ========================================= */
             @media screen and (max-width: 1024px) {
-                .navbar {
-                    padding: 0 24px;
-                    height: 72px;
-                }
-
-                :root {
-                    --navbar-height: 72px;
-                }
-
-                .logo-nav {
-                    max-height: 64px;
-                }
-
-                .music-btn {
-                    width: 46px;
-                    height: 46px;
-                }
-
-                .nav-btn {
-                    width: 32px;
-                    height: 32px;
-                }
-
-                .navbar-controls {
-                    gap: 20px;
-                }
+                .navbar { padding: 0 24px; }
+                .music-btn { width: 42px; height: 42px; }
+                .nav-btn { width: 32px; height: 32px; }
+                .navbar-controls { gap: 16px; }
             }
 
-            @media screen and (max-width: 768px) {
-                .navbar {
-                    padding: 0 20px;
-                    height: 70px;
-                }
-
-                :root {
-                    --navbar-height: 70px;
-                }
-
-                .logo-nav {
-                    max-height: 60px;
-                }
-
-                .nav-btn {
-                    width: 28px;
-                    height: 28px;
-                    font-size: 16px;
-                }
-
-                /* music button on tablet */
-                .music-btn {
-                    width: 44px;
-                    height: 44px;
-                }
-
-                .navbar-controls {
-                    gap: 16px;
-                }
+            @media screen and (max-width: 896px) {
+                .navbar { padding: 0 16px; }
+                .music-btn { width: 36px; height: 36px; }
+                .nav-btn { width: 28px; height: 28px; }
+                .navbar-controls { gap: 12px; }
             }
 
             @media screen and (max-width: 480px) {
-                .navbar {
-                    padding: 0 15px;
-                    height: 60px;
-                }
-
-                :root {
-                    --navbar-height: 60px;
-                }
-
-                .logo-nav {
-                    max-height: 50px;
-                }
-
-                .nav-btn {
-                    width: 24px;
-                    height: 24px;
-                    font-size: 14px;
-                }
-
-                /* music button on small screens */
-                .music-btn {
-                    width: 32px;
-                    height: 32px;
-                }
-
-                .menu-btn.active{
-                    width: 36px;
-                    height: 36px;
-                }
-                
-                .menu-content{
-                    gap: 4px;
-                }
-                
-                .menu-item{
-                    font-size: 12px;
-                }
-
-                .navbar-controls {
-                    gap: 12px;
-                }
+                .navbar { padding: 0 12px; }
+                .music-btn { width: 30px; height: 30px; }
+                .nav-btn { width: 24px; height: 24px; }
+                .navbar-controls { gap: 8px; }
             }
         `;
         document.head.appendChild(style);
