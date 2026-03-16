@@ -1689,3 +1689,44 @@ function initRemainingKaraokeBoxes() {
         }
     }
 }
+
+// ระบบจัดการ Loading Screen
+(function initLoader() {
+    const progressFill = document.getElementById('progressFill');
+
+    // 👉 1. สั่งให้หลอด "เริ่มต้น" วิ่งไปที่ 30% ทันทีที่สคริปต์ทำงาน (ไม่ต้องรอโหลดเสร็จ)
+    if (progressFill) {
+        // หน่วงนิดนึงเพื่อให้แอนิเมชัน CSS ทำงานทัน
+        setTimeout(() => {
+            progressFill.style.transition = 'width 1.5s cubic-bezier(0.1, 0.5, 0.5, 1)';
+            progressFill.style.width = '35%';
+        }, 50);
+    }
+})();
+
+window.addEventListener('load', function () {
+    const loader = document.getElementById('loadingOverlay');
+    const progressFill = document.getElementById('progressFill');
+
+    // 2. เมื่อ Asset ทุกอย่าง (รูปจาก Cloudinary) มาครบแล้ว
+    if (progressFill) {
+        // 👉 สั่งให้วิ่งต่อจนเต็ม 100% แบบเร็วขึ้นนิดนึง
+        progressFill.style.transition = 'width 0.5s ease-out';
+        progressFill.style.width = '100%';
+    }
+
+    // 3. รอจังหวะให้คนเห็นว่าหลอดเต็ม 100% แล้วค่อยเปิดม่าน
+    setTimeout(() => {
+        if (loader) {
+            loader.classList.add('hidden');
+
+            // ปลดล็อก Body (ถ้ามีคลาส loading-active ใน HTML)
+            document.body.classList.remove('loading-active');
+
+            // 🚀 บังคับให้ GSAP คำนวณตำแหน่งใหม่หลังจากหน้าจอจัดเสร็จแล้ว
+            if (typeof ScrollTrigger !== 'undefined') {
+                ScrollTrigger.refresh();
+            }
+        }
+    }, 1000); // หน่วงไว้ 1 วิให้ดูหลอดเต็มสวยๆ
+});

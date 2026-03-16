@@ -21,23 +21,58 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/history.css">
+    <link rel="stylesheet" href="css/loading.css">
 
-    <!-- FIX FOUC: เซ็ต html.paper-entering แบบ synchronous ก่อน render frame แรก -->
-    <script>if (sessionStorage.getItem('paperTransition') === 'true') { document.documentElement.classList.add('paper-entering'); }</script>
+    <style>
+        /* 🎯 แก้ FOUC หมุนจอ: บังคับให้หน้าจอดำยังอยู่ (flex) เพื่อให้มีเวลาหน่วงบัง GSAP จัดของ */
+        @media screen and (orientation: landscape) {
+            #landscape-overlay {
+                display: flex !important;
+                opacity: 0 !important;
+                pointer-events: none !important;
+                transition: opacity 0.3s ease 0.5s !important;
+            }
+        }
+
+        @media screen and (orientation: portrait) {
+            #landscape-overlay {
+                display: flex !important;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                transition: none !important;
+            }
+        }
+    </style>
 </head>
 
-<body>
-
-    <!-- Paper Tear Transition (Hardcoded: ต้องอยู่ใน HTML เพื่อให้ CSS html.paper-entering ทำงานได้ทันที) -->
-    <div id="paper-transition-wrapper" class="paper-transition-wrapper">
-        <div class="paper-half paper-left"></div>
-        <div class="paper-half paper-right"></div>
+<body class="loading-active">
+    <div id="loadingOverlay" class="loading-overlay active">
+        <div class="loading-container">
+            <div class="gloves-container">
+                <img src="img/PunchLoading.png" alt="Boxing Gloves" class="gloves-image">
+            </div>
+            <h1 class="loading-title">MUAYVERSE</h1>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill">
+                        <div class="progress-wave-start"></div>
+                        <div class="progress-wave"></div>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-stop"></div>
+                    </div>
+                </div>
+            </div>
+            <p class="loading-subtitle">Interactive Website to Promote Muay Thai Soft Power</p>
+        </div>
     </div>
+
     <!-- Force Landscape Overlay -->
     <div id="landscape-overlay">
         <div class="landscape-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#FDF0D5" stroke-width="1.5"
-                stroke-linecap="round" stroke-linejoin="round">
+            <svg style="width: 80px; height: 80px; max-width: 100%;" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24" fill="none" stroke="#FDF0D5" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round">
                 <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
                 <circle cx="12" cy="17" r="1" fill="#FDF0D5" stroke="none" />
                 <line x1="9" y1="5" x2="15" y2="5" />
@@ -1093,14 +1128,15 @@
 
                     </div>
                 </div>
+                <div id="walking-fighter">
+                    <img id="walking-fighter-img"
+                        src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253360/fighter-walk-old-1_yvrxhd.png"
+                        alt="Walking Fighter">
+                </div>
             </div>
         </div>
     </div>
-    <div id="walking-fighter">
-        <img id="walking-fighter-img"
-            src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253360/fighter-walk-old-1_yvrxhd.png"
-            alt="Walking Fighter">
-    </div>
+
     <!-- Scripts -->
     <!-- GSAP for Horizontal Scroll - Load before history.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
