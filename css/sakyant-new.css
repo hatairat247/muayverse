@@ -1517,3 +1517,66 @@
         transform: scale(1);
     }
 }
+
+/* =========================================
+   SWIPE HINT — ใต้กอง paper
+   ========================================= */
+.swipe-hint {
+    position: absolute;
+    bottom: -64px;
+    /* เพิ่มจาก -48px → ลงมาอีก */
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: swipeHintFloat 1.6s ease-in-out infinite;
+}
+
+.swipe-hint-img {
+    width: clamp(40px, 3.5vw, 55px) !important;
+    height: auto !important;
+    opacity: 0.9 !important;
+    filter: brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(5deg) !important;
+}
+
+@keyframes swipeHintFloat {
+
+    0%,
+    100% {
+        transform: translateX(-50%) translateX(0px);
+        opacity: 0.75;
+    }
+
+    25% {
+        transform: translateX(-50%) translateX(-18px);
+        opacity: 1;
+    }
+
+    75% {
+        transform: translateX(-50%) translateX(18px);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 430px) and (orientation: portrait) {
+    .swipe-hint {
+        bottom: -52px;
+    }
+
+    .swipe-hint-img {
+        width: 36px;
+    }
+}
+
+@media (max-width: 768px) and (orientation: landscape) {
+    .swipe-hint {
+        bottom: -48px;
+    }
+
+    .swipe-hint-img {
+        width: 34px;
+    }
+}
