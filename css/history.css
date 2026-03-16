@@ -3836,6 +3836,8 @@ body::before {
 html,
 body {
     overscroll-behavior-y: none !important;
+    scroll-behavior: auto !important;
+    /* 👈 เติมบรรทัดนี้ลงไปครับ! ห้ามลืมนะ! */
 }
 
 /* =========================================================================

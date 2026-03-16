@@ -23,20 +23,21 @@
     <link rel="stylesheet" href="css/history.css">
 
     <style>
+        /* 🎯 แก้ FOUC หมุนจอ: บังคับให้หน้าจอดำยังอยู่ (flex) เพื่อให้มีเวลาหน่วงบัง GSAP จัดของ */
         @media screen and (orientation: landscape) {
             #landscape-overlay {
+                display: flex !important;
                 opacity: 0 !important;
                 pointer-events: none !important;
-                /* 👈 หัวใจสำคัญ: รอ 0.3 วิ ให้ GSAP จัดของเสร็จ แล้วค่อยๆ เฟดออกใน 0.4 วิ */
-                transition: opacity 0.4s ease 0.3s !important;
+                transition: opacity 0.3s ease 0.5s !important;
             }
         }
 
         @media screen and (orientation: portrait) {
             #landscape-overlay {
+                display: flex !important;
                 opacity: 1 !important;
                 pointer-events: auto !important;
-                /* 👈 ตอนหมุนกลับมาแนวตั้ง ให้จอดำปิดปะทะทันที ห้ามมีดีเลย์ */
                 transition: none !important;
             }
         }
