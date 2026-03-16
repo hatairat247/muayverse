@@ -3801,3 +3801,17 @@ body::before {
         transform: scale(1);
     }
 }
+
+/* เปลี่ยนแค่นี้เท่านั้น ห้ามแตะคลาสอื่น! */
+.next-page img {
+    width: 100% !important;
+    height: 100% !important;
+    /* 👈 1. บังคับความสูงไม่ให้ทะลุกล่อง (แทนที่ auto เดิม) */
+    max-width: 100% !important;
+    /* 👈 2. ดักไม่ให้กว้างเกินกล่อง */
+    max-height: 100% !important;
+    /* 👈 3. ดักไม่ให้สูงเกินกล่อง */
+    object-fit: contain !important;
+    /* 👈 4. รักษาสัดส่วนภาพไม่ให้เบี้ยว */
+    filter: brightness(1.2) contrast(1.1) drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7)) !important;
+}

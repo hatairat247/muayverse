@@ -796,3 +796,15 @@ main {
         height: 24px !important;
     }
 }
+
+/* ล็อกขนาดไอคอนแจ้งเตือนพลิกหน้าจอ ไม่ให้ระเบิดเต็มจอตอนโหลด */
+#landscape-overlay img {
+    width: 120px !important;
+    /* 👈 ใส่ขนาดที่นายต้องการให้มันโชว์จริง */
+    height: 120px !important;
+    /* 👈 ล็อกความสูงไว้เลย */
+    max-width: 120px !important;
+    max-height: 120px !important;
+    object-fit: contain !important;
+    margin-bottom: 20px !important;
+}
