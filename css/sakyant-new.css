@@ -526,6 +526,102 @@
     }
 }
 
+/* =====================================================
+   FIX: 932px — ขยับ swipe-hint ขึ้นสูงขึ้น
+   ===================================================== */
+@media (max-width: 932px) and (min-width: 681px) {
+    .swipe-hint {
+        bottom: -36px !important;
+    }
+}
+
+/* =====================================================
+   FIX: 667px landscape (iPhone SE / 8 landscape)
+   ===================================================== */
+@media (max-width: 680px) and (min-width: 600px) and (orientation: landscape) {
+
+    /* ── ขนาด paper เล็กลง ── */
+    .gaoyord-papers {
+        width: clamp(130px, 25vw, 185px) !important;
+    }
+
+    /* ── ขยับรูป paper ลงมานิดนึง ── */
+    .paper-img {
+        margin-top: 16px !important;
+    }
+
+    /* ── ขนาด text เล็กลง ── */
+    .gaoyord-title {
+        font-size: clamp(0.85rem, 2.4vw, 1.1rem) !important;
+    }
+
+    .gaoyord-desc {
+        font-size: clamp(0.65rem, 1.75vw, 0.8rem) !important;
+        margin-top: -8px !important;
+    }
+
+    /* ── จัดให้อยู่กลาง + ลด margin/padding ด้านล่าง ── */
+    .gaoyord-section {
+        margin-top: 0 !important;
+        min-height: auto !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .gaoyord-content {
+        justify-content: center !important;
+        align-items: center !important;
+        padding-bottom: 16px !important;
+        margin-top: 0 !important;
+    }
+}
+
+/* =====================================================
+   FIX: 844px — ขยับ paper-img และ yant-text-content ขึ้นสูงขึ้น
+   ===================================================== */
+@media (max-width: 844px) and (min-width: 800px) and (orientation: landscape) {
+
+    .paper-img {
+        margin-top: -50px !important;
+    }
+
+    .yant-text-content.active {
+        margin-top: -20px !important;
+    }
+
+    p.gaoyord-desc {
+        margin-top: -20px !important;
+        font-size: 14.5px;
+    }
+
+    .swipe-hint {
+        bottom: 10px !important;
+    }
+
+}
+
+/* =====================================================
+   FIX: 896px landscape (iPhone XR / 11)
+   ===================================================== */
+@media (max-width: 896px) and (min-width: 845px) and (orientation: landscape) {
+
+    .paper-img {
+        margin-top: -40px !important;
+    }
+
+    .yant-text-content.active {
+        margin-top: -20px !important;
+    }
+
+    .swipe-hint {
+        bottom: -10px !important;
+    }
+
+    p.gaoyord-desc {
+        margin-top: -20px !important;
+    }
+}
+
 /* iPhone SE, iPhone 8 and similar landscape - 480px to 768px */
 @media (max-width: 768px) and (min-width: 481px) and (orientation: landscape) {
     .sakyant-scroll-lock {
@@ -639,6 +735,48 @@
         opacity: 0.35;
     }
 }
+
+/* =====================================================
+   FIX: 667px landscape (iPhone SE / 8 landscape)
+   ===================================================== */
+@media (max-width: 680px) and (min-width: 600px) and (orientation: landscape) {
+
+    /* ── ขนาด paper เล็กลง ── */
+    .gaoyord-papers {
+        width: clamp(130px, 25vw, 185px) !important;
+    }
+
+    /* ── ขยับรูป paper ลงมานิดนึง ── */
+    .paper-img {
+        margin-top: 16px !important;
+    }
+
+    /* ── ขนาด text เล็กลง ── */
+    .gaoyord-title {
+        font-size: clamp(0.85rem, 2.4vw, 1.1rem) !important;
+    }
+
+    .gaoyord-desc {
+        font-size: clamp(0.65rem, 1.75vw, 0.8rem) !important;
+        margin-top: -8px !important;
+    }
+
+    /* ── จัดให้อยู่กลาง + ลด margin/padding ด้านล่าง ── */
+    .gaoyord-section {
+        margin-top: 0 !important;
+        min-height: auto !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .gaoyord-content {
+        justify-content: center !important;
+        align-items: center !important;
+        padding-bottom: 16px !important;
+        margin-top: 0 !important;
+    }
+}
+
 
 /* iPad Mini and tablets portrait mode - 431px to 768px */
 @media (max-width: 768px) and (min-width: 431px) and (orientation: portrait) {
@@ -1025,7 +1163,7 @@
 
 .gaoyord-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(1.8rem, 2.08vw, 40px);
+    font-size: clamp(4rem, 2.08vw, 40px);
     font-weight: 400;
     color: var(--color-text-light);
     text-shadow: 0 4px 5.2px rgba(0, 0, 0, 0.82);
@@ -1036,7 +1174,7 @@
 
 .gaoyord-desc {
     font-family: var(--font-family);
-    font-size: clamp(0.95rem, 1.15vw, 22px);
+    font-size: clamp(1.25rem, 1.15vw, 22px);
     font-weight: 400;
     color: var(--color-text-light);
     text-shadow: 0 4px 5.2px rgba(0, 0, 0, 0.82);
@@ -1484,6 +1622,7 @@
         height: 45px !important;
         padding: 2px !important;
     }
+
 }
 
 /* มือถือเล็กมาก (iPhone SE / 430px ลงมา) */
