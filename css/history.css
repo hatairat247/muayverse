@@ -3383,6 +3383,352 @@ body::before {
 }
 
 /* =========================================================================
+    iPAD & TABLET LANDSCAPE FIX (768px - 1100px)
+   ========================================================================= */
+
+@media screen and (min-width: 768px) and (max-width: 1366px) and (hover: none) and (pointer: coarse) {
+    #desktop-canvas {
+        height: 100vh !important;
+        max-height: 100vh !important;
+    }
+
+    .history-viewport {
+        height: 100% !important;
+        max-height: 100% !important;
+    }
+
+    .bg-mountain {
+        height: 35cqh !important;
+        bottom: 16cqh !important;
+    }
+
+    .ayutthaya-tree,
+    .lopburi-tree,
+    .tha-sao-tree,
+    .thonburi-tree,
+    .early-ratana-tree,
+    .mid-ratana-building,
+    .present-building {
+        position: absolute !important;
+        top: auto !important;
+        height: 25cqh !important;
+        width: auto !important;
+        opacity: 1 !important;
+        z-index: 0 !important;
+    }
+
+    .ayutthaya-tree {
+        bottom: 20cqh !important;
+    }
+
+    .lopburi-tree {
+        bottom: 22cqh !important;
+    }
+
+    .tha-sao-tree,
+    .thonburi-tree,
+    .early-ratana-tree,
+    .mid-ratana-building,
+    .present-building {
+        bottom: 25cqh !important;
+    }
+
+    .mid-ratana-building-1 {
+        bottom: 26cqh !important;
+        left: 914cqw !important;
+    }
+
+    .mid-ratana-building-3 {
+        bottom: 26cqh !important;
+        left: 1010cqw !important;
+    }
+
+    .present-building {
+        height: 25cqh !important;
+    }
+
+    .bg-ruins,
+    .ayutthaya-temples,
+    .korat-background,
+    .lopburi-background,
+    .chaiya-background,
+    .tha-sao-background,
+    .thonburi-background,
+    .early-ratana-background,
+    .mid-ratana-background,
+    .present-background {
+        height: 60cqh !important;
+        bottom: 12cqh !important;
+    }
+
+    .bg-ruins {
+        left: -5cqw !important;
+    }
+
+    .ruins-back {
+        left: -3cqw !important;
+    }
+
+    .ruins-middle {
+        left: -1cqw !important;
+    }
+
+    .temple-layer {
+        left: -8cqw !important;
+    }
+
+    .temple-center {
+        left: -6cqw !important;
+    }
+
+    .korat-background {
+        left: 165cqw !important;
+    }
+
+    .lopburi-background {
+        left: 200cqw !important;
+    }
+
+    .chaiya-background {
+        left: 310cqw !important;
+        height: 65cqh !important;
+        bottom: 14cqh !important;
+    }
+
+    .early-ratana-background,
+    .present-background {
+        bottom: 16cqh !important;
+    }
+
+    /* =========================================================================
+       ✅ แยกปรับขนาด+ตำแหน่งนักมวยแต่ละยุค (อิงจากโครงสร้าง @container)
+       ========================================================================= */
+
+    /* 1. ขยายขนาดนักมวยหลักให้ใหญ่ขึ้น (จาก 42cqh เป็น 48cqh) */
+    .fighters .fighter,
+    .regional-fighter,
+    .lopburi-fighter,
+    .chaiya-fighter,
+    .tha-sao-fighter,
+    .tha-sao-fighter-2,
+    .tha-sao-fighter-3,
+    .thonburi-fighter,
+    .early-ratana-fighter,
+    .mid-ratana-fighter,
+    .kick-pose {
+        height: 50cqh !important;
+    }
+
+    /* 2. สุโขทัย */
+    .fighters .fighter {
+        bottom: -40cqh !important;
+        /* ดันขึ้นจากเดิมที่จมอยู่ -50cqh */
+    }
+
+    .kick-poses {
+        bottom: 25cqh !important;
+    }
+
+    /* 3. อยุธยา */
+    .regional-fighters {
+        bottom: 26cqh !important;
+    }
+
+    .khanom-tom-fighter,
+    .early-ratana-pic-rama5 {
+        height: 46cqh !important;
+        bottom: 30cqh !important;
+        /* ดันให้ลอยเด่นขึ้น */
+    }
+
+    .boran-thailand-image {
+        bottom: -8cqh !important;
+        height: 45cqh !important;
+        top: auto !important;
+    }
+
+    /* 4. ลพบุรี */
+    .lopburi-fighters {
+        bottom: 33cqh !important;
+    }
+
+    .korat-poses {
+        bottom: 24cqh !important;
+    }
+
+    .lopburi-fighters-2 {
+        bottom: 27cqh !important;
+    }
+
+    /* 5. ไชยา */
+    .chaiya-fighters,
+    .chaiya-fighters-2,
+    .chaiya-fighters-3 {
+        bottom: 29cqh !important;
+    }
+
+    /* 6. ท่าเสา */
+    .tha-sao-fighters,
+    .tha-sao-fighters-2,
+    .tha-sao-fighters-3 {
+        bottom: 26cqh !important;
+    }
+
+    /* 7. ธนบุรี และ รัตนโกสินทร์ตอนต้น */
+    .thonburi-fighters,
+    .early-ratana-fighters {
+        bottom: 27cqh !important;
+    }
+
+    /* 8. รัตนโกสินทร์ตอนกลาง */
+    .mid-ratana-fighters {
+        bottom: 30cqh !important;
+    }
+
+    /* 9. ปัจจุบัน */
+    .present-fighter {
+        height: 22cqh !important;
+        /* สัดส่วนรูปภาพคนจริงจะต่างจากรูปวาด */
+    }
+
+    .present-fighters {
+        bottom: 50cqh !important;
+        /* ดันขึ้นสูงหนีขอบล่าง */
+    }
+
+    /* 10. นักมวยเดิน (Walking Fighter) */
+    #walking-fighter-img {
+        height: 30cqh !important;
+        bottom: 12cqh !important;
+    }
+
+    /* =========================================================================
+       ✅ อัปเกรด Text Box สำหรับ iPad: ตัวใหญ่ขึ้น และดันลงมาให้อ่านง่าย
+       ========================================================================= */
+    .text-box {
+        padding: 10px 16px !important;
+        transform: translateY(12cqh) !important;
+        /* 👈 พระเอก! ดันกรอบข้อความลงมา 12% ของความสูงจอ */
+    }
+
+    .text-box p {
+        font-size: 15px !important;
+        /* 👈 ขยายขนาดตัวอักษรให้อ่านง่ายสะใจ (จากเดิม 9px) */
+        line-height: 1.6 !important;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9) !important;
+        /* เพิ่มเงาดำให้ตัดกับฉากหลังชัดๆ */
+    }
+
+    /* ── กว้างพิเศษมาก 40 ── */
+    .text-box-22 {
+        width: 40cqw !important;
+    }
+
+    /* ── กว้างพิเศษ 34 ── */
+    .text-box-14,
+    .text-box-15,
+    .text-box-21 {
+        width: 34cqw !important;
+    }
+
+    .text-box-19 {
+        width: 34cqw !important;
+        left: 977cqw !important;
+    }
+
+    /* ── กว้างมาก 36 ── */
+    .text-box-4 {
+        width: 36cqw !important;
+        left: 208cqw !important;
+    }
+
+    /* ── กว้างมาตรฐาน 32 ── */
+    .text-box-1,
+    .text-box-7,
+    .text-box-8,
+    .text-box-9,
+    .text-box-16,
+    .text-box-17,
+    .text-box-18 {
+        width: 32cqw !important;
+    }
+
+    .text-box-20 {
+        width: 30cqw !important;
+        left: 1030cqw !important;
+    }
+
+    /* ── กว้างปานกลาง 28 ── */
+    .text-box-2,
+    .text-box-3,
+    .text-box-5 {
+        width: 32cqw !important;
+    }
+
+    /* ── ขนาดกะทัดรัด 24-25 ── */
+    .text-box-6,
+    .text-box-10,
+    .text-box-13 {
+        width: 25cqw !important;
+    }
+
+    /* ── ขนาดเล็ก 15-20 ── */
+    .text-box-11,
+    .text-box-12 {
+        width: 15cqw !important;
+    }
+
+    .text-box-11 {
+        left: 498cqw !important;
+    }
+
+    /* =========================================================================
+       ✅ ปรับขนาด Label (ป้ายชื่อภาค/ท่าทาง) ให้อ่านง่ายขึ้น อิงจากกลุ่มเดิม
+       ========================================================================= */
+    .fighter-label,
+    .pose-label,
+    .chaiya-label,
+    .tha-sao-label,
+    .tha-sao-group-label,
+    .tha-sao-group-label-2,
+    .tha-sao-group-label-3 {
+        font-size: 14px !important;
+        /* 👈 ขยายข้อความให้ใหญ่ขึ้น (จากเดิมที่เคยโดนบีบเหลือ 10px) */
+    }
+}
+
+/* =========================================================================
+    MAC & LAPTOP FIX (1101px - 1440px)
+   ========================================================================= */
+@media screen and (min-width: 1101px) and (max-width: 1440px) and (hover: hover) and (pointer: fine) {
+
+    .text-box {
+        padding: 12px 16px !important;
+        transform: translateY(-2cqw) !important;
+    }
+
+    .text-box p {
+        font-size: 15px !important;
+        line-height: 1.5 !important;
+    }
+
+    .fighter-label,
+    .pose-label,
+    .chaiya-label,
+    .tha-sao-label,
+    .tha-sao-group-label,
+    .tha-sao-group-label-2,
+    .tha-sao-group-label-3 {
+        font-size: 15px !important;
+    }
+
+    .boran-thailand-image {
+        top: 32cqw !important;
+        height: 33cqw !important;
+    }
+}
+
+/* =========================================================================
    SAKYANT ICON MASTERPIECE
    ========================================================================= */
 
