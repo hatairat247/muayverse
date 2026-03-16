@@ -2886,13 +2886,24 @@ body::before {
         earlyRatanaEmojiBounceLoop 1.2s ease-in-out 0.8s infinite;
 }
 
+
+/* 1. จุดหลัก (สำหรับ Mac ให้เหยียบเส้นพอดี) */
 #walking-fighter {
-    position: fixed;
-    bottom: 8%;
-    left: 20%;
-    transform: translateX(-50%);
-    z-index: 7;
-    pointer-events: none;
+    position: absolute !important;
+    bottom: 8% !important;
+    /* 👈 คืนค่าเป็น 8% เพื่อดึงคนกลับขึ้นมาบนเส้นถนนของจอ Mac */
+    left: 20% !important;
+    transform: translateX(-50%) !important;
+    z-index: 7 !important;
+    pointer-events: none !important;
+}
+
+/* 2. ตัวล้างค่าซ้อนทับ (สำหรับ iPad และมือถือ) */
+@media (hover: none) and (pointer: coarse) {
+    #walking-fighter {
+        bottom: 0 !important;
+        /* 👈 เซ็ตแม่ให้เป็น 0 เพื่อให้รูปลูกใช้ค่า 12cqh ของนายได้เป๊ะๆ ไม่เด้งซ้อน! */
+    }
 }
 
 #walking-fighter-img {
@@ -3825,4 +3836,17 @@ body::before {
 html,
 body {
     overscroll-behavior-y: none !important;
+}
+
+/* =========================================================================
+   🎯 ROTATION SNAP FIX: ปิด Transition กล่องหลัก ป้องกันภาพไหลตอนหมุนจอ
+   ========================================================================= */
+.pin-spacer,
+#canvas-center-wrapper,
+#desktop-canvas,
+.history-wrapper,
+.history-viewport,
+#timeline-track {
+    transition: none !important;
+    animation: none !important;
 }

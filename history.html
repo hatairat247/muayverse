@@ -22,8 +22,25 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/history.css">
 
-    <!-- FIX FOUC: เซ็ต html.paper-entering แบบ synchronous ก่อน render frame แรก -->
-    <script>if (sessionStorage.getItem('paperTransition') === 'true') { document.documentElement.classList.add('paper-entering'); }</script>
+    <style>
+        @media screen and (orientation: landscape) {
+            #landscape-overlay {
+                opacity: 0 !important;
+                pointer-events: none !important;
+                /* 👈 หัวใจสำคัญ: รอ 0.3 วิ ให้ GSAP จัดของเสร็จ แล้วค่อยๆ เฟดออกใน 0.4 วิ */
+                transition: opacity 0.4s ease 0.3s !important;
+            }
+        }
+
+        @media screen and (orientation: portrait) {
+            #landscape-overlay {
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                /* 👈 ตอนหมุนกลับมาแนวตั้ง ให้จอดำปิดปะทะทันที ห้ามมีดีเลย์ */
+                transition: none !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -36,8 +53,9 @@
     <!-- Force Landscape Overlay -->
     <div id="landscape-overlay">
         <div class="landscape-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#FDF0D5" stroke-width="1.5"
-                stroke-linecap="round" stroke-linejoin="round">
+            <svg style="width: 80px; height: 80px; max-width: 100%;" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24" fill="none" stroke="#FDF0D5" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round">
                 <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
                 <circle cx="12" cy="17" r="1" fill="#FDF0D5" stroke="none" />
                 <line x1="9" y1="5" x2="15" y2="5" />
@@ -96,12 +114,6 @@
 
     <div id="canvas-center-wrapper">
         <div id="desktop-canvas">
-
-            <div id="walking-fighter">
-                <img id="walking-fighter-img"
-                    src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253360/fighter-walk-old-1_yvrxhd.png"
-                    alt="Walking Fighter">
-            </div>
 
             <div class="next-page">
                 <a href="sakyant.html">
@@ -1098,6 +1110,11 @@
                         </section>
 
                     </div>
+                </div>
+                <div id="walking-fighter">
+                    <img id="walking-fighter-img"
+                        src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253360/fighter-walk-old-1_yvrxhd.png"
+                        alt="Walking Fighter">
                 </div>
             </div>
         </div>
