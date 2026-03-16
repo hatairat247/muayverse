@@ -3852,3 +3852,40 @@ body {
     transition: none !important;
     animation: none !important;
 }
+
+/* =========================================================================
+   MASTER LOADING OVERLAY
+   ========================================================================= */
+#loadingOverlay {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 999999 !important;
+    /* หน้าสุดของทุกอย่าง */
+    display: flex !important;
+    flex-direction: column !important;
+    /* จัดของเป็นแนวตั้ง */
+    align-items: center !important;
+    /* กึ่งกลางแนวนอน */
+    justify-content: center !important;
+    /* กึ่งกลางแนวตั้ง */
+    background-color: #272727 !important;
+    transition: opacity 0.8s ease-out !important;
+}
+
+/* ลายกระดาษบนหน้า Loading */
+#loadingOverlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('../img/paper-texture.png');
+    background-repeat: repeat;
+    background-size: 420px 420px;
+    opacity: 0.15;
+    z-index: -1;
+    pointer-events: none;
+}
+
+#loadingOverlay.hidden {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}

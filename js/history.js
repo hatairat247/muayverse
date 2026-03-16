@@ -1689,3 +1689,28 @@ function initRemainingKaraokeBoxes() {
         }
     }
 }
+
+window.addEventListener('load', function () {
+    const loader = document.getElementById('loadingOverlay');
+    const progressFill = document.getElementById('progressFill');
+
+    // 1. วิ่งแถบโหลดให้เต็ม 100%
+    if (progressFill) {
+        progressFill.style.width = '100%';
+    }
+
+    // 2. รอจังหวะให้ทุกอย่างนิ่ง แล้วค่อยเปิดม่าน
+    setTimeout(() => {
+        if (loader) {
+            loader.classList.add('hidden');
+
+            // 👉 ปลดล็อก Body ให้กลับมาเลื่อนหน้าจอได้
+            document.body.classList.remove('loading-active');
+
+            // 🚀 บังคับให้ GSAP คำนวณตำแหน่งใหม่หลังจากหน้าจอจัดเสร็จแล้ว
+            if (typeof ScrollTrigger !== 'undefined') {
+                ScrollTrigger.refresh();
+            }
+        }
+    }, 1200); // เพิ่มเวลาอีกนิดให้ยูสเซอร์เห็นแถบโหลดเต็มๆ แบบสวยๆ
+});
