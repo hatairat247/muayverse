@@ -1538,8 +1538,8 @@
 .swipe-hint-img {
     width: clamp(40px, 3.5vw, 55px) !important;
     height: auto !important;
-    opacity: 0.5 !important;
-    filter: brightness(0) invert(1) sepia(0.5) saturate(1.5) hue-rotate(340deg) brightness(1.05) !important;
+    opacity: 0.9 !important;
+    filter: brightness(0) invert(1) sepia(1) saturate(2) hue-rotate(340deg) brightness(1.15) !important;
 }
 
 @keyframes swipeHintFloat {
