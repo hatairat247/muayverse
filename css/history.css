@@ -3044,48 +3044,48 @@ body::before {
 
     .kick-poses {
         position: absolute !important;
-        bottom: -6cqh !important;
+        bottom: 6cqh !important;
         width: 30cqw !important;
         top: auto !important;
     }
 
     .regional-fighters {
         position: absolute !important;
-        bottom: 13cqh !important;
+        bottom: 20cqh !important;
         top: auto !important;
     }
 
     .khanom-tom-fighter,
     .early-ratana-pic-rama5 {
         height: 45cqh !important;
-        bottom: 25cqh !important;
+        bottom: 28cqh !important;
         top: auto !important;
     }
 
     .boran-thailand-image {
         position: absolute !important;
         height: 50cqh !important;
-        bottom: -55cqh !important;
+        bottom: -50cqh !important;
         top: auto !important;
     }
 
     .korat-poses {
         position: absolute !important;
-        bottom: 4cqh !important;
+        bottom: 12cqh !important;
         width: 30cqw !important;
         top: auto !important;
-        left: 290cqw !important;
+        left: 285cqw !important;
     }
 
     .lopburi-fighters {
         position: absolute !important;
-        bottom: 22cqh !important;
+        bottom: 27cqh !important;
         top: auto !important;
     }
 
     .lopburi-fighters-2 {
         position: absolute !important;
-        bottom: 10cqh !important;
+        bottom: 15cqh !important;
         top: auto !important;
     }
 
@@ -3093,14 +3093,14 @@ body::before {
     .chaiya-fighters-2,
     .chaiya-fighters-3 {
         position: absolute !important;
-        bottom: 13cqh !important;
+        bottom: 20cqh !important;
         top: auto !important;
     }
 
     .tha-sao-fighters,
     .tha-sao-fighters-2,
     .tha-sao-fighters-3 {
-        bottom: 6cqh !important;
+        bottom: 10cqh !important;
         position: absolute !important;
         top: auto !important;
     }
@@ -3108,13 +3108,13 @@ body::before {
     .thonburi-fighters,
     .early-ratana-fighters {
         position: absolute !important;
-        bottom: 10cqh !important;
+        bottom: 13cqh !important;
         top: auto !important;
     }
 
     .mid-ratana-fighters {
         position: absolute !important;
-        bottom: 17cqh !important;
+        bottom: 20cqh !important;
         top: auto !important;
     }
 
@@ -3128,7 +3128,7 @@ body::before {
     }
 
     .present-fighters {
-        bottom: 40cqh !important;
+        bottom: 45cqh !important;
         top: auto !important;
     }
 
@@ -3145,7 +3145,7 @@ body::before {
     .present-background {
         top: auto !important;
         bottom: 12cqh !important;
-        height: 60cqh !important;
+        height: 70cqh !important;
         width: 100cqw !important;
         z-index: 5 !important;
         /* หลังคนแต่หน้าภูเขา */
