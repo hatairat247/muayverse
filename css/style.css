@@ -344,14 +344,18 @@ a {
         right: 20px;
     }
 
-    .menu-content { gap: 14px; }
+    .menu-content {
+        gap: 14px;
+    }
 
     .menu-item {
         font-size: 20px;
         padding: 10px 0;
     }
 
-    .menu-divider { width: 100%; }
+    .menu-divider {
+        width: 100%;
+    }
 }
 
 /* iPad Mini: 768px - 1024px */
@@ -362,14 +366,18 @@ a {
         right: 20px;
     }
 
-    .menu-content { gap: 8px; }
+    .menu-content {
+        gap: 8px;
+    }
 
     .menu-item {
         font-size: 14px;
         padding: 5px 0;
     }
 
-    .menu-divider { width: 100%; }
+    .menu-divider {
+        width: 100%;
+    }
 }
 
 /* Large Mobiles: ≤ 932px */
@@ -380,14 +388,18 @@ a {
         right: 12px;
     }
 
-    .menu-content { gap: 5px; }
+    .menu-content {
+        gap: 5px;
+    }
 
     .menu-item {
         font-size: 12px;
         padding: 4px 0;
     }
 
-    .menu-divider { width: 100%; }
+    .menu-divider {
+        width: 100%;
+    }
 }
 
 /* Small Mobiles: ≤ 667px */
@@ -398,14 +410,18 @@ a {
         right: 10px;
     }
 
-    .menu-content { gap: 3px; }
+    .menu-content {
+        gap: 3px;
+    }
 
     .menu-item {
         font-size: 11px;
         padding: 3px 0;
     }
 
-    .menu-divider { width: 100%; }
+    .menu-divider {
+        width: 100%;
+    }
 }
 
 /* =========================================

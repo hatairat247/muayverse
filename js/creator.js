@@ -3,6 +3,11 @@
 document.addEventListener('DOMContentLoaded', function () {
     const cards = document.querySelectorAll('.creator-card');
 
+    // ตรวจว่าเป็น touch device จริงหรือไม่
+    function isTouchDevice() {
+        return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    }
+
     function toggleCard(card, e) {
         e.stopPropagation();
 
@@ -13,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
             c.classList.remove('active');
         });
 
-        // ถ้ายังไม่ active → เปิด / ถ้า active อยู่แล้ว → ปิด ✅
+        // ถ้ายังไม่ active → เปิด / ถ้า active อยู่แล้ว → ปิด
         if (!isAlreadyActive) {
             card.classList.add('active');
         }
@@ -23,27 +28,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Touch devices — ใช้ touchend + preventDefault เพื่อป้องกัน :hover ค้าง
         card.addEventListener('touchend', function (e) {
-            e.preventDefault(); // ป้องกัน sticky hover และ synthetic click
+            e.preventDefault();
             toggleCard(this, e);
         });
 
-        // Mouse devices — ใช้ click ปกติ
+        // Mouse devices — ปิด click ไม่ให้ toggle (ใช้แค่ hover)
         card.addEventListener('click', function (e) {
-            if (!('ontouchstart' in window)) {
-                toggleCard(this, e);
-            }
+            if (isTouchDevice()) return; // touch device ใช้ touchend แทน
+            e.stopPropagation(); // กัน bubble แต่ไม่ toggle
         });
     });
 
-    // แตะนอก card → ปิดทุก card
+    // แตะนอก card → ปิดทุก card (touch เท่านั้น)
     document.addEventListener('touchend', function () {
         cards.forEach(function (c) { c.classList.remove('active'); });
-    });
-
-    // คลิกนอก card → ปิดทุก card
-    document.addEventListener('click', function () {
-        if (!('ontouchstart' in window)) {
-            cards.forEach(function (c) { c.classList.remove('active'); });
-        }
     });
 });

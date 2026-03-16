@@ -73,9 +73,9 @@ body {
     position: relative;
 }
 
-/* ─── กัน card-info ไม่ให้ล้นออกนอก card ─── */
+/* ─── กัน card-info ไม่ให้ล้นออกนอก card (ยกเว้น glow) ─── */
 .creator-card .card-info {
-    overflow: hidden;
+    overflow: visible !important;
 }
 
 /* ─── Card Image ─── */
@@ -125,7 +125,9 @@ body {
     transform: translateX(0px);
     opacity: 1;
     transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s ease;
+    overflow: visible !important;
     z-index: 5;
+    position: relative;
 }
 
 .card-icon img {
@@ -169,8 +171,9 @@ body {
 @keyframes slideUpCenter {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -298,7 +301,12 @@ body {
 }
 
 .creator-card.active .card-icon {
-    display: none;
+    transform: translateX(180px) scale(1.15);
+    /* เลื่อนไปขวาเหมือน Desktop */
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s ease;
 }
 
 .creator-card.active .card-name {
@@ -318,6 +326,7 @@ body {
     height: 40px;
     opacity: 1;
     animation: none;
+    animation: slideUpCenter 0.5s ease 0.3s forwards;
 }
 
 .creator-card.active .card-info::before {
@@ -381,8 +390,8 @@ body {
 
 
 /* ════════════════════════════════════════
-   iPad Pro (1200–1366px)
-════════════════════════════════════════ */
+    iPad Pro (1200–1366px) - FULL RESPONSIVE
+   ════════════════════════════════════════ */
 @media (min-width: 1200px) and (max-width: 1366px) {
 
     .creator-title {
@@ -398,7 +407,6 @@ body {
     .creator-cards {
         gap: clamp(16px, 2vw, 28px);
         padding: 16px 0;
-        overflow: hidden;
         justify-content: center;
     }
 
@@ -406,6 +414,7 @@ body {
         gap: 16px;
     }
 
+    /* ขนาด Card ปกติ */
     .card-image {
         width: clamp(220px, 22vw, 290px);
         height: clamp(381px, 38vw, 502px);
@@ -416,105 +425,129 @@ body {
         width: clamp(220px, 22vw, 290px);
         height: 48px;
         min-height: 48px;
+        position: relative;
+        overflow: visible;
     }
 
     .card-icon {
         width: 60px;
         height: 60px;
-        flex-shrink: 0;
-    }
-
-    .card-icon img {
-        width: 60px;
-        height: 60px;
-    }
-
-    .card-name {
-        height: 44px;
-        flex: 1 1 0;
-        min-width: 0;
-        overflow: hidden;
-        box-sizing: border-box;
+        transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s ease;
     }
 
     .card-name span {
         font-size: 13px;
-        white-space: nowrap;
-        overflow: visible;
-        text-overflow: unset;
-        display: block;
-        max-width: 100%;
     }
 
-    @media (hover: hover) {
+    /* ─── HOVER & ACTIVE STATE (นวมต่อยไปขวา + อีเมลสไลด์ขึ้น) ─── */
 
-        .creator-card:hover .card-image {
-            width: clamp(272px, 27vw, 358px);
-            height: clamp(381px, 38vw, 502px);
-        }
-
-        .creator-card:hover .card-info {
-            width: clamp(272px, 27vw, 358px);
-        }
-
-        .creator-card:hover .card-info::before,
-        .creator-card:hover .card-info::after {
-            height: 44px;
-        }
-
-        .creator-card:hover .card-info::before {
-            font-size: 14px;
-            padding: 0 12px;
-        }
-
-        .creator-card:hover .card-info::after {
-            font-size: 15px;
-            padding: 0 14px;
-        }
-
-        .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
-            font-size: 11px;
-            padding: 0 10px;
-        }
-
-        .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
-            font-size: 12px;
-            padding: 0 12px;
-        }
-    }
-
+    /* ขยายการ์ด */
+    .creator-card:hover .card-image,
     .creator-card.active .card-image {
         width: clamp(272px, 27vw, 358px);
-        height: clamp(381px, 38vw, 502px);
     }
 
+    .creator-card:hover .card-info,
     .creator-card.active .card-info {
         width: clamp(272px, 27vw, 358px);
     }
 
+    /* นวมเลื่อนไปทางขวาแล้วจางหาย */
+    .creator-card:hover .card-icon,
+    .creator-card.active .card-icon {
+        transform: translateX(180px) scale(1.15);
+        opacity: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+
+    /* ซ่อนชื่อเดิม */
+    .creator-card:hover .card-name,
+    .creator-card.active .card-name {
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+    }
+
+    /* ตั้งค่าให้สไลด์ข้อมูลขึ้นมา (Animation Slide Up) */
+    .creator-card:hover .card-info::before,
+    .creator-card:hover .card-info::after,
     .creator-card.active .card-info::before,
     .creator-card.active .card-info::after {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 100px;
+        font-family: 'Poppins', sans-serif;
         height: 44px;
+        opacity: 0;
+        animation: slideUpCenter 0.5s ease 0.3s forwards;
+        /* สไลด์ขึ้น */
     }
 
-    .creator-card.active .card-info::before {
-        font-size: 14px;
-        padding: 0 12px;
+    /* --- ข้อมูล Content สำหรับแต่ละ Badge --- */
+    .creator-card[data-badge="MO"]:hover .card-info::before,
+    .creator-card[data-badge="MO"].active .card-info::before {
+        content: "namo.sangd@gmail.com";
     }
 
-    .creator-card.active .card-info::after {
-        font-size: 15px;
-        padding: 0 14px;
+    .creator-card[data-badge="MO"]:hover .card-info::after,
+    .creator-card[data-badge="MO"].active .card-info::after {
+        content: "MO";
     }
 
+    .creator-card[data-badge="TAR"]:hover .card-info::before,
+    .creator-card[data-badge="TAR"].active .card-info::before {
+        content: "hatairat.chuen@gmail.com";
+    }
+
+    .creator-card[data-badge="TAR"]:hover .card-info::after,
+    .creator-card[data-badge="TAR"].active .card-info::after {
+        content: "TAR";
+    }
+
+    .creator-card[data-badge="ZEE"]:hover .card-info::before,
+    .creator-card[data-badge="ZEE"].active .card-info::before {
+        content: "pirapatchoochaiya@gmail.com";
+    }
+
+    .creator-card[data-badge="ZEE"]:hover .card-info::after,
+    .creator-card[data-badge="ZEE"].active .card-info::after {
+        content: "ZEE";
+    }
+
+    .creator-card[data-badge="ADVISOR"]:hover .card-info::before,
     .creator-card[data-badge="ADVISOR"].active .card-info::before {
+        content: "Lecturer, Department of Computer and Information Technology, KMUTT";
         font-size: 11px;
         padding: 0 10px;
+        line-height: 1.3;
     }
 
+    .creator-card[data-badge="ADVISOR"]:hover .card-info::after,
     .creator-card[data-badge="ADVISOR"].active .card-info::after {
+        content: "ADVISOR";
         font-size: 12px;
-        padding: 0 12px;
+    }
+
+    /* สไตล์ของกล่องข้อมูล */
+    .creator-card:hover .card-info::before,
+    .creator-card.active .card-info::before {
+        background-color: var(--card-bg);
+        color: var(--card-text);
+        flex: 1;
+        font-size: 14px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .creator-card:hover .card-info::after,
+    .creator-card.active .card-info::after {
+        background-color: var(--card-icon-bg);
+        color: var(--card-icon-color);
+        font-size: 15px;
+        font-weight: 600;
+        padding: 0 14px;
+        flex-shrink: 0;
     }
 }
 
@@ -568,6 +601,14 @@ body {
         min-width: 0;
         overflow: hidden;
         box-sizing: border-box;
+    }
+
+    .creator-card.active .card-info::before,
+    .creator-card.active .card-info::after {
+        display: flex;
+        height: 38px;
+        opacity: 0;
+        animation: slideUpCenter 0.5s ease 0.2s forwards;
     }
 
     .card-name span {
@@ -765,6 +806,16 @@ body {
         }
     }
 
+    .creator-card.active .card-info::before,
+    .creator-card.active .card-info::after {
+        display: flex;
+        height: 38px;
+        opacity: 0;
+        /* เริ่มที่ 0 เพื่อให้มองเห็นการสไลด์ */
+        animation: slideUpCenter 0.5s ease 0.2s forwards;
+        /* ใช้ Animation เดียวกับ Desktop */
+    }
+
     .creator-card.active .card-image {
         width: clamp(206px, 26vw, 267px);
         height: clamp(286px, 36vw, 372px);
@@ -802,9 +853,9 @@ body {
 
 
 /* ════════════════════════════════════════
-   Tablet (600–767px)
+   Tablet (668–767px)
 ════════════════════════════════════════ */
-@media (max-width: 767px) and (min-width: 600px) {
+@media (max-width: 767px) and (min-width: 669px) {
 
     .creator-title {
         font-size: clamp(48px, 7vw, 80px);
@@ -970,6 +1021,11 @@ body {
         flex: 1.5 1 0;
     }
 
+    .creator-card.active .card-icon {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+
     .card-image {
         width: 100%;
         aspect-ratio: 9 / 16;
@@ -990,6 +1046,8 @@ body {
         height: clamp(14px, 4.5vw, 22px);
         margin-right: 0;
         flex-shrink: 0;
+        margin-top: -2px;
+        overflow: visible !important;
     }
 
     .card-info {
@@ -997,6 +1055,9 @@ body {
         height: 28px;
         min-height: 28px;
         gap: 2px;
+        overflow: visible !important;
+        display: flex;
+        align-items: center;
     }
 
     .creator-card.active .card-info {
@@ -1017,6 +1078,14 @@ body {
         text-overflow: ellipsis;
         max-width: 100%;
         display: block;
+    }
+
+    .creator-card.active .card-info::before,
+    .creator-card.active .card-info::after {
+        display: flex;
+        opacity: 0;
+        height: 28px;
+        animation: slideUpCenter 0.5s ease 0.2s forwards;
     }
 
     .creator-card.active .card-info::before,
@@ -1045,264 +1114,6 @@ body {
     }
 }
 
-
-/* ════════════════════════════════════════
-   iPhone SE (≤ 375px)
-════════════════════════════════════════ */
-@media (max-width: 375px) {
-
-    .creator-title {
-        font-size: 28px;
-        padding: 6px 0;
-        letter-spacing: 0.5px;
-    }
-
-    .creator-container {
-        padding: 6px 4px;
-        gap: 6px;
-        overflow: hidden;
-    }
-
-    .creator-cards {
-        gap: 4px;
-        padding: 4px 2px;
-        overflow: hidden;
-        flex-wrap: nowrap;
-    }
-
-    .creator-card {
-        flex: 1 1 0;
-        min-width: 0;
-        gap: 4px;
-        align-items: center;
-        transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1), gap 0.3s ease;
-    }
-
-    .creator-card.active {
-        flex: 1.5 1 0;
-    }
-
-    .card-image {
-        width: 100%;
-        aspect-ratio: 9 / 16;
-        height: auto;
-        border-radius: 6px;
-        transition: border-radius 0.4s ease, box-shadow 0.4s ease;
-    }
-
-    .creator-card.active .card-image {
-        width: 100%;
-        height: auto;
-        border-radius: 10px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    }
-
-    .card-icon {
-        width: 16px;
-        height: 16px;
-        margin-right: 0;
-        flex-shrink: 0;
-    }
-
-    .card-icon img {
-        width: 16px;
-        height: 16px;
-    }
-
-    .card-info {
-        width: 100%;
-        height: 24px;
-        min-height: 24px;
-        gap: 2px;
-    }
-
-    .creator-card.active .card-info {
-        width: 100%;
-    }
-
-    .card-name {
-        height: 24px;
-        width: 100%;
-        padding: 0 2px;
-        min-width: 0;
-        overflow: hidden;
-        box-sizing: border-box;
-    }
-
-    .card-name span {
-        font-size: 8px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: clip;
-        letter-spacing: -0.5px;
-        display: block;
-        width: 100%;
-    }
-
-    .creator-card.active .card-info::before,
-    .creator-card.active .card-info::after {
-        height: 24px;
-    }
-
-    .creator-card.active .card-info::before {
-        font-size: 7px;
-        padding: 0 3px;
-    }
-
-    .creator-card.active .card-info::after {
-        font-size: 7px;
-        padding: 0 4px;
-    }
-
-    .creator-card[data-badge="ADVISOR"].active .card-info::before {
-        font-size: 6px;
-        padding: 0 2px;
-    }
-
-    .creator-card[data-badge="ADVISOR"].active .card-info::after {
-        font-size: 6px;
-        padding: 0 3px;
-    }
-}
-
-
-/* ════════════════════════════════════════
-   Mobile landscape (≤ 667px)
-════════════════════════════════════════ */
-@media (max-width: 667px) {
-
-    .creator-title {
-        font-size: clamp(32px, 6vw, 48px);
-        padding: 4px 0;
-        letter-spacing: 1px;
-    }
-
-    .creator-container {
-        padding: 4px 8px;
-        gap: 4px;
-        overflow: hidden;
-    }
-
-    .creator-cards {
-        gap: 12px;
-        padding: 4px 2px;
-        overflow: hidden;
-        justify-content: center;
-    }
-
-    .creator-card {
-        flex: 0 0 130px;
-        gap: 3px;
-        align-items: center;
-    }
-
-    .card-image {
-        width: 130px;
-        height: 231px;
-        border-radius: 6px;
-        overflow: hidden;
-        position: relative;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        flex-shrink: 0;
-    }
-
-    .creator-card.active .card-image {
-        width: 160px;
-        height: 231px;
-        border-radius: 10px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    }
-
-    .card-icon {
-        width: clamp(22px, 4vw, 32px);
-        height: clamp(22px, 4vw, 32px);
-        margin-right: 0;
-        flex-shrink: 0;
-    }
-
-    .card-info {
-        width: 130px;
-        height: 24px;
-        min-height: 24px;
-        gap: 2px;
-        box-sizing: border-box;
-        overflow: visible;
-        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .creator-card.active .card-info {
-        width: 170px;
-        height: auto;
-        min-height: 24px;
-    }
-
-    .card-name {
-        height: 24px;
-        width: 100%;
-        padding: 0 4px;
-        min-width: 0;
-        box-sizing: border-box;
-    }
-
-    .card-name span {
-        font-size: clamp(6px, 1.2vw, 9px);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 100%;
-        display: block;
-    }
-
-    .creator-card.active .card-info::before,
-    .creator-card.active .card-info::after {
-        height: auto;
-        min-height: 24px;
-        max-height: 48px;
-        opacity: 1;
-        animation: none;
-    }
-
-    .creator-card.active .card-info::before {
-        font-size: clamp(6px, 1.1vw, 8px);
-        padding: 2px 4px;
-        line-height: 1.2;
-        white-space: normal;
-        word-break: break-word;
-        display: flex;
-        align-items: center;
-    }
-
-    .creator-card.active .card-info::after {
-        font-size: clamp(6px, 1.1vw, 8px);
-        padding: 2px 4px;
-        white-space: nowrap;
-        display: flex;
-        align-items: center;
-    }
-
-    .creator-card[data-badge="ADVISOR"].active .card-info {
-        height: auto;
-        align-items: flex-start;
-    }
-
-    .creator-card[data-badge="ADVISOR"].active .card-info::before {
-        font-size: clamp(5px, 0.9vw, 7px);
-        padding: 2px 3px;
-        line-height: 1.3;
-        white-space: normal;
-        word-break: break-word;
-        flex: 1;
-    }
-
-    .creator-card[data-badge="ADVISOR"].active .card-info::after {
-        font-size: clamp(5px, 0.9vw, 7px);
-        padding: 2px 3px;
-        white-space: nowrap;
-        align-self: flex-start;
-        flex-shrink: 0;
-    }
-}
 
 
 /* ════════════════════════════════════════
@@ -1340,9 +1151,14 @@ body {
         align-items: center;
     }
 
+    .creator-card.active .card-icon {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+
     .card-image {
         width: 175px;
-        height: 250px;
+        height: 230px;
         border-radius: 8px;
         overflow: hidden;
         position: relative;
@@ -1353,7 +1169,7 @@ body {
 
     .creator-card.active .card-image {
         width: 218px;
-        height: 250px;
+        height: 230px;
         border-radius: 8px;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     }
@@ -1402,10 +1218,12 @@ body {
 
     .creator-card.active .card-info::before,
     .creator-card.active .card-info::after {
-        height: 36px;
-        opacity: 1;
-        animation: none;
+        display: flex;
+        height: 38px;
+        opacity: 0;
+        animation: slideUpCenter 0.5s ease 0.2s forwards;
     }
+
 
     .creator-card.active .card-info::before {
         font-size: 10px;
@@ -1444,6 +1262,208 @@ body {
     }
 }
 
+/* ════════════════════════════════════════
+   iPhone SE / 6 / 7 / 8 landscape (600–667px)
+════════════════════════════════════════ */
+@media (max-width: 668px) {
+
+    .creator-page {
+        padding-top: 100px;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .creator-title {
+        font-size: clamp(30px, 5vw, 42px);
+        padding: 4px 0;
+        letter-spacing: 1px;
+    }
+
+    .creator-container {
+        padding: 4px 20px;
+        gap: 4px;
+        overflow: hidden;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .creator-cards {
+        gap: 5px;
+        padding: 2px 0;
+        overflow: hidden;
+        width: 100%;
+        box-sizing: border-box;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .creator-card.active .card-icon {
+        transform: translateX(90px);
+        opacity: 0;
+    }
+
+    .creator-card {
+        flex: 1 1 0;
+        min-width: 0;
+        gap: 4px;
+        align-items: center;
+        transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .creator-card.active {
+        flex: 1.19 1 0;
+    }
+
+    .card-image {
+        width: 100%;
+        height: 170px;
+        border-radius: 8px;
+        overflow: hidden;
+        position: relative;
+        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+            border-radius 0.4s ease,
+            box-shadow 0.4s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        flex-shrink: 0;
+    }
+
+    .creator-card.active .card-image {
+        width: 100%;
+        height: 170px;
+        border-radius: 10px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-icon {
+        width: clamp(18px, 3vw, 24px);
+        height: clamp(18px, 3vw, 24px);
+        margin-right: 0;
+        flex-shrink: 0;
+        margin-top: -2px;
+        overflow: visible !important;
+    }
+
+    .card-info {
+        width: 100%;
+        height: 28px;
+        min-height: 28px;
+        gap: 3px;
+        box-sizing: border-box;
+        margin-top: 2px;
+        overflow: visible !important;
+        display: flex;
+        align-items: center;
+    }
+
+    .creator-card.active .card-info {
+        width: 100%;
+        height: 28px;
+        min-height: 28px;
+        overflow: visible;
+    }
+
+    .card-name {
+        height: 28px;
+        width: 100%;
+        padding: 4px 4px;
+        min-width: 0;
+        box-sizing: border-box;
+        overflow: visible;
+    }
+
+    .card-name span {
+        font-size: clamp(7px, 1.7vw, 10px);
+        white-space: nowrap;
+        overflow: visible;
+        text-overflow: unset;
+        display: block;
+        width: 100%;
+        line-height: 1.3;
+        text-align: center;
+    }
+
+    .creator-card.active .card-info::before,
+    .creator-card.active .card-info::after {
+        height: 28px;
+        min-height: 28px;
+        opacity: 0;
+        animation: slideUpCenter 0.35s ease 0.1s forwards;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .creator-card.active .card-info::before {
+        font-size: clamp(6px, 1.4vw, 8px);
+        padding: 0 8px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+    .creator-card.active .card-info::after {
+        font-size: clamp(6px, 1.4vw, 8px);
+        padding: 0 8px;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .creator-card[data-badge="ADVISOR"].active .card-info::before {
+        font-size: clamp(5px, 1.3vw, 7px);
+        white-space: normal;
+        word-break: break-word;
+        line-height: 1.3;
+        padding: 0px 8px;
+        height: auto;
+        min-height: 28px;
+        align-items: center;
+        text-align: center;
+        overflow: visible;
+        text-overflow: unset;
+    }
+
+    .creator-card[data-badge="ADVISOR"].active .card-info::after {
+        font-size: clamp(5px, 1.1vw, 6.5px);
+        padding: 0 8px;
+        height: 28px;
+    }
+
+    @media (hover: hover) {
+
+        .creator-card:hover .card-info::before,
+        .creator-card:hover .card-info::after {
+            height: 28px;
+        }
+
+        .creator-card:hover .card-info::before {
+            font-size: clamp(7px, 1.8vw, 10px);
+            padding: 0 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 1 1 0;
+            min-width: 0;
+        }
+
+        .creator-card:hover .card-info::after {
+            font-size: clamp(7px, 1.8vw, 10px);
+            padding: 0 10px;
+        }
+
+        .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+            font-size: clamp(6px, 1.5vw, 9px);
+        }
+
+        .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+            font-size: clamp(6px, 1.5vw, 9px);
+            padding: 0 8px;
+        }
+    }
+}
 
 /* ════════════════════════════════════════
    iPhone 14 Pro Max landscape (897–932px)
@@ -1479,6 +1499,11 @@ body {
         flex: 0 0 auto;
         gap: 6px;
         align-items: center;
+    }
+
+    .creator-card.active .card-icon {
+        transform: translateX(120px);
+        opacity: 0;
     }
 
     .card-image {
@@ -1583,10 +1608,14 @@ body {
 
     .creator-card.active .card-info::before,
     .creator-card.active .card-info::after {
+        display: flex;
         height: 38px;
-        opacity: 1;
-        animation: none;
+        opacity: 0;
+        /* เริ่มที่ 0 เพื่อให้มองเห็นการสไลด์ */
+        animation: slideUpCenter 0.5s ease 0.2s forwards;
+        /* ใช้ Animation เดียวกับ Desktop */
     }
+
 
     .creator-card.active .card-info::before {
         font-size: 11px;
@@ -1627,69 +1656,127 @@ body {
 
 
 /* ════════════════════════════════════════
-   GLOVE SHAKE + GLOW — loop ตลอดเวลา
+   GLOVE SHAKE + PULSE GLOW
 ════════════════════════════════════════ */
-@keyframes gloveShakeGlow {
+
+/* ─── Glove Shake — ส่ายไอคอน ─── */
+@keyframes gloveShake {
     0% {
         transform: translate(0, 0) rotate(0deg);
-        filter: drop-shadow(0 0 4px rgba(253, 240, 213, 0.3));
     }
 
     10% {
         transform: translate(-2px, -1px) rotate(-3deg);
-        filter: drop-shadow(0 0 7px rgba(253, 240, 213, 0.6)) drop-shadow(0 0 12px rgba(253, 240, 213, 0.3));
     }
 
     20% {
         transform: translate(2px, 1px) rotate(3deg);
-        filter: drop-shadow(0 0 9px rgba(253, 240, 213, 0.75)) drop-shadow(0 0 16px rgba(253, 240, 213, 0.4));
     }
 
     30% {
         transform: translate(-2px, 1px) rotate(-2deg);
-        filter: drop-shadow(0 0 9px rgba(253, 240, 213, 0.75)) drop-shadow(0 0 16px rgba(253, 240, 213, 0.4));
     }
 
     40% {
         transform: translate(2px, -1px) rotate(2deg);
-        filter: drop-shadow(0 0 7px rgba(253, 240, 213, 0.6)) drop-shadow(0 0 12px rgba(253, 240, 213, 0.3));
     }
 
     50% {
         transform: translate(-1px, 2px) rotate(-3deg);
-        filter: drop-shadow(0 0 6px rgba(253, 240, 213, 0.5)) drop-shadow(0 0 10px rgba(253, 240, 213, 0.25));
     }
 
     60% {
         transform: translate(1px, -2px) rotate(3deg);
-        filter: drop-shadow(0 0 7px rgba(253, 240, 213, 0.6)) drop-shadow(0 0 12px rgba(253, 240, 213, 0.3));
     }
 
     70% {
         transform: translate(-1px, -1px) rotate(-1deg);
-        filter: drop-shadow(0 0 9px rgba(253, 240, 213, 0.75)) drop-shadow(0 0 16px rgba(253, 240, 213, 0.4));
     }
 
     80% {
         transform: translate(1px, 1px) rotate(1deg);
-        filter: drop-shadow(0 0 7px rgba(253, 240, 213, 0.6)) drop-shadow(0 0 12px rgba(253, 240, 213, 0.3));
     }
 
     90% {
         transform: translate(0, -1px) rotate(0deg);
-        filter: drop-shadow(0 0 5px rgba(253, 240, 213, 0.45)) drop-shadow(0 0 10px rgba(253, 240, 213, 0.2));
     }
 
     100% {
         transform: translate(0, 0) rotate(0deg);
-        filter: drop-shadow(0 0 4px rgba(253, 240, 213, 0.3));
     }
 }
 
+/* ─── Pulse Glow — แสงแดงฟุ้งรอบไอคอน ─── */
+@keyframes pulseGlow {
+    0% {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translate(-50%, -50%);
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+}
+
+/* ─── ใช้ animation ─── */
+.card-icon {
+    position: relative;
+    overflow: visible;
+}
+
+/* แสง glow ฟุ้งรอบไอคอน — ชั้นหลัก */
+.card-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 55%;
+    height: 55%;
+    border-radius: 0;
+    background: rgba(216, 33, 33, 1);
+    filter: blur(16px);
+    animation: pulseGlow 2s ease-in-out infinite;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* แสง glow ชั้นซ้อน — เพิ่มความเข้ม */
+.card-icon::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40%;
+    height: 40%;
+    border-radius: 0;
+    background: rgba(255, 60, 60, 1);
+    filter: blur(10px);
+    transform: translate(-50%, -50%);
+    opacity: 0.9;
+    z-index: -1;
+    pointer-events: none;
+}
+
 .card-icon img {
-    animation: gloveShakeGlow 1.4s ease-in-out infinite;
-    animation-delay: 0s;
+    animation: gloveShake 1.4s ease-in-out infinite;
     transform-origin: center center;
+    position: relative;
+    z-index: 1;
+}
+
+/* ─── หยุดทั้งคู่ตอน hover / active ─── */
+.creator-card:hover .card-icon::after,
+.creator-card:hover .card-icon::before,
+.creator-card.active .card-icon::after,
+.creator-card.active .card-icon::before {
+    animation: none;
+    opacity: 0;
 }
 
 .creator-card:hover .card-icon img,
