@@ -950,6 +950,18 @@ body {
         }
     }
 
+    .card-icon::after {
+        width: 45%;
+        height: 45%;
+        filter: blur(10px);
+    }
+
+    .card-icon::before {
+        width: 30%;
+        height: 30%;
+        filter: blur(6px);
+    }
+
     .creator-card.active .card-image {
         width: clamp(200px, 28vw, 310px);
         height: clamp(225px, 38vw, 400px);
