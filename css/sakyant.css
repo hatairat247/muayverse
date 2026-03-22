@@ -262,35 +262,35 @@
 @media (max-width: 932px) and (min-width: 681px) {
     .paper-img                { margin-top: 10px !important; margin-left: 20px !important; }
     .yant-text-content.active { margin-top: -20px !important; }
-    .gaoyord-title            { font-size: 2.5rem !important; }
+    .gaoyord-title            { font-size: 2rem !important; }
     p.gaoyord-desc            { margin-top: -20px !important; font-size: 0.84rem !important; }
     .swipe-hint               { bottom: -50px !important; }
-}
-
-/* FIX: 844px landscape */
-@media (max-width: 844px) and (min-width: 800px) and (orientation: landscape) {
-    .paper-img                { margin-top: -10px !important; margin-left: 20px !important; }
-    .yant-text-content.active { margin-top: -20px !important; }
-    .gaoyord-title            { font-size: 2rem !important; }
-    p.gaoyord-desc            { margin-top: -20px !important; font-size: 0.7rem !important; }
-    .swipe-hint               { bottom: 10px !important; left: 160px !important; }
 }
 
 /* FIX: 896px landscape — iPhone XR / 11 */
 @media (max-width: 896px) and (min-width: 870px) and (orientation: landscape) {
     .paper-img                { margin-top: 10px !important; margin-left: 30px !important; }
     .yant-text-content.active { margin-top: -20px !important; }
-    .gaoyord-title            { font-size: 2.1rem !important; margin-top: 20px !important; }
+    .gaoyord-title            { font-size: 1.6rem !important; margin-top: 20px !important; }
     .gaoyord-desc             { font-size: 0.7rem !important; margin-top: -10px !important; }
     p.gaoyord-desc            { margin-top: -20px !important; }
     .swipe-hint               { bottom: -20px !important; left: 150px !important; }
+}
+
+/* FIX: 844px landscape */
+@media (max-width: 844px) and (min-width: 800px) and (orientation: landscape) {
+    .paper-img                { margin-top: -10px !important; margin-left: 20px !important; }
+    .yant-text-content.active { margin-top: -20px !important; }
+    .gaoyord-title            { font-size: 1.5rem !important; }
+    p.gaoyord-desc            { margin-top: -20px !important; font-size: 0.7rem !important; }
+    .swipe-hint               { bottom: 10px !important; left: 160px !important; }
 }
 
 /* FIX: 667px landscape — iPhone SE / 8 */
 @media (max-width: 680px) and (min-width: 600px) and (orientation: landscape) {
     .gaoyord-papers  { width: clamp(130px, 25vw, 185px) !important; }
     .paper-img       { margin-top: -10px !important; }
-    .gaoyord-title   { font-size: 2rem !important; margin-top: -20px !important; }
+    .gaoyord-title   { font-size: 1.5rem !important; margin-top: -20px !important; }
     .gaoyord-desc    { font-size: 0.7rem !important; margin-top: -10px !important; }
     .gaoyord-section { margin-top: 0 !important; min-height: auto !important; align-items: center !important; justify-content: center !important; }
     .gaoyord-content { justify-content: center !important; align-items: center !important; padding-bottom: 16px !important; margin-top: 0 !important; }
