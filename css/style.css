@@ -1,101 +1,8 @@
-html,
-body {
-    width: 100%;
-    max-width: 100vw;
-    overflow-x: clip !important;
-    /* เก็บตัวนี้ไว้คุมขอบจอรวม */
-    position: relative;
-}
-
-.page-content,
-main {
-    width: 100%;
-    max-width: 100vw;
-}
-
-/* =========================================
-   🎯 FIX: Navbar Dynamic Size & FOUC Layout Shift (รวบตึงแก้ Responsive)
-   ========================================= */
-
-/* ตั้งค่าตัวแปรความสูง Navbar ตามขนาดจอ */
+/* ===== 1. CSS Variables ===== */
 :root {
+    /* Navbar Height Base */
     --navbar-height: 80px;
-    /* ขนาดจอคอม */
-}
 
-@media screen and (max-width: 1024px) {
-    :root {
-        --navbar-height: 65px;
-    }
-
-    /* จอ iPad */
-}
-
-@media screen and (max-width: 896px) {
-    :root {
-        --navbar-height: 55px;
-    }
-
-    /* จอมือถือแนวนอน / แท็บเล็ตเล็ก */
-}
-
-@media screen and (max-width: 480px) {
-    :root {
-        --navbar-height: 45px;
-    }
-
-    /* จอมือถือแนวตั้ง */
-}
-
-/* บังคับ Navbar ให้ใช้ความสูงจากตัวแปรด้านบน */
-#navbar,
-.navbar {
-    background-color: #003049 !important;
-    min-height: var(--navbar-height) !important;
-    height: var(--navbar-height) !important;
-    display: flex !important;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    position: fixed !important;
-    top: 0;
-    left: 0;
-    z-index: 999 !important;
-    transition: height 0.3s ease, min-height 0.3s ease;
-    /* ทำให้สมูทตอนหมุนจอ */
-}
-
-/* จัดการโลโก้ให้ยืดหยุ่น หดตามความสูง Navbar อัตโนมัติ */
-.navbar-logo {
-    display: flex;
-    align-items: center;
-    height: 100%;
-}
-
-.logo-nav {
-    height: calc(var(--navbar-height) - 20px) !important;
-    /* ให้โลโก้เล็กกว่าแถบ Navbar เล็กน้อยเสมอ */
-    width: auto !important;
-    object-fit: contain;
-    cursor: pointer;
-    transition: height 0.3s ease;
-}
-
-/* จัดการฝั่งปุ่มกด */
-.navbar-controls {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    gap: 20px;
-}
-
-.btn-icon {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: contain;
-}
-
-:root {
     /* Colors from Figma */
     --color-primary: #003049;
     --color-secondary: #780000;
@@ -121,7 +28,6 @@ main {
     --font-weight-semibold: 600;
 
     /* Layout */
-    --navbar-height: 96px;
     --border-radius: 6px;
     --hamburger-width: 240px;
     --hamburger-top: 71px;
@@ -130,66 +36,34 @@ main {
     --transition-speed: 0.3s;
 }
 
-/* ป้องกันหน้า Warning/Loading และรูปกระดิ่ง เด้งขึ้นมาแวบแรกตอนรีเฟรช (FOUC) */
-.warning-overlay:not(.active),
-.loading-overlay:not(.active) {
-    display: none !important;
-}
-
-/* =========================================
-   FIX: Navbar Critical Layout (ป้องกัน FOUC ขณะรอ navbar.js inject styles)
-   z-index ต่ำพอที่จะไม่บัง warning-overlay / hamburger-menu / paper-transition
-   ========================================= */
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 80px;
-    background-color: var(--color-primary);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 var(--spacing-2xl);
-    z-index: 100;
-    /* navbar.js จะ override เป็น 999 ทีหลัง — ปลอดภัย */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* =========================================
-   FIX: ป้องกันไอคอนและโลโก้ใน Navbar เด้งขนาดใหญ่ตอนรีเฟรช (FOUC)
-   ========================================= */
-.btn-icon {
-    width: 100% !important;
-    /* 👈 เปลี่ยนให้กว้างพอดีกล่องแม่ */
-    height: 100% !important;
-    /* 👈 เปลี่ยนให้สูงพอดีกล่องแม่ */
-    object-fit: contain;
-}
-
-.logo-nav {
-    height: 100px !important;
-    width: auto !important;
-    cursor: pointer;
-}
-
-/* ===== Reset & Base Styles ===== */
+/* ===== 2. Reset & Base Styles ===== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+html,
+body {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: clip !important;
+    position: relative;
+    /* ปิดระบบขยายฟอนต์อัตโนมัติของมือถือทุกรุ่น */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
 body {
     font-family: var(--font-family);
-    background-color: #272727 !important;
-    /* บังคับพื้นหลังสุดเป็นสีเทาเข้ม */
+    background-color: var(--color-background) !important;
     background-image: none !important;
-    /* ป้องกันการซ้อนทับ */
     color: var(--color-text-light);
-    overflow-x: hidden;
     min-height: 100vh;
-    position: relative;
+    min-width: 320px;
+    /* STICKY FOOTER FIX: ดัน Footer ลงล่างสุดเสมอ */
+    display: flex;
+    flex-direction: column;
 }
 
 /* สร้าง Layer ลายกระดาษแบบคงที่ ให้แสดงผลทุกหน้า */
@@ -201,9 +75,7 @@ body::before {
     background-repeat: repeat;
     background-size: 420px 420px;
     opacity: 0.15;
-    /* ปรับความชัดของกระดาษได้ที่นี่ */
     z-index: -1;
-    /* ให้อยู่หลังสุดไม่บังเนื้อหา */
     pointer-events: none;
 }
 
@@ -212,44 +84,14 @@ a {
     color: inherit;
 }
 
-/* ===== Video in Hero Section ===== */
-#video-wrapper {
-    position: sticky;
-    top: 0;
-    left: 0;
+/* เนื้อหาหลักยืดตัวเพื่อดัน Footer ลงไป */
+.page-content,
+main {
     width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    box-sizing: border-box;
-    z-index: 5;
-    /* ต้องต่ำกว่า navbar (999) และ hamburger (998) — ไม่งั้นจะบังคลิกได้ */
-    clip-path: inset(0px 0px 0px 0px round 0px);
-    will-change: clip-path, filter;
-    transform: translateZ(0);
-    -webkit-backface-visibility: hidden;
+    max-width: 100vw;
+    flex: 1;
 }
 
-.bg-video {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-}
-
-/* ===== Hero Video Section ===== */
-.hero-video-section {
-    width: 100%;
-    height: 185vh;
-    /* 55vh shrink + 30vh pause + 100vh sticky */
-    display: block;
-    position: relative;
-    background-color: #272727;
-}
-
-/* video-wrapper margin removed — sticky layout handles positioning */
-
-
-/* ===== Main Content ===== */
 .main-content {
     display: flex;
     flex-direction: column;
@@ -259,7 +101,106 @@ a {
     padding: 20px;
 }
 
-/* ===== Hamburger Menu (เปิดจากปุ่ม 3 ขีดใน Navbar) ===== */
+/* พระเอกของงาน: Footer เด้งไปอยู่ล่างสุดเสมอถ้ามีพื้นที่เหลือ */
+#footer {
+    margin-top: auto;
+    width: 100%;
+    position: relative !important;
+}
+
+/* ===== 3. Overlays & Transitions ===== */
+.warning-overlay:not(.active),
+.loading-overlay:not(.active) {
+    display: none !important;
+}
+
+.page-transition-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: var(--color-background);
+    background-image: url('../img/paper-texture.png');
+    background-size: 420px 420px;
+    z-index: 999999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.page-transition-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* ===== 4. Navbar & Nav Buttons ===== */
+#navbar,
+.navbar {
+    background-color: var(--color-primary) !important;
+    min-height: var(--navbar-height) !important;
+    height: var(--navbar-height) !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    padding: 0 var(--spacing-2xl);
+    z-index: 999 !important;
+    transition: height 0.3s ease, min-height 0.3s ease !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.logo-nav {
+    height: 100px !important;
+    width: auto !important;
+    object-fit: contain;
+    cursor: pointer;
+    transition: height 0.3s ease;
+}
+
+.navbar-controls {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    gap: 20px;
+}
+
+.btn-icon {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain;
+}
+
+/* Button Base Sizes */
+.nav-btn {
+    width: 38px !important;
+    height: 38px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.music-btn {
+    width: 52px !important;
+    height: 52px !important;
+}
+
+.menu-btn {
+    width: 48px !important;
+    height: 48px !important;
+}
+
+.menu-btn .btn-icon {
+    transform: scale(0.8) !important;
+}
+
+/* ===== 5. Hamburger Menu ===== */
 .hamburger-menu {
     position: fixed;
     top: var(--navbar-height);
@@ -276,11 +217,19 @@ a {
     transition: all var(--transition-speed) ease;
     transform-origin: top;
     margin-top: 10px;
+
+    /* FIX: ป้องกันการกดเมนูทะลุตอนที่ยังไม่ได้เปิด */
+    pointer-events: none !important;
+    visibility: hidden;
 }
 
+.hamburger-menu.active,
+.hamburger-menu.open,
 .hamburger-menu.show {
     max-height: 500px;
     opacity: 1;
+    pointer-events: auto !important;
+    visibility: visible;
 }
 
 .menu-content {
@@ -324,7 +273,38 @@ a {
     opacity: 0.5;
 }
 
-/* ===== Animations ===== */
+/* ===== 6. Video & Hero Base ===== */
+.hero-video-section {
+    width: 100%;
+    height: 185vh;
+    display: block;
+    position: relative;
+    background-color: transparent !important;
+}
+
+#video-wrapper {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    box-sizing: border-box;
+    z-index: 5;
+    clip-path: inset(0px 0px 0px 0px round 0px);
+    will-change: clip-path, filter;
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+}
+
+.bg-video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+/* ===== 7. Animations ===== */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -349,15 +329,132 @@ a {
     }
 }
 
-/* =========================================
-   Hamburger Menu - Responsive
-   Breakpoints ตาม device จริง:
-   - Large Tablets  : max-width 1366px  (iPad Pro / Air / Mini)
-   - Large Mobiles  : max-width  932px  (iPhone 14 Pro Max / XR / 12 Pro)
-   - Small Mobiles  : max-width  667px  (iPhone SE)
-   ========================================= */
+@keyframes rotate-phone {
+    0% {
+        transform: rotate(0deg);
+    }
 
-/* iPad Pro: 1025px - 1366px */
+    25% {
+        transform: rotate(0deg);
+    }
+
+    60% {
+        transform: rotate(-90deg);
+    }
+
+    85% {
+        transform: rotate(-90deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+/* ===== 8. Responsive: Navbar & General Layout (รวบตึง) ===== */
+
+/* ✅ iPad / Tablet (1024px ลงมา) */
+@media screen and (max-width: 1024px) {
+    :root {
+        --navbar-height: 65px;
+    }
+
+    #navbar,
+    .navbar {
+        height: var(--navbar-height) !important;
+        min-height: var(--navbar-height) !important;
+    }
+
+    .logo-nav {
+        max-height: 80px !important;
+    }
+
+    .music-btn {
+        width: 44px !important;
+        height: 44px !important;
+    }
+
+    .menu-btn {
+        width: 38px !important;
+        height: 38px !important;
+    }
+
+    .nav-btn {
+        width: 32px !important;
+        height: 32px !important;
+    }
+}
+
+/* ✅ มือถือแนวนอน (Landscape) หรือจอไม่เกิน 896px */
+@media screen and (max-width: 896px) {
+    :root {
+        --navbar-height: 50px;
+    }
+
+    #navbar,
+    .navbar {
+        height: var(--navbar-height) !important;
+        min-height: var(--navbar-height) !important;
+        padding: 0 16px !important;
+    }
+
+    .logo-nav {
+        max-height: 60px !important;
+    }
+
+    .music-btn {
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    .nav-btn {
+        width: 28px !important;
+        height: 28px !important;
+    }
+
+    .menu-btn,
+    .menu-btn.active {
+        width: 28px !important;
+        height: 28px !important;
+    }
+}
+
+/* ✅ มือถือแนวตั้ง (Portrait) 480px ลงมา */
+@media screen and (max-width: 480px) {
+    :root {
+        --navbar-height: 45px;
+    }
+
+    #navbar,
+    .navbar {
+        height: var(--navbar-height) !important;
+        min-height: var(--navbar-height) !important;
+        padding: 0 12px !important;
+    }
+
+    .logo-nav {
+        max-height: 28px !important;
+    }
+
+    .music-btn {
+        width: 32px !important;
+        height: 32px !important;
+    }
+
+    .nav-btn {
+        width: 24px !important;
+        height: 24px !important;
+    }
+
+    .menu-btn,
+    .menu-btn.active {
+        width: 24px !important;
+        height: 24px !important;
+    }
+}
+
+/* ===== 9. Responsive: Hamburger Menu ===== */
+
 @media screen and (min-width: 1025px) and (max-width: 1366px) {
     .hamburger-menu {
         min-width: 280px;
@@ -379,7 +476,6 @@ a {
     }
 }
 
-/* iPad Mini: 768px - 1024px */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
     .hamburger-menu {
         min-width: 190px;
@@ -401,7 +497,6 @@ a {
     }
 }
 
-/* Large Mobiles: ≤ 932px */
 @media screen and (max-width: 932px) {
     .hamburger-menu {
         min-width: 160px;
@@ -423,7 +518,6 @@ a {
     }
 }
 
-/* Small Mobiles: ≤ 667px */
 @media screen and (max-width: 667px) {
     .hamburger-menu {
         min-width: 140px;
@@ -445,9 +539,8 @@ a {
     }
 }
 
-/* =========================================
-   Video / Hero responsive (ไม่แตะ hamburger)
-   ========================================= */
+/* ===== 10. Responsive: Video & Landscape Overlay ===== */
+
 @media screen and (max-width: 767px) {
 
     html,
@@ -491,7 +584,6 @@ a {
     }
 }
 
-/* Mobile จอเล็กมาก (480px ลงมา) */
 @media screen and (max-width: 480px) {
     #video-wrapper {
         height: 100svh;
@@ -502,12 +594,7 @@ a {
     }
 }
 
-/* กันเว็บพังในจอที่เล็กกว่ามาตรฐาน */
-body {
-    min-width: 320px;
-}
-
-/* ===== Force Landscape Overlay ===== */
+/* Landscape Overlay Base */
 #landscape-overlay {
     display: none;
     position: fixed;
@@ -544,267 +631,17 @@ body {
     opacity: 0.9;
 }
 
-@keyframes rotate-phone {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    25% {
-        transform: rotate(0deg);
-    }
-
-    60% {
-        transform: rotate(-90deg);
-    }
-
-    85% {
-        transform: rotate(-90deg);
-    }
-
-    100% {
-        transform: rotate(0deg);
-    }
-}
-
-/* แสดง overlay เฉพาะ mobile/tablet แนวตั้ง */
-@media screen and (orientation: portrait) and (max-width: 1024px) {
-    #landscape-overlay {
-        display: flex;
-    }
-}
-
-/* ===== Scrollbar Styling ===== 
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--color-background);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--color-primary);
-    border-radius: 5px;
-}
-//thumbnail hover effect
-::-webkit-scrollbar-thumb:hover {
-    background: var(--color-secondary);
-}*/
-
-/* =========================================
-   STICKY FOOTER FIX (ดัน Footer ลงล่างสุดเสมอ)
-   ========================================= */
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    /* บังคับให้บอดี้สูงอย่างน้อยเท่ากับ 1 หน้าจอเสมอ */
-}
-
-/* สั่งให้เนื้อหาหลักยืดตัวเพื่อดัน Footer ลงไป */
-main {
-    flex: 1;
-}
-
-/* พระเอกของงาน: สั่งให้ Footer เด้งไปอยู่ล่างสุดเสมอถ้ามีพื้นที่เหลือ */
-#footer {
-    margin-top: auto;
-    width: 100%;
-    position: relative !important;
-    /* ห้ามเป็น fixed หรือ absolute เด็ดขาด */
-}
-
-/* =========================================
-   PAGE TRANSITION OVERLAY (ม่านสลับหน้า)
-   ========================================= */
-.page-transition-overlay {
-    position: fixed;
-    inset: 0;
-    background-color: #272727;
-    background-image: url('../img/paper-texture.png');
-    background-size: 420px 420px;
-    z-index: 999999;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.8s ease-in-out;
-}
-
-.page-transition-overlay.active {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-/* =========================================
-   🎯 MASTER OVERRIDE: บังคับ Navbar ให้เล็กตามจอ (สยบโค้ด JS)
-   ========================================= */
-
-/* ✅ 1. จอคอมปกติ */
-#navbar,
-.navbar {
-    height: 80px !important;
-    min-height: 80px !important;
-    transition: height 0.3s ease, min-height 0.3s ease !important;
-}
-
-/* 👈 เพิ่มการล็อกขนาดกล่องปุ่มตั้งแต่แรกสุด เพื่อกันรูปกระดิ่งระเบิด (FOUC) */
-.nav-btn {
-    width: 38px !important;
-    height: 38px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-
-.music-btn {
-    width: 52px !important;
-    height: 52px !important;
-}
-
-/* ✅ 2. iPad / Tablet (1024px ลงมา) */
-@media screen and (max-width: 1024px) {
-    :root {
-        --navbar-height: 65px;
-    }
-
-    #navbar,
-    .navbar {
-        height: 65px !important;
-        min-height: 65px !important;
-    }
-
-    .logo-nav {
-        max-height: 80px !important;
-    }
-
-    .music-btn {
-        width: 44px !important;
-        height: 44px !important;
-    }
-
-    .nav-btn {
-        width: 32px !important;
-        height: 32px !important;
-    }
-}
-
-/* ✅ 3. มือถือแนวนอน (Landscape) หรือจอไม่เกิน 896px */
-@media screen and (max-width: 896px) {
-    :root {
-        --navbar-height: 50px;
-    }
-
-    #navbar,
-    .navbar {
-        height: 50px !important;
-        min-height: 50px !important;
-        padding: 0 16px !important;
-    }
-
-    .logo-nav {
-        max-height: 60px !important;
-    }
-
-    .music-btn {
-        width: 36px !important;
-        height: 36px !important;
-    }
-
-    .nav-btn {
-        width: 28px !important;
-        height: 28px !important;
-    }
-}
-
-/* ✅ 4. มือถือแนวตั้ง (Portrait) 480px ลงมา */
-@media screen and (max-width: 480px) {
-    :root {
-        --navbar-height: 45px;
-    }
-
-    #navbar,
-    .navbar {
-        height: 45px !important;
-        min-height: 45px !important;
-        padding: 0 12px !important;
-    }
-
-    .logo-nav {
-        max-height: 28px !important;
-    }
-
-    .music-btn {
-        width: 32px !important;
-        height: 32px !important;
-    }
-
-    .nav-btn {
-        width: 24px !important;
-        height: 24px !important;
-    }
-
-    .menu-btn.active {
-        width: 28px !important;
-        height: 28px !important;
-    }
-}
-
-/* =========================================
-   🎯 MENU BUTTON SHRINK: ย่อขนาดเฉพาะปุ่มเมนู 3 ขีด ให้เล็กน่ารัก
-   ========================================= */
-
-/* ✅ 1. จอคอมปกติ */
-.menu-btn {
-    width: 48px !important;
-    height: 48px !important;
-}
-
-/* ย่อขนาดตัวรูปไอคอนข้างในลงอีกนิดนึง จะได้ไม่ดูแน่นขอบกล่อง */
-.menu-btn .btn-icon {
-    transform: scale(0.8) !important;
-}
-
-/* ✅ 2. iPad / Tablet (1024px ลงมา) */
-@media screen and (max-width: 1024px) {
-    .menu-btn {
-        width: 38px !important;
-        height: 38px !important;
-    }
-}
-
-/* ✅ 3. มือถือแนวนอน (Landscape) (896px ลงมา) */
-@media screen and (max-width: 896px) {
-    .menu-btn {
-        width: 28px !important;
-        height: 28px !important;
-    }
-
-    .menu-btn.active {
-        width: 28px !important;
-        height: 28px !important;
-    }
-}
-
-/* ✅ 4. มือถือแนวตั้ง (Portrait) 480px ลงมา */
-@media screen and (max-width: 480px) {
-    .menu-btn {
-        width: 24px !important;
-        height: 24px !important;
-    }
-
-    .menu-btn.active {
-        width: 24px !important;
-        height: 24px !important;
-    }
-}
-
-/* ล็อกขนาดไอคอนแจ้งเตือนพลิกหน้าจอ ไม่ให้ระเบิดเต็มจอตอนโหลด */
 #landscape-overlay img {
     width: 120px !important;
-    /* 👈 ใส่ขนาดที่นายต้องการให้มันโชว์จริง */
     height: 120px !important;
-    /* 👈 ล็อกความสูงไว้เลย */
     max-width: 120px !important;
     max-height: 120px !important;
     object-fit: contain !important;
     margin-bottom: 20px !important;
+}
+
+@media screen and (orientation: portrait) and (max-width: 1024px) {
+    #landscape-overlay {
+        display: flex;
+    }
 }

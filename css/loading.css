@@ -1,6 +1,4 @@
-/* ===== Loading Page CSS ===== */
 /* Variables inherited from style.css */
-
 :root {
     --font-size-title: 28px;
     --font-size-intro: 18px;
@@ -55,11 +53,45 @@ body.loading-active {
     margin-bottom: 40px;
 }
 
+/* Pulse Animation for Gloves */
+.gloves-container::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 450px;
+    height: 450px;
+    transform: translate(-50%, -50%);
+}
+
 .gloves-image {
     width: 403px;
     height: 403px;
     object-fit: contain;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+/* ===== Keyframes ===== */
+@keyframes progress-loading {
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* ===== Loading Title ===== */
@@ -72,6 +104,19 @@ body.loading-active {
     letter-spacing: 2px;
     font-weight: 400;
     line-height: normal;
+    animation: fade-in-up 1s ease-out 0.5s both;
+}
+
+/* ===== Loading Subtitle ===== */
+.loading-subtitle {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    color: var(--color-text-light);
+    text-align: center;
+    max-width: 1188px;
+    line-height: normal;
+    font-weight: 400;
+    animation: fade-in-up 1s ease-out 1s both;
 }
 
 /* ===== Progress Bar ===== */
@@ -80,6 +125,7 @@ body.loading-active {
     max-width: 100vw;
     margin-bottom: 20px;
     padding-left: 4px;
+    animation: fade-in-up 1s ease-out 0.8s both;
 }
 
 .progress-bar {
@@ -159,28 +205,10 @@ body.loading-active {
     transform: translateY(-50%);
 }
 
-@keyframes progress-loading {
-    0% {
-        width: 0%;
-    }
+/* =========================================
+   Responsive Design
+   ========================================= */
 
-    100% {
-        width: 100%;
-    }
-}
-
-/* ===== Loading Subtitle ===== */
-.loading-subtitle {
-    font-family: var(--font-family);
-    font-size: var(--font-size-base);
-    color: var(--color-text-light);
-    text-align: center;
-    max-width: 1188px;
-    line-height: normal;
-    font-weight: 400;
-}
-
-/* ===== Responsive Design (ยึด Desktop เป็นหลัก แล้วย่อส่วนลง) ===== */
 @media screen and (max-width: 1200px) {
     .progress-container {
         width: 85%;
@@ -285,7 +313,7 @@ body.loading-active {
     }
 }
 
-/* ดักจับ "จอมือถือแนวนอน (Landscape)" ที่เตี้ยมากๆ (เหมือนที่แก้ให้หน้า Warning) */
+/* ดักจับ "จอมือถือแนวนอน (Landscape)" ที่เตี้ยมากๆ */
 @media screen and (max-height: 500px) {
     .loading-container {
         padding: 10px;
@@ -322,40 +350,4 @@ body.loading-active {
     .loading-subtitle {
         font-size: 10px;
     }
-}
-
-/* ===== Loading Animation Effects ===== */
-.loading-title {
-    animation: fade-in-up 1s ease-out 0.5s both;
-}
-
-.loading-subtitle {
-    animation: fade-in-up 1s ease-out 1s both;
-}
-
-.progress-container {
-    animation: fade-in-up 1s ease-out 0.8s both;
-}
-
-@keyframes fade-in-up {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ===== Pulse Animation for Gloves ===== */
-.gloves-container::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 450px;
-    height: 450px;
-    transform: translate(-50%, -50%);
 }
