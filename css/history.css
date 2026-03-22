@@ -2845,6 +2845,8 @@ body::before {
     width: auto;
     max-width: 15cqw;
     object-fit: contain;
+    transform: translateZ(0);
+    will-change: transform;
 }
 
 @keyframes earlyRatanaEmojiHintBounce {
