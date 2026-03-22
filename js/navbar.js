@@ -45,7 +45,7 @@ class Navbar {
             <div class="navbar">
                 <div class="navbar-logo">
                     <a href="index.html?return=true">
-                        <img src="img/logo_nav.png" alt="MuayVerse Logo" class="logo-nav">
+                        <img src="img/logo-nav.png" alt="MuayVerse Logo" class="logo-nav">
                     </a>
                 </div>
                 <div class="navbar-controls">
@@ -83,7 +83,7 @@ class Navbar {
                 transform: scale(1.2);
             }
 
-            .logo_nav {
+            .logo-nav {
                 filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
             }
 
