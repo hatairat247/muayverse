@@ -1250,9 +1250,6 @@ body::before {
     opacity: 0;
     filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
     height: 30.93cqw;
-    transform-style: preserve-3d;
-    transform: rotateX(90deg);
-    transform-origin: center bottom;
     transition: none;
 }
 
