@@ -479,6 +479,11 @@
         margin-top: -10px;
     }
 
+    .paper-img {
+        margin-top: -50px !important;
+        margin-left: 10px !important;
+    }
+
     .main-title {
         font-size: clamp(2.2rem, 5vw, 85px);
         max-width: 800px;
@@ -557,15 +562,39 @@
         right: clamp(-290px, -15vw, -140px);
         top: 50%;
     }
+
+    .swipe-hint {
+        bottom: -10px !important;
+    }
 }
 
 /* =====================================================
    FIX: 932px — ขยับ swipe-hint ขึ้นสูงขึ้น
    ===================================================== */
 @media (max-width: 932px) and (min-width: 681px) {
-    .swipe-hint {
-        bottom: -36px !important;
+    
+    .paper-img {
+        margin-top: 10px !important;
+        margin-left: 20px !important;
     }
+
+    .yant-text-content.active {
+        margin-top: -20px !important;
+    }
+
+    .gaoyord-title {
+        font-size: 2.5rem !important;
+    }
+
+    p.gaoyord-desc {
+        margin-top: -20px !important;
+        font-size: 0.84rem !important;
+    }
+    
+    .swipe-hint {
+        bottom: -50px !important;
+    }
+
 }
 
 /* =====================================================
@@ -582,7 +611,8 @@
     }
 
     .gaoyord-title {
-        font-size: 2.2rem !important;
+        font-size: 2rem !important;
+        margin-top: -20px !important;
     }
 
     .gaoyord-desc {
@@ -612,6 +642,7 @@
 
     .paper-img {
         margin-top: -20px !important;
+        margin-left: 20px !important;
     }
 
     .yant-text-content.active {
@@ -624,11 +655,12 @@
 
     p.gaoyord-desc {
         margin-top: -20px !important;
-        font-size: 13.3px;
+        font-size: 0.84rem !important;
     }
 
     .swipe-hint {
-        bottom: 10px !important;
+        bottom: -5px !important;
+        left: 160px !important ;
     }
 
 }
@@ -636,18 +668,30 @@
 /* =====================================================
    FIX: 896px landscape (iPhone XR / 11)
    ===================================================== */
-@media (max-width: 896px) and (min-width: 845px) and (orientation: landscape) {
+@media (max-width: 896px) and (min-width: 870px) and (orientation: landscape) {
 
     .paper-img {
-        margin-top: -20px !important;
+        margin-top: 10px !important;
+        margin-left: 30px !important;
     }
 
     .yant-text-content.active {
         margin-top: -20px !important;
     }
 
+    .gaoyord-title {
+        font-size: 2.5rem !important;
+        margin-top: 20px !important;
+    }
+
+    .gaoyord-desc {
+        font-size: 0.84rem !important;
+        margin-top: -10px !important;
+    }
+
     .swipe-hint {
-        bottom: -10px !important;
+        bottom: -20px !important;
+        left: 150px  !important ;
     }
 
     p.gaoyord-desc {
@@ -954,12 +998,15 @@
 }
 
 /* ── Decorative yantra (behind content) ── */
+/* merged: layout + scroll-triggered entrance */
 .gaoyord-deco {
     position: absolute;
     z-index: 1;
     pointer-events: none;
     will-change: transform;
     transform: translateZ(0);
+    opacity: 0;
+    transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
 }
 
 .gaoyord-deco-left {
@@ -997,6 +1044,7 @@
 }
 
 /* ── Stacked paper images (left) — swipe to cycle ── */
+/* merged: layout + scroll-triggered entrance */
 .gaoyord-papers {
     position: relative;
     flex-shrink: 0;
@@ -1006,6 +1054,10 @@
     touch-action: pan-y;
     user-select: none;
     -webkit-user-select: none;
+    opacity: 0;
+    transform: translateX(-60px) translateY(30px) rotate(-6.92deg) scale(0.95);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .gaoyord-papers:active {
@@ -1101,8 +1153,10 @@
    ============================================================ */
 
 /* ── Text content (right) ── */
+/* merged: layout + scroll-triggered entrance + pointer-events override */
 .gaoyord-text {
     position: relative;
+    z-index: 10;
     display: flex;
     flex-direction: column;
     gap: 35px;
@@ -1110,6 +1164,11 @@
     flex-shrink: 1;
     min-height: 300px;
     align-self: center;
+    pointer-events: auto !important;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s,
+        transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
 }
 
 /* Text content switching */
@@ -1207,13 +1266,15 @@
 }
 
 /* Each word in yant description */
+/* merged: base style + hover override (inline-block, shorter transition, z-index) */
 .yant-word {
-    display: inline;
+    display: inline-block;
     color: inherit;
     white-space: pre-wrap;
     word-break: keep-all;
-    transition: color 0.2s ease-out,
-        text-shadow 0.2s ease-out;
+    transition: color 0.15s ease-out, text-shadow 0.15s ease-out;
+    position: relative;
+    z-index: 11;
 }
 
 /* Word glow effect based on mouse proximity */
@@ -1242,20 +1303,6 @@
 }
 
 /* ── Scroll-triggered entrance ── */
-.gaoyord-papers {
-    opacity: 0;
-    transform: translateX(-60px) translateY(30px) rotate(-6.92deg) scale(0.95);
-    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
-        transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.gaoyord-text {
-    opacity: 0;
-    transform: translateY(50px);
-    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s,
-        transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
-}
-
 .gaoyord-papers.visible {
     opacity: 1;
     transform: translateX(0) translateY(0) rotate(-6.92deg) scale(1);
@@ -1264,12 +1311,6 @@
 .gaoyord-text.visible {
     opacity: 1;
     transform: translateY(0);
-}
-
-/* Deco elements also animate in */
-.gaoyord-deco {
-    opacity: 0;
-    transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
 }
 
 .gaoyord-deco.visible {
@@ -1527,24 +1568,6 @@
     }
 }
 
-/* =========================================
-   SAK YANT WORD HOVER EFFECT (บังคับเปิดใช้งาน)
-   ========================================= */
-.gaoyord-text {
-    pointer-events: auto !important;
-    /* บังคับให้กล่องรับเมาส์ */
-    position: relative;
-    z-index: 10;
-}
-
-.yant-word {
-    display: inline-block;
-    /* ทำให้คำคำนวณระยะเมาส์ได้เป๊ะๆ */
-    transition: color 0.15s ease-out, text-shadow 0.15s ease-out;
-    position: relative;
-    z-index: 11;
-}
-
 /* =========================================================================
     PREV PAGE ICON (HISTORY)
    ========================================================================= */
@@ -1581,9 +1604,13 @@
     padding: 2px !important;
 }
 
+/* merged: removed duplicate block — properties identical */
 .prev-page img {
     width: 100% !important;
-    height: auto !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
     filter: brightness(1.2) contrast(1.1) drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7)) !important;
     transform: scale(1.3) !important;
 }
@@ -1633,26 +1660,12 @@
     }
 }
 
-/* ค้นหา .prev-page img และเปลี่ยนเป็นชุดนี้ */
-.prev-page img {
-    width: 100% !important;
-    height: 100% !important;
-    /* 👈 ล็อกความสูง */
-    max-width: 100% !important;
-    max-height: 100% !important;
-    object-fit: contain !important;
-    /* 👈 รักษาสัดส่วนภาพ */
-    filter: brightness(1.2) contrast(1.1) drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7)) !important;
-    transform: scale(1.3) !important;
-}
-
 /* =========================================
    SWIPE HINT — ใต้กอง paper
    ========================================= */
 .swipe-hint {
     position: absolute;
     bottom: -64px;
-    /* เพิ่มจาก -48px → ลงมาอีก */
     left: 50%;
     transform: translateX(-50%);
     pointer-events: none;
