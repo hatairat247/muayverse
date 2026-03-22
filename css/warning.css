@@ -1,4 +1,4 @@
-/* ===== Warning Page CSS ===== */
+/* ===== Warning Page CSS (Cleaned & Optimized) ===== */
 :root {
     --font-size-title: 28px;
     --font-size-intro: 18px;
@@ -20,7 +20,8 @@
     align-items: center;
     justify-content: space-around;
     min-height: 100vh;
-    padding: 40px 20px 40px;
+    padding: 40px 20px;
+    /* ยุบ 40px 20px 40px เป็นค่าเดียวกัน */
     position: relative;
 }
 
@@ -39,61 +40,60 @@
 
 /* ===== Warning Content ===== */
 .warning-content {
-    max-width: var(--content-max-width);
+    max-width: var(--content-max-width, 100%);
     text-align: center;
     margin-bottom: 40px;
     animation: fade-in-up 1s ease-out 0.5s both;
 }
 
-/* ===== Warning Title ===== */
-.warning-title {
-    font-family: var(--font-family);
-    font-size: 32px;
-    font-weight: 700;
-    color: var(--color-text-light);
-    text-align: center;
-    margin-bottom: 40px;
-    line-height: 1.2;
-}
-
-/* ===== Warning Text ===== */
 .warning-text {
     display: flex;
     flex-direction: column;
     gap: 30px;
 }
 
-.intro-text {
+/* รวม Properties ที่ใช้ร่วมกันของตัวหนังสือทั้งหมด */
+.warning-title,
+.intro-text,
+.note-text,
+.highlight-text,
+.closing-text,
+.instruction-text {
     font-family: var(--font-family);
-    font-size: var(--font-size-intro);
-    color: var(--color-text-light);
-    line-height: 1.6;
     text-align: center;
 }
 
-.note-text {
-    font-family: var(--font-family);
-    font-size: var(--font-size-base);
+/* รวมสีและระยะบรรทัด */
+.intro-text,
+.note-text,
+.closing-text {
     color: var(--color-text-light);
     line-height: 1.6;
-    text-align: center;
+}
+
+/* แยกส่วนที่ต่างกัน */
+.warning-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--color-text-light);
+    margin-bottom: 40px;
+    line-height: 1.2;
+}
+
+.intro-text {
+    font-size: var(--font-size-intro);
+}
+
+.note-text,
+.closing-text {
+    font-size: var(--font-size-base);
 }
 
 .highlight-text {
-    font-family: var(--font-family);
     font-size: var(--font-size-highlight);
     font-weight: 700;
     color: var(--color-text-white);
     line-height: 1.5;
-    text-align: center;
-}
-
-.closing-text {
-    font-family: var(--font-family);
-    font-size: var(--font-size-base);
-    color: var(--color-text-light);
-    line-height: 1.6;
-    text-align: center;
 }
 
 /* ===== Interaction Instructions ===== */
@@ -131,12 +131,10 @@
 }
 
 .click-image:hover {
-    opacity: 1;
     transform: scale(1.2);
     background-color: rgba(253, 240, 213, 0.1);
     box-shadow: 0 0 20px rgba(253, 240, 213, 0.3);
     animation: none;
-    /* หยุด animation เมื่อ hover */
 }
 
 .click-image:active {
@@ -167,15 +165,22 @@
 }
 
 .instruction-text {
-    font-family: var(--font-family);
     font-size: 16px;
     color: var(--color-text-light);
-    text-align: center;
     opacity: 0.9;
     margin-top: -10px;
 }
 
-/* ===== Animations ===== */
+/* ===== Scroll Behavior ===== */
+.warning-container.scrolled {
+    background: linear-gradient(to bottom, rgba(39, 39, 39, 0.9), rgba(39, 39, 39, 0.95), var(--color-background));
+}
+
+.warning-complete .warning-container {
+    animation: fade-out-scale 0.8s ease-out forwards;
+}
+
+/* ===== Keyframes  ===== */
 @keyframes fade-in-down {
     from {
         opacity: 0;
@@ -240,7 +245,21 @@
     }
 }
 
-/* ===== Responsive Design ===== */
+@keyframes fade-out-scale {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(1.05);
+    }
+}
+
+/* =========================================
+   Responsive Design
+   ========================================= */
 @media screen and (max-width: 1024px) {
     :root {
         --content-max-width: 90%;
@@ -267,7 +286,6 @@
 @media screen and (max-width: 768px) {
     :root {
         --font-size-title: 22px;
-        /* หดตัวอักษรลง */
         --font-size-intro: 14px;
         --font-size-highlight: 16px;
         --font-size-base: 14px;
@@ -277,16 +295,10 @@
         padding: 30px 15px;
     }
 
-    .logo-container {
-        margin-bottom: 20px;
-    }
-
     .warning-logo {
         width: 140px;
-        height: auto;
     }
 
-    /* ย่อโลโก้ */
     .warning-title {
         margin-bottom: 20px;
     }
@@ -299,7 +311,6 @@
         gap: 12px;
     }
 
-    /* บีบบรรทัดให้ชิดกัน */
     .click-image {
         width: 36px;
         height: 36px;
@@ -367,7 +378,7 @@
     }
 }
 
-/* เพิ่ม Media Query พิเศษดักจับ "จอมือถือแนวนอน (Landscape)" ที่เตี้ยมากๆ */
+/* จอมือถือแนวนอน (Landscape) ที่เตี้ยมากๆ */
 @media screen and (max-height: 500px) {
     .warning-container {
         padding: 10px;
@@ -425,32 +436,6 @@
 
     .scroll-arrows img {
         width: 14px;
-        /* จอเตี้ยมากๆ หดให้เล็กสุด */
         height: 14px;
-    }
-}
-
-/* ===== Scroll Behavior ===== */
-.warning-container.scrolled {
-    background: linear-gradient(to bottom,
-            rgba(39, 39, 39, 0.9),
-            rgba(39, 39, 39, 0.95),
-            var(--color-background));
-}
-
-/* ===== Loading Complete Effect ===== */
-.warning-complete .warning-container {
-    animation: fade-out-scale 0.8s ease-out forwards;
-}
-
-@keyframes fade-out-scale {
-    from {
-        opacity: 1;
-        transform: scale(1);
-    }
-
-    to {
-        opacity: 0;
-        transform: scale(1.05);
     }
 }

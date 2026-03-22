@@ -50,6 +50,7 @@ window.addEventListener('load', () => {
     initPresentParallax();
     initPresentFighters();
     initWalkingFighter();
+    initSakyantButtonReveal();
 
     (function addScrollEndBuffer() {
         const prev = document.getElementById('scroll-end-buffer');
@@ -1730,3 +1731,24 @@ window.addEventListener('load', function () {
         }
     }, 1000); // หน่วงไว้ 1 วิให้ดูหลอดเต็มสวยๆ
 });
+
+// =============================================
+// Sak Yant Button Reveal (โชว์ปุ่มเมื่ออ่านถึง Text Box 22)
+// =============================================
+function initSakyantButtonReveal() {
+    if (!horizontalScrollTween) return;
+
+    const btn = document.querySelector('.next-page');
+    const box22 = document.querySelector('.text-box-22');
+
+    if (!btn || !box22) return;
+
+    // สร้าง ScrollTrigger ตัวใหม่แยกต่างหาก (ไม่กวนระบบคาราโอเกะเดิม)
+    ScrollTrigger.create({
+        trigger: box22,
+        containerAnimation: horizontalScrollTween,
+        start: 'left 55%', // จุดที่คาราโอเกะกล่อง 22 วิ่งจบพอดี (คาราโอเกะจบที่ 60%)
+        onEnter: () => btn.classList.add('show-btn'), // พอเลื่อนถึง สั่งเฟดปุ่มขึ้นมา
+        onLeaveBack: () => btn.classList.remove('show-btn') // ถ้าผู้ใช้ไถกลับไปยุคก่อนหน้า ให้ซ่อนปุ่มกลับไป
+    });
+}

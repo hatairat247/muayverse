@@ -170,22 +170,17 @@
     text-shadow: 2px 2px 12px rgba(120, 0, 0, 0.9);
 }
 
-/* ===== Responsive Design ===== */
+/* RESPONSIVE DESIGN */
 
-/* Desktop (1025px ขึ้นไป) - ใช้ Default Styles */
+/* Desktop (1025px ขึ้นไป) */
 @media screen and (min-width: 1367px) {
     .cards-container {
         flex-direction: row;
     }
 }
 
-/* ipadPro */
+/* แท็บเล็ตทุกขนาด (iPad Pro, iPad Air, iPad Mini) (1366px ลงมา) -- */
 @media screen and (max-width: 1366px) {
-    .cards-section {
-        padding: 60px;
-        margin-top: -100px;
-    }
-
     .cards-container {
         display: flex;
         flex-direction: row;
@@ -199,6 +194,21 @@
 
     .card {
         flex: 0 1 auto;
+    }
+
+    .card-title {
+        font-size: 30px;
+    }
+
+    /* Disable parallax on tablet for better performance */
+    .cards-background {
+        background-attachment: scroll;
+    }
+
+    /* ค่าเฉพาะของ iPad Pro (1366px) */
+    .cards-section {
+        padding: 60px;
+        margin-top: -100px;
     }
 
     .card-image-wrapper {
@@ -206,105 +216,42 @@
         height: 400px;
     }
 
-    .card-title {
-        font-size: 30px;
-    }
-
     .card-lamp {
         top: -280px;
         width: 500px;
     }
-
-    /* Disable parallax on tablet for better performance */
-    .cards-background {
-        background-attachment: scroll;
-    }
 }
 
-/* ipadAir */
+/* iPad Air (1180px ลงมา) */
 @media screen and (max-width: 1180px) {
     .cards-section {
         padding: 60px;
         margin-top: 10px;
     }
 
-    .cards-container {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: flex-start;
-        gap: 40px;
-        max-width: 100%;
-        padding-top: 60px;
-        flex-wrap: nowrap;
-    }
-
-    .card {
-        flex: 0 1 auto;
-    }
-
     .card-image-wrapper {
         width: 240px;
         height: 360px;
-    }
-
-    .card-title {
-        font-size: 30px;
     }
 
     .card-lamp {
         top: -250px;
         width: 420px;
     }
-
-    /* Disable parallax on tablet for better performance */
-    .cards-background {
-        background-attachment: scroll;
-    }
 }
 
-/* IpadMini (768px - 1024px) */
-@media screen and (max-width: 1024px) and (min-width: 768px) {
+/* iPad Mini (1024px ลงมา) */
+@media screen and (max-width: 1024px) {
     .cards-section {
-        padding: 20px 20px;
+        padding: 20px;
+        /* เทียบเท่า 20px 20px */
         margin-top: 10px;
     }
 
-    .cards-container {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: flex-start;
-        gap: 40px;
-        max-width: 100%;
-        padding-top: 60px;
-        flex-wrap: nowrap;
-    }
-
-    .card {
-        flex: 0 1 auto;
-    }
-
-    .card-image-wrapper {
-        width: 240px;
-        height: 360px;
-    }
-
-    .card-title {
-        font-size: 30px;
-    }
-
-    .card-lamp {
-        top: -250px;
-        width: 420px;
-    }
-
-    .cards-background {
-        background-attachment: scroll;
-    }
+    /* ไม่ต้องเขียน wrapper กับ lamp ดึงค่า 240/360 จาก 1180px มาใช้ */
 }
 
-/* Mobile (น้อยกว่า 768px) */
+/* Mobile (767px ลงมา) */
 @media screen and (max-width: 767px) {
     .cards-section {
         padding: 40px 16px 60px 16px;
