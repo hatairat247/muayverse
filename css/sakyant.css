@@ -263,7 +263,7 @@
     .paper-img                { margin-top: 10px !important; margin-left: 20px !important; }
     .yant-text-content.active { margin-top: -20px !important; }
     .gaoyord-title            { font-size: 2rem !important; }
-    p.gaoyord-desc            { margin-top: -20px !important; font-size: 0.84rem !important; }
+    p.gaoyord-desc            { margin-top: -20px !important; font-size: 0.6rem !important; }
     .swipe-hint               { bottom: -50px !important; }
 }
 
@@ -273,16 +273,16 @@
     .yant-text-content.active { margin-top: -20px !important; }
     .gaoyord-title            { font-size: 1.6rem !important; margin-top: 20px !important; }
     .gaoyord-desc             { font-size: 0.7rem !important; margin-top: -10px !important; }
-    p.gaoyord-desc            { margin-top: -20px !important; }
+    p.gaoyord-desc            { margin-top: -20px !important;font-size: 0.5rem !important; }
     .swipe-hint               { bottom: -20px !important; left: 150px !important; }
 }
 
 /* FIX: 844px landscape */
 @media (max-width: 844px) and (min-width: 800px) and (orientation: landscape) {
-    .paper-img                { margin-top: -10px !important; margin-left: 20px !important; }
+    .paper-img                { margin-top: 10px !important; margin-left: 20px !important; }
     .yant-text-content.active { margin-top: -20px !important; }
     .gaoyord-title            { font-size: 1.5rem !important; }
-    p.gaoyord-desc            { margin-top: -20px !important; font-size: 0.7rem !important; }
+    p.gaoyord-desc            { margin-top: -20px !important; font-size: 0.5rem !important; }
     .swipe-hint               { bottom: 10px !important; left: 160px !important; }
 }
 
