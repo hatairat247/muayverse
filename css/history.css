@@ -2888,13 +2888,6 @@ body::before {
     background-attachment: local;
 }
 
-#walking-fighter {
-    will-change: contents;
-}
-
-#walking-fighter-img {
-    will-change: contents;
-}
 
 .regional-fighter,
 .lopburi-fighter,
