@@ -906,22 +906,22 @@ function initWalkingFighter() {
     if (!img) return;
 
     const framesOld = [
-        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253360/fighter-walk-old-1_yvrxhd.png',
-        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253311/fighter-walk-old-2_invoed.png',
-        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253369/fighter-walk-old-3_oxkxcl.png',
-        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253422/fighter-walk-old-4_clbone.png',
-        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253412/fighter-walk-old-5_lbfwzi.png',
-        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253420/fighter-walk-old-6_hmqxqc.png',
-        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253442/fighter-walk-old-7_jampno.png',
+        'img/walk/fighter-walk-old-1.png',
+        'img/walk/fighter-walk-old-2.png',
+        'img/walk/fighter-walk-old-3.png',
+        'img/walk/fighter-walk-old-4.png',
+        'img/walk/fighter-walk-old-5.png',
+        'img/walk/fighter-walk-old-6.png',
+        'img/walk/fighter-walk-old-7.png',
     ];
     const framesNew = [
-        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773255798/fighter-walk-new-1_yulxh4.png',
-        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253583/fighter-walk-new-2_fpyypu.png',
-        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253597/fighter-walk-new-3_qbahsm.png',
-        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253600/fighter-walk-new-4_dohjms.png',
-        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253620/fighter-walk-new-5_g7ki2g.png',
-        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773255801/fighter-walk-new-6_pxvbzq.png',
-        'https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773255799/fighter-walk-new-7_qbpdsx.png',
+        'img/walk/fighter-walk-new-1.png',
+        'img/walk/fighter-walk-new-2.png',
+        'img/walk/fighter-walk-new-3.png',
+        'img/walk/fighter-walk-new-4.png',
+        'img/walk/fighter-walk-new-5.png',
+        'img/walk/fighter-walk-new-6.png',
+        'img/walk/fighter-walk-new-7.png',
     ];
 
     let currentFrames = framesOld;
