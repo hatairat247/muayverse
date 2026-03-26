@@ -839,158 +839,7 @@ body {
 /* ─── Mobile Portrait (< 600px) ─── */
 @media (max-width: 599px) {
     .creator-page {
-        padding-top: 80px;
-        padding-bottom: 60px;
-        min-height: 100vh;
-        display: flex;
-        align-items: flex-start;
-        justify-content: center;
-    }
-
-    .creator-container {
-        padding: 16px 20px;
-        gap: 16px;
-        overflow: visible;
-        width: 100%;
-        box-sizing: border-box;
-        align-items: center;
-    }
-
-    .creator-title {
-        font-size: clamp(42px, 12vw, 64px);
-        padding: 8px 0 4px;
-        letter-spacing: 2px;
-        text-align: center;
-    }
-
-    .creator-cards {
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 20px;
-        padding: 8px 0;
-        overflow: visible;
-        width: 100%;
-    }
-
-    .creator-card {
-        flex: none;
-        width: 60vw;
-        max-width: 260px;
-        min-width: 200px;
-        gap: 10px;
-        align-items: center;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .card-image {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 3 / 4;
-        border-radius: 16px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .card-info {
-        width: 100%;
-        height: 42px;
-        min-height: 42px;
-        gap: 6px;
-        overflow: visible !important;
-        display: flex;
-        align-items: center;
-        box-sizing: border-box;
-    }
-
-    .card-icon {
-        width: 32px;
-        height: 32px;
-        min-width: 32px;
-        flex-shrink: 0;
-        margin-right: 0;
-        overflow: visible !important;
-    }
-
-    .card-icon img {
-        width: 32px;
-        height: 32px;
-    }
-
-    .card-name {
-        height: 38px;
-        width: 100%;
-        padding: 0 12px;
-        min-width: 0;
-        box-sizing: border-box;
-    }
-
-    .card-name span {
-        font-size: clamp(11px, 3vw, 14px);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: block;
-        width: 100%;
-        text-align: center;
-    }
-
-    .creator-card.active .card-image {
-        width: 100%;
-        border-radius: 18px;
-        box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35);
-    }
-
-    .creator-card.active .card-info {
-        width: 100%;
-    }
-
-    .creator-card.active .card-icon {
-        transform: translateX(160px) scale(1.1);
-        opacity: 0;
-        position: absolute;
-        pointer-events: none;
-    }
-
-    .creator-card.active .card-name {
-        opacity: 0;
-        pointer-events: none;
-        position: absolute;
-        visibility: hidden;
-    }
-
-    .creator-card.active .card-info::before,
-    .creator-card.active .card-info::after {
-        display: flex;
-        height: 38px;
-        animation: slideUpCenter 0.5s ease 0.2s forwards;
-    }
-
-    .creator-card.active .card-info::before {
-        font-size: clamp(10px, 2.8vw, 13px);
-        padding: 0 12px;
-    }
-
-    .creator-card.active .card-info::after {
-        font-size: clamp(11px, 3vw, 14px);
-        padding: 0 14px;
-    }
-
-    .creator-card[data-badge="ADVISOR"].active .card-info::before {
-        font-size: clamp(8px, 2.3vw, 11px);
-        padding: 0 10px;
-    }
-
-    .creator-card[data-badge="ADVISOR"].active .card-info::after {
-        font-size: clamp(9px, 2.5vw, 12px);
-        padding: 0 10px;
-    }
-}
-
-/* ─── Mobile landscape (844–896px) ─── */
-@media (min-width: 844px) and (max-width: 896px) {
-    .creator-page {
-        padding-top: 40px;
+        padding-top: 100px;
         min-height: 100vh;
         display: flex;
         align-items: center;
@@ -1011,7 +860,197 @@ body {
         gap: 4px;
         overflow: hidden;
         width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+
+    .creator-cards {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 5px;
+        padding: 2px 0;
+        overflow: hidden;
+        width: fit-content;
+        max-width: 100%;
+        box-sizing: border-box;
+        justify-content: center;
+        align-items: stretch;
+    }
+
+
+    .creator-card {
+        flex: 0 0 auto;
+        width: 140px;          
+        gap: 4px;
+        align-items: center;
+        transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+
+    .creator-card.active {
+        width: 168px;          
+    }
+
+
+    .creator-card.active .card-icon {
+        transform: translateX(90px);
+        opacity: 0;
+    }
+
+
+    .card-image {
+        width: 140px;          
+        height: 180px;
+        border-radius: 8px;
+        overflow: hidden;
+        position: relative;
+        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-radius 0.4s ease, box-shadow 0.4s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        flex-shrink: 0;
+    }
+
+
+    .creator-card.active .card-image {
+        width: 168px;           /* ← ตามขนาด card active */
+        height: 180px;
+        border-radius: 10px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+
+    .card-icon {
+        width: clamp(18px, 3vw, 24px);
+        height: clamp(18px, 3vw, 24px);
+        margin-right: 0;
+        flex-shrink: 0;
+        margin-top: -2px;
+        overflow: visible !important;
+    }
+
+
+    .card-info {
+        width: 130px;           /* ← ตามรูป */
+        height: 28px;
+        min-height: 28px;
+        gap: 3px;
+        box-sizing: border-box;
+        margin-top: 2px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    .creator-card.active .card-info {
+        width: 168px;           /* ← ตามรูป active */
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        overflow: hidden;
+        gap: 3px;
+        box-sizing: border-box;
+    }
+
+
+    .card-name {
+        height: 28px;
+        width: 100%;
+        padding: 0 6px;
+        min-width: 0;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+
+    .card-name span {
+        font-size: 7.5px;        
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: clip;
+        display: block;
+        width: 100%;
+        line-height: 1.3;
+        text-align: center;
+        letter-spacing: -0.5px;
+        transform-origin: center;
+    }
+
+
+    .creator-card.active .card-info::before,
+    .creator-card.active .card-info::after {
+        display: flex;
+        height: 28px;
+        min-height: 28px;
+        animation: slideUpCenter 0.35s ease 0.1s forwards;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+
+    .creator-card.active .card-info::before {
+        font-size: 8px;         /* ← +1px จาก 600–668 (7px) */
+        padding: 0 6px;
+        flex: 1 1 0;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+
+    .creator-card.active .card-info::after {
+        font-size: 8px;         /* ← +1px จาก 600–668 (7px) */
+        padding: 0 6px;
+        flex-shrink: 0;
+        white-space: nowrap;
+    }
+
+
+    .creator-card[data-badge="ADVISOR"].active .card-info::before {
+        font-size: 7px;         /* ← +1px จาก 600–668 (6px) */
+        padding: 0 1px;
+        white-space: normal;
+        line-height: 1.2;
+        text-overflow: ellipsis;
+    }
+
+
+    .creator-card[data-badge="ADVISOR"].active .card-info::after {
+        font-size: 7px;         /* ← +1px จาก 600–668 (6px) */
+        padding: 0 1px;
+    }
+}
+
+
+/* ─── Mobile landscape (844–896px) ─── */
+@media (min-width: 844px) and (max-width: 896px) {
+    .creator-page {
+        padding-top: 60px;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    .creator-title {
+        font-size: clamp(30px, 5vw, 42px);
+        padding: 4px 0;
+        letter-spacing: 1px;
+        text-align: center;
+    }
+
+
+    .creator-container {
+        padding: 4px 20px;
+        gap: 4px;
+        overflow: hidden;
         max-width: 90vw;
+        width: 100%;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
@@ -1043,7 +1082,7 @@ body {
 
 
     .creator-card.active {
-        width: 168px;          
+        width: 155px;          
     }
 
 
@@ -1054,7 +1093,7 @@ body {
 
 
     .card-image {
-        width: 100%;          
+        width: 120px;          
         height: 150px;
         border-radius: 8px;
         overflow: hidden;
@@ -1066,7 +1105,7 @@ body {
 
 
     .creator-card.active .card-image {
-        width: 168px;           /* ← ตามขนาด card active */
+        width: 155px;           /* ← ตามขนาด card active */
         height: 150px;
         border-radius: 10px;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
@@ -1084,7 +1123,7 @@ body {
 
 
     .card-info {
-        width: 100%;           /* ← ตามรูป */
+        width: 120px;           /* ← ตามรูป */
         height: 28px;
         min-height: 28px;
         gap: 3px;
@@ -1098,12 +1137,11 @@ body {
 
 
     .creator-card.active .card-info {
-        width: 100%;           /* ← ตามรูป active */
+        width: 155px;           /* ← ตามรูป active */
         display: flex;
-        padding: 0 3px;
         flex-direction: row;
         align-items: center;
-        overflow: visible;
+        overflow: hidden;
         gap: 3px;
         box-sizing: border-box;
     }
@@ -1116,14 +1154,13 @@ body {
         min-width: 0;
         box-sizing: border-box;
         overflow: hidden;
-        flex: 1;
     }
 
 
     .card-name span {
         font-size: 7.5px;        
         white-space: nowrap;
-        overflow: hidden;
+        overflow: visible;
         text-overflow: clip;
         display: block;
         width: 100%;
@@ -1146,18 +1183,18 @@ body {
 
 
     .creator-card.active .card-info::before {
-        font-size: 7.3px;         /* ← +1px จาก 600–668 (7px) */
-        padding: 0 6px;
+        font-size: 6.9px;         /* ← +1px จาก 600–668 (7px) */
+        padding: 0;
         flex: 1 1 0;
         min-width: 0;
         white-space: nowrap;
         overflow: hidden;
-        text-overflow: ellipsis;
+        text-overflow: clip;
     }
 
 
     .creator-card.active .card-info::after {
-        font-size: 6.5px;         /* ← +1px จาก 600–668 (7px) */
+        font-size: 6.9px;         /* ← +1px จาก 600–668 (7px) */
         padding: 0 6px;
         flex-shrink: 0;
         white-space: nowrap;
@@ -1165,7 +1202,7 @@ body {
 
 
     .creator-card[data-badge="ADVISOR"].active .card-info::before {
-        font-size: 6.5px;         /* ← +1px จาก 600–668 (6px) */
+        font-size: 6.9px;         /* ← +1px จาก 600–668 (7px) */
         padding: 0 1px;
         white-space: normal;
         line-height: 1.2;
@@ -1174,7 +1211,7 @@ body {
 
 
     .creator-card[data-badge="ADVISOR"].active .card-info::after {
-        font-size: 6.5px;         /* ← +1px จาก 600–668 (6px) */
+        font-size: 6.9px;         /* ← +1px จาก 600–668 (7px) */
         padding: 0 1px;
     }
 }
