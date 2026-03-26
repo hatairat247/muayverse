@@ -3638,6 +3638,26 @@ body::before {
     transition: opacity 0.5s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
 }
 
+/* ข้อความบอกทางไปหน้า Sakyant (อยู่ใต้ปุ่ม) */
+.next-page-label {
+    position: absolute;
+    top: calc(100% + 8px);
+    /* ระยะห่างจากใต้ปุ่ม */
+    left: 50%;
+    transform: translateX(-50%);
+    /* จัดให้อยู่กึ่งกลางปุ่มเป๊ะๆ */
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--history-highlight);
+    /* ดึงสีทองของธีมมาใช้ */
+    white-space: nowrap;
+    /* ป้องกันข้อความโดนบีบตกบรรทัดในจอมือถือ */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    pointer-events: none;
+    /* ป้องกันไม่ให้ข้อความไปขวางการคลิกปุ่ม */
+}
+
 /* คลาสนี้จะถูกเติมด้วย JS เมื่ออ่านถึงกล่องสุดท้าย */
 .next-page.show-btn {
     opacity: 1 !important;
@@ -3664,14 +3684,18 @@ body::before {
 
 @container (max-width: 1100px) {
     .next-page {
-        top: 85px !important;
+        top: 80px !important;
         right: 45px !important;
         width: 50px !important;
         height: 50px !important;
     }
 
     .next-page a {
-        padding: 9px !important;
+        padding: 6px !important;
+    }
+
+    .next-page-label {
+        font-size: 9px !important;
     }
 }
 
