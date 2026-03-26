@@ -1118,35 +1118,6 @@ body {
         transform-origin: center;
     }
 
-    @media (hover: hover) {
-
-        .creator-card:hover .card-info::before,
-        .creator-card:hover .card-info::after {
-            display: flex;
-            height: 28px;
-            animation: slideUpCenter 0.35s ease 0.1s forwards;
-        }
-
-        .creator-card:hover .card-info::before {
-            font-size: clamp(7px, 1.8vw, 10px);
-            padding: 0 8px;
-        }
-
-        .creator-card:hover .card-info::after {
-            font-size: clamp(7px, 1.8vw, 10px);
-            padding: 0 10px;
-        }
-
-        .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
-            font-size: clamp(6px, 1.5vw, 9px);
-        }
-
-        .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
-            font-size: clamp(6px, 1.5vw, 9px);
-            padding: 0 8px;
-        }
-    }
-
     .creator-card.active .card-info::before,
     .creator-card.active .card-info::after {
         display: flex;
