@@ -190,7 +190,7 @@ body {
     flex-shrink: 0;
 }
 
-/* ─── เนื้อหาข้อความ (ทำครั้งเดียว ใช้ได้ทุกหน้าจอ) ─── */
+/* ─── เนื้อหาข้อความ ─── */
 .creator-card[data-badge="MO"] .card-info::before {
     content: "namo.sangd@gmail.com";
 }
