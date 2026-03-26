@@ -1022,7 +1022,7 @@ body {
         padding: 2px 0;
         overflow: hidden;
         width: fit-content;
-        max-width: 100%;
+        max-width: 100%; 
         box-sizing: border-box;
         justify-content: center;
         align-items: stretch;
@@ -1030,14 +1030,14 @@ body {
 
     .creator-card {
         flex: 0 0 auto;
-        width: 140px;           
+        width: 110px; 
         gap: 4px;
         align-items: center;
         transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .creator-card.active {
-        width: 168px;           
+        width: 145px;
     }
 
     .creator-card.active .card-icon {
@@ -1046,8 +1046,8 @@ body {
     }
 
     .card-image {
-        width: 140px;           
-        height: 180px;
+        width: 110px;
+        height: 170px;
         border-radius: 8px;
         overflow: hidden;
         position: relative;
@@ -1057,8 +1057,8 @@ body {
     }
 
     .creator-card.active .card-image {
-        width: 168px;           /* ← ตามขนาด card active */
-        height: 180px;
+        width: 145px;
+        height: 170px;
         border-radius: 10px;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     }
@@ -1073,7 +1073,7 @@ body {
     }
 
     .card-info {
-        width: 130px;           /* ← ตามรูป */
+        width: 110px;
         height: 28px;
         min-height: 28px;
         gap: 3px;
@@ -1086,7 +1086,7 @@ body {
     }
 
     .creator-card.active .card-info {
-        width: 168px;           /* ← ตามรูป active */
+        width: 145px;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -1101,11 +1101,11 @@ body {
         padding: 0 6px;
         min-width: 0;
         box-sizing: border-box;
-        overflow: hidden;
+        overflow: hidden;          
     }
 
     .card-name span {
-        font-size: 7.5px;         
+        font-size: 7px;               
         white-space: nowrap;
         overflow: hidden;
         text-overflow: clip;
@@ -1114,7 +1114,37 @@ body {
         line-height: 1.3;
         text-align: center;
         letter-spacing: -0.5px;
+        transform: scaleX(1.0);      /* ← บีบแนวนอน */
         transform-origin: center;
+    }
+
+    @media (hover: hover) {
+
+        .creator-card:hover .card-info::before,
+        .creator-card:hover .card-info::after {
+            display: flex;
+            height: 28px;
+            animation: slideUpCenter 0.35s ease 0.1s forwards;
+        }
+
+        .creator-card:hover .card-info::before {
+            font-size: clamp(7px, 1.8vw, 10px);
+            padding: 0 8px;
+        }
+
+        .creator-card:hover .card-info::after {
+            font-size: clamp(7px, 1.8vw, 10px);
+            padding: 0 10px;
+        }
+
+        .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
+            font-size: clamp(6px, 1.5vw, 9px);
+        }
+
+        .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
+            font-size: clamp(6px, 1.5vw, 9px);
+            padding: 0 8px;
+        }
     }
 
     .creator-card.active .card-info::before,
@@ -1128,7 +1158,7 @@ body {
     }
 
     .creator-card.active .card-info::before {
-        font-size: 8px;         /* ← +1px จาก 600–668 (7px) */
+        font-size: 7px;
         padding: 0 6px;
         flex: 1 1 0;
         min-width: 0;
@@ -1138,23 +1168,23 @@ body {
     }
 
     .creator-card.active .card-info::after {
-        font-size: 8px;         /* ← +1px จาก 600–668 (7px) */
+        font-size: 7px;
         padding: 0 6px;
         flex-shrink: 0;
         white-space: nowrap;
     }
 
-    .creator-card[data-badge="ADVISOR"].active .card-info::before {
-        font-size: 7px;         /* ← +1px จาก 600–668 (6px) */
-        padding: 0 1px;
+     .creator-card[data-badge="ADVISOR"].active .card-info::before {
+        font-size: 6px;
+        padding: 0 5px;
         white-space: normal;
         line-height: 1.2;
         text-overflow: ellipsis;
     }
 
-    .creator-card[data-badge="ADVISOR"].active .card-info::after {
-        font-size: 7px;         /* ← +1px จาก 600–668 (6px) */
-        padding: 0 1px;
+   .creator-card[data-badge="ADVISOR"].active .card-info::after {
+        font-size: 6px;
+        padding: 0 5px;
     }
 }
 
