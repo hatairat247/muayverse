@@ -1027,7 +1027,7 @@ body {
 
 
 /* ─── Mobile landscape (844–896px) ─── */
-@media (min-width: 844px) and (max-width: 896px) {
+@media (max-width: 844px) and (min-width: 800px) and (orientation: landscape) {
     .creator-page {
         padding-top: 60px;
         min-height: 100vh;
