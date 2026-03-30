@@ -208,7 +208,7 @@ body {
 }
 
 .creator-card[data-badge="ZEE"] .card-info::before {
-    content: "pirapatchoochaiya@gmail.com";
+    content: "pirapat.choo@gmail.com";
 }
 
 .creator-card[data-badge="ZEE"] .card-info::after {
