@@ -4,6 +4,9 @@
 html,
 body {
     overscroll-behavior-y: none !important;
+    overscroll-behavior-x: none !important;
+    touch-action: pan-y;
+    /* ให้ระบบมือถือรู้ว่าเรารับแค่การไถขึ้นลงเท่านั้น */
     scroll-behavior: auto !important;
 }
 
@@ -20,15 +23,15 @@ body {
     justify-content: center;
     align-items: center;
     width: 100vw;
-    height: 100vh;
+    height: 100svh;
     background-color: transparent !important;
 }
 
 #desktop-canvas {
     width: 100vw;
     height: 56.25vw;
-    max-height: 100vh;
-    max-width: 177.78vh;
+    max-height: 100svh;
+    max-width: 177.78svh;
     background-color: transparent !important;
     container-type: size;
 }
@@ -3003,7 +3006,7 @@ body::before {
         .boran-thailand-image {
             position: absolute !important;
             height: 50cqh !important;
-            bottom: -55cqh !important;
+            bottom: -50cqh !important;
             top: auto !important;
         }
 
