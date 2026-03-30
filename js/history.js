@@ -66,14 +66,12 @@ window.addEventListener('load', () => {
 
     isInitialized = true;
 
-    // Lazy load รูปใน sections ที่ไม่ใช่ 2 section แรก
     document.querySelectorAll(
         '.era-section:not([data-era="sukhothai"]):not([data-era="ayutthaya"]) img'
     ).forEach(img => {
         if (!img.loading) img.loading = 'lazy';
     });
 
-    // ลด forced reflow — บอก GSAP ใช้ requestAnimationFrame batch
     gsap.config({ force3D: true });
     ScrollTrigger.config({ limitCallbacks: true });
 
@@ -84,12 +82,12 @@ window.addEventListener('load', () => {
 // =============================================
 function initHorizontalScroll() {
     const timelineTrack = document.querySelector('#timeline-track');
-    const desktopCanvas = document.querySelector('#desktop-canvas'); // ดึงขนาดจอจำลองมาใช้
+    const desktopCanvas = document.querySelector('#desktop-canvas');
     if (!timelineTrack || !desktopCanvas) { console.error('Elements not found'); return; }
 
     const getScrollDistance = () => {
         const lastBox = document.querySelector('.text-box-22');
-        const canvasWidth = desktopCanvas.offsetWidth; // เปลี่ยนจากการมองจอจริง มามองจอจำลองแทน
+        const canvasWidth = desktopCanvas.offsetWidth;
 
         if (lastBox) {
             let totalLeft = 0;
@@ -108,7 +106,7 @@ function initHorizontalScroll() {
         x: () => -getScrollDistance(),
         ease: 'none',
         scrollTrigger: {
-            trigger: '#canvas-center-wrapper', // เปลี่ยนให้ GSAP ไปปักหมุดที่ Wrapper ตัวนอกสุดแทน
+            trigger: '#canvas-center-wrapper',
             start: 'top top',
             end: () => `+=${getScrollDistance()}`,
             scrub: 1,
@@ -315,7 +313,6 @@ function initSukhothaiKickAnimation() {
     if (!framesData) return;
     const frames = framesData.split(',');
 
-    // set initial state ชัดเจน
     gsap.set(container, { opacity: 0, y: 80, scale: 0.85 });
 
     if (horizontalScrollTween) {
@@ -324,53 +321,52 @@ function initSukhothaiKickAnimation() {
             start: 'right 35%',
             containerAnimation: horizontalScrollTween,
             onEnter: () => {
-    gsap.killTweensOf(container);
-    gsap.fromTo(container,
-        { y: 80, scale: 0.85, opacity: 0 },
-        {
-            y: 0, scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(2)',
-            onComplete: () => {
-                window._sukhothaiKickDone = true;
-                window.dispatchEvent(new Event('kickRevealed'));
-                // เริ่ม idle หลังเด้งขึ้นมาแล้ว
-                gsap.to(container, {
-                    rotation: 2,       // เอียงขวา
-                    x: 5,              // ขยับขวานิดนึง
-                    duration: 1.4,
-                    ease: 'sine.inOut',
-                    repeat: -1,
-                    yoyo: true,
-                });
+                gsap.killTweensOf(container);
+                gsap.fromTo(container,
+                    { y: 80, scale: 0.85, opacity: 0 },
+                    {
+                        y: 0, scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(2)',
+                        onComplete: () => {
+                            window._sukhothaiKickDone = true;
+                            window.dispatchEvent(new Event('kickRevealed'));
+                            gsap.to(container, {
+                                rotation: 2,
+                                x: 5,
+                                duration: 1.4,
+                                ease: 'sine.inOut',
+                                repeat: -1,
+                                yoyo: true,
+                            });
+                        }
+                    }
+                );
+            },
+            onEnterBack: () => {
+                gsap.killTweensOf(container);
+                gsap.fromTo(container,
+                    { y: 80, scale: 0.85, opacity: 0 },
+                    {
+                        y: 0, scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(2)',
+                        onComplete: () => {
+                            window._sukhothaiKickDone = true;
+                            window.dispatchEvent(new Event('kickRevealed'));
+                            gsap.to(container, {
+                                rotation: 2,
+                                x: 5,
+                                duration: 1.4,
+                                ease: 'sine.inOut',
+                                repeat: -1,
+                                yoyo: true,
+                            });
+                        }
+                    }
+                );
+            },
+            onLeaveBack: () => {
+                gsap.killTweensOf(container);
+                gsap.to(container, { opacity: 0, y: 80, scale: 0.85, duration: 0.3 });
+                window._sukhothaiKickDone = false;
             }
-        }
-    );
-},
-onEnterBack: () => {
-    gsap.killTweensOf(container);
-    gsap.fromTo(container,
-        { y: 80, scale: 0.85, opacity: 0 },
-        {
-            y: 0, scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(2)',
-            onComplete: () => {
-                window._sukhothaiKickDone = true;
-                window.dispatchEvent(new Event('kickRevealed'));
-                gsap.to(container, {
-                    rotation: 2,
-                    x: 5,
-                    duration: 1.4,
-                    ease: 'sine.inOut',
-                    repeat: -1,
-                    yoyo: true,
-                });
-            }
-        }
-    );
-},
-onLeaveBack: () => {
-    gsap.killTweensOf(container); // หยุด idle ก่อนซ่อน
-    gsap.to(container, { opacity: 0, y: 80, scale: 0.85, duration: 0.3 });
-    window._sukhothaiKickDone = false;
-}
         });
     }
 
@@ -448,6 +444,23 @@ function initKaraokeAnimation() {
         const charElements = karaokeTextElement.querySelectorAll('.karaoke-char');
         if (charElements.length === 0) return;
 
+        let buffaloStartIndex = -1;
+        if (selector === '.text-box-7') {
+            const allChars = Array.from(charElements);
+            let inGroup = false;
+            let groupCount = 0;
+            for (let i = 0; i < allChars.length; i++) {
+                const isHighlight = allChars[i].classList.contains('highlight');
+                if (isHighlight && !inGroup) {
+                    inGroup = true;
+                    groupCount++;
+                    if (groupCount === 2) { buffaloStartIndex = i; break; }
+                } else if (!isHighlight) {
+                    inGroup = false;
+                }
+            }
+        }
+
         ScrollTrigger.create({
             trigger: selector,
             start: 'left 70%',
@@ -461,6 +474,17 @@ function initKaraokeAnimation() {
                     if (index < activeCharCount) { char.classList.add('active'); }
                     else { char.classList.remove('active'); }
                 });
+
+                if (buffaloStartIndex > 0) {
+                    if (activeCharCount >= buffaloStartIndex && !window._buffaloSwingFired) {
+                        window._buffaloSwingFired = true;
+                        window.dispatchEvent(new Event('buffaloSwingReached'));
+                    }
+                    if (activeCharCount < buffaloStartIndex) {
+                        window._buffaloSwingFired = false;
+                        window.dispatchEvent(new Event('buffaloSwingLeft'));
+                    }
+                }
             }
         });
     });
@@ -498,6 +522,7 @@ function initKoratSlideUp() {
     if (!horizontalScrollTween) return;
     const koratBg = document.querySelector('.korat-bg-layer');
     const buffaloImage = document.querySelector('.buffalo-swing-image');
+    const buffaloWrapper = document.querySelector('.buffalo-swing-wrapper');
     const poseLabel = document.querySelector('.pose-label');
 
     if (koratBg) {
@@ -510,13 +535,10 @@ function initKoratSlideUp() {
         });
     }
 
-   if (buffaloImage) {
-    gsap.set(buffaloImage, { opacity: 0, y: 150, scale: 0.6, rotation: -8 });
+    if (buffaloImage) {
+        gsap.set(buffaloImage, { opacity: 0, y: 150, scale: 0.6, rotation: -8 });
 
-    ScrollTrigger.create({
-        trigger: buffaloImage, containerAnimation: horizontalScrollTween,
-        start: 'left 75%',
-        onEnter: () => {
+        const revealBuffalo = () => {
             gsap.killTweensOf(buffaloImage);
             gsap.set(buffaloImage, { opacity: 0, y: 150, scale: 0.6, rotation: -8 });
             gsap.to(buffaloImage, {
@@ -530,28 +552,25 @@ function initKoratSlideUp() {
                     });
                 }
             });
-        },
-        onEnterBack: () => {
-            gsap.killTweensOf(buffaloImage);
-            gsap.set(buffaloImage, { opacity: 0, y: 150, scale: 0.6, rotation: -8 });
-            gsap.to(buffaloImage, {
-                y: 0, scale: 1, rotation: 0, opacity: 1,
-                duration: 0.8, ease: 'back.out(2)',
-                onComplete: () => {
-                    gsap.to(buffaloImage, {
-                        y: -8, duration: 1.2,
-                        ease: 'sine.inOut',
-                        repeat: -1, yoyo: true,
-                    });
-                }
-            });
-        },
-        onLeaveBack: () => {
+            buffaloWrapper?.classList.add('aura-visible');
+        };
+
+        const hideBuffalo = () => {
             gsap.killTweensOf(buffaloImage);
             gsap.to(buffaloImage, { opacity: 0, y: 150, scale: 0.6, rotation: -8, duration: 0.3, ease: 'power1.in' });
-        },
-    });
-}
+            buffaloWrapper?.classList.remove('aura-visible');
+        };
+
+        ScrollTrigger.create({
+            trigger: '.text-box-7',
+            start: 'left 10%',
+            containerAnimation: horizontalScrollTween,
+            onEnter: () => revealBuffalo(),
+            onEnterBack: () => revealBuffalo(),
+            onLeave: () => { /* ไม่ต้อง hide ตอน scroll ไปหน้า */ },
+            onLeaveBack: () => hideBuffalo(),
+        });
+    }
 
     if (poseLabel) {
         gsap.set(poseLabel, { opacity: 0, y: 80, scale: 0.5, rotation: -4 });
@@ -582,17 +601,6 @@ function initBuffaloSwingClick() {
     ];
 
     let isAnimating = false;
-
-    if (horizontalScrollTween) {
-        ScrollTrigger.create({
-            trigger: '.buffalo-swing-wrapper',
-            start: 'left 70%', end: 'right 30%',
-            containerAnimation: horizontalScrollTween,
-            onEnter: () => { buffaloWrapper.classList.add('aura-visible'); },
-            onLeaveBack: () => { buffaloWrapper.classList.remove('aura-visible'); },
-            onLeave: () => { buffaloWrapper.classList.remove('aura-visible'); }
-        });
-    }
 
     buffaloImage.addEventListener('click', async () => {
         if (isAnimating) return;
@@ -629,7 +637,7 @@ function initLopburiSlideUp() {
 
         ScrollTrigger.create({
             trigger: el,
-            start: 'left 40%', // เดิม 65% → ลดลงเพื่อให้ trigger ช้าลง
+            start: 'left 40%',
             containerAnimation: horizontalScrollTween,
             onEnter: () => {
                 gsap.to(el, {
@@ -672,20 +680,19 @@ function initLopburiFightersBillboard() {
                     opacity: 1, y: 0, scale: 1, rotation: 0,
                     duration: 0.7, ease: 'back.out(2)',
                     onComplete: () => {
-                        // พอเด้งขึ้นมาหยุดแล้ว ค่อยเริ่ม idle ขึ้นลง
                         gsap.to(el, {
-                        x: 6,
-                        rotation: 1.5,
-                        duration: 0.9 + index * 0.15, // แต่ละรูปความเร็วต่างกันนิดนึง
-                        ease: 'sine.inOut',
-                        repeat: -1,
-                        yoyo: true,
+                            x: 6,
+                            rotation: 1.5,
+                            duration: 0.9 + index * 0.15,
+                            ease: 'sine.inOut',
+                            repeat: -1,
+                            yoyo: true,
                         });
                     }
                 });
             },
             onLeaveBack: () => {
-                gsap.killTweensOf(el); // หยุด idle ก่อนซ่อน
+                gsap.killTweensOf(el);
                 gsap.to(el, {
                     opacity: 0, y: 150, scale: 0.6, rotation: item.rotDir,
                     duration: 0.3,
@@ -986,9 +993,9 @@ function initAyutthayaImagesAnimation() {
     });
 
     ScrollTrigger.create({
-        trigger: thailandMap,
+        trigger: '.text-box-5',
         containerAnimation: horizontalScrollTween,
-        start: 'left 55%',
+        start: 'left 20%',
         onEnter: () => gsap.to(thailandMap, { y: -300, opacity: 1, duration: 1.2, ease: 'power3.out' }),
         onLeaveBack: () => gsap.to(thailandMap, { y: 300, opacity: 0, duration: 0.5, ease: 'power2.in' }),
         onEnterBack: () => gsap.to(thailandMap, { y: -300, opacity: 1, duration: 1.2, ease: 'power3.out' })
@@ -1123,8 +1130,7 @@ function initChaiyaKaraokeBoxes() {
         const chars = Array.from(box.querySelectorAll('.karaoke-char'));
         if (!chars.length) return;
 
-        // text-box-11 ช้ากว่าตัวอื่น
-        const end = boxSelector === '.text-box-11' ? 'left 10%' : 'left 45%';
+        const end = boxSelector === '.text-box-11' ? 'left 35%' : 'left 45%';
 
         gsap.fromTo(chars,
             { opacity: 0.15, filter: 'blur(4px)' },
@@ -1407,9 +1413,9 @@ function initThaSaoFighters() {
     });
 
     const groupLabels = [
-        { selector: '.tha-sao-group-label', trigger: '.tha-sao-elbow',start: 'left -20%'},
-        { selector: '.tha-sao-group-label-2', trigger: '.tha-sao-fighter2-1',start: 'left 20%' },
-        { selector: '.tha-sao-group-label-3', trigger: '.tha-sao-fighters-3'},
+        { selector: '.tha-sao-group-label', trigger: '.tha-sao-elbow', start: 'left -20%' },
+        { selector: '.tha-sao-group-label-2', trigger: '.tha-sao-fighter2-1', start: 'left 20%' },
+        { selector: '.tha-sao-group-label-3', trigger: '.tha-sao-fighters-3' },
     ];
 
     groupLabels.forEach((item) => {
@@ -1436,7 +1442,7 @@ function initThaSaoHoverSwap() {
         if (isAnimating) return;
         isAnimating = true;
         let frame = 1;
-        img.src = frames[frame]; // เปลี่ยน frame แรกทันทีที่กด
+        img.src = frames[frame];
 
         const playInterval = setInterval(() => {
             frame++;
@@ -1501,7 +1507,7 @@ function initThonburiHoverSwap() {
                     }, 800);
                 }
             }, 700);
-        }, 200); // หน่วงก่อนเริ่ม — ปรับตัวเลขนี้ได้เลย
+        }, 200);
     });
 }
 
@@ -1532,20 +1538,12 @@ function initThonburiFighterReveal() {
     };
 
     ScrollTrigger.create({
-        trigger: '.thonburi-fighters', containerAnimation: horizontalScrollTween, start: 'left 60%',
+        trigger: '.thonburi-fighters', containerAnimation: horizontalScrollTween, start: 'left 50%',
         onEnter: () => { if (!tb14Passed()) return; playSlamAnimation(); },
         onLeaveBack: () => {
             gsap.killTweensOf(fighter);
             fighter.closest('.thonburi-container')?.classList.remove('aura-visible');
             gsap.to(fighter, { opacity: 0, scale: 0.3, duration: 0.5, ease: 'power2.in', onComplete: () => gsap.set(fighter, { scale: 0.3 }) });
-        }
-    });
-
-    ScrollTrigger.create({
-        trigger: '.text-box-14', containerAnimation: horizontalScrollTween, start: 'left 30%',
-        onEnter: () => {
-            const fighterRect = fighter.getBoundingClientRect();
-            if (fighterRect.left < window.innerWidth && gsap.getProperty(fighter, 'opacity') < 0.5) playSlamAnimation();
         }
     });
 }
@@ -1594,11 +1592,10 @@ function initEarlyRatanaFighterReveal() {
                 opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'back.out(1.7)',
                 onComplete: () => {
                     fighter.closest('.early-ratana-container')?.classList.add('aura-visible');
-                    // animation เหมือนกำลังก้มกราบ — ก้มลงแล้วยกขึ้น ช้าๆ
                     gsap.to(fighter, {
-                        scaleY: 0.97,   // ยุบลงนิดนึงเหมือนก้ม
-                        scaleX: 1.02,   // กว้างขึ้นนิดนึงตามธรรมชาติ
-                        y: 4,           // จมลงเล็กน้อย
+                        scaleY: 0.97,
+                        scaleX: 1.02,
+                        y: 4,
                         duration: 1.8,
                         ease: 'sine.inOut',
                         repeat: -1,
@@ -1685,7 +1682,7 @@ function initMidRatanaFighters() {
         if (!el) return;
 
         const enterAt = 65 - index * 15;
-        const fromX   = index % 2 === 0 ? -150 : 150; // สลับซ้ายขวา
+        const fromX   = index % 2 === 0 ? -150 : 150;
 
         gsap.set(el, { opacity: 0, x: fromX, scale: 0.6 });
 
@@ -1788,10 +1785,9 @@ function initRemainingKaraokeBoxes() {
     const boxes = [
         '.text-box-5',
         '.text-box-9',
-        '.text-box-13', '.text-box-14', '.text-box-15',
+        '.text-box-13', '.text-box-14',
         '.text-box-16', '.text-box-17', '.text-box-18',
         '.text-box-19', '.text-box-20', '.text-box-21'
-        // ลบ .text-box-11 ออกจาก array นี้
     ];
 
     boxes.forEach((boxSelector) => {
@@ -1811,21 +1807,20 @@ function initRemainingKaraokeBoxes() {
         );
     });
 
-    // text-box-11 แยกต่างหาก — เล่นเร็วกว่าปกติ
-    const box11 = document.querySelector('.text-box-11');
-    if (box11) {
-        box11.querySelectorAll('p').forEach(p => wrapCharsInNode(p));
-        const chars11 = Array.from(box11.querySelectorAll('.karaoke-char'));
-        if (chars11.length) {
-            gsap.fromTo(chars11,
-                { opacity: 0.15, filter: 'blur(4px)' },
-                {
-                    opacity: 1, filter: 'blur(0px)', stagger: 0.02, ease: 'none', duration: 0.6,
-                    scrollTrigger: { trigger: box11, start: 'left 160%', end: 'left 110%', scrub: 0.1, containerAnimation: horizontalScrollTween }
-                }
-            );
-        }
+    const box15 = document.querySelector('.text-box-15');
+if (box15) {
+    box15.querySelectorAll('p').forEach(p => wrapCharsInNode(p));
+    const chars15 = Array.from(box15.querySelectorAll('.karaoke-char'));
+    if (chars15.length) {
+        gsap.fromTo(chars15,
+            { opacity: 0.15, filter: 'blur(4px)' },
+            {
+                opacity: 1, filter: 'blur(0px)', stagger: 0.02, ease: 'none', duration: 0.6,
+                scrollTrigger: { trigger: box15, start: 'left 50%', end: 'left 20%', scrub: 0.3, containerAnimation: horizontalScrollTween }
+            }
+        );
     }
+}
 
     const box22 = document.querySelector('.text-box-22');
     if (box22) {
@@ -1843,13 +1838,13 @@ function initRemainingKaraokeBoxes() {
     }
 }
 
-// ระบบจัดการ Loading Screen
+// =============================================
+// Loading Screen
+// =============================================
 (function initLoader() {
     const progressFill = document.getElementById('progressFill');
 
-    // 👉 1. สั่งให้หลอด "เริ่มต้น" วิ่งไปที่ 30% ทันทีที่สคริปต์ทำงาน (ไม่ต้องรอโหลดเสร็จ)
     if (progressFill) {
-        // หน่วงนิดนึงเพื่อให้แอนิเมชัน CSS ทำงานทัน
         setTimeout(() => {
             progressFill.style.transition = 'width 1.5s cubic-bezier(0.1, 0.5, 0.5, 1)';
             progressFill.style.width = '35%';
@@ -1861,31 +1856,25 @@ window.addEventListener('load', function () {
     const loader = document.getElementById('loadingOverlay');
     const progressFill = document.getElementById('progressFill');
 
-    // 2. เมื่อ Asset ทุกอย่าง (รูปจาก Cloudinary) มาครบแล้ว
     if (progressFill) {
-        // 👉 สั่งให้วิ่งต่อจนเต็ม 100% แบบเร็วขึ้นนิดนึง
         progressFill.style.transition = 'width 0.5s ease-out';
         progressFill.style.width = '100%';
     }
 
-    // 3. รอจังหวะให้คนเห็นว่าหลอดเต็ม 100% แล้วค่อยเปิดม่าน
     setTimeout(() => {
         if (loader) {
             loader.classList.add('hidden');
-
-            // ปลดล็อก Body (ถ้ามีคลาส loading-active ใน HTML)
             document.body.classList.remove('loading-active');
 
-            // 🚀 บังคับให้ GSAP คำนวณตำแหน่งใหม่หลังจากหน้าจอจัดเสร็จแล้ว
             if (typeof ScrollTrigger !== 'undefined') {
                 ScrollTrigger.refresh();
             }
         }
-    }, 1000); // หน่วงไว้ 1 วิให้ดูหลอดเต็มสวยๆ
+    }, 1000);
 });
 
 // =============================================
-// Sak Yant Button Reveal (โชว์ปุ่มเมื่ออ่านถึง Text Box 22)
+// Sak Yant Button Reveal
 // =============================================
 function initSakyantButtonReveal() {
     if (!horizontalScrollTween) return;
@@ -1895,12 +1884,11 @@ function initSakyantButtonReveal() {
 
     if (!btn || !box22) return;
 
-    // สร้าง ScrollTrigger ตัวใหม่แยกต่างหาก (ไม่กวนระบบคาราโอเกะเดิม)
     ScrollTrigger.create({
         trigger: box22,
         containerAnimation: horizontalScrollTween,
-        start: 'left 55%', // จุดที่คาราโอเกะกล่อง 22 วิ่งจบพอดี (คาราโอเกะจบที่ 60%)
-        onEnter: () => btn.classList.add('show-btn'), // พอเลื่อนถึง สั่งเฟดปุ่มขึ้นมา
-        onLeaveBack: () => btn.classList.remove('show-btn') // ถ้าผู้ใช้ไถกลับไปยุคก่อนหน้า ให้ซ่อนปุ่มกลับไป
+        start: 'left 55%',
+        onEnter: () => btn.classList.add('show-btn'),
+        onLeaveBack: () => btn.classList.remove('show-btn')
     });
 }
