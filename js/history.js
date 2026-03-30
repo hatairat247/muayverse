@@ -1147,19 +1147,19 @@ function initChaiyaFighterScrubReveal() {
 
     const earlyGroup = [
         { fighter: '.chaiya-fighter-1', label: '.label-chaiya-1', rotDir: -8 },
-        { fighter: '.chaiya-fighter-2', label: '.label-chaiya-2', rotDir:  8 },
-        { fighter: '.wai-kru-swap',     label: '.label-chaiya-3', rotDir: -8 },
-        { fighter: '.chaiya-fighter-4', label: '.label-chaiya-4', rotDir:  8 },
+        { fighter: '.chaiya-fighter-2', label: '.label-chaiya-2', rotDir: 8 },
+        { fighter: '.wai-kru-swap', label: '.label-chaiya-3', rotDir: -8 },
+        { fighter: '.chaiya-fighter-4', label: '.label-chaiya-4', rotDir: 8 },
         { fighter: '.chaiya-fighter-5', label: '.label-chaiya-5', rotDir: -8 },
     ];
 
     earlyGroup.forEach((item, index) => {
         const fighterEl = document.querySelector(item.fighter);
-        const labelEl   = document.querySelector(item.label);
+        const labelEl = document.querySelector(item.label);
         if (!fighterEl) return;
 
         const isWaiKru = item.fighter === '.wai-kru-swap';
-        const enterAt  = 65 - index * 15;
+        const enterAt = 65 - index * 15;
 
         gsap.set(fighterEl, { opacity: 0, y: 150, scale: 0.6, rotation: item.rotDir });
         if (labelEl) gsap.set(labelEl, { opacity: 0, y: 80, scale: 0.5, rotation: item.rotDir * 0.5 });
@@ -1202,13 +1202,13 @@ function initChaiyaFighterScrubReveal() {
 
     [
         { selector: '.chaiya-fighter-6', isLabel: false },
-        { selector: '.label-chaiya-6',   isLabel: true  },
+        { selector: '.label-chaiya-6', isLabel: true },
     ].forEach((item) => {
         const el = document.querySelector(item.selector);
         if (!el) return;
 
         if (item.isLabel) { gsap.set(el, { opacity: 0, y: 60 }); }
-        else              { gsap.set(el, { opacity: 0, y: 200, scale: 0.5, rotation: -15 }); }
+        else { gsap.set(el, { opacity: 0, y: 200, scale: 0.5, rotation: -15 }); }
 
         gsap.to(el, {
             opacity: 1, ease: 'power2.out',
@@ -1217,7 +1217,7 @@ function initChaiyaFighterScrubReveal() {
                 start: 'left 45%', end: 'left 20%', scrub: 1,
                 onEnter: () => {
                     if (item.isLabel) { gsap.to(el, { y: 0, duration: 0.6, ease: 'power2.out' }); }
-                    else              { gsap.to(el, { y: 0, scale: 1, rotation: 0, duration: 1, ease: 'elastic.out(1, 0.5)' }); }
+                    else { gsap.to(el, { y: 0, scale: 1, rotation: 0, duration: 1, ease: 'elastic.out(1, 0.5)' }); }
                 },
                 onUpdate: (self) => { if (self.progress > 0.5 && !el.classList.contains('idle')) el.classList.add('idle'); },
                 onEnterBack: () => el.classList.remove('idle'),
@@ -1233,13 +1233,13 @@ function initChaiyaFighterScrubReveal() {
 
     [
         { selector: '.chaiya-fighter-7', isLabel: false },
-        { selector: '.label-chaiya-7',   isLabel: true  },
+        { selector: '.label-chaiya-7', isLabel: true },
     ].forEach((item) => {
         const el = document.querySelector(item.selector);
         if (!el) return;
 
         if (item.isLabel) { gsap.set(el, { opacity: 0, y: 60 }); }
-        else              { gsap.set(el, { opacity: 0, y: 200, scale: 0.5, rotation: 15 }); }
+        else { gsap.set(el, { opacity: 0, y: 200, scale: 0.5, rotation: 15 }); }
 
         gsap.to(el, {
             opacity: 1, ease: 'power2.out',
@@ -1248,7 +1248,7 @@ function initChaiyaFighterScrubReveal() {
                 start: 'left 35%', end: 'left 10%', scrub: 1,
                 onEnter: () => {
                     if (item.isLabel) { gsap.to(el, { y: 0, duration: 0.6, ease: 'power2.out' }); }
-                    else              { gsap.to(el, { y: 0, scale: 1, rotation: 0, duration: 1, ease: 'elastic.out(1, 0.5)' }); }
+                    else { gsap.to(el, { y: 0, scale: 1, rotation: 0, duration: 1, ease: 'elastic.out(1, 0.5)' }); }
                 },
                 onUpdate: (self) => { if (self.progress > 0.5 && !el.classList.contains('idle')) el.classList.add('idle'); },
                 onEnterBack: () => el.classList.remove('idle'),
@@ -1263,15 +1263,15 @@ function initChaiyaFighterScrubReveal() {
     });
 
     const defenseGroup = [
-        { fighter: '.chaiya-fighter-8',  label: '.label-chaiya-8',  rotDir: -8 },
-        { fighter: '.chaiya-fighter-9',  label: '.label-chaiya-9',  rotDir:  8 },
+        { fighter: '.chaiya-fighter-8', label: '.label-chaiya-8', rotDir: -8 },
+        { fighter: '.chaiya-fighter-9', label: '.label-chaiya-9', rotDir: 8 },
         { fighter: '.chaiya-fighter-10', label: '.label-chaiya-10', rotDir: -8 },
-        { fighter: '.chaiya-fighter-11', label: '.label-chaiya-11', rotDir:  8 },
+        { fighter: '.chaiya-fighter-11', label: '.label-chaiya-11', rotDir: 8 },
     ];
 
     defenseGroup.forEach((item, index) => {
         const fighterEl = document.querySelector(item.fighter);
-        const labelEl   = document.querySelector(item.label);
+        const labelEl = document.querySelector(item.label);
         if (!fighterEl) return;
 
         const enterAt = 60 - index * 15;
@@ -1672,9 +1672,9 @@ function initMidRatanaFighters() {
 
     const fighters = [
         { selector: '.mid-ratana-fighter-1', rotDir: -1 },
-        { selector: '.mid-ratana-fighter-2', rotDir:  1 },
+        { selector: '.mid-ratana-fighter-2', rotDir: 1 },
         { selector: '.mid-ratana-fighter-3', rotDir: -1 },
-        { selector: '.mid-ratana-fighter-4', rotDir:  1 },
+        { selector: '.mid-ratana-fighter-4', rotDir: 1 },
     ];
 
     fighters.forEach((item, index) => {
@@ -1682,7 +1682,7 @@ function initMidRatanaFighters() {
         if (!el) return;
 
         const enterAt = 65 - index * 15;
-        const fromX   = index % 2 === 0 ? -150 : 150;
+        const fromX = index % 2 === 0 ? -150 : 150;
 
         gsap.set(el, { opacity: 0, x: fromX, scale: 0.6 });
 
@@ -1808,19 +1808,19 @@ function initRemainingKaraokeBoxes() {
     });
 
     const box15 = document.querySelector('.text-box-15');
-if (box15) {
-    box15.querySelectorAll('p').forEach(p => wrapCharsInNode(p));
-    const chars15 = Array.from(box15.querySelectorAll('.karaoke-char'));
-    if (chars15.length) {
-        gsap.fromTo(chars15,
-            { opacity: 0.15, filter: 'blur(4px)' },
-            {
-                opacity: 1, filter: 'blur(0px)', stagger: 0.02, ease: 'none', duration: 0.6,
-                scrollTrigger: { trigger: box15, start: 'left 50%', end: 'left 20%', scrub: 0.3, containerAnimation: horizontalScrollTween }
-            }
-        );
+    if (box15) {
+        box15.querySelectorAll('p').forEach(p => wrapCharsInNode(p));
+        const chars15 = Array.from(box15.querySelectorAll('.karaoke-char'));
+        if (chars15.length) {
+            gsap.fromTo(chars15,
+                { opacity: 0.15, filter: 'blur(4px)' },
+                {
+                    opacity: 1, filter: 'blur(0px)', stagger: 0.02, ease: 'none', duration: 0.6,
+                    scrollTrigger: { trigger: box15, start: 'left 50%', end: 'left 20%', scrub: 0.3, containerAnimation: horizontalScrollTween }
+                }
+            );
+        }
     }
-}
 
     const box22 = document.querySelector('.text-box-22');
     if (box22) {
@@ -1892,3 +1892,30 @@ function initSakyantButtonReveal() {
         onLeaveBack: () => btn.classList.remove('show-btn')
     });
 }
+
+(function () {
+    let resizeTimer;
+
+    function refreshGSAPLayout() {
+        if (!window.ScrollTrigger) return;
+        ScrollTrigger.clearScrollMemory();
+        ScrollTrigger.refresh(true);
+    }
+
+    window.addEventListener("resize", function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(refreshGSAPLayout, 180);
+    });
+
+    window.addEventListener("orientationchange", function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(refreshGSAPLayout, 220);
+    });
+
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener("resize", function () {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(refreshGSAPLayout, 120);
+        });
+    }
+})();
