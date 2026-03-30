@@ -23,15 +23,15 @@ body {
     justify-content: center;
     align-items: center;
     width: 100vw;
-    height: 100svh;
+    height: 100dvh;
     background-color: transparent !important;
 }
 
 #desktop-canvas {
     width: 100vw;
     height: 56.25vw;
-    max-height: 100svh;
-    max-width: 177.78svh;
+    max-height: 100dvh;
+    max-width: 177.78dvh;
     background-color: transparent !important;
     container-type: size;
 }
