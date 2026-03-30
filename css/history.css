@@ -19,14 +19,13 @@ body {
 }
 
 #canvas-center-wrapper {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100vw !important;
     height: 100svh !important;
-    background-color: transparent !important;
-    overflow: hidden !important;
-    position: relative;
+    background-color: transparent;
+    overflow: hidden;
 }
 
 #desktop-canvas {
@@ -34,11 +33,9 @@ body {
     height: 56.25vw !important;
     max-height: 100svh !important;
     max-width: 177.78svh !important;
-    background-color: transparent !important;
-    overflow: hidden !important;
+    background-color: transparent;
+    overflow: hidden;
     container-type: size;
-    margin: auto !important;
-    /* บังคับให้ฉากอยู่กึ่งกลางเสมอ */
 }
 
 /* =========================================================================
