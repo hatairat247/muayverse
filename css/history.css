@@ -19,21 +19,26 @@ body {
 }
 
 #canvas-center-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 100dvh;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100vw !important;
+    height: 100svh !important;
     background-color: transparent !important;
+    overflow: hidden !important;
+    position: relative;
 }
 
 #desktop-canvas {
-    width: 100vw;
-    height: 56.25vw;
-    max-height: 100dvh;
-    max-width: 177.78dvh;
+    width: 100vw !important;
+    height: 56.25vw !important;
+    max-height: 100svh !important;
+    max-width: 177.78svh !important;
     background-color: transparent !important;
+    overflow: hidden !important;
     container-type: size;
+    margin: auto !important;
+    /* บังคับให้ฉากอยู่กึ่งกลางเสมอ */
 }
 
 /* =========================================================================
