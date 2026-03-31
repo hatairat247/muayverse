@@ -435,7 +435,7 @@ body {
     .creator-card.active .card-info { width: clamp(130px, 18vw, 145px); flex-direction: row; overflow: hidden; gap: 3px; }
 
     .card-name { height: 24px; width: 100px; padding: 0 5px; min-width: 0; box-sizing: border-box; overflow: hidden; }
-    .card-name span { font-size: clamp(2.5px, 0.9vw, 3px); white-space: nowrap; overflow: hidden; text-overflow: clip; display: block; width: 100%; text-align: center; letter-spacing: -0.5px; -webkit-text-size-adjust: none; text-size-adjust: none; }
+    .card-name span { font-size: clamp(2.5px, 12vw, 3px); white-space: nowrap; overflow: hidden; text-overflow: clip; display: block; width: 100%; text-align: center; letter-spacing: -0.5px; -webkit-text-size-adjust: none; text-size-adjust: none; }
 
     .creator-card.active .card-info::before,
     .creator-card.active .card-info::after { display: flex; height: 24px; min-height: 24px; animation: slideUpCenter 0.35s ease 0.1s forwards; box-sizing: border-box; overflow: hidden; }
