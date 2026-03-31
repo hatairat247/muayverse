@@ -435,14 +435,14 @@ body {
     .creator-card.active .card-info { width: clamp(130px, 18vw, 145px); flex-direction: row; overflow: hidden; gap: 3px; }
 
     .card-name { height: 24px; width: 100px; padding: 0 5px; min-width: 0; box-sizing: border-box; overflow: hidden; }
-    .card-name span { font-size: clamp(4.5px, 0.9vw, 5px); white-space: nowrap; overflow: hidden; text-overflow: clip; display: block; width: 100%; text-align: center; letter-spacing: -0.5px; -webkit-text-size-adjust: none; text-size-adjust: none; }
+    .card-name span { font-size: clamp(4.5px, 0.9vw, 4.5px); white-space: nowrap; overflow: hidden; text-overflow: clip; display: block; width: 100%; text-align: center; letter-spacing: -0.5px; -webkit-text-size-adjust: none; text-size-adjust: none; }
 
     .creator-card.active .card-info::before,
     .creator-card.active .card-info::after { display: flex; height: 24px; min-height: 24px; animation: slideUpCenter 0.35s ease 0.1s forwards; box-sizing: border-box; overflow: hidden; }
-    .creator-card.active .card-info::before { font-size: clamp(5px, 0.9vw, 6.5px); padding: 0 5px; flex: 1 1 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .creator-card.active .card-info::after  { font-size: clamp(5px, 0.9vw, 6.5px); padding: 0 5px; flex-shrink: 0; white-space: nowrap; }
+    .creator-card.active .card-info::before { font-size: clamp(4.5px, 0.9vw, 4.5px); padding: 0 5px; flex: 1 1 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .creator-card.active .card-info::after  { font-size: clamp(4.5px, 0.9vw, 4.5px); padding: 0 5px; flex-shrink: 0; white-space: nowrap; }
     
-    .creator-card[data-badge="ADVISOR"].active .card-info::before { font-size: clamp(4.5px, 0.75vw, 5.5px); padding: 0 2px; white-space: normal; line-height: 1.2; }
+    .creator-card[data-badge="ADVISOR"].active .card-info::before { font-size: clamp(4.5px, 0.75vw, 5px); padding: 0 2px; white-space: normal; line-height: 1.2; }
     .creator-card[data-badge="ADVISOR"].active .card-info::after  { font-size: clamp(6px, 0.75vw, 7.5px); padding: 0 2px; }
 }
 
