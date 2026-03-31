@@ -68,6 +68,7 @@ body {
     flex-wrap: nowrap;
     gap: 30px;
     justify-content: center;
+    -webkit-overflow-scrolling: touch;
     align-items: flex-start;
     padding: 20px 0;
     width: 100%;
