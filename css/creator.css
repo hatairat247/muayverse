@@ -1,4 +1,5 @@
 /* Creator Page Styles */
+
 :root {
     --creator-bg: #272727;
     --creator-title-color: #fdf0d5;
@@ -159,6 +160,7 @@ body {
     white-space: nowrap;
 }
 
+/* ─── Pseudo-element base ─── */
 .creator-card .card-info::before,
 .creator-card .card-info::after {
     display: none;
@@ -190,30 +192,13 @@ body {
     flex-shrink: 0;
 }
 
-/* ─── เนื้อหาข้อความ ─── */
-.creator-card[data-badge="MO"] .card-info::before {
-    content: "namo.sangd@gmail.com";
-}
-
-.creator-card[data-badge="MO"] .card-info::after {
-    content: "MO";
-}
-
-.creator-card[data-badge="TAR"] .card-info::before {
-    content: "hatairat.chuen@gmail.com";
-}
-
-.creator-card[data-badge="TAR"] .card-info::after {
-    content: "TAR";
-}
-
-.creator-card[data-badge="ZEE"] .card-info::before {
-    content: "pirapat.choo@gmail.com";
-}
-
-.creator-card[data-badge="ZEE"] .card-info::after {
-    content: "ZEE";
-}
+/* ─── Content ─── */
+.creator-card[data-badge="MO"] .card-info::before    { content: "namo.sangd@gmail.com"; }
+.creator-card[data-badge="MO"] .card-info::after     { content: "MO"; }
+.creator-card[data-badge="TAR"] .card-info::before   { content: "hatairat.chuen@gmail.com"; }
+.creator-card[data-badge="TAR"] .card-info::after    { content: "TAR"; }
+.creator-card[data-badge="ZEE"] .card-info::before   { content: "pirapat.choo@gmail.com"; }
+.creator-card[data-badge="ZEE"] .card-info::after    { content: "ZEE"; }
 
 .creator-card[data-badge="ADVISOR"] .card-info::before {
     content: "Lecturer, Department of Computer and Information Technology, KMUTT";
@@ -221,67 +206,34 @@ body {
     line-height: 1.3;
     padding: 0 10px;
 }
-
 .creator-card[data-badge="ADVISOR"] .card-info::after {
     content: "ADVISOR";
     font-size: 13px;
     padding: 0 12px;
 }
 
-
 @keyframes slideUpCenter {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
-/* HOVER & ACTIVE BASE */
-
+/* ══════════════════════════════════════════════
+   DESKTOP hover base (ไม่มี max-width → ครอบทุก breakpoint)
+   แต่ละ breakpoint override ค่าพวกนี้เองตาม size ที่ต้องการ
+   ══════════════════════════════════════════════ */
 @media (hover: hover) {
-    .creator-card:hover .card-image {
-        width: 368px;
-        height: 486px;
-    }
-
-    .creator-card:hover .card-info {
-        width: 368px;
-    }
-
     .creator-card:hover .card-icon {
         transform: translateX(180px) scale(1.15);
         opacity: 0;
         position: absolute;
         pointer-events: none;
     }
-
     .creator-card:hover .card-name {
         opacity: 0;
         pointer-events: none;
         position: absolute;
         visibility: hidden;
     }
-
-    .creator-card:hover .card-info::before,
-    .creator-card:hover .card-info::after {
-        display: flex;
-        height: 40px;
-        animation: slideUpCenter 0.5s ease 0.3s forwards;
-    }
-}
-
-.creator-card.active .card-image {
-    width: 368px;
-    height: 486px;
-}
-
-.creator-card.active .card-info {
-    width: 368px;
 }
 
 .creator-card.active .card-icon {
@@ -290,14 +242,12 @@ body {
     position: absolute;
     pointer-events: none;
 }
-
 .creator-card.active .card-name {
     opacity: 0;
     pointer-events: none;
     position: absolute;
     visibility: hidden;
 }
-
 .creator-card.active .card-info::before,
 .creator-card.active .card-info::after {
     display: flex;
@@ -306,1350 +256,322 @@ body {
     opacity: 1;
 }
 
-/* RESPONSIVE MEDIA QUERIES */
+/* ══════════════════════════════════════════════
+   1. iPad Pro  ≥ 1366px
+   ══════════════════════════════════════════════ */
+@media (min-width: 1366px) {
 
-/* ─── iPad Pro (1200–1366px) ─── */
-@media (min-width: 1200px) and (max-width: 1366px) {
-    .creator-title {
-        font-size: clamp(72px, 8vw, 96px);
-    }
+    .creator-cards { gap: 30px; }
+    .creator-card  { gap: 20px; }
 
-    .creator-container {
-        padding: 24px 20px;
-        gap: 24px;
-        overflow: hidden;
-    }
-
-    .creator-cards {
-        gap: clamp(16px, 2vw, 28px);
-        padding: 16px 0;
-        justify-content: center;
-    }
-
-    .creator-card {
-        gap: 16px;
-    }
-
-    .card-image {
-        width: clamp(220px, 22vw, 290px);
-        height: clamp(381px, 38vw, 502px);
-        border-radius: 18px;
-    }
-
-    .card-info {
-        width: clamp(220px, 22vw, 290px);
-        height: 48px;
-        min-height: 48px;
-        position: relative;
-        overflow: visible;
-    }
-
-    .card-icon {
-        width: 60px;
-        height: 60px;
-        transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s ease;
-    }
-
-    .card-name span {
-        font-size: 13px;
-    }
-
-    .creator-card:hover .card-image,
-    .creator-card.active .card-image {
-        width: clamp(272px, 27vw, 358px);
-    }
-
-    .creator-card:hover .card-info,
-    .creator-card.active .card-info {
-        width: clamp(272px, 27vw, 358px);
-    }
-
-    .creator-card:hover .card-icon,
-    .creator-card.active .card-icon {
-        transform: translateX(180px) scale(1.15);
-        opacity: 0;
-        position: absolute;
-        pointer-events: none;
-    }
-
-    .creator-card:hover .card-name,
-    .creator-card.active .card-name {
-        opacity: 0;
-        visibility: hidden;
-        position: absolute;
-    }
-
-    .creator-card:hover .card-info::before,
-    .creator-card:hover .card-info::after,
-    .creator-card.active .card-info::before,
-    .creator-card.active .card-info::after {
-        display: flex;
-        height: 44px;
-        animation: slideUpCenter 0.5s ease 0.3s forwards;
-    }
-
-    .creator-card:hover .card-info::before,
-    .creator-card.active .card-info::before {
-        font-size: 14px;
-    }
-
-    .creator-card:hover .card-info::after,
-    .creator-card.active .card-info::after {
-        font-size: 15px;
-        padding: 0 14px;
-    }
-
-    .creator-card[data-badge="ADVISOR"]:hover .card-info::before,
-    .creator-card[data-badge="ADVISOR"].active .card-info::before {
-        font-size: 11px;
-        padding: 0 10px;
-    }
-
-    .creator-card[data-badge="ADVISOR"]:hover .card-info::after,
-    .creator-card[data-badge="ADVISOR"].active .card-info::after {
-        font-size: 12px;
-    }
-}
-
-/* ─── iPad Air (1025–1199px) ─── */
-@media (max-width: 1199px) and (min-width: 1025px) {
-    .creator-title {
-        font-size: clamp(60px, 7vw, 96px);
-    }
-
-    .creator-container {
-        padding: 20px 16px;
-        gap: 20px;
-        overflow: hidden;
-    }
-
-    .creator-cards {
-        gap: clamp(10px, 1.5vw, 20px);
-        padding: 10px 0;
-        overflow: hidden;
-        justify-content: center;
-    }
-
-    .creator-card {
-        gap: 12px;
-    }
-
-    .card-image {
-        width: clamp(170px, 20vw, 235px);
-        height: clamp(294px, 34.6vw, 407px);
-        border-radius: 16px;
-    }
-
-    .card-info {
-        width: clamp(170px, 20vw, 235px);
-        height: 44px;
-        min-height: 44px;
-    }
-
-    .card-icon {
-        width: 56px;
-        height: 56px;
-    }
-
-    .card-name {
-        height: 40px;
-        flex: 1 1 0;
-        min-width: 0;
-        overflow: hidden;
-        box-sizing: border-box;
-    }
-
-    .card-name span {
-        font-size: clamp(10px, 1.1vw, 13px);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: clip;
-        display: block;
-        width: 100%;
-        letter-spacing: -0.3px;
-    }
+    .card-image { width: 280px; height: 486px; border-radius: 20px; }
+    .card-info  { width: 280px; height: 44px; min-height: 44px; }
+    .card-name span { font-size: 16px; }
 
     @media (hover: hover) {
-        .creator-card:hover .card-image {
-            width: clamp(210px, 25vw, 292px);
-            height: clamp(294px, 34.6vw, 407px);
-        }
-
-        .creator-card:hover .card-info {
-            width: clamp(210px, 25vw, 292px);
-        }
-
+        .creator-card:hover .card-image { width: 368px; height: 486px; }
+        .creator-card:hover .card-info  { width: 368px; }
         .creator-card:hover .card-info::before,
-        .creator-card:hover .card-info::after {
-            display: flex;
-            height: 40px;
-            animation: slideUpCenter 0.5s ease 0.2s forwards;
-        }
-
-        .creator-card:hover .card-info::before {
-            font-size: 12px;
-            padding: 0 10px;
-        }
-
-        .creator-card:hover .card-info::after {
-            font-size: 13px;
-            padding: 0 12px;
-        }
-
-        .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
-            font-size: 10px;
-            padding: 0 8px;
-        }
-
-        .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
-            font-size: 11px;
-            padding: 0 10px;
-        }
+        .creator-card:hover .card-info::after { display: flex; height: 40px; animation: slideUpCenter 0.5s ease 0.3s forwards; }
+        .creator-card:hover .card-info::before { font-size: 15px; }
+        .creator-card:hover .card-info::after  { font-size: 16px; padding: 0 16px; }
+        .creator-card[data-badge="ADVISOR"]:hover .card-info::before { font-size: 12px; padding: 0 10px; }
+        .creator-card[data-badge="ADVISOR"]:hover .card-info::after  { font-size: 13px; padding: 0 12px; }
     }
 
-    .creator-card.active .card-image {
-        width: clamp(210px, 25vw, 292px);
-        height: clamp(294px, 34.6vw, 407px);
-    }
-
-    .creator-card.active .card-info {
-        width: clamp(210px, 25vw, 292px);
-    }
-
-    .creator-card.active .card-info::before,
-    .creator-card.active .card-info::after {
-        display: flex;
-        height: 40px;
-        animation: slideUpCenter 0.5s ease 0.2s forwards;
-    }
-
-    .creator-card.active .card-info::before {
-        font-size: 12px;
-        padding: 0 10px;
-    }
-
-    .creator-card.active .card-info::after {
-        font-size: 13px;
-        padding: 0 12px;
-    }
-
-    .creator-card[data-badge="ADVISOR"].active .card-info::before {
-        font-size: 10px;
-        padding: 0 8px;
-    }
-
-    .creator-card[data-badge="ADVISOR"].active .card-info::after {
-        font-size: 11px;
-        padding: 0 10px;
-    }
+    .creator-card.active .card-image { width: 368px; height: 486px; }
+    .creator-card.active .card-info  { width: 368px; }
+    .creator-card.active .card-info::before { font-size: 15px; }
+    .creator-card.active .card-info::after  { font-size: 16px; padding: 0 16px; }
+    .creator-card[data-badge="ADVISOR"].active .card-info::before { font-size: 12px; padding: 0 10px; }
+    .creator-card[data-badge="ADVISOR"].active .card-info::after  { font-size: 13px; padding: 0 12px; }
 }
 
-/* ─── iPad Mini (768–1024px) ─── */
-@media (max-width: 1024px) and (min-width: 768px) {
-    .creator-title {
-        font-size: clamp(40px, 6vw, 60px);
-    }
+/* ══════════════════════════════════════════════
+   2. iPad Air  1180–1365px
+   ══════════════════════════════════════════════ */
+@media (min-width: 1180px) and (max-width: 1365px) {
 
-    .creator-container {
-        padding: 16px 8px;
-        gap: 16px;
-        overflow: hidden;
-    }
+    .creator-title { font-size: clamp(72px, 7.5vw, 96px); }
+    .creator-container { padding: 24px 20px; gap: 24px; }
+    .creator-cards { gap: clamp(18px, 2.2vw, 30px); padding: 16px 0; }
+    .creator-card  { gap: 16px; }
 
-    .creator-cards {
-        gap: 10px;
-        padding: 10px 6px;
-        overflow: hidden;
-    }
-
-    .creator-card {
-        gap: 10px;
-        min-width: 0;
-    }
-
-    .card-image {
-        width: clamp(165px, 21vw, 215px);
-        height: clamp(286px, 36vw, 372px);
-        border-radius: 14px;
-    }
-
-    .card-info {
-        width: clamp(165px, 21vw, 215px);
-        height: 40px;
-        min-height: 40px;
-        gap: 4px;
-        overflow: visible;
-        box-sizing: border-box;
-    }
-
-    .card-icon {
-        width: 36px !important;
-        height: 36px !important;
-        min-width: 36px !important;
-        max-width: 36px !important;
-        flex: 0 0 36px !important;
-        margin-right: 0 !important;
-        margin-left: 0 !important;
-    }
-
-    .card-icon img {
-        width: 36px !important;
-        height: 36px !important;
-    }
-
-    .card-name {
-        height: 36px;
-        flex: 1 1 0;
-        min-width: 0;
-        padding: 0 6px;
-        overflow: hidden;
-        box-sizing: border-box;
-    }
-
-    .card-name span {
-        font-size: clamp(9px, 1.3vw, 12px);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: clip;
-        display: block;
-        width: 100%;
-        letter-spacing: -0.3px;
-    }
+    .card-image { width: clamp(230px, 21vw, 270px); height: clamp(399px, 36.4vw, 468px); border-radius: 18px; }
+    .card-info  { width: clamp(230px, 21vw, 270px); height: 46px; min-height: 46px; overflow: visible; }
+    .card-icon  { width: 60px; height: 60px; }
+    .card-name span { font-size: clamp(13px, 1.2vw, 15px); }
 
     @media (hover: hover) {
-        .creator-card:hover .card-image {
-            width: clamp(206px, 26vw, 267px);
-            height: clamp(286px, 36vw, 372px);
-        }
-
-        .creator-card:hover .card-info {
-            width: clamp(206px, 26vw, 267px);
-        }
-
+        .creator-card:hover .card-image { width: clamp(285px, 26vw, 334px); height: clamp(399px, 36.4vw, 468px); }
+        .creator-card:hover .card-info  { width: clamp(285px, 26vw, 334px); }
+        .creator-card:hover .card-icon  { transform: translateX(180px) scale(1.15); opacity: 0; position: absolute; pointer-events: none; }
+        .creator-card:hover .card-name  { opacity: 0; visibility: hidden; position: absolute; }
         .creator-card:hover .card-info::before,
-        .creator-card:hover .card-info::after {
-            display: flex;
-            height: 36px;
-            animation: slideUpCenter 0.5s ease 0.2s forwards;
-        }
-
-        .creator-card:hover .card-info::before {
-            font-size: 11px;
-            padding: 0 8px;
-        }
-
-        .creator-card:hover .card-info::after {
-            font-size: 12px;
-            padding: 0 10px;
-        }
-
-        .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
-            font-size: 9px;
-            padding: 0 6px;
-        }
-
-        .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
-            font-size: 10px;
-            padding: 0 8px;
-        }
+        .creator-card:hover .card-info::after { display: flex; height: 44px; animation: slideUpCenter 0.5s ease 0.3s forwards; }
+        .creator-card:hover .card-info::before { font-size: 14px; }
+        .creator-card:hover .card-info::after  { font-size: 15px; padding: 0 14px; }
+        .creator-card[data-badge="ADVISOR"]:hover .card-info::before { font-size: 11px; padding: 0 10px; }
+        .creator-card[data-badge="ADVISOR"]:hover .card-info::after  { font-size: 12px; }
     }
 
-    .creator-card.active .card-image {
-        width: clamp(206px, 26vw, 267px);
-        height: clamp(286px, 36vw, 372px);
-    }
-
-    .creator-card.active .card-info {
-        width: clamp(206px, 26vw, 267px);
-    }
-
+    .creator-card.active .card-image { width: clamp(285px, 26vw, 334px); height: clamp(399px, 36.4vw, 468px); }
+    .creator-card.active .card-info  { width: clamp(285px, 26vw, 334px); }
+    .creator-card.active .card-icon  { transform: translateX(180px) scale(1.15); opacity: 0; position: absolute; pointer-events: none; }
+    .creator-card.active .card-name  { opacity: 0; visibility: hidden; position: absolute; }
     .creator-card.active .card-info::before,
-    .creator-card.active .card-info::after {
-        display: flex;
-        height: 36px;
-        animation: slideUpCenter 0.5s ease 0.2s forwards;
-    }
-
-    .creator-card.active .card-info::before {
-        font-size: 11px;
-        padding: 0 8px;
-    }
-
-    .creator-card.active .card-info::after {
-        font-size: 12px;
-        padding: 0 10px;
-    }
-
-    .creator-card[data-badge="ADVISOR"].active .card-info::before {
-        font-size: 9px;
-        padding: 0 6px;
-    }
-
-    .creator-card[data-badge="ADVISOR"].active .card-info::after {
-        font-size: 10px;
-        padding: 0 8px;
-    }
+    .creator-card.active .card-info::after { display: flex; height: 44px; animation: slideUpCenter 0.5s ease 0.3s forwards; }
+    .creator-card.active .card-info::before { font-size: 14px; }
+    .creator-card.active .card-info::after  { font-size: 15px; padding: 0 14px; }
+    .creator-card[data-badge="ADVISOR"].active .card-info::before { font-size: 11px; padding: 0 10px; }
+    .creator-card[data-badge="ADVISOR"].active .card-info::after  { font-size: 12px; }
 }
 
-/* ─── Tablet (668–767px) ─── */
-@media (max-width: 767px) and (min-width: 669px) {
-    .creator-title {
-        font-size: clamp(48px, 7vw, 80px);
-    }
+/* ══════════════════════════════════════════════
+   3. iPad Mini  1024–1179px
+   ══════════════════════════════════════════════ */
+@media (min-width: 1024px) and (max-width: 1179px) {
 
-    .creator-container {
-        padding: 20px 8px;
-        gap: 20px;
-        overflow: hidden;
-    }
+    .creator-title { font-size: clamp(52px, 6.5vw, 72px); }
+    .creator-container { padding: 20px 12px; gap: 20px; }
+    .creator-cards { gap: clamp(12px, 1.8vw, 22px); padding: 12px 0; }
+    .creator-card  { gap: 12px; }
 
-    .creator-cards {
-        gap: clamp(6px, 1.2vw, 16px);
-        padding: 10px 0;
-        overflow: hidden;
-    }
-
-    .creator-card {
-        gap: 10px;
-    }
-
-    .card-image {
-        width: clamp(160px, 23vw, 250px);
-        height: clamp(225px, 38vw, 400px);
-        border-radius: 14px;
-    }
-
-    .card-info {
-        width: clamp(160px, 23vw, 250px);
-        height: 44px;
-        min-height: 44px;
-        gap: 5px;
-    }
-
-    .card-icon {
-        width: clamp(32px, 4vw, 48px);
-        height: clamp(32px, 4vw, 48px);
-        margin-right: -3px;
-        flex-shrink: 0;
-    }
-
-    .card-icon::after {
-        width: 45%;
-        height: 45%;
-        filter: blur(10px);
-    }
-
-    .card-icon::before {
-        width: 30%;
-        height: 30%;
-        filter: blur(6px);
-    }
-
-    .card-name {
-        height: 36px;
-        width: 100%;
-        min-width: 0;
-        overflow: hidden;
-    }
-
-    .card-name span {
-        font-size: 15px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: block;
-        max-width: 100%;
-    }
+    .card-image { width: clamp(180px, 19.5vw, 230px); height: clamp(312px, 33.8vw, 399px); border-radius: 16px; }
+    .card-info  { width: clamp(180px, 19.5vw, 230px); height: 44px; min-height: 44px; overflow: visible; }
+    .card-icon  { width: 50px; height: 50px; }
+    .card-name span { font-size: clamp(11px, 1.1vw, 13px); }
 
     @media (hover: hover) {
-        .creator-card:hover .card-image {
-            width: clamp(200px, 28vw, 310px);
-            height: clamp(225px, 38vw, 400px);
-        }
-
-        .creator-card:hover .card-info {
-            width: clamp(200px, 28vw, 310px);
-        }
-
+        .creator-card:hover .card-image { width: clamp(223px, 24vw, 285px); height: clamp(312px, 33.8vw, 399px); }
+        .creator-card:hover .card-info  { width: clamp(223px, 24vw, 285px); }
+        .creator-card:hover .card-icon  { transform: translateX(160px) scale(1.1); opacity: 0; position: absolute; pointer-events: none; }
+        .creator-card:hover .card-name  { opacity: 0; visibility: hidden; position: absolute; }
         .creator-card:hover .card-info::before,
-        .creator-card:hover .card-info::after {
-            display: flex;
-            height: 36px;
-            animation: slideUpCenter 0.5s ease 0.2s forwards;
-        }
-
-        .creator-card:hover .card-info::before {
-            font-size: clamp(11px, 1.3vw, 14px);
-            padding: 0 8px;
-        }
-
-        .creator-card:hover .card-info::after {
-            font-size: clamp(12px, 1.4vw, 15px);
-            padding: 0 10px;
-        }
-
-        .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
-            font-size: clamp(9px, 1vw, 12px);
-            padding: 0 6px;
-        }
-
-        .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
-            font-size: clamp(10px, 1.1vw, 13px);
-            padding: 0 8px;
-        }
+        .creator-card:hover .card-info::after { display: flex; height: 42px; animation: slideUpCenter 0.5s ease 0.25s forwards; }
+        .creator-card:hover .card-info::before { font-size: 12px; padding: 0 10px; }
+        .creator-card:hover .card-info::after  { font-size: 13px; padding: 0 12px; }
+        .creator-card[data-badge="ADVISOR"]:hover .card-info::before { font-size: 10px; padding: 0 8px; }
+        .creator-card[data-badge="ADVISOR"]:hover .card-info::after  { font-size: 11px; }
     }
 
-    .creator-card.active .card-image {
-        width: clamp(200px, 28vw, 310px);
-        height: clamp(225px, 38vw, 400px);
-    }
-
-    .creator-card.active .card-info {
-        width: clamp(200px, 28vw, 310px);
-    }
-
+    .creator-card.active .card-image { width: clamp(223px, 24vw, 285px); height: clamp(312px, 33.8vw, 399px); }
+    .creator-card.active .card-info  { width: clamp(223px, 24vw, 285px); }
+    .creator-card.active .card-icon  { transform: translateX(160px) scale(1.1); opacity: 0; position: absolute; pointer-events: none; }
+    .creator-card.active .card-name  { opacity: 0; visibility: hidden; position: absolute; }
     .creator-card.active .card-info::before,
-    .creator-card.active .card-info::after {
-        display: flex;
-        height: 36px;
-        animation: slideUpCenter 0.5s ease 0.2s forwards;
-    }
-
-    .creator-card.active .card-info::before {
-        font-size: clamp(11px, 1.3vw, 14px);
-        padding: 0 8px;
-    }
-
-    .creator-card.active .card-info::after {
-        font-size: clamp(12px, 1.4vw, 15px);
-        padding: 0 10px;
-    }
-
-    .creator-card[data-badge="ADVISOR"].active .card-info::before {
-        font-size: clamp(9px, 1vw, 12px);
-        padding: 0 6px;
-    }
-
-    .creator-card[data-badge="ADVISOR"].active .card-info::after {
-        font-size: clamp(10px, 1.1vw, 13px);
-        padding: 0 8px;
-    }
+    .creator-card.active .card-info::after { display: flex; height: 42px; animation: slideUpCenter 0.5s ease 0.25s forwards; }
+    .creator-card.active .card-info::before { font-size: 12px; padding: 0 10px; }
+    .creator-card.active .card-info::after  { font-size: 13px; padding: 0 12px; }
+    .creator-card[data-badge="ADVISOR"].active .card-info::before { font-size: 10px; padding: 0 8px; }
+    .creator-card[data-badge="ADVISOR"].active .card-info::after  { font-size: 11px; }
 }
 
+/* ══════════════════════════════════════════════
+   4. iPhone 14 Pro Max + 17 Pro Max  932–1023px
+   ══════════════════════════════════════════════ */
+@media (min-width: 932px) and (max-width: 1023px) {
 
-/* ─── Mobile Portrait (< 600px) ─── */
+    .creator-page      { padding-top: 80px; display: flex; align-items: center; justify-content: center; }
+    .creator-title     { font-size: clamp(28px, 4vw, 38px); padding: 2px 0; }
+    .creator-container { padding: 4px 16px; gap: 4px; overflow: hidden; display: flex; flex-direction: column; align-items: center; }
+    .creator-cards     { flex-wrap: nowrap; gap: clamp(8px, 1.2vw, 16px); padding: 2px 0; overflow: hidden; width: fit-content; max-width: 100%; }
+
+    .creator-card        { flex: 0 0 auto; width: clamp(155px, 17vw, 185px); gap: 4px; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .creator-card.active { width: clamp(178px, 20vw, 210px); }
+    .creator-card.active .card-icon { transform: translateX(100px); opacity: 0; position: absolute; pointer-events: none; }
+
+    .card-image { width: clamp(155px, 17vw, 185px); height: clamp(195px, 21.5vw, 235px); border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,.1); flex-shrink: 0; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-radius 0.4s ease, box-shadow 0.4s ease; }
+    .creator-card.active .card-image { width: clamp(178px, 20vw, 210px); border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,.3); }
+
+    .card-icon  { width: clamp(20px, 2.5vw, 26px); height: clamp(20px, 2.5vw, 26px); margin-right: 0; flex-shrink: 0; margin-top: -2px; overflow: visible !important; }
+    .card-info  { width: clamp(155px, 17vw, 185px); height: 28px; min-height: 28px; gap: 3px; box-sizing: border-box; margin-top: 2px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .creator-card.active .card-info { width: clamp(178px, 20vw, 210px); flex-direction: row; overflow: hidden; gap: 3px; }
+
+    .card-name { height: 28px; width: 100%; padding: 0 6px; min-width: 0; box-sizing: border-box; overflow: hidden; }
+    .card-name span { font-size: clamp(8.5px, 1vw, 10px); white-space: nowrap; overflow: hidden; text-overflow: clip; display: block; width: 100%; text-align: center; letter-spacing: -0.4px; -webkit-text-size-adjust: none; text-size-adjust: none; }
+
+    .creator-card.active .card-info::before,
+    .creator-card.active .card-info::after { display: flex; height: 28px; min-height: 28px; animation: slideUpCenter 0.35s ease 0.1s forwards; box-sizing: border-box; overflow: hidden; }
+    .creator-card.active .card-info::before { font-size: clamp(8px, 1vw, 10px); padding: 0 6px; flex: 1 1 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .creator-card.active .card-info::after  { font-size: clamp(8px, 1vw, 10px); padding: 0 5px; flex-shrink: 0; white-space: nowrap; }
+
+    .creator-card[data-badge="ADVISOR"].active .card-info::before { font-size: clamp(7px, 0.85vw, 8.5px); padding: 0 4px; white-space: normal; line-height: 1.2; }
+    .creator-card[data-badge="ADVISOR"].active .card-info::after  { font-size: clamp(7px, 0.85vw, 8.5px); padding: 0 4px; }
+}
+
+/* ══════════════════════════════════════════════
+   5. iPhone 12 Pro + iPhone XR  844–931px
+   ══════════════════════════════════════════════ */
+@media (min-width: 844px) and (max-width: 931px) {
+
+    .creator-page      { padding-top: 80px; display: flex; align-items: center; justify-content: center; }
+    .creator-title     { font-size: clamp(24px, 3.8vw, 34px); padding: 2px 0; }
+    .creator-container { padding: 4px 12px; gap: 4px; overflow: hidden; display: flex; flex-direction: column; align-items: center; }
+    .creator-cards     { flex-wrap: nowrap; gap: clamp(5px, 0.9vw, 12px); padding: 2px 0; overflow: hidden; width: fit-content; max-width: 100%; }
+
+    .creator-card        { flex: 0 0 auto; width: clamp(130px, 15.5vw, 155px); gap: 4px; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .creator-card.active { width: clamp(152px, 18vw, 178px); }
+    .creator-card.active .card-icon { transform: translateX(90px); opacity: 0; position: absolute; pointer-events: none; }
+
+    .card-image { width: clamp(130px, 15.5vw, 155px); height: clamp(170px, 20vw, 200px); border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,.1); flex-shrink: 0; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-radius 0.4s ease, box-shadow 0.4s ease; }
+    .creator-card.active .card-image { width: clamp(152px, 18vw, 178px); border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,.3); }
+
+    .card-icon  { width: clamp(18px, 2.3vw, 24px); height: clamp(18px, 2.3vw, 24px); margin-right: 0; flex-shrink: 0; margin-top: -2px; overflow: visible !important; }
+    .card-info  { width: clamp(130px, 15.5vw, 155px); height: 28px; min-height: 28px; gap: 3px; box-sizing: border-box; margin-top: 2px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .creator-card.active .card-info { width: clamp(152px, 18vw, 178px); flex-direction: row; overflow: hidden; gap: 3px; }
+
+    .card-name { height: 28px; width: 100%; padding: 0 5px; min-width: 0; box-sizing: border-box; overflow: hidden; }
+    .card-name span { font-size: clamp(7px, 0.9vw, 8.5px); white-space: nowrap; overflow: hidden; text-overflow: clip; display: block; width: 100%; text-align: center; letter-spacing: -0.5px; -webkit-text-size-adjust: none; text-size-adjust: none; }
+
+    .creator-card.active .card-info::before,
+    .creator-card.active .card-info::after { display: flex; height: 28px; min-height: 28px; animation: slideUpCenter 0.35s ease 0.1s forwards; box-sizing: border-box; overflow: hidden; }
+    .creator-card.active .card-info::before { font-size: clamp(7px, 0.9vw, 8.5px); padding: 0 5px; flex: 1 1 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .creator-card.active .card-info::after  { font-size: clamp(7px, 0.9vw, 8.5px); padding: 0 5px; flex-shrink: 0; white-space: nowrap; }
+
+    .creator-card[data-badge="ADVISOR"].active .card-info::before { font-size: clamp(6px, 0.75vw, 7.5px); padding: 0 2px; white-space: normal; line-height: 1.2; }
+    .creator-card[data-badge="ADVISOR"].active .card-info::after  { font-size: clamp(6px, 0.75vw, 7.5px); padding: 0 2px; }
+}
+
+/* ══════════════════════════════════════════════
+   6. Transition / small landscape  668–843px
+   ══════════════════════════════════════════════ */
+@media (min-width: 668px) and (max-width: 843px) {
+
+    .creator-title { font-size: clamp(40px, 6.5vw, 60px); }
+    .creator-container { padding: 16px 8px; gap: 14px; overflow: hidden; }
+    .creator-cards { gap: clamp(8px, 1.3vw, 18px); padding: 8px 0; overflow: hidden; }
+    .creator-card  { gap: 10px; }
+
+    .card-image { width: clamp(145px, 20vw, 200px); height: clamp(200px, 34.6vw, 346px); border-radius: 12px; }
+    .card-info  { width: clamp(145px, 20vw, 200px); height: 40px; min-height: 40px; gap: 4px; overflow: visible; }
+    .card-icon  { width: clamp(28px, 3.5vw, 40px); height: clamp(28px, 3.5vw, 40px); flex-shrink: 0; }
+    .card-name  { height: 36px; min-width: 0; overflow: hidden; }
+    .card-name span { font-size: clamp(10px, 1.4vw, 13px); white-space: nowrap; overflow: hidden; text-overflow: clip; display: block; width: 100%; letter-spacing: -0.3px; }
+
+    @media (hover: hover) {
+        .creator-card:hover .card-image { width: clamp(180px, 25vw, 248px); }
+        .creator-card:hover .card-info  { width: clamp(180px, 25vw, 248px); }
+        .creator-card:hover .card-icon  { transform: translateX(140px) scale(1.1); opacity: 0; position: absolute; pointer-events: none; }
+        .creator-card:hover .card-name  { opacity: 0; visibility: hidden; position: absolute; }
+        .creator-card:hover .card-info::before,
+        .creator-card:hover .card-info::after { display: flex; height: 36px; animation: slideUpCenter 0.5s ease 0.2s forwards; }
+        .creator-card:hover .card-info::before { font-size: clamp(10px, 1.3vw, 13px); padding: 0 8px; }
+        .creator-card:hover .card-info::after  { font-size: clamp(11px, 1.4vw, 14px); padding: 0 10px; }
+        .creator-card[data-badge="ADVISOR"]:hover .card-info::before { font-size: clamp(8px, 1.1vw, 11px); padding: 0 6px; }
+        .creator-card[data-badge="ADVISOR"]:hover .card-info::after  { font-size: clamp(9px, 1.2vw, 12px); }
+    }
+
+    .creator-card.active .card-image { width: clamp(180px, 25vw, 248px); }
+    .creator-card.active .card-info  { width: clamp(180px, 25vw, 248px); }
+    .creator-card.active .card-icon  { transform: translateX(140px) scale(1.1); opacity: 0; position: absolute; pointer-events: none; }
+    .creator-card.active .card-name  { opacity: 0; visibility: hidden; position: absolute; }
+    .creator-card.active .card-info::before,
+    .creator-card.active .card-info::after { display: flex; height: 36px; animation: slideUpCenter 0.5s ease 0.2s forwards; }
+    .creator-card.active .card-info::before { font-size: clamp(10px, 1.3vw, 13px); padding: 0 8px; }
+    .creator-card.active .card-info::after  { font-size: clamp(11px, 1.4vw, 14px); padding: 0 10px; }
+    .creator-card[data-badge="ADVISOR"].active .card-info::before { font-size: clamp(8px, 1.1vw, 11px); padding: 0 6px; }
+    .creator-card[data-badge="ADVISOR"].active .card-info::after  { font-size: clamp(9px, 1.2vw, 12px); }
+}
+
+/* ══════════════════════════════════════════════
+   7. iPhone SE landscape  600–667px
+   ══════════════════════════════════════════════ */
+@media (min-width: 600px) and (max-width: 667px) {
+
+    .creator-page      { padding-top: 80px; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .creator-title     { font-size: clamp(26px, 4.5vw, 36px); padding: 2px 0; }
+    .creator-container { padding: 4px 16px; gap: 4px; overflow: hidden; display: flex; flex-direction: column; align-items: center; }
+    .creator-cards     { flex-wrap: nowrap; gap: 5px; padding: 2px 0; overflow: hidden; width: fit-content; max-width: 100%; }
+
+    .creator-card        { flex: 0 0 auto; width: 110px; gap: 4px; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .creator-card.active { width: 145px; }
+    .creator-card.active .card-icon { transform: translateX(90px); opacity: 0; position: absolute; pointer-events: none; }
+
+    .card-image { width: 110px; height: 170px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,.1); flex-shrink: 0; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-radius 0.4s ease, box-shadow 0.4s ease; }
+    .creator-card.active .card-image { width: 145px; border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,.3); }
+
+    .card-icon  { width: 20px; height: 20px; margin-right: 0; flex-shrink: 0; margin-top: -2px; overflow: visible !important; }
+    .card-info  { width: 110px; height: 26px; min-height: 26px; gap: 3px; box-sizing: border-box; margin-top: 2px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .creator-card.active .card-info { width: 145px; flex-direction: row; overflow: hidden; gap: 3px; }
+
+    .card-name { height: 26px; width: 100%; padding: 0 5px; min-width: 0; box-sizing: border-box; overflow: hidden; }
+    .card-name span { font-size: 7px; white-space: nowrap; overflow: hidden; text-overflow: clip; display: block; width: 100%; text-align: center; letter-spacing: -0.5px; -webkit-text-size-adjust: none; text-size-adjust: none; }
+
+    .creator-card.active .card-info::before,
+    .creator-card.active .card-info::after { display: flex; height: 26px; min-height: 26px; animation: slideUpCenter 0.35s ease 0.1s forwards; box-sizing: border-box; overflow: hidden; }
+    .creator-card.active .card-info::before { font-size: 7px; padding: 0 5px; flex: 1 1 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .creator-card.active .card-info::after  { font-size: 7px; padding: 0 5px; flex-shrink: 0; white-space: nowrap; }
+
+    .creator-card[data-badge="ADVISOR"].active .card-info::before { font-size: 6px; padding: 0 4px; white-space: normal; line-height: 1.2; }
+    .creator-card[data-badge="ADVISOR"].active .card-info::after  { font-size: 6px; padding: 0 4px; }
+}
+
+/* ══════════════════════════════════════════════
+   8. Mobile Portrait  < 600px
+   ══════════════════════════════════════════════ */
 @media (max-width: 599px) {
-    .creator-page {
-        padding-top: 80px;
-        padding-bottom: 60px;
-        min-height: 100vh;
-        display: flex;
-        align-items: flex-start;
-        justify-content: center;
-    }
 
+    .creator-page { padding-top: 80px; padding-bottom: 60px; min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; }
+    .creator-container { padding: 16px 20px; gap: 16px; overflow: visible; width: 100%; box-sizing: border-box; align-items: center; }
+    .creator-title { font-size: clamp(42px, 12vw, 64px); padding: 8px 0 4px; letter-spacing: 2px; }
 
-    .creator-container {
-        padding: 16px 20px;
-        gap: 16px;
-        overflow: visible;
-        width: 100%;
-        box-sizing: border-box;
-        align-items: center;
-    }
+    .creator-cards { flex-direction: column; align-items: center; justify-content: flex-start; gap: 20px; padding: 8px 0; overflow: visible; width: 100%; }
+    .creator-card  { flex: none; width: 60vw; max-width: 260px; min-width: 200px; gap: 10px; align-items: center; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
 
+    .card-image { width: 100%; height: auto; aspect-ratio: 3 / 4; border-radius: 16px; box-shadow: 0 6px 20px rgba(0,0,0,.25); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
 
-    .creator-title {
-        font-size: clamp(42px, 12vw, 64px);
-        padding: 8px 0 4px;
-        letter-spacing: 2px;
-        text-align: center;
-    }
+    .card-info { width: 100%; height: 42px; min-height: 42px; gap: 6px; overflow: visible !important; display: flex; align-items: center; box-sizing: border-box; }
+    .card-icon { width: 32px; height: 32px; min-width: 32px; flex-shrink: 0; margin-right: 0; overflow: visible !important; }
+    .card-icon img { width: 32px; height: 32px; }
 
+    .card-name { height: 38px; width: 100%; padding: 0 12px; min-width: 0; box-sizing: border-box; }
+    .card-name span { font-size: clamp(11px, 3vw, 14px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; width: 100%; text-align: center; }
 
-    .creator-cards {
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 20px;
-        padding: 8px 0;
-        overflow: visible;
-        width: 100%;
-    }
-
-
-    .creator-card {
-        flex: none;
-        width: 60vw;
-        max-width: 260px;
-        min-width: 200px;
-        gap: 10px;
-        align-items: center;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-
-    .card-image {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 3 / 4;
-        border-radius: 16px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-
-    .card-info {
-        width: 100%;
-        height: 42px;
-        min-height: 42px;
-        gap: 6px;
-        overflow: visible !important;
-        display: flex;
-        align-items: center;
-        box-sizing: border-box;
-    }
-
-
-    .card-icon {
-        width: 32px;
-        height: 32px;
-        min-width: 32px;
-        flex-shrink: 0;
-        margin-right: 0;
-        overflow: visible !important;
-    }
-
-
-    .card-icon img {
-        width: 32px;
-        height: 32px;
-    }
-
-
-    .card-name {
-        height: 38px;
-        width: 100%;
-        padding: 0 12px;
-        min-width: 0;
-        box-sizing: border-box;
-    }
-
-
-    .card-name span {
-        font-size: clamp(11px, 3vw, 14px);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: block;
-        width: 100%;
-        text-align: center;
-    }
-
-
-    .creator-card.active .card-image {
-        width: 100%;
-        border-radius: 18px;
-        box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35);
-    }
-
-
-    .creator-card.active .card-info {
-        width: 100%;
-    }
-
-
-    .creator-card.active .card-icon {
-        transform: translateX(160px) scale(1.1);
-        opacity: 0;
-        position: absolute;
-        pointer-events: none;
-    }
-
-
-    .creator-card.active .card-name {
-        opacity: 0;
-        pointer-events: none;
-        position: absolute;
-        visibility: hidden;
-    }
-
+    .creator-card.active .card-image { width: 100%; border-radius: 18px; box-shadow: 0 10px 32px rgba(0,0,0,.35); }
+    .creator-card.active .card-info  { width: 100%; }
+    .creator-card.active .card-icon  { transform: translateX(160px) scale(1.1); opacity: 0; position: absolute; pointer-events: none; }
+    .creator-card.active .card-name  { opacity: 0; pointer-events: none; position: absolute; visibility: hidden; }
 
     .creator-card.active .card-info::before,
-    .creator-card.active .card-info::after {
-        display: flex;
-        height: 38px;
-        animation: slideUpCenter 0.5s ease 0.2s forwards;
-    }
+    .creator-card.active .card-info::after { display: flex; height: 38px; animation: slideUpCenter 0.5s ease 0.2s forwards; }
+    .creator-card.active .card-info::before { font-size: clamp(10px, 2.8vw, 13px); padding: 0 12px; }
+    .creator-card.active .card-info::after  { font-size: clamp(11px, 3vw, 14px); padding: 0 14px; }
 
-
-    .creator-card.active .card-info::before {
-        font-size: clamp(10px, 2.8vw, 13px);
-        padding: 0 12px;
-    }
-
-
-    .creator-card.active .card-info::after {
-        font-size: clamp(11px, 3vw, 14px);
-        padding: 0 14px;
-    }
-
-
-    .creator-card[data-badge="ADVISOR"].active .card-info::before {
-        font-size: clamp(8px, 2.3vw, 11px);
-        padding: 0 10px;
-    }
-
-
-    .creator-card[data-badge="ADVISOR"].active .card-info::after {
-        font-size: clamp(9px, 2.5vw, 12px);
-        padding: 0 10px;
-    }
+    .creator-card[data-badge="ADVISOR"].active .card-info::before { font-size: clamp(8px, 2.3vw, 11px); padding: 0 10px; }
+    .creator-card[data-badge="ADVISOR"].active .card-info::after  { font-size: clamp(9px, 2.5vw, 12px); padding: 0 10px; }
 }
 
-
-/* ─── Mobile landscape (844–896px) ─── */
-@media (min-width: 820px) and (max-width: 896px) {
-    .creator-page {
-        padding-top: 100px;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-
-    .creator-title {
-        font-size: clamp(30px, 5vw, 42px);
-        padding: 4px 0;
-        letter-spacing: 1px;
-        text-align: center;
-    }
-
-
-    .creator-container {
-        padding: 4px 20px;
-        gap: 4px;
-        overflow: hidden;
-        width: 100%;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-
-    .creator-cards {
-        flex-direction: row;
-        flex-wrap: nowrap;
-        gap: 5px;
-        padding: 2px 0;
-        overflow: hidden;
-        width: fit-content;
-        max-width: 100%;
-        box-sizing: border-box;
-        justify-content: center;
-        align-items: stretch;
-    }
-
-
-    .creator-card {
-        flex: 0 0 auto;
-        width: 140px;          
-        gap: 4px;
-        align-items: center;
-        transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-
-    .creator-card.active {
-        width: 168px;          
-    }
-
-
-    .creator-card.active .card-icon {
-        transform: translateX(90px);
-        opacity: 0;
-    }
-
-
-    .card-image {
-        width: 140px;          
-        height: 180px;
-        border-radius: 8px;
-        overflow: hidden;
-        position: relative;
-        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-radius 0.4s ease, box-shadow 0.4s ease;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        flex-shrink: 0;
-    }
-
-
-    .creator-card.active .card-image {
-        width: 168px;           /* ← ตามขนาด card active */
-        height: 180px;
-        border-radius: 10px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    }
-
-
-    .card-icon {
-        width: clamp(18px, 3vw, 24px);
-        height: clamp(18px, 3vw, 24px);
-        margin-right: 0;
-        flex-shrink: 0;
-        margin-top: -2px;
-        overflow: visible !important;
-    }
-
-
-    .card-info {
-        width: 130px;           /* ← ตามรูป */
-        height: 28px;
-        min-height: 28px;
-        gap: 3px;
-        box-sizing: border-box;
-        margin-top: 2px;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-
-    .creator-card.active .card-info {
-        width: 168px;           /* ← ตามรูป active */
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        overflow: hidden;
-        gap: 3px;
-        box-sizing: border-box;
-    }
-
-
-    .card-name {
-        height: 28px;
-        width: 100%;
-        padding: 0 6px;
-        min-width: 0;
-        box-sizing: border-box;
-        overflow: hidden;
-    }
-
-
-    .card-name span {
-        font-size: 7.5px;        
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: clip;
-        display: block;
-        width: 100%;
-        line-height: 1.3;
-        text-align: center;
-        letter-spacing: -0.5px;
-        transform-origin: center;
-    }
-
-
-    .creator-card.active .card-info::before,
-    .creator-card.active .card-info::after {
-        display: flex;
-        height: 28px;
-        min-height: 28px;
-        animation: slideUpCenter 0.35s ease 0.1s forwards;
-        box-sizing: border-box;
-        overflow: hidden;
-    }
-
-
-    .creator-card.active .card-info::before {
-        font-size: 8px;         /* ← +1px จาก 600–668 (7px) */
-        padding: 0 6px;
-        flex: 1 1 0;
-        min-width: 0;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-
-    .creator-card.active .card-info::after {
-        font-size: 8px;         /* ← +1px จาก 600–668 (7px) */
-        padding: 0 6px;
-        flex-shrink: 0;
-        white-space: nowrap;
-    }
-
-
-    .creator-card[data-badge="ADVISOR"].active .card-info::before {
-        font-size: 7px;         /* ← +1px จาก 600–668 (6px) */
-        padding: 0 1px;
-        white-space: normal;
-        line-height: 1.2;
-        text-overflow: ellipsis;
-    }
-
-
-    .creator-card[data-badge="ADVISOR"].active .card-info::after {
-        font-size: 7px;         /* ← +1px จาก 600–668 (6px) */
-        padding: 0 1px;
-    }
-}
-
-
-
-
-/* ─── iPhone SE / 6 / 7 / 8 landscape (600–667px) ─── */
-@media (max-width: 668px) and (min-width: 600px) {
-    .creator-page {
-        padding-top: 100px;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .creator-title {
-        font-size: clamp(30px, 5vw, 42px);
-        padding: 4px 0;
-        letter-spacing: 1px;
-        text-align: center;
-    }
-
-    .creator-container {
-        padding: 4px 20px;
-        gap: 4px;
-        overflow: hidden;
-        width: 100%;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .creator-cards {
-        flex-direction: row;
-        flex-wrap: nowrap;
-        gap: 5px;
-        padding: 2px 0;
-        overflow: hidden;
-        width: fit-content;
-        max-width: 100%; 
-        box-sizing: border-box;
-        justify-content: center;
-        align-items: stretch;
-    }
-
-    .creator-card {
-        flex: 0 0 auto;
-        width: 110px; 
-        gap: 4px;
-        align-items: center;
-        transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .creator-card.active {
-        width: 145px;
-    }
-
-    .creator-card.active .card-icon {
-        transform: translateX(90px);
-        opacity: 0;
-    }
-
-    .card-image {
-        width: 110px;
-        height: 170px;
-        border-radius: 8px;
-        overflow: hidden;
-        position: relative;
-        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-radius 0.4s ease, box-shadow 0.4s ease;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        flex-shrink: 0;
-    }
-
-    .creator-card.active .card-image {
-        width: 145px;
-        height: 170px;
-        border-radius: 10px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    }
-
-    .card-icon {
-        width: clamp(18px, 3vw, 24px);
-        height: clamp(18px, 3vw, 24px);
-        margin-right: 0;
-        flex-shrink: 0;
-        margin-top: -2px;
-        overflow: visible !important;
-    }
-
-    .card-info {
-        width: 110px;
-        height: 28px;
-        min-height: 28px;
-        gap: 3px;
-        box-sizing: border-box;
-        margin-top: 2px;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .creator-card.active .card-info {
-        width: 145px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        overflow: hidden;
-        gap: 3px;
-        box-sizing: border-box;
-    }
-
-    .card-name {
-        height: 28px;
-        width: 100%;
-        padding: 0 6px;
-        min-width: 0;
-        box-sizing: border-box;
-        overflow: hidden;          
-    }
-
-    .card-name span {
-        font-size: 7px;               
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: clip;
-        display: block;
-        width: 100%;
-        line-height: 1.3;
-        text-align: center;
-        letter-spacing: -0.5px;
-        transform: scaleX(1.0);      /* ← บีบแนวนอน */
-        transform-origin: center;
-    }
-
-    @media (hover: hover) {
-
-        .creator-card:hover .card-info::before,
-        .creator-card:hover .card-info::after {
-            display: flex;
-            height: 28px;
-            animation: slideUpCenter 0.35s ease 0.1s forwards;
-        }
-
-        .creator-card:hover .card-info::before {
-            font-size: clamp(7px, 1.8vw, 10px);
-            padding: 0 8px;
-        }
-
-        .creator-card:hover .card-info::after {
-            font-size: clamp(7px, 1.8vw, 10px);
-            padding: 0 10px;
-        }
-
-        .creator-card[data-badge="ADVISOR"]:hover .card-info::before {
-            font-size: clamp(6px, 1.5vw, 9px);
-        }
-
-        .creator-card[data-badge="ADVISOR"]:hover .card-info::after {
-            font-size: clamp(6px, 1.5vw, 9px);
-            padding: 0 8px;
-        }
-    }
-
-    .creator-card.active .card-info::before,
-    .creator-card.active .card-info::after {
-        display: flex;
-        height: 28px;
-        min-height: 28px;
-        animation: slideUpCenter 0.35s ease 0.1s forwards;
-        box-sizing: border-box;
-        overflow: hidden;
-    }
-
-    .creator-card.active .card-info::before {
-        font-size: 7px;
-        padding: 0 6px;
-        flex: 1 1 0;
-        min-width: 0;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .creator-card.active .card-info::after {
-        font-size: 7px;
-        padding: 0 6px;
-        flex-shrink: 0;
-        white-space: nowrap;
-    }
-
-     .creator-card[data-badge="ADVISOR"].active .card-info::before {
-        font-size: 6px;
-        padding: 0 5px;
-        white-space: normal;
-        line-height: 1.2;
-        text-overflow: ellipsis;
-    }
-
-   .creator-card[data-badge="ADVISOR"].active .card-info::after {
-        font-size: 6px;
-        padding: 0 5px;
-    }
-}
-
-/* ─── iPhone 14 Pro Max landscape (897–932px) ─── */
-@media (min-width: 897px) and (max-width: 932px) {
-    .creator-page {
-        padding-top: 100px;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .creator-title {
-        font-size: clamp(30px, 5vw, 42px);
-        padding: 4px 0;
-        letter-spacing: 1px;
-        text-align: center;
-    }
-
-    .creator-container {
-        padding: 4px 20px;
-        gap: 4px;
-        overflow: hidden;
-        width: 100%;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .creator-cards {
-        flex-direction: row;
-        flex-wrap: nowrap;
-        gap: 10px;
-        padding: 2px 0;
-        overflow: hidden;
-        width: fit-content;
-        max-width: 100%;
-        box-sizing: border-box;
-        justify-content: center;
-        align-items: stretch;
-    }
-
-    .creator-card {
-        flex: 0 0 auto;
-        width: 160px;           
-        gap: 4px;
-        align-items: center;
-        transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .creator-card.active {
-        width: 178px;           
-    }
-
-    .creator-card.active .card-icon {
-        transform: translateX(90px);
-        opacity: 0;
-    }
-
-    .card-image {
-        width: 160px;           
-        height: 200px;
-        border-radius: 8px;
-        overflow: hidden;
-        position: relative;
-        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-radius 0.4s ease, box-shadow 0.4s ease;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        flex-shrink: 0;
-    }
-
-    .creator-card.active .card-image {
-        width: 178px;           /* ← ตามขนาด card active */
-        height: 200px;
-        border-radius: 10px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    }
-
-    .card-icon {
-        width: clamp(18px, 3vw, 24px);
-        height: clamp(18px, 3vw, 24px);
-        margin-right: 0;
-        flex-shrink: 0;
-        margin-top: -2px;
-        overflow: visible !important;
-    }
-
-    .card-info {
-        width: 160px;           
-        height: 28px;
-        min-height: 28px;
-        gap: 3px;
-        box-sizing: border-box;
-        margin-top: 2px;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .creator-card.active .card-info {
-        width: 178px;           
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        overflow: hidden;
-        gap: 3px;
-        box-sizing: border-box;
-    }
-
-    .card-name {
-        height: 28px;
-        width: 100%;
-        padding: 0 6px;
-        min-width: 0;
-        box-sizing: border-box;
-        overflow: hidden;
-    }
-
-    .card-name span {
-        font-size: 9px;         
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: clip;
-        display: block;
-        width: 100%;
-        line-height: 1.3;
-        text-align: center;
-        letter-spacing: -0.5px;
-        transform-origin: center;
-    }
-
-    .creator-card.active .card-info::before,
-    .creator-card.active .card-info::after {
-        display: flex;
-        height: 28px;
-        min-height: 28px;
-        animation: slideUpCenter 0.35s ease 0.1s forwards;
-        box-sizing: border-box;
-        overflow: hidden;
-    }
-
-    .creator-card.active .card-info::before {
-        font-size: 9px;         
-        padding: 0 6px;
-        flex: 1 1 0;
-        min-width: 0;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .creator-card.active .card-info::after {
-        font-size: 9px;         
-        padding: 0 5px;
-        flex-shrink: 0;
-        white-space: nowrap;
-    }
-
-    .creator-card[data-badge="ADVISOR"].active .card-info::before {
-        font-size: 7px;         
-        padding: 0 3px;
-        white-space: normal;
-        line-height: 1.2;
-        text-overflow: ellipsis;
-    }
-
-    .creator-card[data-badge="ADVISOR"].active .card-info::after {
-        font-size: 7px;         
-        padding: 0 3px;
-    }
-}
-
-/* GLOVE SHAKE + PULSE GLOW */
-
+/* ══════════════════════════════════════════════
+   GLOVE SHAKE + PULSE GLOW
+   ══════════════════════════════════════════════ */
 @keyframes gloveShake {
-    0% {
-        transform: translate(0, 0) rotate(0deg);
-    }
-
-    10% {
-        transform: translate(-2px, -1px) rotate(-3deg);
-    }
-
-    20% {
-        transform: translate(2px, 1px) rotate(3deg);
-    }
-
-    30% {
-        transform: translate(-2px, 1px) rotate(-2deg);
-    }
-
-    40% {
-        transform: translate(2px, -1px) rotate(2deg);
-    }
-
-    50% {
-        transform: translate(-1px, 2px) rotate(-3deg);
-    }
-
-    60% {
-        transform: translate(1px, -2px) rotate(3deg);
-    }
-
-    70% {
-        transform: translate(-1px, -1px) rotate(-1deg);
-    }
-
-    80% {
-        transform: translate(1px, 1px) rotate(1deg);
-    }
-
-    90% {
-        transform: translate(0, -1px) rotate(0deg);
-    }
-
-    100% {
-        transform: translate(0, 0) rotate(0deg);
-    }
+    0%   { transform: translate(0, 0) rotate(0deg); }
+    10%  { transform: translate(-2px, -1px) rotate(-3deg); }
+    20%  { transform: translate(2px, 1px) rotate(3deg); }
+    30%  { transform: translate(-2px, 1px) rotate(-2deg); }
+    40%  { transform: translate(2px, -1px) rotate(2deg); }
+    50%  { transform: translate(-1px, 2px) rotate(-3deg); }
+    60%  { transform: translate(1px, -2px) rotate(3deg); }
+    70%  { transform: translate(-1px, -1px) rotate(-1deg); }
+    80%  { transform: translate(1px, 1px) rotate(1deg); }
+    90%  { transform: translate(0, -1px) rotate(0deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
 }
 
 @keyframes pulseGlow {
-    0% {
-        transform: translate(-50%, -50%);
-        opacity: 1;
-    }
-
-    50% {
-        transform: translate(-50%, -50%);
-        opacity: 0.7;
-    }
-
-    100% {
-        transform: translate(-50%, -50%);
-        opacity: 1;
-    }
+    0%   { transform: translate(-50%, -50%); opacity: 1; }
+    50%  { transform: translate(-50%, -50%); opacity: 0.7; }
+    100% { transform: translate(-50%, -50%); opacity: 1; }
 }
 
-.card-icon {
-    position: relative;
-    overflow: visible;
-}
+.card-icon { position: relative; overflow: visible; }
 
 .card-icon::after {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 55%;
-    height: 55%;
-    border-radius: 0;
+    top: 50%; left: 50%;
+    width: 55%; height: 55%;
     background: rgba(216, 33, 33, 1);
     filter: blur(16px);
     animation: pulseGlow 2s ease-in-out infinite;
@@ -1660,11 +582,8 @@ body {
 .card-icon::before {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 40%;
-    height: 40%;
-    border-radius: 0;
+    top: 50%; left: 50%;
+    width: 40%; height: 40%;
     background: rgba(255, 60, 60, 1);
     filter: blur(10px);
     transform: translate(-50%, -50%);
@@ -1680,27 +599,14 @@ body {
     z-index: 1;
 }
 
-/* หยุดแอนิเมชันตอนถูก Hover หรือ Touch */
 .creator-card:hover .card-icon::after,
 .creator-card:hover .card-icon::before,
 .creator-card.active .card-icon::after,
-.creator-card.active .card-icon::before {
-    animation: none;
-    opacity: 0;
-}
+.creator-card.active .card-icon::before { animation: none; opacity: 0; }
 
 .creator-card:hover .card-icon img,
-.creator-card.active .card-icon img {
-    animation: none;
-    filter: none;
-    transform: none;
-}
+.creator-card.active .card-icon img { animation: none; filter: none; transform: none; }
 
-/* Hamburger Menu Toggle */
-.hamburger-menu {
-    pointer-events: none;
-}
-
-.hamburger-menu.show {
-    pointer-events: auto;
-}
+/* Hamburger Menu */
+.hamburger-menu { pointer-events: none; }
+.hamburger-menu.show { pointer-events: auto; }
