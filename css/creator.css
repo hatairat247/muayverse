@@ -434,7 +434,7 @@ body {
     .card-info  { width: clamp(160px, 18vw, 180px); height: 28px; min-height: 28px; gap: 3px; box-sizing: border-box; margin-top: 2px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
     .creator-card.active .card-info { width: clamp(160px, 18vw, 180px); flex-direction: row; overflow: hidden; gap: 3px; }
 
-    .card-name { height: 24px; width: clamp(100px, 15.5vw, 130px); padding: 0 5px; min-width: 0; box-sizing: border-box; overflow: hidden; }
+    .card-name { height: 50px; width: clamp(100px, 15.5vw, 130px); padding: 0 5px; min-width: 0; box-sizing: border-box; overflow: hidden; }
     .card-name span { font-size: clamp(1px, 0.9vw, 2px); white-space: nowrap; overflow: hidden; text-overflow: clip; display: block; width: 100%; text-align: center; letter-spacing: -1px; -webkit-text-size-adjust: none; text-size-adjust: none; }
 
     .creator-card.active .card-info::before,
