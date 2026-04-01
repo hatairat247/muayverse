@@ -385,8 +385,8 @@ body {
    ══════════════════════════════════════════════ */
 @media (min-width: 932px) and (max-width: 1023px) {
 
-    .creator-page      { padding-top: 60px; display: flex; align-items: center; justify-content: center; }
-    .creator-title     { font-size: clamp(28px, 4vw, 38px); padding: 2px 0; }
+    .creator-page      { padding-top: 100px; display: flex; align-items: center; justify-content: center; }
+    .creator-title     { font-size: clamp(50px, 4vw, 38px); padding: 2px 0; }
     .creator-container { padding: 4px 16px; gap: 4px; overflow: hidden; display: flex; flex-direction: column; align-items: center; }
     .creator-cards     { flex-wrap: nowrap; gap: clamp(8px, 1.2vw, 16px); padding: 2px 0; overflow: hidden; width: fit-content; max-width: 100%; }
 
@@ -394,23 +394,23 @@ body {
     .creator-card.active { width: clamp(178px, 20vw, 210px); }
     .creator-card.active .card-icon { transform: translateX(100px); opacity: 0; position: absolute; pointer-events: none; }
 
-    .card-image { width: clamp(155px, 17vw, 185px); height: clamp(195px, 21.5vw, 235px); border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,.1); flex-shrink: 0; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-radius 0.4s ease, box-shadow 0.4s ease; }
+    .card-image { width: clamp(155px, 17vw, 185px); height: clamp(250px, 21.5vw, 235px); border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,.1); flex-shrink: 0; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-radius 0.4s ease, box-shadow 0.4s ease; }
     .creator-card.active .card-image { width: clamp(178px, 20vw, 210px); border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,.3); }
 
     .card-icon  { width: clamp(20px, 2.5vw, 26px); height: clamp(20px, 2.5vw, 26px); margin-right: 0; flex-shrink: 0; margin-top: -2px; overflow: visible !important; }
     .card-info  { width: clamp(155px, 17vw, 185px); height: 28px; min-height: 28px; gap: 3px; box-sizing: border-box; margin-top: 2px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
     .creator-card.active .card-info { width: clamp(178px, 20vw, 210px); flex-direction: row; overflow: hidden; gap: 3px; }
 
-    .card-name { height: 28px; width: 100%; padding: 0 6px; min-width: 0; box-sizing: border-box; overflow: hidden; }
+    .card-name { height: 30px; width: 100%; padding: 0 6px; min-width: 0; box-sizing: border-box; overflow: hidden; }
     .card-name span { font-size: clamp(8.5px, 1vw, 10px); white-space: nowrap; overflow: hidden; text-overflow: clip; display: block; width: 100%; text-align: center; letter-spacing: -0.4px; -webkit-text-size-adjust: none; text-size-adjust: none; }
 
     .creator-card.active .card-info::before,
-    .creator-card.active .card-info::after { display: flex; height: 28px; min-height: 28px; animation: slideUpCenter 0.35s ease 0.1s forwards; box-sizing: border-box; overflow: hidden; }
+    .creator-card.active .card-info::after { display: flex; height: 30px; min-height: 30px; animation: slideUpCenter 0.35s ease 0.1s forwards; box-sizing: border-box; overflow: hidden; }
     .creator-card.active .card-info::before { font-size: clamp(8px, 1vw, 10px); padding: 0 6px; flex: 1 1 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .creator-card.active .card-info::after  { font-size: clamp(8px, 1vw, 10px); padding: 0 5px; flex-shrink: 0; white-space: nowrap; }
 
-    .creator-card[data-badge="ADVISOR"].active .card-info::before { font-size: clamp(7px, 0.85vw, 8.5px); padding: 0 4px; white-space: normal; line-height: 1.2; }
-    .creator-card[data-badge="ADVISOR"].active .card-info::after  { font-size: clamp(7px, 0.85vw, 8.5px); padding: 0 4px; }
+    .creator-card[data-badge="ADVISOR"].active .card-info::before { font-size: clamp(6px, 0.85vw, 8.5px); padding: 0px; white-space: normal; line-height: 1.2; }
+    .creator-card[data-badge="ADVISOR"].active .card-info::after  { font-size: clamp(6px, 0.85vw, 8.5px); padding: 0 1px; }
 }
 
 /* ══════════════════════════════════════════════
@@ -419,31 +419,31 @@ body {
 @media (min-width: 844px) and (max-width: 931px) {
 
     .creator-page      { padding-top: 60px; display: flex; align-items: center; justify-content: center; }
-    .creator-title     { font-size: clamp(24px, 3.8vw, 34px); padding: 2px 0; }
+    .creator-title     { font-size: clamp(50px, 3.8vw, 34px); padding: 2px 0; }
     .creator-container { padding: 4px 12px; gap: 4px; overflow: hidden; display: flex; flex-direction: column; align-items: center; }
     .creator-cards     { flex-wrap: nowrap; gap: clamp(5px, 0.9vw, 12px); padding: 2px 0; overflow: hidden; width: fit-content; max-width: 100%; }
 
-    .creator-card        { flex: 0 0 auto; width: clamp(130px, 15.5vw, 155px); gap: 4px; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-    .creator-card.active { width: clamp(130px, 18vw, 145px); }
+    .creator-card        { flex: 0 0 auto; width: clamp(180px, 15.5vw, 185px); gap: 4px; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .creator-card.active { width: clamp(200px, 18vw, 185px); }
     .creator-card.active .card-icon { transform: translateX(90px); opacity: 0; position: absolute; pointer-events: none; }
 
-    .card-image { width: clamp(100px, 15.5vw, 130px); height: clamp(130px, 20vw, 170px); border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,.1); flex-shrink: 0; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-radius 0.4s ease, box-shadow 0.4s ease; }
-    .creator-card.active .card-image { width: clamp(130px, 18vw, 145px); border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,.3); }
+    .card-image { width: clamp(180px, 15.5vw, 130px); height: clamp(230px, 20vw, 170px); border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,.1); flex-shrink: 0; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-radius 0.4s ease, box-shadow 0.4s ease; }
+    .creator-card.active .card-image { width: clamp(200px, 15.5vw, 185px); border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,.3); }
 
     .card-icon  { width: clamp(18px, 2.3vw, 24px); height: clamp(18px, 2.3vw, 24px); margin-right: 0; flex-shrink: 0; margin-top: -2px; overflow: visible !important; }
-    .card-info  { width: clamp(130px, 15.5vw, 155px); height: 28px; min-height: 28px; gap: 3px; box-sizing: border-box; margin-top: 2px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-    .creator-card.active .card-info { width: clamp(130px, 18vw, 145px); flex-direction: row; overflow: hidden; gap: 3px; }
+    .card-info  { width: clamp(180px, 15.5vw, 185px); height: 28px; min-height: 28px; gap: 3px; box-sizing: border-box; margin-top: 2px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .creator-card.active .card-info { width: clamp(195px, 15.5vw, 185px); flex-direction: row; overflow: hidden; gap: 3px; }
 
-    .card-name { height: 24px; width: 100px; padding: 0 5px; min-width: 0; box-sizing: border-box; overflow: hidden; }
-    .card-name span { font-size: clamp(10px, 0.9vw, 12px); white-space: nowrap; overflow: hidden; text-overflow: clip; display: block; width: 100%; text-align: center; letter-spacing: -0.5px; -webkit-text-size-adjust: none; text-size-adjust: none; }
+    .card-name { height: 24px; width: clamp(180px, 15.5vw, 185px); padding: 0 5px; min-width: 0; box-sizing: border-box; overflow: hidden; }
+    .card-name span { font-size: clamp(12px, 0.9vw, 14px); white-space: nowrap; overflow: hidden; text-overflow: clip; display: block; width: 100%; text-align: center; letter-spacing: -0.5px; -webkit-text-size-adjust: none; text-size-adjust: none; }
 
     .creator-card.active .card-info::before,
     .creator-card.active .card-info::after { display: flex; height: 24px; min-height: 24px; animation: slideUpCenter 0.35s ease 0.1s forwards; box-sizing: border-box; overflow: hidden; }
     .creator-card.active .card-info::before { font-size: clamp(10px, 0.9vw, 12px); padding: 0 5px; flex: 1 1 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .creator-card.active .card-info::after  { font-size: clamp(10px, 0.9vw, 12px); padding: 0 5px; flex-shrink: 0; white-space: nowrap; }
     
-    .creator-card[data-badge="ADVISOR"].active .card-info::before { font-size: clamp(4.5px, 0.75vw, 5px); padding: 0 2px; white-space: normal; line-height: 1.2; }
-    .creator-card[data-badge="ADVISOR"].active .card-info::after  { font-size: clamp(6px, 0.75vw, 7.5px); padding: 0 2px; }
+    .creator-card[data-badge="ADVISOR"].active .card-info::before { font-size: clamp(7px, 0.75vw, 5px); padding: 0 2px; white-space: normal; line-height: 1.2; }
+    .creator-card[data-badge="ADVISOR"].active .card-info::after  { font-size: clamp(8px, 0.75vw, 7.5px); padding: 0 2px; }
 }
 
 /* ══════════════════════════════════════════════
@@ -451,7 +451,7 @@ body {
    ══════════════════════════════════════════════ */
 @media (min-width: 668px) and (max-width: 843px) {
 
-     .creator-page      { padding-top: 80px; display: flex; align-items: center; justify-content: center; }
+    .creator-page      { padding-top: 80px; display: flex; align-items: center; justify-content: center; }
     .creator-title     { font-size: clamp(24px, 3.8vw, 34px); padding: 2px 0; }
     .creator-container { padding: 8px 12px; gap: 2px; overflow: hidden; display: flex; flex-direction: column; align-items: center; }
     .creator-cards     { flex-wrap: nowrap; gap: clamp(10px, 2vw, 12px); padding: 18px 0; overflow: visible; width: fit-content; max-width: 100%; justify-content: center; }
@@ -493,7 +493,7 @@ body {
     .creator-card.active { width: 145px; }
     .creator-card.active .card-icon { transform: translateX(90px); opacity: 0; position: absolute; pointer-events: none; }
 
-    .card-image { width: 110px; height: 170px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,.1); flex-shrink: 0; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-radius 0.4s ease, box-shadow 0.4s ease; }
+    .card-image { width: 110px; height: 200px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,.1); flex-shrink: 0; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-radius 0.4s ease, box-shadow 0.4s ease; }
     .creator-card.active .card-image { width: 145px; border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,.3); }
 
     .card-icon  { width: 20px; height: 20px; margin-right: 0; flex-shrink: 0; margin-top: -2px; overflow: visible !important; }
