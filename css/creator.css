@@ -153,7 +153,8 @@ body {
     background-color: var(--card-bg);
     padding: 0 15px;
     border-radius: 100px;
-    width: 100%;
+    flex: 1;
+    min-width: 0; 
     height: 40px;
     display: flex;
     align-items: center;
@@ -435,7 +436,7 @@ body {
     .creator-card.active .card-info { width: clamp(130px, 18vw, 145px); flex-direction: row; overflow: hidden; gap: 3px; }
 
     .card-name { height: 28px; flex: 1; min-width: 0; padding: 0 5px; box-sizing: border-box; overflow: hidden; }
-    .card-name span { font-size: clamp(8.5px, 1.1vw, 11px); white-space: nowrap; overflow: hidden; text-overflow: clip; display: block; width: 100%; text-align: center; letter-spacing: -0.3px; -webkit-text-size-adjust: none; text-size-adjust: none; }
+    .card-name span { font-size: clamp(4.5px, 1.1vw, 6.5px); white-space: nowrap; overflow: hidden; text-overflow: clip; display: block; width: 100%; text-align: center; letter-spacing: -0.3px; -webkit-text-size-adjust: none; text-size-adjust: none; }
 
 
     .creator-card.active .card-info::before,
