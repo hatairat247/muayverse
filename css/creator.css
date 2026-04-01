@@ -435,12 +435,12 @@ body {
     .creator-card.active .card-info { width: clamp(130px, 18vw, 145px); flex-direction: row; overflow: hidden; gap: 3px; }
 
     .card-name { height: 24px; width: 100px; padding: 0 5px; min-width: 0; box-sizing: border-box; overflow: hidden; }
-    .card-name span { font-size: clamp(2.5px, 0.9vw, 3px); white-space: nowrap; overflow: hidden; text-overflow: clip; display: block; width: 100%; text-align: center; letter-spacing: -0.5px; -webkit-text-size-adjust: none; text-size-adjust: none; }
+    .card-name span { font-size: clamp(10px, 0.9vw, 12px); white-space: nowrap; overflow: hidden; text-overflow: clip; display: block; width: 100%; text-align: center; letter-spacing: -0.5px; -webkit-text-size-adjust: none; text-size-adjust: none; }
 
     .creator-card.active .card-info::before,
     .creator-card.active .card-info::after { display: flex; height: 24px; min-height: 24px; animation: slideUpCenter 0.35s ease 0.1s forwards; box-sizing: border-box; overflow: hidden; }
-    .creator-card.active .card-info::before { font-size: clamp(4.5px, 0.9vw, 4.5px); padding: 0 5px; flex: 1 1 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .creator-card.active .card-info::after  { font-size: clamp(4.5px, 0.9vw, 4.5px); padding: 0 5px; flex-shrink: 0; white-space: nowrap; }
+    .creator-card.active .card-info::before { font-size: clamp(10px, 0.9vw, 12px); padding: 0 5px; flex: 1 1 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .creator-card.active .card-info::after  { font-size: clamp(10px, 0.9vw, 12px); padding: 0 5px; flex-shrink: 0; white-space: nowrap; }
     
     .creator-card[data-badge="ADVISOR"].active .card-info::before { font-size: clamp(4.5px, 0.75vw, 5px); padding: 0 2px; white-space: normal; line-height: 1.2; }
     .creator-card[data-badge="ADVISOR"].active .card-info::after  { font-size: clamp(6px, 0.75vw, 7.5px); padding: 0 2px; }
@@ -453,11 +453,11 @@ body {
 
      .creator-page      { padding-top: 80px; display: flex; align-items: center; justify-content: center; }
     .creator-title     { font-size: clamp(24px, 3.8vw, 34px); padding: 2px 0; }
-    .creator-container { padding: 4px 12px; gap: 2px; overflow: hidden; display: flex; flex-direction: column; align-items: center; }
-    .creator-cards     { flex-wrap: nowrap; gap: clamp(5px, 0.9vw, 12px); padding: 2px 0; overflow: hidden; width: fit-content; max-width: 100%; }
+    .creator-container { padding: 8px 12px; gap: 2px; overflow: hidden; display: flex; flex-direction: column; align-items: center; }
+    .creator-cards     { flex-wrap: nowrap; gap: clamp(10px, 2vw, 12px); padding: 18px 0; overflow: visible; width: fit-content; max-width: 100%; justify-content: center; }
 
-    .creator-card        { flex: 0 0 auto; width: clamp(180px, 20vw, 180px); gap: 4px; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-    .creator-card.active { width: clamp(180px, 18vw, 170px); }
+    .creator-card        { flex: 0 0 auto; width: clamp(160px, 10vw, 190px); gap: 4px; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .creator-card.active { width: clamp(180px, 18vw, 190px); }
     .creator-card.active .card-icon { transform: translateX(90px); opacity: 0; position: absolute; pointer-events: none; }
 
     .card-image { width: clamp(150px, 15.5vw, 170px); height: clamp(230px, 20vw, 210px); border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,.1); flex-shrink: 0; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-radius 0.4s ease, box-shadow 0.4s ease; }
