@@ -38,7 +38,22 @@ body {
     container-type: size;
 }
 
-
+/* Safari iOS Fix */
+@supports (-webkit-touch-callout: none) {
+    #canvas-center-wrapper {
+        height: -webkit-fill-available !important;
+        height: 100dvh !important;
+    }
+    
+    #desktop-canvas {
+        height: min(56.25vw, -webkit-fill-available) !important;
+        max-height: 100dvh !important;
+    }
+    
+    .history-wrapper {
+        height: -webkit-fill-available !important;
+    }
+}
 /* =========================================================================
    HISTORY PAGE - MASTER SCALED & CLEANED (100% cqw)
    ========================================================================= */
@@ -3311,8 +3326,8 @@ body::before {
 
 @media screen and (min-width: 768px) and (max-width: 1366px) and (min-height: 500px) and (hover: none) and (pointer: coarse) {
     #desktop-canvas {
-        height: 100vh !important;
-        max-height: 100vh !important;
+        height: 100dvh !important;
+        max-height: 100dvh !important;
     }
 
     .history-viewport {
@@ -3585,6 +3600,98 @@ body::before {
     }
 }
 
+/* DevTools/tablet fallback: some emulators do not report coarse pointer like real iPad. */
+@media screen and (orientation: landscape) and (min-width: 1024px) and (max-width: 1366px) and (min-height: 700px) and (max-height: 1100px) and (max-aspect-ratio: 3/2) {
+    #canvas-center-wrapper,
+    #desktop-canvas,
+    .history-wrapper,
+    .history-viewport {
+        height: 100dvh !important;
+        max-height: 100dvh !important;
+        min-height: 100dvh !important;
+    }
+
+    #canvas-center-wrapper {
+        align-items: stretch !important;
+    }
+
+    #desktop-canvas {
+        width: 100vw !important;
+        max-width: none !important;
+        min-width: 100vw !important;
+    }
+
+    .history-wrapper,
+    .history-viewport,
+    #timeline-track {
+        height: 100% !important;
+        min-height: 100% !important;
+        max-height: 100% !important;
+    }
+
+    .era-indicator,
+    .era-indicator-sukhothai,
+    .era-indicator-ayutthaya,
+    .era-indicator-regional,
+    .era-indicator-korat,
+    .era-indicator-lopburi,
+    .era-indicator-chaiya,
+    .era-indicator-tha-sao,
+    .era-indicator-thonburi,
+    .era-indicator-early-ratana,
+    .era-indicator-mid-ratana,
+    .era-indicator-present {
+        top: 84.5% !important;
+    }
+}
+
+/* iOS Safari: dynamic toolbar can expose a bottom gap and clip era labels in landscape. */
+@supports (-webkit-touch-callout: none) {
+    @media screen and (hover: none) and (pointer: coarse) and (orientation: landscape) {
+        #canvas-center-wrapper,
+        #desktop-canvas,
+        .history-wrapper,
+        .history-viewport {
+            height: 100dvh !important;
+            max-height: 100dvh !important;
+            min-height: 100dvh !important;
+        }
+
+        #canvas-center-wrapper {
+            align-items: stretch !important;
+        }
+
+        #desktop-canvas {
+            width: 100vw !important;
+            max-width: none !important;
+            min-width: 100vw !important;
+        }
+
+        .history-wrapper,
+        .history-viewport,
+        #timeline-track {
+            height: 100% !important;
+            min-height: 100% !important;
+            max-height: 100% !important;
+        }
+
+        .era-indicator,
+        .era-indicator-sukhothai,
+        .era-indicator-ayutthaya,
+        .era-indicator-regional,
+        .era-indicator-korat,
+        .era-indicator-lopburi,
+        .era-indicator-chaiya,
+        .era-indicator-tha-sao,
+        .era-indicator-thonburi,
+        .era-indicator-early-ratana,
+        .era-indicator-mid-ratana,
+        .era-indicator-present {
+            top: 84.5% !important;
+        }
+    }
+}
+
 /* =========================================================================
     MAC & LAPTOP FIX (1101px - 1440px)
    ========================================================================= */
@@ -3778,5 +3885,95 @@ body::before {
     body {
         -webkit-text-size-adjust: 100% !important;
         text-size-adjust: 100% !important;
+    }
+}
+
+/* Final iPad landscape override (kept at end to win cascade in emulators). */
+@media screen and (orientation: landscape) and (min-width: 1000px) and (max-width: 1400px) and (min-height: 700px) and (max-height: 1100px) {
+    #canvas-center-wrapper {
+        height: 100vh !important;
+        height: 100dvh !important;
+        min-height: 100vh !important;
+        min-height: 100dvh !important;
+        align-items: stretch !important;
+    }
+
+    #desktop-canvas {
+        width: 100vw !important;
+        min-width: 100vw !important;
+        max-width: none !important;
+        height: 100% !important;
+        min-height: 100% !important;
+        max-height: none !important;
+    }
+
+    .history-wrapper,
+    .history-viewport,
+    #timeline-track {
+        height: 100% !important;
+        min-height: 100% !important;
+        max-height: none !important;
+    }
+
+    .era-indicator,
+    .era-indicator-sukhothai,
+    .era-indicator-ayutthaya,
+    .era-indicator-regional,
+    .era-indicator-korat,
+    .era-indicator-lopburi,
+    .era-indicator-chaiya,
+    .era-indicator-tha-sao,
+    .era-indicator-thonburi,
+    .era-indicator-early-ratana,
+    .era-indicator-mid-ratana,
+    .era-indicator-present {
+        top: 84.5% !important;
+    }
+
+    .text-box {
+        padding: 10px 16px !important;
+    }
+
+    .text-box p {
+        font-size: 15px !important;
+        line-height: 1.55 !important;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9) !important;
+    }
+
+    .fighter-label,
+    .pose-label,
+    .chaiya-label,
+    .tha-sao-label,
+    .tha-sao-group-label,
+    .tha-sao-group-label-2,
+    .tha-sao-group-label-3 {
+        font-size: 14px !important;
+    }
+
+    .era-title,
+    .era-indicator-sukhothai .era-title,
+    .era-indicator-ayutthaya .era-title,
+    .era-indicator-regional .era-title,
+    .era-indicator-korat .era-title,
+    .era-indicator-lopburi .era-title,
+    .era-indicator-chaiya .era-title,
+    .era-indicator-tha-sao .era-title,
+    .era-indicator-thonburi .era-title,
+    .era-indicator-early-ratana .era-title,
+    .era-indicator-mid-ratana .era-title,
+    .era-indicator-present .era-title {
+        font-size: 14px !important;
+    }
+
+    .era-number {
+        font-size: 16px !important;
+    }
+
+    #navbar {
+        height: 56px !important;
+    }
+
+    .next-page-label {
+        font-size: 12px !important;
     }
 }
