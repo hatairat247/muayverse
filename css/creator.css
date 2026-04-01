@@ -468,15 +468,15 @@ body {
     .creator-card.active .card-info { width: clamp(175px, 18vw, 180px); flex-direction: row; overflow: hidden; gap: 3px; }
 
     .card-name { height: 24px; width: clamp(130px, 15.5vw, 160px); padding: 0 5px; min-width: 0; box-sizing: border-box; overflow: hidden; }
-    .card-name span { font-size: clamp(8px, 0.9vw, 10px); white-space: nowrap; overflow: hidden; text-overflow: clip; display: block; width: 100%; text-align: center; letter-spacing: -0.3px; -webkit-text-size-adjust: none; text-size-adjust: none; }
+    .card-name span { font-size: clamp(9px, 0.9vw, 10px); white-space: nowrap; overflow: hidden; text-overflow: clip; display: block; width: 100%; text-align: center; letter-spacing: -0.3px; -webkit-text-size-adjust: none; text-size-adjust: none; }
 
     .creator-card.active .card-info::before,
     .creator-card.active .card-info::after { display: flex; height: 24px; min-height: 24px; animation: slideUpCenter 0.35s ease 0.1s forwards; box-sizing: border-box; overflow: hidden; }
-    .creator-card.active .card-info::before { font-size: clamp(7px, 0.9vw, 9px); padding: 0 5px; flex: 1 1 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .creator-card.active .card-info::after  { font-size: clamp(7px, 0.9vw, 9px); padding: 0 5px; flex-shrink: 0; white-space: nowrap; }
+    .creator-card.active .card-info::before { font-size: clamp(9px, 0.9vw, 9px); padding: 0 5px; flex: 1 1 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .creator-card.active .card-info::after  { font-size: clamp(9px, 0.9vw, 9px); padding: 0 5px; flex-shrink: 0; white-space: nowrap; }
     
-    .creator-card[data-badge="ADVISOR"].active .card-info::before { font-size: clamp(5.5px, 0.75vw, 7px); padding: 0 2px; white-space: normal; line-height: 1.2; }
-    .creator-card[data-badge="ADVISOR"].active .card-info::after  { font-size: clamp(6px, 0.75vw, 7.5px); padding: 0 2px; }
+    .creator-card[data-badge="ADVISOR"].active .card-info::before { font-size: clamp(7px, 0.75vw, 7.5px); padding: 0 2px; white-space: normal; line-height: 1.2; }
+    .creator-card[data-badge="ADVISOR"].active .card-info::after  { font-size: clamp(7px, 0.75vw, 7.5px); padding: 0 2px; }
 }
 
 /* ══════════════════════════════════════════════
