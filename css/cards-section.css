@@ -293,26 +293,26 @@
    ======================================================= */
 @media screen and (min-width: 768px) and (max-height: 500px) and (orientation: landscape) {
     .cards-section {
-        padding: 40px 16px 60px 16px !important;
+        padding: 0px 16px 60px 16px !important;
         min-height: 100vh !important;
         margin-top: 0 !important;
     }
 
     .cards-container {
         flex-direction: row !important;
-        gap: 40px !important;
-        padding-top: 70px !important;
+        gap: 50px !important;
+        padding-top: 60px !important;
         justify-content: center !important;
     }
 
     .card {
-        width: 190px !important;
+        width: 200px !important;
         flex: 0 0 auto !important;
     }
 
     .card-image-wrapper {
         width: 100% !important;
-        height: 280px !important;
+        height: 300px !important;
         /* ล็อกสัดส่วน 2:3 รูปไม่ยืดแน่นอน */
     }
 
