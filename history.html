@@ -25,13 +25,11 @@
     <link rel="stylesheet" href="css/loading.css">
 
     <style>
-        /* แก้ FOUC หมุนจอ: บังคับให้หน้าจอดำยังอยู่ (flex) เพื่อให้มีเวลาหน่วงบัง GSAP จัดของ */
+        /* FIX: ปิดกล่องเด็ดขาดในแนวนอน และโชว์ทันทีแบบไม่มีดีเลย์ในแนวตั้ง */
         @media screen and (orientation: landscape) {
             #landscape-overlay {
-                display: flex !important;
-                opacity: 0 !important;
-                pointer-events: none !important;
-                transition: opacity 0.3s ease 0.5s !important;
+                display: none !important;
+                /* สั่งฆ่าทิ้งทันทีในแนวนอน ไม่ต้องลอยกวนใจ */
             }
         }
 
@@ -41,6 +39,7 @@
                 opacity: 1 !important;
                 pointer-events: auto !important;
                 transition: none !important;
+                /* ปิดระบบหน่วงเวลา ตั้งจอปุ๊บติดปั๊บ! */
             }
         }
     </style>

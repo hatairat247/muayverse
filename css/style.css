@@ -385,7 +385,7 @@ main {
     }
 }
 
-/* ✅ มือถือแนวนอน (Landscape) หรือจอไม่เกิน 896px */
+/*  มือถือแนวนอน (Landscape) หรือจอไม่เกิน 896px */
 @media screen and (max-width: 896px) {
     :root {
         --navbar-height: 50px;
@@ -643,5 +643,28 @@ main {
 @media screen and (orientation: portrait) and (max-width: 1024px) {
     #landscape-overlay {
         display: flex;
+    }
+}
+
+/* ========================================= */
+/* FIX: ล็อกขนาดไอคอนและฟอนต์หน้า Rotate (ไม่ให้บวมเด็ดขาด) */
+/* ========================================= */
+@media screen and (orientation: portrait) {
+    .landscape-icon {
+        width: 80px !important;
+        height: 80px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .landscape-icon svg {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    .landscape-message {
+        font-size: 16px !important;
+        line-height: 1.5 !important;
+        margin: 0 !important;
+        max-width: 80% !important;
     }
 }
