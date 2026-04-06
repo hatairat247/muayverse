@@ -260,7 +260,7 @@
     .cards-container {
         flex-direction: row;
         gap: 40px;
-        padding-top: 80px;
+        padding-top: 150px;
     }
 
     .card {
@@ -279,7 +279,7 @@
 
     .card-lamp {
         top: -160px;
-        width: 260px;
+        width: 300px;
     }
 
     .cards-background {
@@ -288,29 +288,52 @@
     }
 }
 
-/* Mobile จอเล็กมาก (480px ลงมา) - แก้ไซส์การ์ดไม่ให้ทะลุจอ */
-@media screen and (max-width: 480px) {
+/* =======================================================
+    FIX: ดักเฉพาะจอมือถือที่มีความสูงไม่เกิน 500px
+   ======================================================= */
+@media screen and (min-width: 768px) and (max-height: 500px) and (orientation: landscape) {
     .cards-section {
-        padding: 30px 12px 50px 12px;
-        margin-top: -40px;
+        padding: 40px 16px 60px 16px !important;
+        min-height: 100vh !important;
+        margin-top: 0 !important;
     }
 
     .cards-container {
-        gap: 20px;
-        padding-top: 60px;
+        flex-direction: row !important;
+        gap: 40px !important;
+        padding-top: 70px !important;
+        justify-content: center !important;
+    }
+
+    .card {
+        width: 190px !important;
+        flex: 0 0 auto !important;
     }
 
     .card-image-wrapper {
-        width: 150px;
-        height: 225px;
+        width: 100% !important;
+        height: 280px !important;
+        /* ล็อกสัดส่วน 2:3 รูปไม่ยืดแน่นอน */
+    }
+
+    .card-image,
+    .card-image-hover {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
     }
 
     .card-title {
-        font-size: 20px;
+        font-size: 20px !important;
+        margin-top: 0 !important;
     }
 
     .card-lamp {
-        top: -150px;
-        width: 260px;
+        top: -200px !important;
+        width: 400px !important;
+    }
+
+    .cards-background {
+        background-attachment: scroll !important;
     }
 }
