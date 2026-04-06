@@ -397,7 +397,7 @@
 /* Tablet (768px - 1024px) */
 @media screen and (max-width: 1024px) and (min-width: 768px) {
     .hero-container {
-        padding: 30px;
+        padding: 40px;
         gap: 30px;
         flex-direction: row;
         align-items: center;
@@ -422,7 +422,7 @@
     }
 
     .hero-description-figma {
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .hero-content-right {
@@ -471,7 +471,7 @@
     }
 
     .hero-section-figma {
-        margin-top: -100px;
+        margin-top: -160px;
     }
 
     .hero-content-left {

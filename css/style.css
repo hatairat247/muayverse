@@ -668,3 +668,13 @@ main {
         max-width: 80% !important;
     }
 }
+
+/* ========================================= */
+/*  FIX: ดันระยะห่าง Section 2 ไม่ให้ติดวิดีโอเกินไปบนมือถือ */
+/* ========================================= */
+@media screen and (max-width: 932px) {
+
+    #heroFigma {
+        padding-top: 40px !important;
+    }
+}
