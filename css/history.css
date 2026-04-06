@@ -44,16 +44,17 @@ body {
         height: -webkit-fill-available !important;
         height: 100dvh !important;
     }
-    
+
     #desktop-canvas {
         height: min(56.25vw, -webkit-fill-available) !important;
         max-height: 100dvh !important;
     }
-    
+
     .history-wrapper {
         height: -webkit-fill-available !important;
     }
 }
+
 /* =========================================================================
    HISTORY PAGE - MASTER SCALED & CLEANED (100% cqw)
    ========================================================================= */
@@ -3602,6 +3603,7 @@ body::before {
 
 /* DevTools/tablet fallback: some emulators do not report coarse pointer like real iPad. */
 @media screen and (orientation: landscape) and (min-width: 1024px) and (max-width: 1366px) and (min-height: 700px) and (max-height: 1100px) and (max-aspect-ratio: 3/2) {
+
     #canvas-center-wrapper,
     #desktop-canvas,
     .history-wrapper,
@@ -3648,6 +3650,7 @@ body::before {
 /* iOS Safari: dynamic toolbar can expose a bottom gap and clip era labels in landscape. */
 @supports (-webkit-touch-callout: none) {
     @media screen and (hover: none) and (pointer: coarse) and (orientation: landscape) {
+
         #canvas-center-wrapper,
         #desktop-canvas,
         .history-wrapper,
@@ -3975,5 +3978,15 @@ body::before {
 
     .next-page-label {
         font-size: 12px !important;
+    }
+}
+
+/* ========================================= */
+/* FIX: ดันฉาก 16:9 ลงติดขอบล่าง เฉพาะหน้าจอ iPad (หน้าจอสัมผัสเท่านั้น) */
+/* ========================================= */
+@media (pointer: coarse) and (min-width: 768px) and (max-width: 1366px) {
+    #canvas-center-wrapper {
+        align-items: flex-end !important;
+        /* ดันกล่อง 16:9 ทั้งก้อนลงมาติดขอบล่างของจอ */
     }
 }
