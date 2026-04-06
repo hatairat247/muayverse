@@ -260,7 +260,7 @@
     .cards-container {
         flex-direction: row;
         gap: 40px;
-        padding-top: 150px;
+        padding-top: 130px;
     }
 
     .card {
