@@ -2845,7 +2845,7 @@ body::before {
 /* 1. จุดหลัก (สำหรับ Mac ให้เหยียบเส้นพอดี) */
 #walking-fighter {
     position: absolute !important;
-    bottom: 0 !important;
+    bottom: 8% !important;
     left: 20% !important;
     transform: translateX(-50%) !important;
     z-index: 7 !important;
@@ -2853,7 +2853,9 @@ body::before {
 }
 
 /* 2. ตัวล้างค่าซ้อนทับ (สำหรับ iPad และมือถือ) */
-@media (hover: none) and (pointer: coarse) {
+@media (hover: none) and (pointer: coarse),
+screen and (max-height: 500px) and (orientation: landscape),
+screen and (max-width: 950px) {
     #walking-fighter {
         bottom: 0 !important;
     }
