@@ -19,6 +19,12 @@ body {
     /* extra scroll distance for karaoke + pause */
 }
 
+@supports (height: 100dvh) {
+    :root {
+        --sakyant-height: calc(100dvh - var(--navbar-height));
+    }
+}
+
 /* ----- Text Highlight ----- */
 .text-highlight {
     color: #E9C824;
