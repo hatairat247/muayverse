@@ -1071,6 +1071,16 @@ function initWalkingFighter() {
         startWalking();
         clearTimeout(scrollStopTimer);
         scrollStopTimer = setTimeout(() => { stopWalking(); }, 800);
+
+        // Scroll hint 
+        const scrollHint = document.querySelector('.fighter-scroll-hint');
+        if (scrollHint) {
+            if (window.scrollY > 500) {
+                scrollHint.classList.add('hidden');
+            } else {
+                scrollHint.classList.remove('hidden');
+            }
+        }
     });
 }
 
