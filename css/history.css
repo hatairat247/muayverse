@@ -3118,11 +3118,11 @@ screen and (max-width: 950px) {
 
         .chaiya-fighters,
         .chaiya-fighters-2 {
-            bottom: 16cqh !important;
+            bottom: 18cqh !important;
         }
 
         .chaiya-fighters-3 {
-            bottom: 14cqh !important;
+            bottom: 16cqh !important;
         }
 
         img.chaiya-fighter.chaiya-fighter-1 {
@@ -3418,6 +3418,12 @@ screen and (max-width: 950px) {
         /* ====================================
            โหมด Samsung (Android)
            ==================================== */
+        :host,
+        :root,
+        body {
+            align-items: flex-end !important;
+        }
+
         .lopburi-fighters .lopburi-container {
             margin-left: -10cqw !important;
         }
@@ -3429,7 +3435,7 @@ screen and (max-width: 950px) {
         .chaiya-fighters .chaiya-container,
         .chaiya-fighters-2 .chaiya-container,
         .chaiya-fighters-3 .chaiya-container {
-            margin-left: -5cqw !important;
+            margin-left: -8cqw !important;
         }
 
         .chaiya-fighters .chaiya-container:first-child,
@@ -3442,7 +3448,7 @@ screen and (max-width: 950px) {
 
         /* กดรูปแผนที่ลงมาไม่ให้ลอยสูง */
         .boran-thailand-image {
-            bottom: -50cqh !important;
+            bottom: -70cqh !important;
         }
 
         /* ====================================
@@ -3455,7 +3461,7 @@ screen and (max-width: 950px) {
             }
 
             .tha-sao-fighters-3 .tha-sao-container-3 {
-                margin-left: -15cqw !important;
+                margin-left: 10cqw !important;
             }
 
             .chaiya-fighters .chaiya-container,
@@ -3464,11 +3470,16 @@ screen and (max-width: 950px) {
                 margin-left: -3cqw !important;
             }
 
+            .mid-ratana-fighters .mid-ratana-container {
+                margin-left: -5cqw !important;
+            }
+
             .chaiya-fighters .chaiya-container:first-child,
             .chaiya-fighters-2 .chaiya-container:first-child,
             .chaiya-fighters-3 .chaiya-container:first-child,
             .lopburi-fighters .lopburi-container:first-child,
-            .tha-sao-fighters-3 .tha-sao-container-3:first-child {
+            .tha-sao-fighters-3 .tha-sao-container-3:first-child,
+            .mid-ratana-fighters .mid-ratana-container:first-child {
                 margin-left: 0 !important;
             }
 
@@ -3477,18 +3488,6 @@ screen and (max-width: 950px) {
                 bottom: -50cqh !important;
             }
         }
-    }
-}
-
-/* =========================================================================
-   🎯 MASTER FIX: ดันฉาก 16:9 ลงติดขอบล่าง สำหรับมือถือ (แก้ช่องว่างด้านล่าง)
-   ========================================================================= */
-@media (hover: none) and (pointer: coarse),
-screen and (max-height: 500px) and (orientation: landscape),
-screen and (max-width: 950px) {
-    #canvas-center-wrapper {
-        align-items: flex-end !important;
-        /* 🌟 ดึงก้อนเว็บทั้งก้อนลงมาให้เหยียบขอบล่างจอ */
     }
 }
 
