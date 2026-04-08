@@ -1640,7 +1640,7 @@ body::before {
 
 .tha-sao-fighters-2 {
     position: absolute;
-    left: 677cqw;
+    left: 674cqw;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -3418,23 +3418,6 @@ screen and (max-width: 950px) {
         /* ====================================
            โหมด Samsung (Android)
            ==================================== */
-        .bg-mountain {
-            bottom: 2cqh !important;
-        }
-
-        .bg-ruins,
-        .ayutthaya-temples,
-        .korat-background,
-        .lopburi-background,
-        .chaiya-background,
-        .tha-sao-background,
-        .thonburi-background,
-        .early-ratana-background,
-        .mid-ratana-background,
-        .present-background {
-            bottom: 0cqh !important;
-        }
-
         :host,
         :root,
         body {
@@ -3442,21 +3425,25 @@ screen and (max-width: 950px) {
         }
 
         .regional-fighters .fighter-container {
-            margin-left: -2cqw !important;
+            margin-left: -5cqw !important;
         }
 
         .lopburi-fighters .lopburi-container {
             margin-left: -10cqw !important;
         }
 
+        .chaiya-fighters .chaiya-container,
+        .chaiya-fighters-2 .chaiya-container,
+        .chaiya-fighters-3 .chaiya-container {
+            margin-left: -6cqw !important;
+        }
+
         .tha-sao-fighters-3 .tha-sao-container-3 {
             margin-left: -10cqw !important;
         }
 
-        .chaiya-fighters .chaiya-container,
-        .chaiya-fighters-2 .chaiya-container,
-        .chaiya-fighters-3 .chaiya-container {
-            margin-left: -8cqw !important;
+        .mid-ratana-fighters .mid-ratana-container {
+            margin-left: -5cqw !important;
         }
 
         .regional-fighters .fighter-container:first-child,
@@ -3464,12 +3451,13 @@ screen and (max-width: 950px) {
         .chaiya-fighters-2 .chaiya-container:first-child,
         .chaiya-fighters-3 .chaiya-container:first-child,
         .lopburi-fighters .lopburi-container:first-child,
-        .tha-sao-fighters-3 .tha-sao-container-3:first-child {
+        .tha-sao-fighters-3 .tha-sao-container-3:first-child,
+        .mid-ratana-fighters .mid-ratana-container:first-child {
             margin-left: 0 !important;
         }
 
         .boran-thailand-image {
-            bottom: -70cqh !important;
+            bottom: -80cqh !important;
         }
 
         /* ====================================
