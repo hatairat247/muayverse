@@ -3440,7 +3440,7 @@ screen and (max-width: 950px) {
     .early-ratana-fighter,
     .mid-ratana-fighter,
     .kick-pose {
-        height: 30cqh !important;
+        height: 50cqh !important;
     }
 
     .fighters .fighter {
