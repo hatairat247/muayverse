@@ -2949,7 +2949,7 @@ screen and (max-width: 950px) {
 }
 
 /* =========================================================================
-    THE FINAL LAYER FIX
+    MOBILE - THE FINAL LAYER FIX
    ========================================================================= */
 
 #desktop-canvas .history-wrapper {
@@ -2999,106 +2999,6 @@ screen and (max-width: 950px) {
             opacity: 1 !important;
             z-index: 0 !important;
             left: 1010cqw !important;
-        }
-
-        .fighters .fighter,
-        #walking-fighter-img {
-            position: absolute !important;
-            bottom: -35cqh !important;
-            height: 35cqh !important;
-            width: auto !important;
-            top: auto !important;
-            z-index: 15 !important;
-        }
-
-        .kick-poses {
-            position: absolute !important;
-            bottom: 6cqh !important;
-            width: 30cqw !important;
-            top: auto !important;
-        }
-
-        .regional-fighters {
-            position: absolute !important;
-            bottom: 18cqh !important;
-            top: auto !important;
-        }
-
-        .khanom-tom-fighter,
-        .early-ratana-pic-rama5 {
-            height: 45cqh !important;
-            bottom: 28cqh !important;
-            top: auto !important;
-        }
-
-        .boran-thailand-image {
-            position: absolute !important;
-            height: 50cqh !important;
-            bottom: -50cqh !important;
-            top: auto !important;
-        }
-
-        .korat-poses {
-            position: absolute !important;
-            bottom: 15cqh !important;
-            width: 30cqw !important;
-            top: auto !important;
-            left: 285cqw !important;
-            transform: scale(0.9) !important;
-            transform-origin: bottom center !important;
-        }
-
-        .lopburi-fighters {
-            position: absolute !important;
-            bottom: 27cqh !important;
-            top: auto !important;
-        }
-
-        .lopburi-fighters-2 {
-            position: absolute !important;
-            bottom: 15cqh !important;
-            top: auto !important;
-        }
-
-        .chaiya-fighters,
-        .chaiya-fighters-2,
-        .chaiya-fighters-3 {
-            position: absolute !important;
-            bottom: 18cqh !important;
-            top: auto !important;
-        }
-
-        .tha-sao-fighters,
-        .tha-sao-fighters-2,
-        .tha-sao-fighters-3 {
-            bottom: 10cqh !important;
-            position: absolute !important;
-            top: auto !important;
-        }
-
-        .thonburi-fighters,
-        .early-ratana-fighters {
-            position: absolute !important;
-            bottom: 13cqh !important;
-            top: auto !important;
-        }
-
-        .mid-ratana-fighters {
-            position: absolute !important;
-            bottom: 20cqh !important;
-            top: auto !important;
-        }
-
-        #walking-fighter-img {
-            position: absolute !important;
-            bottom: 8cqh !important;
-            height: 35cqh !important;
-            top: auto !important;
-        }
-
-        .present-fighters {
-            bottom: 45cqh !important;
-            top: auto !important;
         }
 
         .bg-ruins,
@@ -3164,6 +3064,171 @@ screen and (max-width: 950px) {
             left: 310cqw !important;
         }
 
+        .fighters,
+        .kick-poses,
+        .regional-fighters,
+        .korat-poses,
+        .lopburi-fighters,
+        .lopburi-fighters-2,
+        .chaiya-fighters,
+        .chaiya-fighters-2,
+        .chaiya-fighters-3,
+        .tha-sao-fighters,
+        .tha-sao-fighters-2,
+        .tha-sao-fighters-3,
+        .thonburi-fighters,
+        .early-ratana-fighters,
+        .mid-ratana-fighters,
+        .present-fighters {
+            height: auto !important;
+            width: auto !important;
+            display: flex !important;
+            align-items: flex-end !important;
+            top: auto !important;
+        }
+
+        .fighters,
+        .kick-poses,
+        .regional-fighters,
+        .thonburi-fighters,
+        .early-ratana-fighters,
+        .mid-ratana-fighters {
+            bottom: 17cqh !important;
+        }
+
+        .kick-click-hint {
+            position: absolute !important;
+            right: 1px !important;
+            left: auto !important;
+            top: 70% !important;
+            margin-top: -10px !important;
+            width: 25px !important;
+            height: auto !important;
+            pointer-events: none !important;
+            z-index: 20 !important;
+            filter: invert(1) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6)) !important;
+            animation: kickClickBounce 1.2s ease-in-out infinite !important;
+        }
+
+        .korat-poses,
+        .lopburi-fighters {
+            bottom: 20cqh !important;
+        }
+
+        .chaiya-fighters,
+        .chaiya-fighters-2 {
+            bottom: 15cqh !important;
+        }
+
+        .chaiya-fighters-3 {
+            bottom: 14cqh !important;
+        }
+
+        img.chaiya-fighter.chaiya-fighter-1 {
+            top: 3.64cqw !important;
+        }
+
+        img.chaiya-fighter.chaiya-fighter-2 {
+            top: 0.78cqw !important;
+        }
+
+        img.chaiya-fighter.chaiya-fighter-3 {
+            top: -1.56cqw !important;
+        }
+
+        img.chaiya-fighter.chaiya-fighter-4 {
+            top: 0.52cqw !important;
+        }
+
+        img.chaiya-fighter.chaiya-fighter-5 {
+            top: 1.56cqw !important;
+        }
+
+        img.chaiya-fighter.chaiya-fighter-6 {
+            top: -1.04cqw !important;
+        }
+
+        img.chaiya-fighter.chaiya-fighter-7 {
+            top: 2.6cqw !important;
+        }
+
+        img.chaiya-fighter.chaiya-fighter-8 {
+            top: -2.08cqw !important;
+        }
+
+        img.chaiya-fighter.chaiya-fighter-9 {
+            top: 1.3cqw !important;
+        }
+
+        img.chaiya-fighter.chaiya-fighter-10 {
+            top: -0.52cqw !important;
+        }
+
+        img.chaiya-fighter.chaiya-fighter-11 {
+            top: 2.08cqw !important;
+        }
+
+        .lopburi-fighters-2 {
+            bottom: 14cqh !important;
+        }
+
+        .tha-sao-fighters,
+        .tha-sao-fighters-2,
+        .tha-sao-fighters-3 {
+            bottom: 15cqh !important;
+        }
+
+        .present-fighters {
+            bottom: 45cqh !important;
+        }
+
+        .fighters .fighter,
+        .kick-pose,
+        .regional-fighter,
+        .korat-pose,
+        .lopburi-fighter,
+        .chaiya-fighter,
+        .tha-sao-fighter,
+        .tha-sao-fighter-2,
+        .tha-sao-fighter-3,
+        .thonburi-fighter,
+        .early-ratana-fighter,
+        .mid-ratana-fighter {
+            height: 60cqh !important;
+            width: auto !important;
+            top: auto !important;
+            left: auto !important;
+            transform: none !important;
+            position: relative !important;
+        }
+
+        /* นักมวยคนเดิน */
+        #walking-fighter-img {
+            position: absolute !important;
+            bottom: 8cqh !important;
+            height: 35cqh !important;
+            width: auto !important;
+            top: auto !important;
+            z-index: 15 !important;
+        }
+
+        .khanom-tom-fighter,
+        .early-ratana-pic-rama5 {
+            height: 45cqh !important;
+            bottom: 28cqh !important;
+            top: auto !important;
+        }
+
+        .boran-thailand-image {
+            position: absolute !important;
+            height: 50cqh !important;
+            bottom: -50cqh !important;
+            top: auto !important;
+        }
+
+        /* ====================================
+           4. Text Boxes & Fonts (ของป้าเป๊ะ 100%)
+           ==================================== */
         .text-box {
             padding: 6px 12px !important;
         }
@@ -3225,18 +3290,24 @@ screen and (max-width: 950px) {
         }
 
         .fighter-label,
-        .pose-label,
         .chaiya-label,
+        .pose-label,
         .tha-sao-group-label,
         .tha-sao-group-label-2,
         .tha-sao-group-label-3 {
             font-size: 10px !important;
         }
 
+        .fighter-label {
+            font-size: 10px !important;
+            position: absolute !important;
+        }
+
         #navbar {
             height: 35px !important;
         }
 
+        /* Era Timeline */
         .era-timeline-line {
             display: block !important;
             top: 30% !important;
@@ -3253,6 +3324,10 @@ screen and (max-width: 950px) {
         .era-title {
             font-size: 10px !important;
             white-space: nowrap !important;
+        }
+
+        .era-number {
+            font-size: 12px !important;
         }
 
         .era-indicator-sukhothai .era-circle {
@@ -3320,10 +3395,6 @@ screen and (max-width: 950px) {
             white-space: nowrap !important;
             display: block !important;
             opacity: 1 !important;
-        }
-
-        .era-number {
-            font-size: 12px !important;
         }
 
         #timeline-track {
@@ -3477,7 +3548,7 @@ screen and (max-width: 950px) {
     .early-ratana-fighter,
     .mid-ratana-fighter,
     .kick-pose {
-        height: 20cqh !important;
+        height: 50cqh !important;
     }
 
     .fighters .fighter {
@@ -3494,13 +3565,13 @@ screen and (max-width: 950px) {
 
     .khanom-tom-fighter,
     .early-ratana-pic-rama5 {
-        height: 32cqh !important;
+        height: 46cqh !important;
         bottom: 30cqh !important;
     }
 
     .boran-thailand-image {
         bottom: -8cqh !important;
-        height: 32cqh !important;
+        height: 45cqh !important;
         top: auto !important;
     }
 
@@ -3538,7 +3609,7 @@ screen and (max-width: 950px) {
     }
 
     .present-fighter {
-        height: 15cqh !important;
+        height: 22cqh !important;
     }
 
     .present-fighters {
