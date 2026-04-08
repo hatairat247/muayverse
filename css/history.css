@@ -2962,6 +2962,11 @@ screen and (max-width: 950px) {
 @media (hover: none) and (pointer: coarse),
 screen and (max-height: 500px) and (orientation: landscape),
 screen and (max-width: 950px) {
+
+    #canvas-center-wrapper {
+        align-items: flex-end !important;
+    }
+
     @container (max-width: 1440px) {
         .bg-mountain {
             height: 40cqh !important;
@@ -3418,11 +3423,6 @@ screen and (max-width: 950px) {
         /* ====================================
            โหมด Samsung (Android)
            ==================================== */
-        :host,
-        :root,
-        body {
-            align-items: flex-end !important;
-        }
 
         .regional-fighters .fighter-container {
             margin-left: -5cqw !important;
@@ -3443,7 +3443,7 @@ screen and (max-width: 950px) {
         }
 
         .mid-ratana-fighters .mid-ratana-container {
-            margin-left: -5cqw !important;
+            margin-left: -8cqw !important;
         }
 
         .regional-fighters .fighter-container:first-child,
@@ -3466,7 +3466,7 @@ screen and (max-width: 950px) {
         @supports (-webkit-touch-callout: none) {
 
             .lopburi-fighters .lopburi-container {
-                margin-left: -10cqw !important;
+                margin-left: -7cqw !important;
             }
 
             .tha-sao-fighters-3 .tha-sao-container-3 {
@@ -3480,7 +3480,7 @@ screen and (max-width: 950px) {
             }
 
             .mid-ratana-fighters .mid-ratana-container {
-                margin-left: -5cqw !important;
+                margin-left: -7cqw !important;
             }
 
             .chaiya-fighters .chaiya-container:first-child,
@@ -3492,7 +3492,6 @@ screen and (max-width: 950px) {
                 margin-left: 0 !important;
             }
 
-            /* คืนค่าตำแหน่งแผนที่เดิมที่ iPhone แสดงผลสวยอยู่แล้ว */
             .boran-thailand-image {
                 bottom: -50cqh !important;
             }

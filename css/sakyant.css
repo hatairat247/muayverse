@@ -1,5 +1,18 @@
 /* sakyant Page Styles - Exact Figma Layout */
 
+html,
+body {
+    overscroll-behavior-x: none !important;
+    /* ปิดการไถจอแนวนอนเพื่อย้อนกลับ */
+    overscroll-behavior-y: none !important;
+    /* ปิดอาการเด้งดึ๋งขอบจอบน-ล่าง */
+}
+
+.gaoyord-papers {
+    touch-action: pan-y !important;
+    /* 🌟 สำคัญมาก! บอกเบราว์เซอร์ว่าตรงกล่องกระดาษนี้ เราจะเขียน JS สไลด์เอง เบราว์เซอร์ห้ามมายุ่ง! */
+}
+
 :root {
     --sakyant-height: calc(100vh - var(--navbar-height));
     --karaoke-scroll-length: 100vh;
