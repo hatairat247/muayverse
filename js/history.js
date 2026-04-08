@@ -1543,8 +1543,8 @@ function initThonburiFighterReveal() {
             }
         });
         tl.set(fighter, { opacity: 0, scale: 0.3, y: 0 })
-            .to(fighter, { opacity: 1, scale: 1.08, duration: 0.55, ease: 'power2.out' })
-            .to(fighter, { scale: 1, duration: 0.25, ease: 'elastic.out(1.2, 0.5)' });
+            .to(fighter, { opacity: 1, scale: 1.08, duration: 0.3, ease: 'power2.out' })
+            .to(fighter, { scale: 1, duration: 0.15, ease: 'elastic.out(1.2, 0.5)' });
     };
 
     ScrollTrigger.create({
@@ -1599,7 +1599,7 @@ function initEarlyRatanaFighterReveal() {
         trigger: '.early-ratana-fighters', containerAnimation: horizontalScrollTween, start: 'left 60%',
         onEnter: () => {
             gsap.to(fighter, {
-                opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'back.out(1.7)',
+                opacity: 1, y: 0, scale: 1, duration: 0.35, ease: 'back.out(1.7)',
                 onComplete: () => {
                     fighter.closest('.early-ratana-container')?.classList.add('aura-visible');
                     gsap.to(fighter, {

@@ -1681,7 +1681,6 @@ body::before {
 }
 
 .tha-sao-container,
-.tha-sao-container-2,
 .tha-sao-container-3 {
     display: flex;
     flex-direction: column;
@@ -1690,11 +1689,19 @@ body::before {
     margin-left: -7cqw;
 }
 
+.tha-sao-fighters-row-2 {
+    width: 100% !important;
+    justify-content: center !important;
+}
+
 .tha-sao-container-2 {
-    margin-left: -12cqw;
+    margin-left: 0cqw;
     width: fit-content;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     pointer-events: none;
+    justify-content: center !important;
 }
 
 .tha-sao-container-3 {
@@ -1702,7 +1709,6 @@ body::before {
 }
 
 .tha-sao-container:first-child,
-.tha-sao-container-2:first-child,
 .tha-sao-container-3:first-child {
     margin-left: 0;
 }
@@ -2963,8 +2969,23 @@ screen and (max-width: 950px) {
 screen and (max-height: 500px) and (orientation: landscape),
 screen and (max-width: 950px) {
 
+    #canvas-center-wrapper,
+    #desktop-canvas,
+    .history-wrapper,
+    .history-viewport {
+        height: 100dvh !important;
+        max-height: 100dvh !important;
+        min-height: 100dvh !important;
+    }
+
     #canvas-center-wrapper {
-        align-items: flex-end !important;
+        align-items: stretch !important;
+    }
+
+    #desktop-canvas {
+        width: 100vw !important;
+        max-width: none !important;
+        min-width: 100vw !important;
     }
 
     @container (max-width: 1440px) {
@@ -3127,7 +3148,7 @@ screen and (max-width: 950px) {
         }
 
         .chaiya-fighters-3 {
-            bottom: 16cqh !important;
+            bottom: 15cqh !important;
         }
 
         img.chaiya-fighter.chaiya-fighter-1 {
@@ -3443,7 +3464,7 @@ screen and (max-width: 950px) {
         }
 
         .mid-ratana-fighters .mid-ratana-container {
-            margin-left: -8cqw !important;
+            margin-left: -6cqw !important;
         }
 
         .regional-fighters .fighter-container:first-child,
@@ -3457,7 +3478,7 @@ screen and (max-width: 950px) {
         }
 
         .boran-thailand-image {
-            bottom: -80cqh !important;
+            bottom: -50cqh !important;
         }
 
         /* ====================================
