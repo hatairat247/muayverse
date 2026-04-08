@@ -4020,6 +4020,8 @@ screen and (max-width: 950px) {
     }
 }
 
+
+
 /* ========================================= */
 /*  SCROLL HINT ลอยบนหัวนักมวย */
 /* ========================================= */
@@ -4090,36 +4092,5 @@ screen and (max-width: 950px) {
 
     50% {
         transform: translateX(-50%) translateY(-10px);
-    }
-}
-
-/* ========================================= */
-/* Phone รุ่นใหม่ (จอยาว) */
-/* ========================================= */
-@media screen and (max-height: 500px) and (orientation: landscape),
-screen and (max-width: 950px) {
-
-    .regional-fighter,
-    .lopburi-fighter,
-    .chaiya-fighter,
-    .tha-sao-fighter,
-    .tha-sao-fighter-2,
-    .tha-sao-fighter-3,
-    .thonburi-fighter,
-    .early-ratana-fighter,
-    .mid-ratana-fighter,
-    .present-fighter,
-    .khanom-tom-fighter,
-    .kick-pose,
-    .boran-thailand-image,
-    .fighters .fighter {
-        height: auto !important;
-        max-height: 42cqh !important;
-    }
-
-    /* ปรับนักมวยคนเดินให้สมส่วนกัน */
-    #walking-fighter-img {
-        height: auto !important;
-        max-height: 35cqh !important;
     }
 }
