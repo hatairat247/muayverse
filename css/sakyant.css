@@ -282,7 +282,7 @@ body {
 /* 1367px — Desktop / iPad Air landscape */
 @media (max-width: 1367px) {
     :root {
-        --karaoke-scroll-length: 20vh;
+        --karaoke-scroll-length: 70vh;
     }
 
     .center-content {
@@ -366,7 +366,7 @@ body {
 /* 1180px — iPad Pro landscape */
 @media (max-width: 1180px) {
     :root {
-        --karaoke-scroll-length: 20vh;
+        --karaoke-scroll-length: 75vh;
     }
 
     .center-content {
@@ -458,7 +458,7 @@ body {
 /* 1024px — iPad Mini landscape */
 @media (max-width: 1024px) {
     :root {
-        --karaoke-scroll-length: 20vh;
+        --karaoke-scroll-length: 80vh;
     }
 
     .prev-page {
@@ -470,7 +470,7 @@ body {
     }
 
     .sakyant-scroll-lock {
-        height: calc(var(--sakyant-height) + 20vh);
+        height: calc(var(--sakyant-height) + 80vh);
     }
 
     .sakyant-section {
@@ -809,7 +809,7 @@ body {
 /* 768px portrait — iPad Mini and tablets */
 @media (max-width: 768px) and (min-width: 431px) and (orientation: portrait) {
     .sakyant-scroll-lock {
-        height: calc(var(--sakyant-height) + 40vh);
+        height: calc(var(--sakyant-height) + 70vh);
     }
 
     .center-content {
@@ -901,7 +901,7 @@ body {
 /* 480px landscape */
 @media (max-width: 480px) and (orientation: landscape) {
     .sakyant-scroll-lock {
-        height: calc(var(--sakyant-height) + 30vh);
+        height: calc(var(--sakyant-height) + 65vh);
     }
 
     .sakyant-section {

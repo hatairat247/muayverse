@@ -50,12 +50,16 @@ class SakYantAnim {
         // ── ใช้ getter แทน cache — เช็คทุกครั้งที่เรียกใช้ ──
         this._seQuery = window.matchMedia('(max-width: 430px) and (orientation: portrait)');
 
-        // ── karaokeEnd: ค่าน้อย = karaoke จบเร็ว + pause นานขึ้น ──
+        // ── karaoke tuning ตาม input type: touch ต้องยืดช่วงให้ไล่คำทัน ──
         this._isTablet = window.innerWidth >= 769 && window.innerWidth <= 1367;
-        this.karaokeEnd = this._isTablet ? 0.25 : 0.25;
+        this.isTouchDevice = this._detectTouchDevice();
+        this.karaokeEnd = 0.7;
+        this.snapDownThreshold = 0.9;
+        this.snapUpMin = 0.88;
+        this._updateKaraokeTuning();
         this.snapTriggered = false;
 
-        console.log(`[SE] init: w=${window.innerWidth} h=${window.innerHeight} isSE=${this._seQuery.matches} isTablet=${this._isTablet} karaokeEnd=${this.karaokeEnd}`);
+        console.log(`[SE] init: w=${window.innerWidth} h=${window.innerHeight} isSE=${this._seQuery.matches} isTablet=${this._isTablet} isTouch=${this.isTouchDevice} karaokeEnd=${this.karaokeEnd}`);
 
         this._splitTitle();
         this._wrapDescriptionChars();
@@ -85,10 +89,34 @@ class SakYantAnim {
                 this._fixGaoyordHeight();
                 // อัปเดต karaokeEnd เมื่อ resize เปลี่ยน breakpoint
                 this._isTablet = window.innerWidth >= 769 && window.innerWidth <= 1367;
-                this.karaokeEnd = this._isTablet ? 0.25 : 0.25;
+                this.isTouchDevice = this._detectTouchDevice();
+                this._updateKaraokeTuning();
                 this.snapTriggered = false;
             }, 150);
         });
+    }
+
+    _detectTouchDevice() {
+        return window.matchMedia('(hover: none), (pointer: coarse)').matches || navigator.maxTouchPoints > 0;
+    }
+
+    _updateKaraokeTuning() {
+        // Touch device มี momentum scroll สูงกว่า จึงต้องเพิ่มช่วง karaoke และเลื่อนจุด snap ออกไป
+        if (this.isTouchDevice) {
+            if (this._isTablet) {
+                this.karaokeEnd = 0.92;
+                this.snapDownThreshold = 0.97;
+                this.snapUpMin = 0.9;
+            } else {
+                this.karaokeEnd = 0.88;
+                this.snapDownThreshold = 0.95;
+                this.snapUpMin = 0.9;
+            }
+        } else {
+            this.karaokeEnd = 0.7;
+            this.snapDownThreshold = 0.9;
+            this.snapUpMin = 0.88;
+        }
     }
 
     /* ─────────────────────────────────────────────────────────────
@@ -346,6 +374,7 @@ class SakYantAnim {
         const navbarH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--navbar-height')) || 96;
         const sectionH = this.section.offsetHeight;
         const scrollableDistance = this.scrollLock.offsetHeight - sectionH;
+        if (scrollableDistance <= 0) return;
 
         const scrolled = -(lockRect.top - navbarH);
         const progress = Math.min(Math.max(scrolled / scrollableDistance, 0), 1);
@@ -367,13 +396,13 @@ class SakYantAnim {
 
         // ── Scroll Snap: แม่เหล็กดึงไป Section 2 หรือกลับ Section 1 ──
         // Down scroll: ถ้า progress > 85% และกำลัง scroll ลง → snap ไป Section 2
-        if (progress >= 0.85 && this.scrollDirection > 0 && !this.snapTriggered && !this.isSnapScrolling) {
+        if (progress >= this.snapDownThreshold && this.scrollDirection > 0 && !this.snapTriggered && !this.isSnapScrolling) {
             this.snapTriggered = true;
             this.karaokeComplete = true;
             this._smoothScrollToSection2();
         }
         // Up scroll: เช็คว่าอยู่ระหว่าง Section 1 และ Section 2 และกำลัง scroll ขึ้น → snap กลับ Section 1
-        else if (progress > 0.88 && progress < 1 && this.scrollDirection < 0 && this.snapTriggered && !this.isSnapScrolling) {
+        else if (progress > this.snapUpMin && progress < 1 && this.scrollDirection < 0 && this.snapTriggered && !this.isSnapScrolling) {
             this.snapTriggered = false;
             this._smoothScrollToSection1();
         }
