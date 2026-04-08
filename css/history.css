@@ -3605,103 +3605,6 @@ screen and (max-width: 950px) {
     }
 }
 
-/* =========================================================================
-   iPAD
-   ========================================================================= */
-@media screen and (min-width: 768px) and (max-width: 1366px) and (orientation: landscape) {
-
-    .bg-mountain {
-        transform: translateY(15cqw) !important;
-    }
-
-    .bg-ruins,
-    .ayutthaya-temples,
-    .korat-background,
-    .lopburi-background,
-    .chaiya-background,
-    .tha-sao-background,
-    .thonburi-background,
-    .early-ratana-background,
-    .mid-ratana-background,
-    .present-background,
-    .ayutthaya-tree,
-    .lopburi-tree,
-    .tha-sao-tree,
-    .thonburi-tree,
-    .early-ratana-tree,
-    .mid-ratana-building,
-    .present-building {
-        transform: translateY(14cqw) !important;
-    }
-
-    .chaiya-background,
-    .tha-sao-background,
-    .early-ratana-background,
-    .present-background {
-        transform: translateY(10cqw) !important;
-    }
-
-    .ayutthaya-tree,
-    .lopburi-tree,
-    .tha-sao-tree,
-    .thonburi-tree,
-    .early-ratana-tree,
-    .mid-ratana-building,
-    .present-building {
-        transform: translateY(1cqw) !important;
-    }
-
-    .era-indicator-ayutthaya .era-circle,
-    .era-indicator-regional .era-circle,
-    .era-indicator-korat .era-circle,
-    .era-indicator-lopburi .era-circle,
-    .era-indicator-chaiya .era-circle,
-    .era-indicator-tha-sao .era-circle,
-    .era-indicator-thonburi .era-circle,
-    .era-indicator-early-ratana .era-circle,
-    .era-indicator-mid-ratana .era-circle,
-    .era-indicator-present .era-circle {
-        position: absolute;
-        width: 48px;
-        height: 48px;
-    }
-
-    .kick-pose,
-    .regional-fighter,
-    .lopburi-fighter,
-    .chaiya-fighter,
-    .tha-sao-fighter,
-    .tha-sao-fighter-3,
-    .thonburi-fighter,
-    .early-ratana-fighter,
-    .mid-ratana-fighter,
-    .present-fighter,
-    .khanom-tom-fighter,
-    .early-ratana-pic-rama5,
-    .kick-pose,
-    .fighters .fighter {
-        height: 54cqh !important;
-        /* ปรับความสูงให้คนดูตัวใหญ่ขึ้น (ของเดิม 42) */
-        width: auto !important;
-        /* ปล่อยกว้างอิสระเพื่อให้ดูตัวล่ำสมส่วน */
-        bottom: -46cqh !important;
-        /* ดันเท้าลงมาให้ติดพื้นพอดีกับตัวที่ใหญ่ขึ้น */
-    }
-
-    .text-box {
-        padding: 15px 25px !important;
-        /* เพิ่มพื้นที่ในกล่องให้อ่านง่ายขึ้น */
-        /* 🌟 ปรับตำแหน่งแนวตั้ง: เลขน้อย = ลอยสูงขึ้น / เลขมาก = ต่ำลง */
-        transform: translateY(8cqh) !important;
-    }
-
-    .text-box p {
-        font-size: 18px !important;
-        /* iPad Pro จอชัดมาก เพิ่มฟอนต์ได้อีกนิดครับ */
-        line-height: 1.6 !important;
-    }
-
-}
 
 /* DevTools/tablet fallback: some emulators do not report coarse pointer like real iPad. */
 @media screen and (orientation: landscape) and (min-width: 1024px) and (max-width: 1366px) and (min-height: 700px) and (max-height: 1100px) and (max-aspect-ratio: 3/2) {
@@ -4019,8 +3922,6 @@ screen and (max-width: 950px) {
         text-size-adjust: 100% !important;
     }
 }
-
-
 
 /* ========================================= */
 /*  SCROLL HINT ลอยบนหัวนักมวย */
