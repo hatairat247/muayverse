@@ -2969,10 +2969,6 @@ screen and (max-width: 950px) {
 screen and (max-height: 500px) and (orientation: landscape),
 screen and (max-width: 950px) {
 
-    #canvas-center-wrapper {
-        align-items: flex-end !important;
-    }
-
     #canvas-center-wrapper,
     #desktop-canvas,
     .history-wrapper,
