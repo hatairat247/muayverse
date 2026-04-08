@@ -3418,10 +3418,31 @@ screen and (max-width: 950px) {
         /* ====================================
            โหมด Samsung (Android)
            ==================================== */
+        .bg-mountain {
+            bottom: 2cqh !important;
+        }
+
+        .bg-ruins,
+        .ayutthaya-temples,
+        .korat-background,
+        .lopburi-background,
+        .chaiya-background,
+        .tha-sao-background,
+        .thonburi-background,
+        .early-ratana-background,
+        .mid-ratana-background,
+        .present-background {
+            bottom: 0cqh !important;
+        }
+
         :host,
         :root,
         body {
             align-items: flex-end !important;
+        }
+
+        .regional-fighters .fighter-container {
+            margin-left: -2cqw !important;
         }
 
         .lopburi-fighters .lopburi-container {
@@ -3438,6 +3459,7 @@ screen and (max-width: 950px) {
             margin-left: -8cqw !important;
         }
 
+        .regional-fighters .fighter-container:first-child,
         .chaiya-fighters .chaiya-container:first-child,
         .chaiya-fighters-2 .chaiya-container:first-child,
         .chaiya-fighters-3 .chaiya-container:first-child,
@@ -3446,7 +3468,6 @@ screen and (max-width: 950px) {
             margin-left: 0 !important;
         }
 
-        /* กดรูปแผนที่ลงมาไม่ให้ลอยสูง */
         .boran-thailand-image {
             bottom: -70cqh !important;
         }
@@ -3461,7 +3482,7 @@ screen and (max-width: 950px) {
             }
 
             .tha-sao-fighters-3 .tha-sao-container-3 {
-                margin-left: 10cqw !important;
+                margin-left: -10cqw !important;
             }
 
             .chaiya-fighters .chaiya-container,
