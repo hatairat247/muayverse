@@ -3111,13 +3111,14 @@ screen and (max-width: 950px) {
         }
 
         .korat-poses,
-        .lopburi-fighters {
+        .lopburi-fighters,
+        .lopburi-fighters-2 {
             bottom: 20cqh !important;
         }
 
         .chaiya-fighters,
         .chaiya-fighters-2 {
-            bottom: 15cqh !important;
+            bottom: 16cqh !important;
         }
 
         .chaiya-fighters-3 {
@@ -3168,10 +3169,6 @@ screen and (max-width: 950px) {
             top: 2.08cqw !important;
         }
 
-        .lopburi-fighters-2 {
-            bottom: 14cqh !important;
-        }
-
         .tha-sao-fighters,
         .tha-sao-fighters-2,
         .tha-sao-fighters-3 {
@@ -3187,6 +3184,7 @@ screen and (max-width: 950px) {
         .regional-fighter,
         .korat-pose,
         .lopburi-fighter,
+        .lopburi-fighter-2,
         .chaiya-fighter,
         .tha-sao-fighter,
         .tha-sao-fighter-2,
@@ -3227,7 +3225,7 @@ screen and (max-width: 950px) {
         }
 
         /* ====================================
-           4. Text Boxes & Fonts (ของป้าเป๊ะ 100%)
+            Text Boxes & Fonts
            ==================================== */
         .text-box {
             padding: 6px 12px !important;
@@ -3416,6 +3414,81 @@ screen and (max-width: 950px) {
             width: 5px !important;
             height: 5px !important;
         }
+
+        /* ====================================
+           โหมด Samsung (Android)
+           ==================================== */
+        .lopburi-fighters .lopburi-container {
+            margin-left: -10cqw !important;
+        }
+
+        .tha-sao-fighters-3 .tha-sao-container-3 {
+            margin-left: -10cqw !important;
+        }
+
+        .chaiya-fighters .chaiya-container,
+        .chaiya-fighters-2 .chaiya-container,
+        .chaiya-fighters-3 .chaiya-container {
+            margin-left: -5cqw !important;
+        }
+
+        .chaiya-fighters .chaiya-container:first-child,
+        .chaiya-fighters-2 .chaiya-container:first-child,
+        .chaiya-fighters-3 .chaiya-container:first-child,
+        .lopburi-fighters .lopburi-container:first-child,
+        .tha-sao-fighters-3 .tha-sao-container-3:first-child {
+            margin-left: 0 !important;
+        }
+
+        /* กดรูปแผนที่ลงมาไม่ให้ลอยสูง */
+        .boran-thailand-image {
+            bottom: -50cqh !important;
+        }
+
+        /* ====================================
+           โหมด iPhone (iOS)
+           ==================================== */
+        @supports (-webkit-touch-callout: none) {
+
+            .lopburi-fighters .lopburi-container {
+                margin-left: -10cqw !important;
+            }
+
+            .tha-sao-fighters-3 .tha-sao-container-3 {
+                margin-left: -15cqw !important;
+            }
+
+            .chaiya-fighters .chaiya-container,
+            .chaiya-fighters-2 .chaiya-container,
+            .chaiya-fighters-3 .chaiya-container {
+                margin-left: -3cqw !important;
+            }
+
+            .chaiya-fighters .chaiya-container:first-child,
+            .chaiya-fighters-2 .chaiya-container:first-child,
+            .chaiya-fighters-3 .chaiya-container:first-child,
+            .lopburi-fighters .lopburi-container:first-child,
+            .tha-sao-fighters-3 .tha-sao-container-3:first-child {
+                margin-left: 0 !important;
+            }
+
+            /* คืนค่าตำแหน่งแผนที่เดิมที่ iPhone แสดงผลสวยอยู่แล้ว */
+            .boran-thailand-image {
+                bottom: -50cqh !important;
+            }
+        }
+    }
+}
+
+/* =========================================================================
+   🎯 MASTER FIX: ดันฉาก 16:9 ลงติดขอบล่าง สำหรับมือถือ (แก้ช่องว่างด้านล่าง)
+   ========================================================================= */
+@media (hover: none) and (pointer: coarse),
+screen and (max-height: 500px) and (orientation: landscape),
+screen and (max-width: 950px) {
+    #canvas-center-wrapper {
+        align-items: flex-end !important;
+        /* 🌟 ดึงก้อนเว็บทั้งก้อนลงมาให้เหยียบขอบล่างจอ */
     }
 }
 
