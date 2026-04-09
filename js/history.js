@@ -9,6 +9,133 @@ const SCROLL_END_BUFFER = 1000;
 
 const historyMouseHandlers = new Set();
 let historyMouseTicking = false;
+let historyWarmupPromise = null;
+
+function waitForImageSettled(img, timeoutMs = 12000) {
+    return new Promise((resolve) => {
+        if (!img) {
+            resolve();
+            return;
+        }
+
+        if (img.complete && img.naturalWidth > 0) {
+            resolve();
+            return;
+        }
+
+        let done = false;
+
+        const finish = () => {
+            if (done) return;
+            done = true;
+            cleanup();
+            resolve();
+        };
+
+        const cleanup = () => {
+            img.removeEventListener('load', finish);
+            img.removeEventListener('error', finish);
+            clearTimeout(timerId);
+        };
+
+        img.addEventListener('load', finish, { once: true });
+        img.addEventListener('error', finish, { once: true });
+
+        const timerId = setTimeout(finish, timeoutMs);
+
+        try {
+            img.loading = 'eager';
+            img.decoding = 'async';
+        } catch (_err) {
+            // ignore
+        }
+
+        try {
+            if (typeof img.decode === 'function') {
+                img.decode().then(finish).catch(() => {
+                    // fall back to load/error/timeout
+                });
+            }
+        } catch (_decodeErr) {
+            // ignore
+        }
+    });
+}
+
+function withTimeout(promise, timeoutMs) {
+    return new Promise((resolve) => {
+        let settled = false;
+
+        const finish = () => {
+            if (settled) return;
+            settled = true;
+            resolve();
+        };
+
+        const timer = setTimeout(finish, timeoutMs);
+
+        Promise.resolve(promise)
+            .catch(() => {
+                // swallow; timeout/fallback will still continue page entry
+            })
+            .finally(() => {
+                clearTimeout(timer);
+                finish();
+            });
+    });
+}
+
+function getHistoryWarmupPromise(onProgress) {
+    if (historyWarmupPromise) return historyWarmupPromise;
+
+    const timelineRoot = document.getElementById('timeline-track') || document;
+    const timelineImages = Array.from(timelineRoot.querySelectorAll('img'));
+    const walkImage = document.getElementById('walking-fighter-img');
+
+    if (walkImage && !timelineImages.includes(walkImage)) {
+        timelineImages.push(walkImage);
+    }
+
+    let finished = 0;
+    const total = Math.max(1, timelineImages.length + 2);
+
+    const tick = () => {
+        finished += 1;
+        if (!onProgress) return;
+
+        const progressRatio = Math.min(finished / total, 1);
+        const visualProgress = 35 + progressRatio * 60;
+        onProgress(Math.min(95, visualProgress));
+    };
+
+    const imageTasks = timelineImages.map((img) =>
+        waitForImageSettled(img, 12000).finally(tick)
+    );
+
+    const walkingReadyTask = withTimeout(window.__historyWalkingReadyPromise || Promise.resolve(), 25000).finally(tick);
+
+    const postRefreshTask = new Promise((resolve) => {
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                try {
+                    if (typeof ScrollTrigger !== 'undefined') {
+                        ScrollTrigger.refresh();
+                    }
+                } catch (_err) {
+                    // ignore
+                }
+                resolve();
+            });
+        });
+    }).finally(tick);
+
+    historyWarmupPromise = withTimeout(
+        Promise.all([...imageTasks, walkingReadyTask, postRefreshTask]),
+        45000
+    );
+
+    return historyWarmupPromise;
+}
 
 function addHistoryMouseHandler(handler) {
     if (typeof handler !== 'function') return;
@@ -1279,7 +1406,10 @@ function initWalkingFighter() {
         });
     }
 
-    ensureFramesResident().then((cache) => {
+    const walkingReadyPromise = ensureFramesResident();
+    window.__historyWalkingReadyPromise = walkingReadyPromise;
+
+    walkingReadyPromise.then((cache) => {
         oldFrames = cache.oldFrames || framesOldSource;
         newFrames = cache.newFrames || framesNewSource;
         frameSetsReady = true;
@@ -2077,13 +2207,21 @@ function initRemainingKaraokeBoxes() {
 window.addEventListener('load', function () {
     const loader = document.getElementById('loadingOverlay');
     const progressFill = document.getElementById('progressFill');
+    const setProgress = (value) => {
+        if (!progressFill) return;
+        const clamped = Math.max(0, Math.min(100, value));
+        progressFill.style.transition = 'width 0.25s ease-out';
+        progressFill.style.width = clamped.toFixed(0) + '%';
+    };
 
-    if (progressFill) {
-        progressFill.style.transition = 'width 0.5s ease-out';
-        progressFill.style.width = '100%';
-    }
+    setProgress(40);
 
-    setTimeout(() => {
+    getHistoryWarmupPromise(setProgress)
+        .then(() => {
+            setProgress(100);
+            return new Promise((resolve) => setTimeout(resolve, 300));
+        })
+        .then(() => {
         if (loader) {
             loader.classList.add('hidden');
             document.body.classList.remove('loading-active');
@@ -2092,7 +2230,7 @@ window.addEventListener('load', function () {
                 ScrollTrigger.refresh();
             }
         }
-    }, 1000);
+        });
 });
 
 // =============================================
