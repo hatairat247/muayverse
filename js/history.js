@@ -1043,7 +1043,7 @@ function initWalkingFighter() {
     const img = document.getElementById('walking-fighter-img');
     if (!img) return;
 
-    const framesOld = [
+    const framesOldSource = [
         'img/walk/fighter-walk-old-1.png',
         'img/walk/fighter-walk-old-2.png',
         'img/walk/fighter-walk-old-3.png',
@@ -1052,7 +1052,7 @@ function initWalkingFighter() {
         'img/walk/fighter-walk-old-6.png',
         'img/walk/fighter-walk-old-7.png',
     ];
-    const framesNew = [
+    const framesNewSource = [
         'img/walk/fighter-walk-new-1.png',
         'img/walk/fighter-walk-new-2.png',
         'img/walk/fighter-walk-new-3.png',
@@ -1062,28 +1062,92 @@ function initWalkingFighter() {
         'img/walk/fighter-walk-new-7.png',
     ];
 
-    const toAbsUrl = (src) => new URL(src, window.location.href).href;
-    const loadedFrameAbs = new Set();
-
-    // Keep references alive so slow-network preload is not canceled in production.
-    const framePreloads = [...new Set([...framesOld, ...framesNew])].map((src) => {
-        const asset = new Image();
-        asset.decoding = 'async';
-        const abs = toAbsUrl(src);
-
-        if (asset.complete && asset.naturalWidth > 0) {
-            loadedFrameAbs.add(abs);
-        }
-
-        asset.addEventListener('load', () => {
-            loadedFrameAbs.add(abs);
-        }, { once: true });
-
-        asset.src = src;
-        return asset;
+    const RAM_CACHE_KEY = '__mvWalkingFrameCache';
+    const ramCache = window[RAM_CACHE_KEY] || (window[RAM_CACHE_KEY] = {
+        ready: false,
+        loadingPromise: null,
+        urlMap: Object.create(null),
+        oldFrames: null,
+        newFrames: null,
+        residentImages: [],
+        objectUrls: []
     });
 
-    let currentFrames = framesOld;
+    const toAbsUrl = (src) => new URL(src, window.location.href).href;
+
+    function holdDecodedImage(src) {
+        return new Promise((resolve, reject) => {
+            const resident = new Image();
+            resident.decoding = 'async';
+
+            resident.addEventListener('load', () => resolve(resident), { once: true });
+            resident.addEventListener('error', reject, { once: true });
+
+            resident.src = src;
+
+            if (resident.complete && resident.naturalWidth > 0) {
+                resolve(resident);
+            }
+        });
+    }
+
+    function ensureFramesResident() {
+        if (ramCache.ready) {
+            return Promise.resolve(ramCache);
+        }
+
+        if (ramCache.loadingPromise) {
+            return ramCache.loadingPromise;
+        }
+
+        const uniqueSources = [...new Set([...framesOldSource, ...framesNewSource])];
+
+        ramCache.loadingPromise = Promise.all(uniqueSources.map(async (src) => {
+            if (ramCache.urlMap[src]) return;
+
+            let residentSrc = src;
+
+            try {
+                const response = await fetch(src, { cache: 'force-cache' });
+                if (!response.ok) throw new Error('Failed to fetch frame: ' + src);
+
+                const blob = await response.blob();
+                residentSrc = URL.createObjectURL(blob);
+                ramCache.objectUrls.push(residentSrc);
+            } catch (_err) {
+                residentSrc = src;
+            }
+
+            try {
+                const decodedImage = await holdDecodedImage(residentSrc);
+                ramCache.residentImages.push(decodedImage);
+            } catch (_decodeErr) {
+                residentSrc = src;
+                try {
+                    const fallbackImage = await holdDecodedImage(residentSrc);
+                    ramCache.residentImages.push(fallbackImage);
+                } catch (_fallbackErr) {
+                    // If decode still fails, keep source path and let browser retry naturally.
+                }
+            }
+
+            ramCache.urlMap[src] = residentSrc;
+        })).then(() => {
+            ramCache.oldFrames = framesOldSource.map((src) => ramCache.urlMap[src] || src);
+            ramCache.newFrames = framesNewSource.map((src) => ramCache.urlMap[src] || src);
+            ramCache.ready = true;
+            return ramCache;
+        });
+
+        return ramCache.loadingPromise;
+    }
+
+    let oldFrames = ramCache.oldFrames || framesOldSource.slice();
+    let newFrames = ramCache.newFrames || framesNewSource.slice();
+    let frameSetsReady = ramCache.ready;
+
+    let eraMode = 'old';
+    let currentFrames = oldFrames;
     let currentFrame = 0;
     let isWalking = false;
     let walkInterval = null;
@@ -1099,32 +1163,23 @@ function initWalkingFighter() {
         lastTrackX = Number.isFinite(initialX) ? initialX : 0;
     }
 
-    function isFrameLoaded(src) {
-        return loadedFrameAbs.has(toAbsUrl(src));
-    }
-
     function setFrameSafely(index) {
         const src = currentFrames[index];
-        if (!src || !isFrameLoaded(src)) return false;
+        if (!src) return false;
+
+        const targetAbs = toAbsUrl(src);
+        if (img.src === targetAbs) {
+            currentFrame = index;
+            return true;
+        }
+
         currentFrame = index;
         img.src = src;
         return true;
     }
 
-    function getLoadedFrameCount(frames) {
-        let count = 0;
-        for (let i = 0; i < frames.length; i++) {
-            if (isFrameLoaded(frames[i])) count++;
-        }
-        return count;
-    }
-
     function getNextLoadedFrameIndex() {
-        for (let i = 1; i <= currentFrames.length; i++) {
-            const idx = (currentFrame + i) % currentFrames.length;
-            if (isFrameLoaded(currentFrames[idx])) return idx;
-        }
-        return -1;
+        return (currentFrame + 1) % currentFrames.length;
     }
 
     function updateScrollHint() {
@@ -1142,30 +1197,36 @@ function initWalkingFighter() {
         const floor10 = document.querySelector('img[src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253003/floor-artboard-10_qaq3ft.png"]');
         if (!floor10) return;
         const floorScreenX = floor10.getBoundingClientRect().left;
+        const nextMode = floorScreenX <= window.innerWidth * 0.5 ? 'new' : 'old';
 
-        if (floorScreenX <= window.innerWidth * 0.5) {
-            if (currentFrames !== framesNew) {
-                currentFrames = framesNew;
-                currentFrame = 0;
-                setFrameSafely(0);
-            }
-        } else {
-            if (currentFrames !== framesOld) {
-                currentFrames = framesOld;
-                currentFrame = 0;
-                setFrameSafely(0);
-            }
+        if (nextMode === eraMode) return;
+
+        eraMode = nextMode;
+        currentFrames = eraMode === 'new' ? newFrames : oldFrames;
+        currentFrame = 0;
+        setFrameSafely(0);
+    }
+
+    function primeEraMode() {
+        const floor10 = document.querySelector('img[src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253003/floor-artboard-10_qaq3ft.png"]');
+        if (!floor10) {
+            eraMode = 'old';
+            currentFrames = oldFrames;
+            return;
         }
+
+        eraMode = floor10.getBoundingClientRect().left <= window.innerWidth * 0.5 ? 'new' : 'old';
+        currentFrames = eraMode === 'new' ? newFrames : oldFrames;
     }
 
     function startWalking() {
         if (isWalking) return;
-        if (getLoadedFrameCount(currentFrames) < 2) return;
+        if (!frameSetsReady) return;
+        if (!currentFrames || currentFrames.length < 2) return;
 
         isWalking = true;
         walkInterval = setInterval(() => {
             const nextIdx = getNextLoadedFrameIndex();
-            if (nextIdx === -1) return;
             setFrameSafely(nextIdx);
         }, FRAME_SPEED);
     }
@@ -1215,12 +1276,19 @@ function initWalkingFighter() {
             if (!timelineTrack || typeof gsap === 'undefined') return;
             const refreshedX = Number(gsap.getProperty(timelineTrack, 'x'));
             lastTrackX = Number.isFinite(refreshedX) ? refreshedX : lastTrackX;
+            checkEra();
         });
     }
 
-    // Prevent unused warning and ensure preload refs stay reachable in this scope.
-    if (framePreloads.length === 0) return;
+    ensureFramesResident().then((cache) => {
+        oldFrames = cache.oldFrames || framesOldSource;
+        newFrames = cache.newFrames || framesNewSource;
+        frameSetsReady = true;
+        currentFrames = eraMode === 'new' ? newFrames : oldFrames;
+        setFrameSafely(0);
+    });
 
+    primeEraMode();
     checkEra();
     updateScrollHint();
 }
