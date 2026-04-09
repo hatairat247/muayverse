@@ -165,15 +165,34 @@ function getHistoryWarmupPromise(onProgress) {
     if (historyWarmupPromise) return historyWarmupPromise;
 
     const timelineRoot = document.getElementById('timeline-track') || document;
-    const timelineImages = Array.from(timelineRoot.querySelectorAll('img'));
+    const allTimelineImages = Array.from(timelineRoot.querySelectorAll('img'));
+    let timelineImages = allTimelineImages.filter((img) => {
+        const rect = img.getBoundingClientRect();
+        return rect.width > 0 && rect.height > 0 &&
+            rect.right >= -240 &&
+            rect.left <= window.innerWidth + 240 &&
+            rect.bottom >= -240 &&
+            rect.top <= window.innerHeight + 240;
+    });
+
+    // Fallback in case first layout not ready yet.
+    if (!timelineImages.length) {
+        timelineImages = allTimelineImages.slice(0, 24);
+    }
+
+    const kickPose = document.querySelector('.kick-pose');
     const walkImage = document.getElementById('walking-fighter-img');
+
+    if (kickPose && !timelineImages.includes(kickPose)) {
+        timelineImages.push(kickPose);
+    }
 
     if (walkImage && !timelineImages.includes(walkImage)) {
         timelineImages.push(walkImage);
     }
 
     let finished = 0;
-    const total = Math.max(1, timelineImages.length + 3);
+    const total = Math.max(1, timelineImages.length + 1);
 
     const tick = () => {
         finished += 1;
@@ -185,11 +204,8 @@ function getHistoryWarmupPromise(onProgress) {
     };
 
     const imageTasks = timelineImages.map((img) =>
-        waitForImageSettled(img, 12000).finally(tick)
+        waitForImageSettled(img, 8000).finally(tick)
     );
-
-    const walkingReadyTask = withTimeout(window.__historyWalkingReadyPromise || Promise.resolve(), 25000).finally(tick);
-    const interactiveReadyTask = withTimeout(window.__historyInteractiveFramesReadyPromise || Promise.resolve(), 25000).finally(tick);
 
     const postRefreshTask = new Promise((resolve) => {
         requestAnimationFrame(() => {
@@ -207,8 +223,8 @@ function getHistoryWarmupPromise(onProgress) {
     }).finally(tick);
 
     historyWarmupPromise = withTimeout(
-        Promise.all([...imageTasks, walkingReadyTask, interactiveReadyTask, postRefreshTask]),
-        45000
+        Promise.all([...imageTasks, postRefreshTask]),
+        18000
     );
 
     return historyWarmupPromise;
@@ -568,7 +584,7 @@ function initSukhothaiKickAnimation() {
     if (!framesData) return;
     const frameSources = framesData.split(',').map((src) => src.trim()).filter(Boolean);
     let frames = frameSources.slice();
-    const framesReadyPromise = registerHistoryInteractivePromise(
+    registerHistoryInteractivePromise(
         preloadHistoryFramesResident(frameSources).then((residentFrames) => {
             if (residentFrames.length === frameSources.length) {
                 frames = residentFrames;
@@ -639,15 +655,11 @@ function initSukhothaiKickAnimation() {
 
     let isAnimating = false;
 
-    container.addEventListener('click', async () => {
+    container.addEventListener('click', () => {
         if (isAnimating) return;
         isAnimating = true;
 
-        await withTimeout(framesReadyPromise, 12000);
-        if (!frames.length) {
-            isAnimating = false;
-            return;
-        }
+        if (!frames.length) { isAnimating = false; return; }
 
         let currentFrame = 0;
         const playInterval = setInterval(() => {
@@ -873,7 +885,7 @@ function initBuffaloSwingClick() {
         'img/muay-boran/northeast/muay-korat-buffalo-swing 4 .png'
     ];
     let imageSequence = sourceSequence.slice();
-    const sequenceReadyPromise = registerHistoryInteractivePromise(
+    registerHistoryInteractivePromise(
         preloadHistoryFramesResident(sourceSequence).then((residentSequence) => {
             if (residentSequence.length === sourceSequence.length) {
                 imageSequence = residentSequence;
@@ -884,15 +896,11 @@ function initBuffaloSwingClick() {
 
     let isAnimating = false;
 
-    buffaloImage.addEventListener('click', async () => {
+    const playBuffaloSequence = async () => {
         if (isAnimating) return;
         isAnimating = true;
 
-        await withTimeout(sequenceReadyPromise, 12000);
-        if (!imageSequence.length) {
-            isAnimating = false;
-            return;
-        }
+        if (!imageSequence.length) { isAnimating = false; return; }
 
         for (let i = 1; i < imageSequence.length; i++) {
             buffaloImage.src = imageSequence[i];
@@ -902,6 +910,10 @@ function initBuffaloSwingClick() {
         await new Promise(resolve => setTimeout(resolve, 300));
         buffaloImage.src = imageSequence[0];
         isAnimating = false;
+    };
+
+    buffaloWrapper.addEventListener('click', () => {
+        playBuffaloSequence();
     });
 }
 
@@ -2091,11 +2103,12 @@ function initEarlyRatanaFighterReveal() {
 function initEarlyRatanaClickSwap() {
     const img = document.querySelector('.early-ratana-swap');
     if (!img) return;
+    const container = img.closest('.early-ratana-container') || img;
     const framesData = img.getAttribute('data-frames');
     if (!framesData) return;
     const frameSources = framesData.split(',').map((src) => src.trim()).filter(Boolean);
     let frames = frameSources.slice();
-    const framesReadyPromise = registerHistoryInteractivePromise(
+    registerHistoryInteractivePromise(
         preloadHistoryFramesResident(frameSources).then((residentFrames) => {
             if (residentFrames.length === frameSources.length) {
                 frames = residentFrames;
@@ -2105,15 +2118,11 @@ function initEarlyRatanaClickSwap() {
     );
     let isPlaying = false;
 
-    img.addEventListener('click', async () => {
+    container.addEventListener('click', () => {
         if (isPlaying) return;
         isPlaying = true;
 
-        await withTimeout(framesReadyPromise, 12000);
-        if (!frames.length) {
-            isPlaying = false;
-            return;
-        }
+        if (!frames.length) { isPlaying = false; return; }
 
         let currentFrame = 0;
         const playInterval = setInterval(() => {
