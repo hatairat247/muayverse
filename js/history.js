@@ -11,6 +11,111 @@ let historyBooted = false;
 const historyMouseHandlers = new Set();
 let historyMouseTicking = false;
 
+const interactiveFramePromises = new Map();
+const interactiveFrameResolved = new Map();
+const interactiveFrameRefs = [];
+
+function splitFrameAttr(value) {
+    if (!value) return [];
+    return value.split(',').map((s) => s.trim()).filter(Boolean);
+}
+
+function toAbsoluteFrameSrc(src) {
+    try {
+        return new URL(src, window.location.href).href;
+    } catch (_err) {
+        return src;
+    }
+}
+
+function getResidentFrameSrc(src) {
+    const abs = toAbsoluteFrameSrc(src);
+    return interactiveFrameResolved.get(abs) || src;
+}
+
+function warmFrameSource(src) {
+    const abs = toAbsoluteFrameSrc(src);
+    if (interactiveFramePromises.has(abs)) {
+        return interactiveFramePromises.get(abs);
+    }
+
+    const promise = (async () => {
+        let residentSrc = src;
+
+        try {
+            const response = await fetch(abs, { cache: 'force-cache' });
+            if (response.ok) {
+                const blob = await response.blob();
+                residentSrc = URL.createObjectURL(blob);
+            }
+        } catch (_err) {
+            residentSrc = src;
+        }
+
+        await new Promise((resolve) => {
+            const frame = new Image();
+            frame.decoding = 'async';
+
+            frame.addEventListener('load', () => {
+                interactiveFrameRefs.push(frame);
+                resolve();
+            }, { once: true });
+
+            frame.addEventListener('error', () => {
+                resolve();
+            }, { once: true });
+
+            frame.src = residentSrc;
+
+            if (frame.complete && frame.naturalWidth > 0) {
+                interactiveFrameRefs.push(frame);
+                resolve();
+            }
+        });
+
+        interactiveFrameResolved.set(abs, residentSrc);
+        return residentSrc;
+    })();
+
+    interactiveFramePromises.set(abs, promise);
+    return promise;
+}
+
+async function ensureSequenceResident(frameList) {
+    const clean = frameList.map((s) => s.trim()).filter(Boolean);
+    if (!clean.length) return [];
+
+    await Promise.all(clean.map((src) => warmFrameSource(src)));
+    return clean.map((src) => getResidentFrameSrc(src));
+}
+
+function primeInteractiveFrameCache() {
+    const sources = new Set();
+
+    document.querySelectorAll('[data-frames], [data-kick-frames], [data-hover-src]').forEach((node) => {
+        splitFrameAttr(node.getAttribute('data-frames')).forEach((src) => sources.add(src));
+        splitFrameAttr(node.getAttribute('data-kick-frames')).forEach((src) => sources.add(src));
+
+        const hoverSrc = node.getAttribute('data-hover-src');
+        if (hoverSrc) sources.add(hoverSrc.trim());
+
+        const directSrc = node.getAttribute('src');
+        if (directSrc) sources.add(directSrc.trim());
+    });
+
+    [
+        'img/muay-boran/northeast/muay-korat-buffalo-swing.png',
+        'img/muay-boran/northeast/muay-korat-buffalo-swing 1 .png',
+        'img/muay-boran/northeast/muay-korat-buffalo-swing 2.png',
+        'img/muay-boran/northeast/muay-korat-buffalo-swing 3 .png',
+        'img/muay-boran/northeast/muay-korat-buffalo-swing 4 .png'
+    ].forEach((src) => sources.add(src));
+
+    sources.forEach((src) => {
+        void warmFrameSource(src);
+    });
+}
+
 function addHistoryMouseHandler(handler) {
     if (typeof handler !== 'function') return;
     historyMouseHandlers.add(handler);
@@ -43,13 +148,7 @@ function bootHistoryPage() {
         document.documentElement.classList.add('is-edge');
     }
 
-    // สั่งโหลดเฟรมแอนิเมชันทั้งหมดเก็บไว้ในแรม แก้ปัญหาภาพกระตุก/เด้ง บน PC 
-    document.querySelectorAll('[data-frames], [data-kick-frames], [data-hover-src]').forEach(img => {
-        const frames = img.getAttribute('data-frames') || img.getAttribute('data-kick-frames');
-        const hover = img.getAttribute('data-hover-src');
-        if (frames) frames.split(',').forEach(src => { const temp = new Image(); temp.src = src.trim(); });
-        if (hover) { const temp = new Image(); temp.src = hover.trim(); }
-    });
+    primeInteractiveFrameCache();
 
     setupKaraokeText();
     initHorizontalScroll();
@@ -366,7 +465,7 @@ function initSukhothaiKickAnimation() {
 
     const framesData = kickPose.getAttribute('data-kick-frames');
     if (!framesData) return;
-    const frames = framesData.split(',');
+    const sourceFrames = splitFrameAttr(framesData);
 
     gsap.set(container, { opacity: 0, y: 80, scale: 0.85 });
 
@@ -427,11 +526,18 @@ function initSukhothaiKickAnimation() {
 
     let isAnimating = false;
 
-    container.addEventListener('click', () => {
+    container.addEventListener('click', async () => {
         if (isAnimating) return;
         isAnimating = true;
 
+        const frames = await ensureSequenceResident(sourceFrames);
+        if (!frames.length) {
+            isAnimating = false;
+            return;
+        }
+
         let currentFrame = 0;
+        kickPose.src = frames[currentFrame];
         const playInterval = setInterval(() => {
             currentFrame++;
             kickPose.src = frames[currentFrame];
@@ -551,11 +657,14 @@ function initKickAnimation() {
     const framesData = kickPose.getAttribute('data-frames');
     if (!framesData) return;
 
-    const frames = framesData.split(',');
+    const sourceFrames = splitFrameAttr(framesData);
     let currentFrame = 0;
     let animationInterval = null;
 
-    kickPose.addEventListener('mouseenter', () => {
+    kickPose.addEventListener('mouseenter', async () => {
+        const frames = await ensureSequenceResident(sourceFrames);
+        if (!frames.length) return;
+
         currentFrame = 0;
         animationInterval = setInterval(() => {
             currentFrame = (currentFrame + 1) % frames.length;
@@ -660,6 +769,19 @@ function initBuffaloSwingClick() {
     buffaloImage.addEventListener('click', async () => {
         if (isAnimating) return;
         isAnimating = true;
+
+        const imageSequence = await ensureSequenceResident([
+            'img/muay-boran/northeast/muay-korat-buffalo-swing.png',
+            'img/muay-boran/northeast/muay-korat-buffalo-swing 1 .png',
+            'img/muay-boran/northeast/muay-korat-buffalo-swing 2.png',
+            'img/muay-boran/northeast/muay-korat-buffalo-swing 3 .png',
+            'img/muay-boran/northeast/muay-korat-buffalo-swing 4 .png'
+        ]);
+
+        if (!imageSequence.length) {
+            isAnimating = false;
+            return;
+        }
 
         for (let i = 1; i < imageSequence.length; i++) {
             buffaloImage.src = imageSequence[i];
@@ -1567,15 +1689,17 @@ function initChaiyaFighterScrubReveal() {
 function initWaiKruHoverSwap() {
     const img = document.querySelector('.wai-kru-swap');
     if (!img) return;
-    const originalSrc = img.src;
+    const originalSrc = img.getAttribute('src') || img.src;
     const altSrc = img.getAttribute('data-hover-src');
     if (!altSrc) return;
+
+    void ensureSequenceResident([originalSrc, altSrc]);
 
     let isAlt = false;
 
     img.addEventListener('click', () => {
         isAlt = !isAlt;
-        img.src = isAlt ? altSrc : originalSrc;
+        img.src = isAlt ? getResidentFrameSrc(altSrc) : getResidentFrameSrc(originalSrc);
     });
 }
 
@@ -1675,12 +1799,18 @@ function initThaSaoHoverSwap() {
     if (!img) return;
     const framesData = img.getAttribute('data-frames');
     if (!framesData) return;
-    const frames = framesData.split(',');
+    const sourceFrames = splitFrameAttr(framesData);
+    void ensureSequenceResident(sourceFrames);
     let isAnimating = false;
 
-    img.addEventListener('click', () => {
+    img.addEventListener('click', async () => {
         if (isAnimating) return;
         isAnimating = true;
+        const frames = await ensureSequenceResident(sourceFrames);
+        if (!frames.length) {
+            isAnimating = false;
+            return;
+        }
         let frame = 1;
         img.src = frames[frame];
 
@@ -1725,12 +1855,19 @@ function initThonburiHoverSwap() {
     if (!img) return;
     const framesData = img.getAttribute('data-frames');
     if (!framesData) return;
-    const frames = framesData.split(',');
+    const sourceFrames = splitFrameAttr(framesData);
+    void ensureSequenceResident(sourceFrames);
     let isAnimating = false;
 
-    img.addEventListener('click', () => {
+    img.addEventListener('click', async () => {
         if (isAnimating) return;
         isAnimating = true;
+
+        const frames = await ensureSequenceResident(sourceFrames);
+        if (!frames.length) {
+            isAnimating = false;
+            return;
+        }
 
         setTimeout(() => {
             let frame = 1;
@@ -1857,12 +1994,20 @@ function initEarlyRatanaClickSwap() {
     if (!img) return;
     const framesData = img.getAttribute('data-frames');
     if (!framesData) return;
-    const frames = framesData.split(',');
+    const sourceFrames = splitFrameAttr(framesData);
+    void ensureSequenceResident(sourceFrames);
     let isPlaying = false;
 
-    img.addEventListener('click', () => {
+    img.addEventListener('click', async () => {
         if (isPlaying) return;
         isPlaying = true;
+
+        const frames = await ensureSequenceResident(sourceFrames);
+        if (!frames.length) {
+            isPlaying = false;
+            return;
+        }
+
         let currentFrame = 0;
         const playInterval = setInterval(() => {
             currentFrame++;
