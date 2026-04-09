@@ -1636,57 +1636,84 @@ body.loading-active {
 /* iPad / Tablet (ไม่เกิน 1024px) */
 @media screen and (max-width: 1024px) {
     .prev-page {
-        top: 80px !important;
-        left: 40px !important;
-        width: 55px !important;
-        height: 55px !important;
+        top: calc(var(--navbar-height) + 6px) !important;
+        left: calc(env(safe-area-inset-left) + 10px) !important;
+        width: 42px !important;
+        height: 42px !important;
     }
 
     .prev-page a {
-        padding: 6px !important;
+        padding: 4px !important;
     }
 
     .prev-page-label {
-        font-size: 9px !important;
-        top: calc(100% + 5px) !important;
+        display: block !important;
+        top: calc(100% + 4px) !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        font-size: 8px !important;
+        line-height: 1.1 !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        white-space: nowrap !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9) !important;
     }
 }
 
 /* Mobile (ไม่เกิน 768px) */
 @media screen and (max-width: 768px) {
     .prev-page {
-        top: 70px !important;
-        left: 30px !important;
-        width: 55px !important;
-        height: 55px !important;
+        top: calc(var(--navbar-height) + 6px) !important;
+        left: calc(env(safe-area-inset-left) + 8px) !important;
+        width: 38px !important;
+        height: 38px !important;
     }
 
     .prev-page a {
-        padding: 6px !important;
+        padding: 4px !important;
     }
 
     .prev-page-label {
-        font-size: 9px !important;
-        top: calc(100% + 4px) !important;
+        display: block !important;
+        top: calc(100% + 3px) !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        font-size: 8px !important;
+        line-height: 1.1 !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        white-space: nowrap !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9) !important;
     }
 }
 
 /* Small Mobile (ไม่เกิน 480px) */
 @media screen and (max-width: 480px) {
     .prev-page {
-        top: 70px !important;
-        left: 20px !important;
-        width: 45px !important;
-        height: 45px !important;
+        top: calc(var(--navbar-height) + 6px) !important;
+        left: calc(env(safe-area-inset-left) + 6px) !important;
+        width: 34px !important;
+        height: 34px !important;
     }
 
     .prev-page a {
-        padding: 5px !important;
+        padding: 3px !important;
     }
 
     .prev-page-label {
-        font-size: 9px !important;
+        display: block !important;
         top: calc(100% + 3px) !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        font-size: 8px !important;
+        line-height: 1.1 !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        white-space: nowrap !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9) !important;
     }
 }
 
