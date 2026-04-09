@@ -9,226 +9,6 @@ const SCROLL_END_BUFFER = 1000;
 
 const historyMouseHandlers = new Set();
 let historyMouseTicking = false;
-let historyWarmupPromise = null;
-const historyInteractiveFrameCache = window.__historyInteractiveFrameCache || (window.__historyInteractiveFrameCache = {
-    resolvedMap: Object.create(null),
-    pendingMap: Object.create(null),
-    residentImages: [],
-    objectUrls: [],
-    readyPromises: []
-});
-
-function waitForImageSettled(img, timeoutMs = 12000) {
-    return new Promise((resolve) => {
-        if (!img) {
-            resolve();
-            return;
-        }
-
-        if (img.complete && img.naturalWidth > 0) {
-            resolve();
-            return;
-        }
-
-        let done = false;
-
-        const finish = () => {
-            if (done) return;
-            done = true;
-            cleanup();
-            resolve();
-        };
-
-        const cleanup = () => {
-            img.removeEventListener('load', finish);
-            img.removeEventListener('error', finish);
-            clearTimeout(timerId);
-        };
-
-        img.addEventListener('load', finish, { once: true });
-        img.addEventListener('error', finish, { once: true });
-
-        const timerId = setTimeout(finish, timeoutMs);
-
-        try {
-            img.loading = 'eager';
-            img.decoding = 'async';
-        } catch (_err) {
-            // ignore
-        }
-
-        try {
-            if (typeof img.decode === 'function') {
-                img.decode().then(finish).catch(() => {
-                    // fall back to load/error/timeout
-                });
-            }
-        } catch (_decodeErr) {
-            // ignore
-        }
-    });
-}
-
-function withTimeout(promise, timeoutMs) {
-    return new Promise((resolve) => {
-        let settled = false;
-
-        const finish = () => {
-            if (settled) return;
-            settled = true;
-            resolve();
-        };
-
-        const timer = setTimeout(finish, timeoutMs);
-
-        Promise.resolve(promise)
-            .catch(() => {
-                // swallow; timeout/fallback will still continue page entry
-            })
-            .finally(() => {
-                clearTimeout(timer);
-                finish();
-            });
-    });
-}
-
-function preloadHistoryFramesResident(frameList) {
-    const normalizedFrames = (frameList || [])
-        .map((src) => String(src || '').trim())
-        .filter(Boolean);
-
-    if (!normalizedFrames.length) {
-        return Promise.resolve([]);
-    }
-
-    const uniqueFrames = [...new Set(normalizedFrames)];
-
-    const loadTasks = uniqueFrames.map((src) => {
-        if (historyInteractiveFrameCache.resolvedMap[src]) {
-            return Promise.resolve(historyInteractiveFrameCache.resolvedMap[src]);
-        }
-
-        if (historyInteractiveFrameCache.pendingMap[src]) {
-            return historyInteractiveFrameCache.pendingMap[src];
-        }
-
-        const task = (async () => {
-            let residentSrc = src;
-
-            try {
-                const response = await fetch(src, { cache: 'force-cache' });
-                if (!response.ok) throw new Error('frame fetch failed');
-
-                const blob = await response.blob();
-                residentSrc = URL.createObjectURL(blob);
-                historyInteractiveFrameCache.objectUrls.push(residentSrc);
-            } catch (_fetchErr) {
-                residentSrc = src;
-            }
-
-            try {
-                const resident = new Image();
-                resident.decoding = 'async';
-                resident.src = residentSrc;
-                await waitForImageSettled(resident, 12000);
-                if (resident.naturalWidth > 0) {
-                    historyInteractiveFrameCache.residentImages.push(resident);
-                }
-            } catch (_decodeErr) {
-                // keep source as fallback
-            }
-
-            historyInteractiveFrameCache.resolvedMap[src] = residentSrc;
-            return residentSrc;
-        })();
-
-        historyInteractiveFrameCache.pendingMap[src] = task.finally(() => {
-            delete historyInteractiveFrameCache.pendingMap[src];
-        });
-
-        return historyInteractiveFrameCache.pendingMap[src];
-    });
-
-    return Promise.all(loadTasks).then(() =>
-        normalizedFrames.map((src) => historyInteractiveFrameCache.resolvedMap[src] || src)
-    );
-}
-
-function registerHistoryInteractivePromise(promise) {
-    const safePromise = Promise.resolve(promise).catch(() => []);
-    historyInteractiveFrameCache.readyPromises.push(safePromise);
-    window.__historyInteractiveFramesReadyPromise = Promise.all(historyInteractiveFrameCache.readyPromises);
-    return safePromise;
-}
-
-function getHistoryWarmupPromise(onProgress) {
-    if (historyWarmupPromise) return historyWarmupPromise;
-
-    const timelineRoot = document.getElementById('timeline-track') || document;
-    const allTimelineImages = Array.from(timelineRoot.querySelectorAll('img'));
-    let timelineImages = allTimelineImages.filter((img) => {
-        const rect = img.getBoundingClientRect();
-        return rect.width > 0 && rect.height > 0 &&
-            rect.right >= -240 &&
-            rect.left <= window.innerWidth + 240 &&
-            rect.bottom >= -240 &&
-            rect.top <= window.innerHeight + 240;
-    });
-
-    // Fallback in case first layout not ready yet.
-    if (!timelineImages.length) {
-        timelineImages = allTimelineImages.slice(0, 24);
-    }
-
-    const kickPose = document.querySelector('.kick-pose');
-    const walkImage = document.getElementById('walking-fighter-img');
-
-    if (kickPose && !timelineImages.includes(kickPose)) {
-        timelineImages.push(kickPose);
-    }
-
-    if (walkImage && !timelineImages.includes(walkImage)) {
-        timelineImages.push(walkImage);
-    }
-
-    let finished = 0;
-    const total = Math.max(1, timelineImages.length + 1);
-
-    const tick = () => {
-        finished += 1;
-        if (!onProgress) return;
-
-        const progressRatio = Math.min(finished / total, 1);
-        const visualProgress = 35 + progressRatio * 60;
-        onProgress(Math.min(95, visualProgress));
-    };
-
-    const imageTasks = timelineImages.map((img) =>
-        waitForImageSettled(img, 8000).finally(tick)
-    );
-
-    const postRefreshTask = new Promise((resolve) => {
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                try {
-                    if (typeof ScrollTrigger !== 'undefined') {
-                        ScrollTrigger.refresh();
-                    }
-                } catch (_err) {
-                    // ignore
-                }
-                resolve();
-            });
-        });
-    }).finally(tick);
-
-    historyWarmupPromise = withTimeout(
-        Promise.all([...imageTasks, postRefreshTask]),
-        18000
-    );
-
-    return historyWarmupPromise;
-}
 
 function addHistoryMouseHandler(handler) {
     if (typeof handler !== 'function') return;
@@ -259,27 +39,13 @@ window.addEventListener('load', () => {
         document.documentElement.classList.add('is-edge');
     }
 
-    // Persist interactive frame assets in memory for deploy environments.
-    const frameWarmups = [];
-    document.querySelectorAll('[data-frames], [data-kick-frames], [data-hover-src]').forEach((imgEl) => {
-        const frames = imgEl.getAttribute('data-frames') || imgEl.getAttribute('data-kick-frames');
-        const hover = imgEl.getAttribute('data-hover-src');
-
-        if (frames) {
-            const frameList = frames.split(',').map((src) => src.trim()).filter(Boolean);
-            if (frameList.length) {
-                frameWarmups.push(preloadHistoryFramesResident(frameList));
-            }
-        }
-
-        if (hover && hover.trim()) {
-            frameWarmups.push(preloadHistoryFramesResident([hover.trim()]));
-        }
+    // สั่งโหลดเฟรมแอนิเมชันทั้งหมดเก็บไว้ในแรม แก้ปัญหาภาพกระตุก/เด้ง บน PC 
+    document.querySelectorAll('[data-frames], [data-kick-frames], [data-hover-src]').forEach(img => {
+        const frames = img.getAttribute('data-frames') || img.getAttribute('data-kick-frames');
+        const hover = img.getAttribute('data-hover-src');
+        if (frames) frames.split(',').forEach(src => { const temp = new Image(); temp.src = src.trim(); });
+        if (hover) { const temp = new Image(); temp.src = hover.trim(); }
     });
-
-    if (frameWarmups.length) {
-        registerHistoryInteractivePromise(Promise.all(frameWarmups));
-    }
 
     setupKaraokeText();
     initHorizontalScroll();
@@ -582,19 +348,7 @@ function initSukhothaiKickAnimation() {
 
     const framesData = kickPose.getAttribute('data-kick-frames');
     if (!framesData) return;
-    const frameSources = framesData.split(',').map((src) => src.trim()).filter(Boolean);
-    let frames = frameSources.slice();
-    registerHistoryInteractivePromise(
-        preloadHistoryFramesResident(frameSources).then((residentFrames) => {
-            if (residentFrames.length === frameSources.length) {
-                frames = residentFrames;
-            }
-            if (!isAnimating && frames.length) {
-                kickPose.src = frames[0];
-            }
-            return frames;
-        })
-    );
+    const frames = framesData.split(',');
 
     gsap.set(container, { opacity: 0, y: 80, scale: 0.85 });
 
@@ -659,12 +413,10 @@ function initSukhothaiKickAnimation() {
         if (isAnimating) return;
         isAnimating = true;
 
-        if (!frames.length) { isAnimating = false; return; }
-
         let currentFrame = 0;
         const playInterval = setInterval(() => {
             currentFrame++;
-            kickPose.src = frames[currentFrame] || frames[0];
+            kickPose.src = frames[currentFrame];
             if (currentFrame >= frames.length - 1) {
                 clearInterval(playInterval);
                 setTimeout(() => {
@@ -877,30 +629,19 @@ function initBuffaloSwingClick() {
     const buffaloWrapper = document.querySelector('.buffalo-swing-wrapper');
     if (!buffaloImage || !buffaloWrapper) return;
 
-    const sourceSequence = [
+    const imageSequence = [
         'img/muay-boran/northeast/muay-korat-buffalo-swing.png',
         'img/muay-boran/northeast/muay-korat-buffalo-swing 1 .png',
         'img/muay-boran/northeast/muay-korat-buffalo-swing 2.png',
         'img/muay-boran/northeast/muay-korat-buffalo-swing 3 .png',
         'img/muay-boran/northeast/muay-korat-buffalo-swing 4 .png'
     ];
-    let imageSequence = sourceSequence.slice();
-    registerHistoryInteractivePromise(
-        preloadHistoryFramesResident(sourceSequence).then((residentSequence) => {
-            if (residentSequence.length === sourceSequence.length) {
-                imageSequence = residentSequence;
-            }
-            return imageSequence;
-        })
-    );
 
     let isAnimating = false;
 
-    const playBuffaloSequence = async () => {
+    buffaloImage.addEventListener('click', async () => {
         if (isAnimating) return;
         isAnimating = true;
-
-        if (!imageSequence.length) { isAnimating = false; return; }
 
         for (let i = 1; i < imageSequence.length; i++) {
             buffaloImage.src = imageSequence[i];
@@ -910,10 +651,6 @@ function initBuffaloSwingClick() {
         await new Promise(resolve => setTimeout(resolve, 300));
         buffaloImage.src = imageSequence[0];
         isAnimating = false;
-    };
-
-    buffaloWrapper.addEventListener('click', () => {
-        playBuffaloSequence();
     });
 }
 
@@ -1542,10 +1279,7 @@ function initWalkingFighter() {
         });
     }
 
-    const walkingReadyPromise = ensureFramesResident();
-    window.__historyWalkingReadyPromise = walkingReadyPromise;
-
-    walkingReadyPromise.then((cache) => {
+    ensureFramesResident().then((cache) => {
         oldFrames = cache.oldFrames || framesOldSource;
         newFrames = cache.newFrames || framesNewSource;
         frameSetsReady = true;
@@ -2103,31 +1837,18 @@ function initEarlyRatanaFighterReveal() {
 function initEarlyRatanaClickSwap() {
     const img = document.querySelector('.early-ratana-swap');
     if (!img) return;
-    const container = img.closest('.early-ratana-container') || img;
     const framesData = img.getAttribute('data-frames');
     if (!framesData) return;
-    const frameSources = framesData.split(',').map((src) => src.trim()).filter(Boolean);
-    let frames = frameSources.slice();
-    registerHistoryInteractivePromise(
-        preloadHistoryFramesResident(frameSources).then((residentFrames) => {
-            if (residentFrames.length === frameSources.length) {
-                frames = residentFrames;
-            }
-            return frames;
-        })
-    );
+    const frames = framesData.split(',');
     let isPlaying = false;
 
-    container.addEventListener('click', () => {
+    img.addEventListener('click', () => {
         if (isPlaying) return;
         isPlaying = true;
-
-        if (!frames.length) { isPlaying = false; return; }
-
         let currentFrame = 0;
         const playInterval = setInterval(() => {
             currentFrame++;
-            img.src = frames[currentFrame] || frames[0];
+            img.src = frames[currentFrame];
             if (currentFrame >= frames.length - 1) {
                 clearInterval(playInterval);
                 setTimeout(() => { img.src = frames[0]; isPlaying = false; }, 700);
@@ -2356,21 +2077,13 @@ function initRemainingKaraokeBoxes() {
 window.addEventListener('load', function () {
     const loader = document.getElementById('loadingOverlay');
     const progressFill = document.getElementById('progressFill');
-    const setProgress = (value) => {
-        if (!progressFill) return;
-        const clamped = Math.max(0, Math.min(100, value));
-        progressFill.style.transition = 'width 0.25s ease-out';
-        progressFill.style.width = clamped.toFixed(0) + '%';
-    };
 
-    setProgress(40);
+    if (progressFill) {
+        progressFill.style.transition = 'width 0.5s ease-out';
+        progressFill.style.width = '100%';
+    }
 
-    getHistoryWarmupPromise(setProgress)
-        .then(() => {
-            setProgress(100);
-            return new Promise((resolve) => setTimeout(resolve, 300));
-        })
-        .then(() => {
+    setTimeout(() => {
         if (loader) {
             loader.classList.add('hidden');
             document.body.classList.remove('loading-active');
@@ -2379,7 +2092,7 @@ window.addEventListener('load', function () {
                 ScrollTrigger.refresh();
             }
         }
-        });
+    }, 1000);
 });
 
 // =============================================
