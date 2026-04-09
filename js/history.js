@@ -148,7 +148,20 @@ function bootHistoryPage() {
         document.documentElement.classList.add('is-edge');
     }
 
-    primeInteractiveFrameCache();
+    const scheduleInteractiveWarmup = () => {
+        if (typeof window.requestIdleCallback === 'function') {
+            window.requestIdleCallback(() => {
+                primeInteractiveFrameCache();
+            }, { timeout: 2500 });
+            return;
+        }
+
+        setTimeout(() => {
+            primeInteractiveFrameCache();
+        }, 1400);
+    };
+
+    scheduleInteractiveWarmup();
 
     setupKaraokeText();
     initHorizontalScroll();

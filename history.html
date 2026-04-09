@@ -24,6 +24,11 @@
     <link rel="stylesheet" href="css/history.css?v=4">
     <link rel="stylesheet" href="css/loading.css">
 
+    <!-- Critical walking frames: load early for immediate first-motion animation -->
+    <link rel="preload" as="image" href="img/walk/fighter-walk-old-1.png" fetchpriority="high">
+    <link rel="preload" as="image" href="img/walk/fighter-walk-old-2.png" fetchpriority="high">
+    <link rel="preload" as="image" href="img/walk/fighter-walk-old-3.png" fetchpriority="high">
+
     <style>
         /* FIX: ปิดกล่องเด็ดขาดในแนวนอน และโชว์ทันทีแบบไม่มีดีเลย์ในแนวตั้ง */
         @media screen and (orientation: landscape) {
@@ -1142,7 +1147,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
     <script defer src="js/navbar.js"></script>
-    <script src="js/history.js?v=9"></script>
+    <script src="js/history.js?v=10"></script>
     <script defer src="js/main.js"></script>
 
 </body>
