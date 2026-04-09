@@ -57,7 +57,28 @@
     <link rel="stylesheet" href="css/cards-section.css">
 </head>
 
-<body>
+<body class="loading-active">
+
+    <div id="loadingOverlay" class="loading-overlay active" aria-hidden="true">
+        <div class="loading-container">
+            <div class="gloves-container">
+                <img src="img/PunchLoading.png" alt="Boxing Gloves" class="gloves-image">
+            </div>
+            <h1 class="loading-title">MUAYVERSE</h1>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill">
+                        <div class="progress-wave-start"></div>
+                        <div class="progress-wave"></div>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-stop"></div>
+                    </div>
+                </div>
+            </div>
+            <p class="loading-subtitle">Interactive Website to Promote Muay Thai Soft Power</p>
+        </div>
+    </div>
 
     <!-- Force Landscape Overlay -->
     <div id="landscape-overlay">
@@ -295,22 +316,8 @@
     <!-- Scripts with defer for better performance -->
     <script src="js/navbar.js" defer></script>
     <script src="js/footer.js" defer></script>
+    <script src="js/sakyant-loading.js" defer></script>
     <script src="js/sakyant-anim.js" defer></script>
-
-    <script>
-        // Initialize Navbar and Footer
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initPage);
-        } else {
-            initPage();
-        }
-
-        function initPage() {
-            new Navbar();
-            new Footer();
-            new SakYantAnim();
-        }
-    </script>
 </body>
 
 </html>

@@ -25,9 +25,6 @@ class SakYantAnim {
         this.karaokeComplete = false;
         this.isSnapScrolling = false;
 
-        this.isNavigatingBack = false;
-        this.topWaitTimer = null;
-
         // Mouse parallax state
         this.mouse = { x: 0, y: 0 };
         this.parallaxTicking = false;
@@ -290,19 +287,26 @@ class SakYantAnim {
 
     /* ─── Event bindings ─── */
     _bindEvents() {
-        window.addEventListener('scroll', () => {
-            const currentScrollY = window.scrollY || window.pageYOffset;
-            this.scrollDirection = currentScrollY > this.lastScrollY ? 1 : -1;
+        const updateScrollState = () => {
+            const currentScrollY = this._getScrollTop();
+            this.scrollDirection = currentScrollY > this.lastScrollY ? 1 : (currentScrollY < this.lastScrollY ? -1 : 0);
             this.lastScrollY = currentScrollY;
             this.scrollY = currentScrollY;
+            this._requestScrollUpdate();
+        };
 
-            if (!this.ticking) {
-                requestAnimationFrame(() => {
-                    this._onScroll();
-                    this.ticking = false;
-                });
-                this.ticking = true;
-            }
+        window.addEventListener('scroll', updateScrollState, { passive: true });
+        // iOS Safari บางช่วงไม่ยิง scroll ถี่พอระหว่าง gesture
+        window.addEventListener('touchstart', () => {
+            this.scrollY = this._getScrollTop();
+            this.lastScrollY = this.scrollY;
+            this._onScroll();
+        }, { passive: true });
+        window.addEventListener('touchmove', updateScrollState, { passive: true });
+        window.addEventListener('resize', () => this._requestScrollUpdate(), { passive: true });
+        window.addEventListener('orientationchange', () => {
+            this._requestScrollUpdate();
+            setTimeout(() => this._requestScrollUpdate(), 120);
         }, { passive: true });
 
         window.addEventListener('mousemove', (e) => {
@@ -319,6 +323,50 @@ class SakYantAnim {
         }, { passive: true });
 
         this._setupYantWordHover();
+
+        // Sync initial karaoke state after layout settles (important on iOS/bfcache).
+        const syncKaraokeState = () => {
+            this.scrollY = this._getScrollTop();
+            this.lastScrollY = this.scrollY;
+            this._onScroll();
+        };
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(syncKaraokeState);
+        });
+
+        window.addEventListener('load', () => {
+            setTimeout(syncKaraokeState, 0);
+            setTimeout(syncKaraokeState, 160);
+        }, { once: true, passive: true });
+
+        window.addEventListener('pageshow', () => {
+            setTimeout(syncKaraokeState, 0);
+            setTimeout(syncKaraokeState, 120);
+        }, { passive: true });
+
+        window.addEventListener('sakyantReady', () => {
+            setTimeout(syncKaraokeState, 0);
+            setTimeout(syncKaraokeState, 120);
+        }, { passive: true });
+    }
+
+    _requestScrollUpdate() {
+        if (!this.ticking) {
+            requestAnimationFrame(() => {
+                this._onScroll();
+                this.ticking = false;
+            });
+            this.ticking = true;
+        }
+    }
+
+    _getScrollTop() {
+        return window.scrollY
+            || window.pageYOffset
+            || document.documentElement.scrollTop
+            || document.body.scrollTop
+            || 0;
     }
 
     /* ─── Mouse parallax effect on yellow deco yantras ─── */
@@ -349,34 +397,15 @@ class SakYantAnim {
 
     /* ─── Scroll handler ─── */
     _onScroll() {
-        // ดักจับ: ถ้าอยู่บนสุด (scrollY = 0) และกำลัง scroll ขึ้น → กลับ history
-        // เช็ค lastScrollY > scrollY เพื่อยืนยัน direction จริงๆ ไม่ใช่แค่ค่า cache
-        const atTop = this.scrollY <= 0;
-        const goingUp = this.lastScrollY > this.scrollY || this.scrollDirection < 0;
-
-        if (atTop && goingUp && !this.isNavigatingBack) {
-            if (!this.topWaitTimer) {
-                this.topWaitTimer = setTimeout(() => {
-                    this.isNavigatingBack = true;
-                    this._triggerTransitionBack('history.html');
-                }, 500);
-            }
-        } else {
-            if (this.topWaitTimer) {
-                clearTimeout(this.topWaitTimer);
-                this.topWaitTimer = null;
-            }
-        }
-
         if (!this.scrollLock || !this.section) return;
 
-        const lockRect = this.scrollLock.getBoundingClientRect();
         const navbarH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--navbar-height')) || 96;
         const sectionH = this.section.offsetHeight;
         const scrollableDistance = this.scrollLock.offsetHeight - sectionH;
         if (scrollableDistance <= 0) return;
 
-        const scrolled = -(lockRect.top - navbarH);
+        const lockStartY = Math.max(this.scrollLock.offsetTop - navbarH, 0);
+        const scrolled = this._getScrollTop() - lockStartY;
         const progress = Math.min(Math.max(scrolled / scrollableDistance, 0), 1);
 
         // ── karaokeEnd ปรับตาม breakpoint (0.9 สำหรับ iPad, 0.5 สำหรับ desktop/mobile) ──
@@ -384,7 +413,7 @@ class SakYantAnim {
         this._revealDescription(karaokeProgress);
 
         if (this.contentWrap) {
-            const fadeStart = 0.7;
+            const fadeStart = this.isTouchDevice ? 0.9 : 0.7;
             if (progress > fadeStart) {
                 const fadeProgress = (progress - fadeStart) / (1 - fadeStart);
                 const eased = fadeProgress * fadeProgress;
@@ -396,7 +425,7 @@ class SakYantAnim {
 
         // ── Scroll Snap: แม่เหล็กดึงไป Section 2 หรือกลับ Section 1 ──
         // Down scroll: ถ้า progress > 85% และกำลัง scroll ลง → snap ไป Section 2
-        if (progress >= this.snapDownThreshold && this.scrollDirection > 0 && !this.snapTriggered && !this.isSnapScrolling) {
+        if (progress >= this.snapDownThreshold && karaokeProgress >= 0.98 && this.scrollDirection > 0 && !this.snapTriggered && !this.isSnapScrolling) {
             this.snapTriggered = true;
             this.karaokeComplete = true;
             this._smoothScrollToSection2();
@@ -793,7 +822,8 @@ class SakYantAnim {
         if (!this.scrollLock || this.isSnapScrolling) return;
 
         this.isSnapScrolling = true;
-        const targetY = 0; // scroll กลับไปด้านบนสุด
+        // ปล่อยให้อยู่เหนือสุดเล็กน้อย กันไปชน gesture "ย้อนกลับ history" ที่เช็ค scrollY=0
+        const targetY = 1;
         const startY = window.scrollY;
         const distance = targetY - startY;
         const duration = 800; // ms
@@ -948,8 +978,19 @@ class SakYantAnim {
         ];
     }
 
-    /* ───  วาร์ปกลับหน้า History พร้อมม่าน ─── */
-    _triggerTransitionBack(url) {
-        window.location.href = url;
-    }
 }
+
+// Initialize SakYant animation once per page load.
+(() => {
+    const bootstrap = () => {
+        if (window.__sakyantAnimInitialized) return;
+        window.__sakyantAnimInitialized = true;
+        window.sakyantAnimInstance = new SakYantAnim();
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bootstrap, { once: true });
+    } else {
+        bootstrap();
+    }
+})();
