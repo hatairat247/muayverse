@@ -10,6 +10,14 @@ const SCROLL_END_BUFFER = 1000;
 window.addEventListener('load', () => {
     gsap.registerPlugin(ScrollTrigger);
 
+    // สั่งโหลดเฟรมแอนิเมชันทั้งหมดเก็บไว้ในแรม แก้ปัญหาภาพกระตุก/เด้ง บน PC 
+    document.querySelectorAll('[data-frames], [data-kick-frames], [data-hover-src]').forEach(img => {
+        const frames = img.getAttribute('data-frames') || img.getAttribute('data-kick-frames');
+        const hover = img.getAttribute('data-hover-src');
+        if (frames) frames.split(',').forEach(src => { const temp = new Image(); temp.src = src.trim(); });
+        if (hover) { const temp = new Image(); temp.src = hover.trim(); }
+    });
+
     setupKaraokeText();
     initHorizontalScroll();
     initSukhothaiTextAnimation();
@@ -30,7 +38,7 @@ window.addEventListener('load', () => {
     initRegionalFightersAnimation();
     initAyutthayaImagesAnimation();
     initKaraokeAnimation();
-    initKickAnimation();
+    //initKickAnimation();
     initMouseParallax();
     initChaiyaBounceReveal();
     initChaiyaKaraokeBoxes();
@@ -1028,6 +1036,9 @@ function initWalkingFighter() {
         'img/walk/fighter-walk-new-7.png',
     ];
 
+    // บังคับโหลดรูปแอนิเมชันให้เสร็จตั้งแต่แรก แก้ปัญหาภาพแหว่ง/หายวาร์ป ใน PC
+    [...framesOld, ...framesNew].forEach(src => { const temp = new Image(); temp.src = src; });
+
     let currentFrames = framesOld;
     let currentFrame = 0;
     let isWalking = false;
@@ -1066,11 +1077,20 @@ function initWalkingFighter() {
         img.src = currentFrames[0];
     }
 
+    let lastScrollTime = Date.now();
+
     window.addEventListener('scroll', () => {
+        const now = Date.now();
+
+        // กรองความถี่ของลูกกลิ้งเมาส์ PC ถ้าส่งรัวเกินไปใน 50ms ให้ข้าม
+        if (now - lastScrollTime < 50) return;
+        lastScrollTime = now;
+
         checkEra();
         startWalking();
         clearTimeout(scrollStopTimer);
-        scrollStopTimer = setTimeout(() => { stopWalking(); }, 800);
+
+        scrollStopTimer = setTimeout(() => { stopWalking(); }, 300);
 
         // Scroll hint 
         const scrollHint = document.querySelector('.fighter-scroll-hint');
