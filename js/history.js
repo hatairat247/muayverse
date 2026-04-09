@@ -10,6 +10,13 @@ const SCROLL_END_BUFFER = 1000;
 const historyMouseHandlers = new Set();
 let historyMouseTicking = false;
 let historyWarmupPromise = null;
+const historyInteractiveFrameCache = window.__historyInteractiveFrameCache || (window.__historyInteractiveFrameCache = {
+    resolvedMap: Object.create(null),
+    pendingMap: Object.create(null),
+    residentImages: [],
+    objectUrls: [],
+    readyPromises: []
+});
 
 function waitForImageSettled(img, timeoutMs = 12000) {
     return new Promise((resolve) => {
@@ -85,6 +92,75 @@ function withTimeout(promise, timeoutMs) {
     });
 }
 
+function preloadHistoryFramesResident(frameList) {
+    const normalizedFrames = (frameList || [])
+        .map((src) => String(src || '').trim())
+        .filter(Boolean);
+
+    if (!normalizedFrames.length) {
+        return Promise.resolve([]);
+    }
+
+    const uniqueFrames = [...new Set(normalizedFrames)];
+
+    const loadTasks = uniqueFrames.map((src) => {
+        if (historyInteractiveFrameCache.resolvedMap[src]) {
+            return Promise.resolve(historyInteractiveFrameCache.resolvedMap[src]);
+        }
+
+        if (historyInteractiveFrameCache.pendingMap[src]) {
+            return historyInteractiveFrameCache.pendingMap[src];
+        }
+
+        const task = (async () => {
+            let residentSrc = src;
+
+            try {
+                const response = await fetch(src, { cache: 'force-cache' });
+                if (!response.ok) throw new Error('frame fetch failed');
+
+                const blob = await response.blob();
+                residentSrc = URL.createObjectURL(blob);
+                historyInteractiveFrameCache.objectUrls.push(residentSrc);
+            } catch (_fetchErr) {
+                residentSrc = src;
+            }
+
+            try {
+                const resident = new Image();
+                resident.decoding = 'async';
+                resident.src = residentSrc;
+                await waitForImageSettled(resident, 12000);
+                if (resident.naturalWidth > 0) {
+                    historyInteractiveFrameCache.residentImages.push(resident);
+                }
+            } catch (_decodeErr) {
+                // keep source as fallback
+            }
+
+            historyInteractiveFrameCache.resolvedMap[src] = residentSrc;
+            return residentSrc;
+        })();
+
+        historyInteractiveFrameCache.pendingMap[src] = task.finally(() => {
+            delete historyInteractiveFrameCache.pendingMap[src];
+        });
+
+        return historyInteractiveFrameCache.pendingMap[src];
+    });
+
+    return Promise.all(loadTasks).then(() =>
+        normalizedFrames.map((src) => historyInteractiveFrameCache.resolvedMap[src] || src)
+    );
+}
+
+function registerHistoryInteractivePromise(promise) {
+    const safePromise = Promise.resolve(promise).catch(() => []);
+    historyInteractiveFrameCache.readyPromises.push(safePromise);
+    window.__historyInteractiveFramesReadyPromise = Promise.all(historyInteractiveFrameCache.readyPromises);
+    return safePromise;
+}
+
 function getHistoryWarmupPromise(onProgress) {
     if (historyWarmupPromise) return historyWarmupPromise;
 
@@ -97,7 +173,7 @@ function getHistoryWarmupPromise(onProgress) {
     }
 
     let finished = 0;
-    const total = Math.max(1, timelineImages.length + 2);
+    const total = Math.max(1, timelineImages.length + 3);
 
     const tick = () => {
         finished += 1;
@@ -113,6 +189,7 @@ function getHistoryWarmupPromise(onProgress) {
     );
 
     const walkingReadyTask = withTimeout(window.__historyWalkingReadyPromise || Promise.resolve(), 25000).finally(tick);
+    const interactiveReadyTask = withTimeout(window.__historyInteractiveFramesReadyPromise || Promise.resolve(), 25000).finally(tick);
 
     const postRefreshTask = new Promise((resolve) => {
         requestAnimationFrame(() => {
@@ -130,7 +207,7 @@ function getHistoryWarmupPromise(onProgress) {
     }).finally(tick);
 
     historyWarmupPromise = withTimeout(
-        Promise.all([...imageTasks, walkingReadyTask, postRefreshTask]),
+        Promise.all([...imageTasks, walkingReadyTask, interactiveReadyTask, postRefreshTask]),
         45000
     );
 
@@ -166,13 +243,27 @@ window.addEventListener('load', () => {
         document.documentElement.classList.add('is-edge');
     }
 
-    // สั่งโหลดเฟรมแอนิเมชันทั้งหมดเก็บไว้ในแรม แก้ปัญหาภาพกระตุก/เด้ง บน PC 
-    document.querySelectorAll('[data-frames], [data-kick-frames], [data-hover-src]').forEach(img => {
-        const frames = img.getAttribute('data-frames') || img.getAttribute('data-kick-frames');
-        const hover = img.getAttribute('data-hover-src');
-        if (frames) frames.split(',').forEach(src => { const temp = new Image(); temp.src = src.trim(); });
-        if (hover) { const temp = new Image(); temp.src = hover.trim(); }
+    // Persist interactive frame assets in memory for deploy environments.
+    const frameWarmups = [];
+    document.querySelectorAll('[data-frames], [data-kick-frames], [data-hover-src]').forEach((imgEl) => {
+        const frames = imgEl.getAttribute('data-frames') || imgEl.getAttribute('data-kick-frames');
+        const hover = imgEl.getAttribute('data-hover-src');
+
+        if (frames) {
+            const frameList = frames.split(',').map((src) => src.trim()).filter(Boolean);
+            if (frameList.length) {
+                frameWarmups.push(preloadHistoryFramesResident(frameList));
+            }
+        }
+
+        if (hover && hover.trim()) {
+            frameWarmups.push(preloadHistoryFramesResident([hover.trim()]));
+        }
     });
+
+    if (frameWarmups.length) {
+        registerHistoryInteractivePromise(Promise.all(frameWarmups));
+    }
 
     setupKaraokeText();
     initHorizontalScroll();
@@ -475,7 +566,19 @@ function initSukhothaiKickAnimation() {
 
     const framesData = kickPose.getAttribute('data-kick-frames');
     if (!framesData) return;
-    const frames = framesData.split(',');
+    const frameSources = framesData.split(',').map((src) => src.trim()).filter(Boolean);
+    let frames = frameSources.slice();
+    const framesReadyPromise = registerHistoryInteractivePromise(
+        preloadHistoryFramesResident(frameSources).then((residentFrames) => {
+            if (residentFrames.length === frameSources.length) {
+                frames = residentFrames;
+            }
+            if (!isAnimating && frames.length) {
+                kickPose.src = frames[0];
+            }
+            return frames;
+        })
+    );
 
     gsap.set(container, { opacity: 0, y: 80, scale: 0.85 });
 
@@ -536,14 +639,20 @@ function initSukhothaiKickAnimation() {
 
     let isAnimating = false;
 
-    container.addEventListener('click', () => {
+    container.addEventListener('click', async () => {
         if (isAnimating) return;
         isAnimating = true;
+
+        await withTimeout(framesReadyPromise, 12000);
+        if (!frames.length) {
+            isAnimating = false;
+            return;
+        }
 
         let currentFrame = 0;
         const playInterval = setInterval(() => {
             currentFrame++;
-            kickPose.src = frames[currentFrame];
+            kickPose.src = frames[currentFrame] || frames[0];
             if (currentFrame >= frames.length - 1) {
                 clearInterval(playInterval);
                 setTimeout(() => {
@@ -756,19 +865,34 @@ function initBuffaloSwingClick() {
     const buffaloWrapper = document.querySelector('.buffalo-swing-wrapper');
     if (!buffaloImage || !buffaloWrapper) return;
 
-    const imageSequence = [
+    const sourceSequence = [
         'img/muay-boran/northeast/muay-korat-buffalo-swing.png',
         'img/muay-boran/northeast/muay-korat-buffalo-swing 1 .png',
         'img/muay-boran/northeast/muay-korat-buffalo-swing 2.png',
         'img/muay-boran/northeast/muay-korat-buffalo-swing 3 .png',
         'img/muay-boran/northeast/muay-korat-buffalo-swing 4 .png'
     ];
+    let imageSequence = sourceSequence.slice();
+    const sequenceReadyPromise = registerHistoryInteractivePromise(
+        preloadHistoryFramesResident(sourceSequence).then((residentSequence) => {
+            if (residentSequence.length === sourceSequence.length) {
+                imageSequence = residentSequence;
+            }
+            return imageSequence;
+        })
+    );
 
     let isAnimating = false;
 
     buffaloImage.addEventListener('click', async () => {
         if (isAnimating) return;
         isAnimating = true;
+
+        await withTimeout(sequenceReadyPromise, 12000);
+        if (!imageSequence.length) {
+            isAnimating = false;
+            return;
+        }
 
         for (let i = 1; i < imageSequence.length; i++) {
             buffaloImage.src = imageSequence[i];
@@ -1969,16 +2093,32 @@ function initEarlyRatanaClickSwap() {
     if (!img) return;
     const framesData = img.getAttribute('data-frames');
     if (!framesData) return;
-    const frames = framesData.split(',');
+    const frameSources = framesData.split(',').map((src) => src.trim()).filter(Boolean);
+    let frames = frameSources.slice();
+    const framesReadyPromise = registerHistoryInteractivePromise(
+        preloadHistoryFramesResident(frameSources).then((residentFrames) => {
+            if (residentFrames.length === frameSources.length) {
+                frames = residentFrames;
+            }
+            return frames;
+        })
+    );
     let isPlaying = false;
 
-    img.addEventListener('click', () => {
+    img.addEventListener('click', async () => {
         if (isPlaying) return;
         isPlaying = true;
+
+        await withTimeout(framesReadyPromise, 12000);
+        if (!frames.length) {
+            isPlaying = false;
+            return;
+        }
+
         let currentFrame = 0;
         const playInterval = setInterval(() => {
             currentFrame++;
-            img.src = frames[currentFrame];
+            img.src = frames[currentFrame] || frames[0];
             if (currentFrame >= frames.length - 1) {
                 clearInterval(playInterval);
                 setTimeout(() => { img.src = frames[0]; isPlaying = false; }, 700);
