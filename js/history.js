@@ -1070,6 +1070,7 @@ function initWalkingFighter() {
     let isWalking = false;
     let walkInterval = null;
     let scrollStopTimer = null;
+    let motionTicking = false;
     const FRAME_SPEED = 100;
 
     function checkEra() {
@@ -1103,31 +1104,36 @@ function initWalkingFighter() {
         img.src = currentFrames[0];
     }
 
-    let lastScrollTime = Date.now();
+    function handleMotionTick() {
+        if (motionTicking) return;
+        motionTicking = true;
 
-    window.addEventListener('scroll', () => {
-        const now = Date.now();
+        requestAnimationFrame(() => {
+            motionTicking = false;
+            checkEra();
+            startWalking();
+            clearTimeout(scrollStopTimer);
+            scrollStopTimer = setTimeout(() => { stopWalking(); }, 300);
 
-        // กรองความถี่ของลูกกลิ้งเมาส์ PC ถ้าส่งรัวเกินไปใน 50ms ให้ข้าม
-        if (now - lastScrollTime < 50) return;
-        lastScrollTime = now;
-
-        checkEra();
-        startWalking();
-        clearTimeout(scrollStopTimer);
-
-        scrollStopTimer = setTimeout(() => { stopWalking(); }, 300);
-
-        // Scroll hint 
-        const scrollHint = document.querySelector('.fighter-scroll-hint');
-        if (scrollHint) {
-            if (window.scrollY > 500) {
-                scrollHint.classList.add('hidden');
-            } else {
-                scrollHint.classList.remove('hidden');
+            // Scroll hint 
+            const scrollHint = document.querySelector('.fighter-scroll-hint');
+            if (scrollHint) {
+                if (window.scrollY > 500) {
+                    scrollHint.classList.add('hidden');
+                } else {
+                    scrollHint.classList.remove('hidden');
+                }
             }
-        }
-    });
+        });
+    }
+
+    window.addEventListener('scroll', handleMotionTick, { passive: true });
+
+    // Deploy fallback: some environments throttle native scroll events heavily,
+    // but ScrollTrigger update still runs while the horizontal timeline scrubs.
+    if (window.ScrollTrigger) {
+        ScrollTrigger.addEventListener('update', handleMotionTick);
+    }
 }
 
 // =============================================
