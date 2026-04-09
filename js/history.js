@@ -1221,7 +1221,6 @@ function initWalkingFighter() {
 
     function startWalking() {
         if (isWalking) return;
-        if (!frameSetsReady) return;
         if (!currentFrames || currentFrames.length < 2) return;
 
         isWalking = true;
@@ -1284,8 +1283,12 @@ function initWalkingFighter() {
         oldFrames = cache.oldFrames || framesOldSource;
         newFrames = cache.newFrames || framesNewSource;
         frameSetsReady = true;
-        currentFrames = eraMode === 'new' ? newFrames : oldFrames;
-        setFrameSafely(0);
+
+        const nextFrames = eraMode === 'new' ? newFrames : oldFrames;
+        const preservedIndex = nextFrames.length ? (currentFrame % nextFrames.length) : 0;
+
+        currentFrames = nextFrames;
+        setFrameSafely(preservedIndex);
     });
 
     primeEraMode();
