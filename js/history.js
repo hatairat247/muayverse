@@ -7,8 +7,37 @@ let isInitialized = false;
 
 const SCROLL_END_BUFFER = 1000;
 
+const historyMouseHandlers = new Set();
+let historyMouseTicking = false;
+
+function addHistoryMouseHandler(handler) {
+    if (typeof handler !== 'function') return;
+    historyMouseHandlers.add(handler);
+
+    if (addHistoryMouseHandler._bound) return;
+    addHistoryMouseHandler._bound = true;
+
+    document.addEventListener('mousemove', (e) => {
+        const mouseXNorm = (e.clientX / window.innerWidth) - 0.5;
+        const mouseYNorm = (e.clientY / window.innerHeight) - 0.5;
+
+        if (historyMouseTicking) return;
+        historyMouseTicking = true;
+
+        requestAnimationFrame(() => {
+            historyMouseTicking = false;
+            historyMouseHandlers.forEach((fn) => fn(mouseXNorm, mouseYNorm));
+        });
+    });
+}
+
 window.addEventListener('load', () => {
     gsap.registerPlugin(ScrollTrigger);
+    const isEdgeBrowser = /Edg\//.test(window.navigator.userAgent);
+
+    if (isEdgeBrowser) {
+        document.documentElement.classList.add('is-edge');
+    }
 
     // สั่งโหลดเฟรมแอนิเมชันทั้งหมดเก็บไว้ในแรม แก้ปัญหาภาพกระตุก/เด้ง บน PC 
     document.querySelectorAll('[data-frames], [data-kick-frames], [data-hover-src]').forEach(img => {
@@ -47,7 +76,6 @@ window.addEventListener('load', () => {
     initThonburiParallax();
     initThaSaoFighters();
     initThaSaoHoverSwap();
-    initThonburiParallax();
     initThonburiHoverSwap();
     initThonburiFighterReveal();
     initEarlyRatanaParallax();
@@ -80,7 +108,8 @@ window.addEventListener('load', () => {
         if (!img.loading) img.loading = 'lazy';
     });
 
-    gsap.config({ force3D: true });
+    // Keep interactions unchanged; only tune compositing to reduce Edge text/image flicker.
+    gsap.config({ force3D: isEdgeBrowser ? false : true });
     ScrollTrigger.config({ limitCallbacks: true });
 
 });
@@ -430,10 +459,10 @@ function initKaraokeAnimation() {
             onLeaveBack: () => hideText2()
         });
 
-        document.addEventListener('mousemove', (e) => {
+        addHistoryMouseHandler((mouseXNorm, mouseYNorm) => {
             if (!textBox2._parallaxReady) return;
-            const mouseX = (e.clientX / window.innerWidth - 0.5) * 25;
-            const mouseY = (e.clientY / window.innerHeight - 0.5) * 25;
+            const mouseX = mouseXNorm * 25;
+            const mouseY = mouseYNorm * 25;
             gsap.to(textBox2, { x: mouseX, y: mouseY, duration: 0.6, ease: 'power2.out', overwrite: 'auto' });
         });
     }
@@ -900,10 +929,7 @@ function initMouseParallax() {
     ].filter(el => el !== null);
     if (textBoxes.length === 0 && !textBox1 && !textBox2) return;
 
-    document.addEventListener('mousemove', (e) => {
-        const mouseX = (e.clientX / window.innerWidth) - 0.5;
-        const mouseY = (e.clientY / window.innerHeight) - 0.5;
-
+    addHistoryMouseHandler((mouseX, mouseY) => {
         if (textBox1 && parseFloat(gsap.getProperty(textBox1, 'opacity')) > 0.5) {
             gsap.to(textBox1, { x: mouseX * 15, y: mouseY * 15, duration: 0.6, ease: 'power2.out', overwrite: 'auto' });
         }
@@ -1942,7 +1968,9 @@ function initSakyantButtonReveal() {
         resizeTimer = setTimeout(refreshGSAPLayout, 220);
     });
 
-    if (window.visualViewport) {
+    const isTouchViewport = navigator.maxTouchPoints > 0;
+
+    if (window.visualViewport && isTouchViewport) {
         window.visualViewport.addEventListener("resize", function () {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(refreshGSAPLayout, 120);

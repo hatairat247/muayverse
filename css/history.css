@@ -2216,6 +2216,44 @@ body::before {
     filter: blur(4px);
 }
 
+/* Edge-only compositing stability layer (do not change interactions) */
+html.is-edge .text-box,
+html.is-edge .text-box p,
+html.is-edge .karaoke-char,
+html.is-edge .next-page,
+html.is-edge .next-page img,
+html.is-edge .kick-pose,
+html.is-edge .regional-fighter,
+html.is-edge .lopburi-fighter,
+html.is-edge .chaiya-fighter,
+html.is-edge .tha-sao-fighter,
+html.is-edge .tha-sao-fighter-2,
+html.is-edge .tha-sao-fighter-3,
+html.is-edge .thonburi-fighter,
+html.is-edge .early-ratana-fighter,
+html.is-edge .mid-ratana-fighter,
+html.is-edge .present-fighter {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    contain: paint;
+}
+
+html.is-edge .text-box,
+html.is-edge .text-box p,
+html.is-edge .karaoke-char {
+    text-rendering: geometricPrecision;
+}
+
+/* Edge: avoid blur/filter raster shimmer on animated karaoke chars */
+html.is-edge .text-box-6 .karaoke-char,
+html.is-edge .text-box-7 .karaoke-char,
+html.is-edge .text-box-10 .karaoke-char,
+html.is-edge .text-box-6 .karaoke-char.active,
+html.is-edge .text-box-7 .karaoke-char.active,
+html.is-edge .text-box-10 .karaoke-char.active {
+    filter: none !important;
+}
+
 /* =========================================
    ERA INDICATORS (TIMELINE BOTTOM)
    ========================================= */
