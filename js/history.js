@@ -6,6 +6,7 @@ let horizontalScrollTween = null;
 let isInitialized = false;
 
 const SCROLL_END_BUFFER = 1000;
+let historyBooted = false;
 
 const historyMouseHandlers = new Set();
 let historyMouseTicking = false;
@@ -31,7 +32,10 @@ function addHistoryMouseHandler(handler) {
     });
 }
 
-window.addEventListener('load', () => {
+function bootHistoryPage() {
+    if (historyBooted) return;
+    historyBooted = true;
+
     gsap.registerPlugin(ScrollTrigger);
     const isEdgeBrowser = /Edg\//.test(window.navigator.userAgent);
 
@@ -112,7 +116,21 @@ window.addEventListener('load', () => {
     gsap.config({ force3D: isEdgeBrowser ? false : true });
     ScrollTrigger.config({ limitCallbacks: true });
 
-});
+    // Re-sync after all assets complete loading.
+    window.addEventListener('load', () => {
+        if (window.ScrollTrigger) {
+            ScrollTrigger.refresh(true);
+        }
+    }, { once: true });
+
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootHistoryPage, { once: true });
+    window.addEventListener('load', bootHistoryPage, { once: true });
+} else {
+    bootHistoryPage();
+}
 
 // =============================================
 // CORE: Horizontal Scroll Setup
