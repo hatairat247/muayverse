@@ -30,7 +30,7 @@ window.addEventListener('load', () => {
     initRegionalFightersAnimation();
     initAyutthayaImagesAnimation();
     initKaraokeAnimation();
-    initKickAnimation();
+    // initKickAnimation();
     initMouseParallax();
     initChaiyaBounceReveal();
     initChaiyaKaraokeBoxes();
@@ -1028,6 +1028,12 @@ function initWalkingFighter() {
         'img/walk/fighter-walk-new-7.png',
     ];
 
+    // บังคับโหลดรูปแอนิเมชันให้เสร็จตั้งแต่แรก แก้ปัญหาภาพแหว่ง/หายวาร์ป ใน PC
+    [...framesOld, ...framesNew].forEach(src => {
+        const preloadedImg = new Image();
+        preloadedImg.src = src;
+    });
+
     let currentFrames = framesOld;
     let currentFrame = 0;
     let isWalking = false;
@@ -1067,10 +1073,16 @@ function initWalkingFighter() {
     }
 
     window.addEventListener('scroll', () => {
+
+        // Scroll ขยับน้อยกว่า 2px ให้เมิน
+        if (Math.abs(window.scrollY - lastScrollY) < 2) return;
+        lastScrollY = window.scrollY;
+
         checkEra();
         startWalking();
         clearTimeout(scrollStopTimer);
-        scrollStopTimer = setTimeout(() => { stopWalking(); }, 800);
+
+        scrollStopTimer = setTimeout(() => { stopWalking(); }, 1200);
 
         // Scroll hint 
         const scrollHint = document.querySelector('.fighter-scroll-hint');
