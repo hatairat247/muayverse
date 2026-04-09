@@ -1062,37 +1062,111 @@ function initWalkingFighter() {
         'img/walk/fighter-walk-new-7.png',
     ];
 
-    // บังคับโหลดรูปแอนิเมชันให้เสร็จตั้งแต่แรก แก้ปัญหาภาพแหว่ง/หายวาร์ป ใน PC
-    [...framesOld, ...framesNew].forEach(src => { const temp = new Image(); temp.src = src; });
+    const toAbsUrl = (src) => new URL(src, window.location.href).href;
+    const loadedFrameAbs = new Set();
+
+    // Keep references alive so slow-network preload is not canceled in production.
+    const framePreloads = [...new Set([...framesOld, ...framesNew])].map((src) => {
+        const asset = new Image();
+        asset.decoding = 'async';
+        const abs = toAbsUrl(src);
+
+        if (asset.complete && asset.naturalWidth > 0) {
+            loadedFrameAbs.add(abs);
+        }
+
+        asset.addEventListener('load', () => {
+            loadedFrameAbs.add(abs);
+        }, { once: true });
+
+        asset.src = src;
+        return asset;
+    });
 
     let currentFrames = framesOld;
     let currentFrame = 0;
     let isWalking = false;
     let walkInterval = null;
-    let scrollStopTimer = null;
-    let motionTicking = false;
+    let lastMotionAt = performance.now();
+    let lastTrackX = 0;
     const FRAME_SPEED = 100;
+    const IDLE_STOP_MS = 320;
+    const WALK_DELTA_EPS = 0.08;
+    const timelineTrack = document.getElementById('timeline-track');
+
+    if (timelineTrack && typeof gsap !== 'undefined') {
+        const initialX = Number(gsap.getProperty(timelineTrack, 'x'));
+        lastTrackX = Number.isFinite(initialX) ? initialX : 0;
+    }
+
+    function isFrameLoaded(src) {
+        return loadedFrameAbs.has(toAbsUrl(src));
+    }
+
+    function setFrameSafely(index) {
+        const src = currentFrames[index];
+        if (!src || !isFrameLoaded(src)) return false;
+        currentFrame = index;
+        img.src = src;
+        return true;
+    }
+
+    function getLoadedFrameCount(frames) {
+        let count = 0;
+        for (let i = 0; i < frames.length; i++) {
+            if (isFrameLoaded(frames[i])) count++;
+        }
+        return count;
+    }
+
+    function getNextLoadedFrameIndex() {
+        for (let i = 1; i <= currentFrames.length; i++) {
+            const idx = (currentFrame + i) % currentFrames.length;
+            if (isFrameLoaded(currentFrames[idx])) return idx;
+        }
+        return -1;
+    }
+
+    function updateScrollHint() {
+        const scrollHint = document.querySelector('.fighter-scroll-hint');
+        if (!scrollHint) return;
+
+        if (window.scrollY > 500) {
+            scrollHint.classList.add('hidden');
+        } else {
+            scrollHint.classList.remove('hidden');
+        }
+    }
 
     function checkEra() {
-        const trackEl = document.getElementById('timeline-track');
-        if (!trackEl) return;
         const floor10 = document.querySelector('img[src="https://res.cloudinary.com/muayverse/image/upload/f_auto,q_auto/v1773253003/floor-artboard-10_qaq3ft.png"]');
         if (!floor10) return;
         const floorScreenX = floor10.getBoundingClientRect().left;
 
         if (floorScreenX <= window.innerWidth * 0.5) {
-            if (currentFrames !== framesNew) { currentFrames = framesNew; currentFrame = 0; img.src = currentFrames[0]; }
+            if (currentFrames !== framesNew) {
+                currentFrames = framesNew;
+                currentFrame = 0;
+                setFrameSafely(0);
+            }
         } else {
-            if (currentFrames !== framesOld) { currentFrames = framesOld; currentFrame = 0; img.src = currentFrames[0]; }
+            if (currentFrames !== framesOld) {
+                currentFrames = framesOld;
+                currentFrame = 0;
+                setFrameSafely(0);
+            }
         }
     }
 
     function startWalking() {
         if (isWalking) return;
+        if (getLoadedFrameCount(currentFrames) < 2) return;
+
         isWalking = true;
         walkInterval = setInterval(() => {
-            currentFrame = (currentFrame + 1) % currentFrames.length;
-            img.src = currentFrames[currentFrame];
+            const nextIdx = getNextLoadedFrameIndex();
+            if (nextIdx === -1) return;
+            setFrameSafely(nextIdx);
         }, FRAME_SPEED);
     }
 
@@ -1100,40 +1174,55 @@ function initWalkingFighter() {
         isWalking = false;
         clearInterval(walkInterval);
         walkInterval = null;
-        currentFrame = 0;
-        img.src = currentFrames[0];
+        setFrameSafely(0);
     }
 
-    function handleMotionTick() {
-        if (motionTicking) return;
-        motionTicking = true;
+    function triggerMotion() {
+        lastMotionAt = performance.now();
+        checkEra();
+        startWalking();
+        updateScrollHint();
+    }
 
-        requestAnimationFrame(() => {
-            motionTicking = false;
-            checkEra();
-            startWalking();
-            clearTimeout(scrollStopTimer);
-            scrollStopTimer = setTimeout(() => { stopWalking(); }, 300);
+    function trackTimelineMotion() {
+        if (!timelineTrack || typeof gsap === 'undefined') return;
 
-            // Scroll hint 
-            const scrollHint = document.querySelector('.fighter-scroll-hint');
-            if (scrollHint) {
-                if (window.scrollY > 500) {
-                    scrollHint.classList.add('hidden');
-                } else {
-                    scrollHint.classList.remove('hidden');
-                }
-            }
+        const rawX = Number(gsap.getProperty(timelineTrack, 'x'));
+        const currentX = Number.isFinite(rawX) ? rawX : lastTrackX;
+        const delta = Math.abs(currentX - lastTrackX);
+
+        if (delta > WALK_DELTA_EPS) {
+            triggerMotion();
+        } else if (isWalking && performance.now() - lastMotionAt > IDLE_STOP_MS) {
+            stopWalking();
+        }
+
+        lastTrackX = currentX;
+    }
+
+    function handleNativeScroll() {
+        triggerMotion();
+    }
+
+    window.addEventListener('scroll', handleNativeScroll, { passive: true });
+
+    if (typeof gsap !== 'undefined' && gsap.ticker) {
+        gsap.ticker.add(trackTimelineMotion);
+    }
+
+    if (window.ScrollTrigger) {
+        ScrollTrigger.addEventListener('refresh', () => {
+            if (!timelineTrack || typeof gsap === 'undefined') return;
+            const refreshedX = Number(gsap.getProperty(timelineTrack, 'x'));
+            lastTrackX = Number.isFinite(refreshedX) ? refreshedX : lastTrackX;
         });
     }
 
-    window.addEventListener('scroll', handleMotionTick, { passive: true });
+    // Prevent unused warning and ensure preload refs stay reachable in this scope.
+    if (framePreloads.length === 0) return;
 
-    // Deploy fallback: some environments throttle native scroll events heavily,
-    // but ScrollTrigger update still runs while the horizontal timeline scrubs.
-    if (window.ScrollTrigger) {
-        ScrollTrigger.addEventListener('update', handleMotionTick);
-    }
+    checkEra();
+    updateScrollHint();
 }
 
 // =============================================
