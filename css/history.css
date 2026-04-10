@@ -3516,7 +3516,7 @@ screen and (max-width: 950px) {
         }
 
         .boran-thailand-image {
-            bottom: -55cqh !important;
+            bottom: -50cqh !important;
         }
 
         /* ====================================
@@ -3552,8 +3552,16 @@ screen and (max-width: 950px) {
             }
 
             .boran-thailand-image {
-                bottom: -55cqh !important;
+                bottom: -50cqh !important;
             }
+        }
+    }
+}
+
+@media screen and (max-height: 450px) and (orientation: landscape) and (hover: hover) and (pointer: fine) {
+    @container (max-width: 1440px) {
+        .boran-thailand-image {
+            bottom: -70cqh !important;
         }
     }
 }
